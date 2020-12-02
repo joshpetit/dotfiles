@@ -16,10 +16,12 @@ setxkbmap -option caps:swapescape
 
 # extra paths
 export PATH="$PATH:/usr/lib/dart/bin"
+export P="/home/joshu/Projects"
 
 # aliases
 alias e=exit
 alias pq=pyquoter
+alias ilock='i3lock -c 000000'
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options

@@ -1,4 +1,4 @@
-set relativenumber
+set number
 
 "Coc starts disabled
 let g:coc_start_at_startup = v:false
@@ -7,9 +7,12 @@ let g:coc_start_at_startup = v:false
 set ts=4 sw=4
 
 " Coc rename
-nmap <F2> <Plug>(coc-rename)
+nmap <F3> <Plug>(coc-rename)
+nnoremap <F2> :NERDTreeToggle<cr>
 nmap <F8> :TagbarToggle<CR>
+nmap <F4> :make compileJava<bar>copen<CR>
 nmap <F5> :!gradle run<CR>
+nmap <F12> :tabedit ~/.vimrc<CR>
 
 let g:mta_filetypes = {
       \ 'html' : 1,
@@ -25,6 +28,9 @@ let g:mta_filetypes = {
 
 " Dark mode for menus (Coc specifically)
 hi Pmenu ctermbg=black ctermfg=white
+"
+" Taboo remmebers tab names!
+set sessionoptions+=tabpages,globals
 
 " Begin vim-plugin
 call plug#begin('~/.vim/plugged')
@@ -40,7 +46,12 @@ Plug 'preservim/nerdtree' |
 Plug 'airblade/vim-gitgutter'
 Plug 'Valloric/MatchTagAlways' "HTML tag highlight
 Plug 'preservim/tagbar' "Tag bar
-
+Plug 'aklt/plantuml-syntax' "uml syntax
+Plug 'weirongxu/plantuml-previewer.vim' "uml preview
+Plug 'tyru/open-browser.vim' "open the browser, for plantuml
+Plug 'gcmt/taboo.vim' "Name Tabs!
+Plug 'kien/ctrlp.vim' "Ctrl P!
+Plug 'davetron5000/java-javadoc-vim' "javadoc?
 
 call plug#end()
 
