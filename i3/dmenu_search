@@ -1,0 +1,20 @@
+#!/bin/bash
+
+URL='https://www.google.com/search?q='
+SITE='Google'
+FILE=''
+if [[ $1 == biblehub ]]; then
+  FILE=$(cat ~/.config/i3/bible)
+  URL='https://biblescan.com/search.php?q='
+  SITE='Bible Hub'
+elif [[ $1 == biblegateway ]]; then
+  FILE=$(cat ~/.config/i3/bible)
+  URL='https://www.biblegateway.com/passage/?search='
+  SITE='BibleGateway'
+fi
+QUERY=$(echo "$FILE" | dmenu -i -p "Search $SITE:" -b)
+
+if [ -n "$QUERY" ]; then
+  xdg-open "${URL}${QUERY}" 2> /dev/null
+  exec i3-msg [class="^Firefox$"] focus
+fi

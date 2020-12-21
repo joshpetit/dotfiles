@@ -10,11 +10,18 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
+set $mod Mod4
+
 # Kde Connect
 exec kdeconnect-cli
 # Night Light! Saves the eyes
 set $leftMonitor DP-0.2
 exec redshift -P  -O 4000
+
+# Search!
+bindsym $mod + g exec --no-startup-id ~/.config/i3/dmenu_search
+bindsym $mod + b exec --no-startup-id ~/.config/i3/dmenu_search biblegateway
+bindsym $mod + Shift + b exec --no-startup-id ~/.config/i3/dmenu_search biblehub
 
 # Set displays
 exec xrandr --output eDP-1-1 --primary --output $leftMonitor --auto --rotate left --left-of eDP-1-1
@@ -27,7 +34,6 @@ bindsym $mod + Shift + KP_2 exec xrandr --output DP-0.2 --rotate left && feh --b
 # 1 pixel border
 for_window [class="^.*"] border pixel 1
 
-set $mod Mod4
 
 
 # Mouse Mode!
