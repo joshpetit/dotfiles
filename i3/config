@@ -17,6 +17,7 @@ exec kdeconnect-cli
 # Night Light! Saves the eyes
 set $leftMonitor DP-0.2
 exec redshift -P  -O 4000
+exec --no-startup-id compton
 
 # Search!
 bindsym $mod + g exec --no-startup-id ~/.config/i3/dmenu_search
@@ -28,8 +29,8 @@ exec xrandr --output eDP-1-1 --primary --output $leftMonitor --auto --rotate lef
 exec_always feh --bg-fill Pictures/nature_bg.jpg 
 
 # Swap Display stuff
-bindsym $mod + Shift + KP_1 exec xrandr --output DP-0.2 --rotate normal --left-of eDP-1-1 && feh --bg-fill Pictures/nature_bg.jpg
-bindsym $mod + Shift + KP_2 exec xrandr --output DP-0.2 --rotate left && feh --bg-fill Pictures/nature_bg.jpg 
+bindsym $mod + Shift + KP_1 exec xrandr --output $leftMonitor --rotate normal --left-of eDP-1-1 && feh --bg-fill Pictures/nature_bg.jpg
+bindsym $mod + Shift + KP_2 exec xrandr --output $leftMonitor --rotate left && feh --bg-fill Pictures/nature_bg.jpg 
 
 # 1 pixel border
 for_window [class="^.*"] border pixel 1
