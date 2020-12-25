@@ -28,26 +28,34 @@ let g:prettier#autoformat_require_pragma = 0
 nmap <F3> <Plug>(coc-rename)
 nnoremap <F2> :NERDTreeToggle<cr>
 nmap <F8> :TagbarToggle<CR>
-nmap <F4> :make compileJava<CR>
-nmap <F5> :make run<CR>
-nmap <S-F5> :make test<CR>
-nmap <S-F12> :tabedit ~/.vimrc<CR>
 nmap <F12> :tabedit ~/.vimrc<CR>
 
-autocmd FileType dart nmap<F12> :tabedit pubspec.yaml<CR>
-autocmd FileType c nmap<F12> :tabedit makefile<CR>
-autocmd FileType java nmap<F12> :tabedit build.gradle<CR>
-autocmd FileType dart nmap<F5> :!pub run test<CR>
-autocmd FileType c nmap<F4> :make<CR>
-autocmd FileType c nmap<F5> :!make && ./%:r.o
-autocmd FileType go nmap<F5> :GoRun<CR>
-autocmd FileType go nmap<leader>r :!go run % 
-autocmd FileType vim nmap<F4> :PlugClean<CR>
-autocmd FileType vim nmap<F5> :PlugInstall<CR>
-autocmd FileType javascript nmap<F12> :tabedit package.json<CR>
-autocmd FileType typescript nmap<F12> :tabedit package.json<CR>
-
 autocmd FileType java :compiler! gradle
+autocmd FileType java nmap<leader>cc :make compileJava<CR>
+autocmd FileType java nmap<leader>t :make test<CR>
+autocmd FileType java nmap<leader>b :make build<CR>
+"compiles java test classes
+autocmd FileType java nmap<leader>ct :make testClasses<CR>
+autocmd FileType java nmap<leader>rr :make run<CR>
+autocmd FileType java nmap<leader>rf :!java %<CR>
+autocmd FileType java nmap<leader>e :tabedit build.gradle<CR>
+
+autocmd FileType dart nmap<leader>t :!pub run test<CR>
+autocmd FileType dart nmap<leader>e :tabedit pubspec.yaml<CR>
+
+autocmd FileType go nmap<leader>r :GoRun<CR>
+"run Go with arguments
+autocmd FileType go nmap<leader>a :!go run % 
+
+autocmd FileType vim nmap<leader>c :PlugClean<CR>
+autocmd FileType vim nmap<leader>i :PlugInstall<CR>
+
+autocmd FileType javascript nmap<leader>e :tabedit package.json<CR>
+autocmd FileType javascriptreact nmap<leader>e :tabedit package.json<CR>
+
+autocmd FileType typescript nmap<leader>e :tabedit package.json<CR>
+autocmd FileType typescriptreact nmap<leader>e :tabedit package.json<CR>
+
 set wildignore+=*/build/*
 let vim_markdown_preview_hotkey='<C-m>'
 let g:mta_filetypes = {
