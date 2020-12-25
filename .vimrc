@@ -15,6 +15,20 @@ let g:go_doc_url = 'https://pkg.go.dev'
 "python formating
 autocmd FileType python set sts=4
 
+nmap <Space> :
+nmap <C-f> :FZF<CR>
+let g:Unicode_no_default_mappings = v:true
+imap <C-E> <Plug>(UnicodeFuzzy)
+let g:fzf_layout = {
+    \ 'window': {
+    \     'width': 0.9,
+    \     'height': 0.6,
+    \     'xoffset': 0.5,
+    \     'yoffset': 0.5,
+    \     'highlight': 'Comment',
+    \     'border': 'sharp',
+    \ }}
+
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx,*.tsx'
 
 " make prettier work
@@ -26,9 +40,11 @@ let g:prettier#autoformat_require_pragma = 0
 
 " Coc rename
 nmap <F3> <Plug>(coc-rename)
+nmap <F4> :so ~/.vimrc<CR>
 nnoremap <F2> :NERDTreeToggle<cr>
 nmap <F8> :TagbarToggle<CR>
 nmap <F12> :tabedit ~/.vimrc<CR>
+
 
 autocmd FileType java :compiler! gradle
 autocmd FileType java nmap<leader>cc :make compileJava<CR>
@@ -47,7 +63,9 @@ autocmd FileType go nmap<leader>r :GoRun<CR>
 "run Go with arguments
 autocmd FileType go nmap<leader>a :!go run % 
 
+autocmd FileType vim nmap<leader>u :PlugUpgrade<CR>
 autocmd FileType vim nmap<leader>c :PlugClean<CR>
+autocmd FileType vim nmap<leader>s :so ~/.vimrc<CR>
 autocmd FileType vim nmap<leader>i :PlugInstall<CR>
 
 autocmd FileType javascript nmap<leader>e :tabedit package.json<CR>
@@ -72,7 +90,6 @@ let test#java#runner = 'gradletest'
 
 " Dark mode for menus (Coc specifically)
 hi Pmenu ctermbg=black ctermfg=white
-"
 
 " Begin vim-plugin
 call plug#begin('~/.vim/plugged')
@@ -104,7 +121,8 @@ Plug 'prettier/vim-prettier', {
   \ 'for': ['javascript', 'typescript', 'typescriptreact', 'javascriptreact', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 Plug 'vim-scripts/c.vim'
 Plug 'tpope/vim-fugitive' "git stuff
-
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'chrisbra/unicode.vim'
 call plug#end()
 
 
@@ -119,5 +137,6 @@ let g:dart_format_on_save = 1
 " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
  augroup ReactFiletypes
 	     autocmd BufRead,BufNewFile *.jsx set filetype=javascriptreact
-             autocmd BufRead,BufNewFile *.tsx set filetype=typescriptreact
+         autocmd BufRead,BufNewFile *.tsx set filetype=typescriptreact
  augroup END"
+
