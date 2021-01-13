@@ -1,15 +1,11 @@
 
 " leader keys
 	let mapleader=" "
-	nnoremap <leader><Space> /
-	vnoremap <leader><Space> /
+	nnoremap <leader><Space> :
+	vnoremap <leader><Space> :
 	nnoremap <leader>, :bp<CR>
 	nnoremap <leader>. :bn<CR>
 	nnoremap <leader>g :Git<CR>
-
-	nnoremap <leader><Tab> :
-	vnoremap <leader><Tab> :
-
 	nnoremap <leader>w :w<CR>
 	nnoremap <leader><C-f> :Rg<CR>
 	nmap <leader>s :so ~/.vimrc<CR>
@@ -28,7 +24,8 @@
 
 "dartl leaders
 	autocmd FileType dart nmap<leader>l :!dart %<CR>
-	autocmd FileType dart nmap<leader>t :!pub run test<CR>
+	autocmd FileType dart nmap<leader>tt :!pub run test<CR>
+	autocmd FileType dart nmap<leader>tf :!pub run %<CR>
 	autocmd FileType dart nmap<leader>a :FlutterSplit<CR>
 	autocmd FileType dart nmap<leader>r :FlutterHotReload<CR>
 	autocmd FileType dart nmap<leader>R :FlutterHotRestart<CR>
@@ -64,7 +61,9 @@
 "jsl leaders
 	autocmd FileType javascript nmap<leader>e :split package.json<CR>
 	autocmd FileType typescript nmap<leader>e :split package.json<CR>
-	autocmd FileType typescript nmap<leader>r :!node %<CR>
+
+	autocmd FileType javascript nmap<leader>s :!npm start<CR>
+	autocmd FileType typescript nmap<leader>s :!npm start<CR>
 
 "plugin settings
 	let g:go_doc_url = 'https://pkg.go.dev'
@@ -161,6 +160,12 @@
 	nnoremap <expr> k (v:count > 1 ? "m'" . v:count : '') . 'k'
 	nnoremap <expr> j (v:count > 1 ? "m'" . v:count : '') . 'j'
 
+	"move windows
+	nnoremap <C-h> <C-w>h
+	nnoremap <C-j> <C-w>j
+	nnoremap <C-k> <C-w>k
+	nnoremap <C-l> <C-w>l
+
 	set wildignore+=*/node_modules/*,_site,*/__pycache__/,*/venv/*,*/target/*,*/.vim$,\~$,*/.log,*/.aux,*/.cls,*/.aux,*/.bbl,*/.blg,*/.fls,*/.fdb*/,*/.toc,*/.out,*/.glo,*/.log,*/.ist,*/.fdb_latexmk
 	set wildignore+=*/.git/*,*/build/*
 	" General formatting
@@ -169,3 +174,5 @@
 	set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 	hi Pmenu ctermbg=black ctermfg=white
 	set number relativenumber
+	noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
+	noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
