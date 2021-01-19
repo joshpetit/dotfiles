@@ -10,6 +10,8 @@
 	nnoremap <leader><C-f> :Rg<CR>
 	nmap <leader>s :so ~/.vimrc<CR>
 	nmap <leader>f :Autoformat<CR>
+"bashl leaders
+	autocmd FileType sh nmap<leader>r :!./%<CR>
 
 "javal leaders
 	autocmd FileType java :compiler! gradle
@@ -32,6 +34,7 @@
 	autocmd FileType dart nmap<leader>s :FlutterRun<CR>
 	autocmd FileType dart nmap<leader>q :FlutterQuit<CR>
 	autocmd FileType dart nmap<leader>e :split pubspec.yaml<CR>
+	autocmd FileType dart nmap<leader>p :!flutter pub get<CR>
 
 "gol leaders
 	autocmd FileType go nmap<leader>r :GoRun<CR>
@@ -40,6 +43,7 @@
 	autocmd FileType go nmap<leader>c :GoTestCompile<CR>
 	"run Go with arguments
 	autocmd FileType go nmap<leader>a :!go run %
+	autocmd FileType go nmap<leader>p :!go get<CR>
 
 	"Debugging
 	autocmd FileType go nmap<F2> :GoDebugNext<CR>
@@ -62,8 +66,10 @@
 	autocmd FileType javascript nmap<leader>e :split package.json<CR>
 	autocmd FileType typescript nmap<leader>e :split package.json<CR>
 
-	autocmd FileType javascript nmap<leader>s :!npm start<CR>
-	autocmd FileType typescript nmap<leader>s :!npm start<CR>
+	autocmd FileType javascript nmap<leader>s :!yarn start<CR>
+	autocmd FileType typescript nmap<leader>s :!yarn start<CR>
+	autocmd FileType javascript nmap<leader>p :!yarn install<CR>
+	autocmd FileType typescript nmap<leader>p :!yarn install<CR>
 
 "plugin settings
 	let g:go_doc_url = 'https://pkg.go.dev'
@@ -83,7 +89,7 @@
 	nnoremap Q :NERDTreeToggle<cr>
 
 	"tagbar
-	nmap <F8> :TagbarToggle<CR>
+	nmap <S-T> :TagbarToggle<CR>
 
 	"Coc
 	let g:coc_start_at_startup = v:false
@@ -105,8 +111,24 @@
 				\ 'typescript' : 1,
 				\}
 
+	let g:tagbar_type_markdown = {
+		\ 'ctagstype': 'markdown',
+		\ 'ctagsbin' : '/home/joshu/miscApps/markdown2ctags/markdown2ctags.py',
+		\ 'ctagsargs' : '-f - --sort=yes --sro=»',
+		\ 'kinds' : [
+			\ 's:sections',
+			\ 'i:images'
+		\ ],
+		\ 'sro' : '»',
+		\ 'kind2scope' : {
+			\ 's' : 'section',
+		\ },
+		\ 'sort': 0,
+	\ }
+
 "plgns
 	call plug#begin('~/.vim/plugged')
+		Plug 'iamcco/markdown-preview.nvim'
 		Plug 'fatih/vim-go' "Go support!
 		" Dart support
 		Plug 'dart-lang/dart-vim-plugin'
@@ -152,9 +174,6 @@
 		autocmd BufRead,BufNewFile *.jsx set filetype=javascriptreact
 		autocmd BufRead,BufNewFile *.tsx set filetype=typescriptreact
 	augroup END"
-
-	autocmd BufWinLeave .vimrc mkview
-	autocmd BufWinEnter .vimrc silent loadview
 
 	" add jumps to jump list!
 	nnoremap <expr> k (v:count > 1 ? "m'" . v:count : '') . 'k'
