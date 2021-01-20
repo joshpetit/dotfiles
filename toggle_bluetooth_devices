@@ -7,8 +7,8 @@ BLUETOOTH_DEVICE="74:45:CE:46:CD:31"
 
 if [[ $1 ]]; then
 	case $1 in
-		pixel) BLUETOOTH_DEVICE=PIXEL_ADD;;
-		whc) BLUETOOTH_DEVICE=HEADPHONES_ADD;;
+		pixel) BLUETOOTH_DEVICE=$PIXEL_ADD;;
+		whc) BLUETOOTH_DEVICE=$HEADPHONES_ADD;;
 		*) echo 'WHATTTT IS THAT???'; exit 1;
 	esac
 fi
