@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "" > .conf
+notify-send -h int:transient:1 "Toggle Window" "Window Cleared"
