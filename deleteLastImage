@@ -1,6 +1,6 @@
 # !bin/bash
 #
 # Deletes the last screenshot
-file=$(ls -Art ~/Pictures/| grep Screenshot\ from\ | tail -n 1)
+file=$(ls -Art ~/Pictures/| tail -n 1)
 rm ~/Pictures/"$file"
 notify-send --hint=int:transient:1 "Deleted $file"

@@ -10,6 +10,16 @@
 	nnoremap <leader><C-f> :Rg<CR>
 	nmap <leader>s :so ~/.vimrc<CR>
 	nmap <leader>f :Autoformat<CR>
+"cl leaders
+	autocmd FileType c :packadd termdebug<CR>
+	autocmd FileType c nmap<F7> :Step<CR>
+	autocmd FileType c nmap<F8> :Over<CR>
+	autocmd FileType c nmap<S-F8> :Over<CR>
+	autocmd FileType c nmap<A-F8> :Evaluate
+	autocmd FileType c nmap<C-F8> :Break<CR>
+	autocmd FileType c nmap<C-S-F8> :Clear<CR>
+	autocmd FileType c nmap<F10> :Finish<CR>
+
 "bashl leaders
 	autocmd FileType sh nmap<leader>r :!./%<CR>
 

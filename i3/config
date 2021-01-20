@@ -11,6 +11,10 @@
 bindsym $mod+q exec "rofi -modi window,drun,run -show run -sidebar-mode -terminal termite -color-window '#000000, #000000, #000000' -color-normal '#000000, #b3e774, #000000, #b3e774, #000000' -color-active '#000000, #b3e774, #000000, #b3e774, #000000' -color-urgent '#000000, #b3e774, #000000, #b3e774, #000000'"
 set $mod Mod4
 
+# Set displays
+exec xrandr --output eDP-1-1 --primary --output $rightMonitor --auto --right-of eDP-1-1 --output $leftMonitor --left-of eDP-1-1
+exec_always feh --bg-fill Pictures/nature_bg.jpg 
+
 # send stuff to phone
 bindsym $mod + Insert exec kdeconnect-handler ~/Pictures/"$(ls -Art ~/Pictures/| tail -n 1)"
 bindsym $mod + Shift + Insert exec kdeconnect-handler ~/move/"$(ls -Art ~/move/| tail -n 1)"
@@ -24,7 +28,8 @@ exec kdeconnect-cli
 exec --no-startup-id flameshot
 
 # Night Light! Saves the eyes
-set $leftMonitor DP-0.2
+set $leftMonitor DP-0.3
+set $rightMonitor DP-0.2
 exec redshift -P  -O 4000
 exec --no-startup-id compton
 
@@ -34,13 +39,10 @@ bindsym $mod + g exec --no-startup-id ~/.config/i3/dmenu_search
 bindsym $mod + b exec --no-startup-id ~/.config/i3/dmenu_search biblegateway
 bindsym $mod + Shift + b exec --no-startup-id ~/.config/i3/dmenu_search biblehub
 
-# Set displays
-exec xrandr --output eDP-1-1 --primary --output $leftMonitor --auto --rotate left --left-of eDP-1-1
-exec_always feh --bg-fill Pictures/nature_bg.jpg 
 
 # Swap Display stuff
-bindsym $mod + Shift + KP_1 exec xrandr --output $leftMonitor --rotate normal --left-of eDP-1-1 && feh --bg-fill Pictures/nature_bg.jpg
-bindsym $mod + Shift + KP_2 exec xrandr --output $leftMonitor --rotate left && feh --bg-fill Pictures/nature_bg.jpg 
+bindsym $mod + Shift + KP_1 exec xrandr --output $rightMonitor --rotate normal && feh --bg-fill Pictures/nature_bg.jpg
+bindsym $mod + Shift + KP_2 exec xrandr --output $rightMonitor --rotate right && feh --bg-fill Pictures/nature_bg.jpg 
 
 # 1 pixel border
 for_window [class="^.*"] border pixel 1
