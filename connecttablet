@@ -1,0 +1,6 @@
+#!/bin/bash
+
+MONITOR="DP-0.2"
+id=$(xinput | grep -oP "S Pen stylus\s*id=\K\d+")
+
+xinput map-to-output $id $MONITOR
