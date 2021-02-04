@@ -20,6 +20,7 @@ if type rg &>/dev/null; then
     export FZF_DEFAULT_OPTS='-m --height 50% --border'
 fi
 
+math='/home/joshu/OneDrive/linux/school/math218/'
 export JAVA_HOME="/usr/lib/jvm/java-14-openjdk-amd64/"
 export PATH="$PATH:/usr/local/go/bin"
 # extra paths
@@ -31,7 +32,10 @@ export PATH="$PATH":"$HOME/go/bin"
 # aliases
 alias e=exit
 alias pq=pyquoter
+alias cpdf="/home/joshu/dotfiles/createpdf"
 alias ilock='i3lock -c 000000'
+alias please=sudo
+alias vg='valgrind --show-leak-kinds=all --leak-check=full -v --track-origins=yes --log-file=vg_logfile.out'
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
