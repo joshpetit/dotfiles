@@ -1,4 +1,4 @@
-# !bin/bash
+#!/bin/bash
 #
 # Deletes the last screenshot
 file=$(ls -Art ~/Pictures/| tail -n 1)

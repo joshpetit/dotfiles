@@ -3,6 +3,7 @@
 	let mapleader=" "
 	nnoremap <leader><Space> :
 	vnoremap <leader><Space> :
+	nnoremap <leader>q :sh<CR>
 	nnoremap <leader>, :bp<CR>
 	nnoremap <leader>. :bn<CR>
 	nnoremap <leader>g :Git<CR>
@@ -11,75 +12,110 @@
 	nmap <leader>s :so ~/.vimrc<CR>
 	nmap <leader>f :Autoformat<CR>
 "cl leaders
-	autocmd FileType c :packadd termdebug<CR>
-	autocmd FileType c nmap<F7> :Step<CR>
-	autocmd FileType c nmap<F8> :Over<CR>
-	autocmd FileType c nmap<S-F8> :Over<CR>
-	autocmd FileType c nmap<A-F8> :Evaluate
-	autocmd FileType c nmap<C-F8> :Break<CR>
-	autocmd FileType c nmap<C-S-F8> :Clear<CR>
-	autocmd FileType c nmap<F10> :Finish<CR>
+	augroup cstuff
+		autocmd!
+		autocmd FileType c :packadd termdebug<CR>
+		autocmd FileType c nmap<F7> :Step<CR>
+		autocmd FileType c nmap<F8> :Over<CR>
+		autocmd FileType c nmap<S-F8> :Over<CR>
+		autocmd FileType c nmap<A-F8> :Evaluate
+		autocmd FileType c nmap<C-F8> :Break<CR>
+		autocmd FileType c nmap<C-S-F8> :Clear<CR>
+		autocmd FileType c nmap<F10> :Finish<CR>
+	augroup end
 
 "bashl leaders
-	autocmd FileType sh nmap<leader>r :!./%<CR>
+	augroup bash
+		autocmd!
+		autocmd FileType sh nmap<leader>r :!./%<CR>
+	augroup end
 
 "javal leaders
-	autocmd FileType java :compiler! gradle
-	autocmd FileType java nmap<leader>cc :make compileJava<CR>
-	autocmd FileType java nmap<leader>ct :make testClasses<CR>
-	autocmd FileType java nmap<leader>t :make test<CR>
-	autocmd FileType java nmap<leader>b :make build<CR>
-	"compiles java test classes
-	autocmd FileType java nmap<leader>rr :make run<CR>
-	autocmd FileType java nmap<leader>rf :!java %<CR>
-	autocmd FileType java nmap<leader>e :split build.gradle<CR>
+	augroup	java_cmds
+		autocmd!
+
+		autocmd FileType java nmap	<leader>f :FormatCode google-java-format<CR>
+		autocmd FileType java :compiler! gradle
+		autocmd FileType java nmap<leader>cc :make compileJava<CR>
+		autocmd FileType java nmap<leader>ct :make testClasses<CR>
+		autocmd FileType java nmap<leader>t :make test<CR>
+		autocmd FileType java nmap<leader>b :make build<CR>
+		"compiles java test classes
+		autocmd FileType java nmap<leader>rr :make run<CR>
+		autocmd FileType java nmap<leader>rf :!java %<CR>
+		autocmd FileType java nmap<leader>e :split build.gradle<CR>
+	augroup end
 
 "dartl leaders
-	autocmd FileType dart nmap<leader>l :!dart %<CR>
-	autocmd FileType dart nmap<leader>tt :!pub run test<CR>
-	autocmd FileType dart nmap<leader>tf :!pub run %<CR>
-	autocmd FileType dart nmap<leader>a :FlutterSplit<CR>
-	autocmd FileType dart nmap<leader>r :FlutterHotReload<CR>
-	autocmd FileType dart nmap<leader>R :FlutterHotRestart<CR>
-	autocmd FileType dart nmap<leader>s :FlutterRun<CR>
-	autocmd FileType dart nmap<leader>q :FlutterQuit<CR>
-	autocmd FileType dart nmap<leader>e :split pubspec.yaml<CR>
-	autocmd FileType dart nmap<leader>p :!flutter pub get<CR>
+	augroup dart_cmds
+		autocmd!
+
+		autocmd FileType dart nmap<leader>l :!dart %<CR>
+		autocmd FileType dart nmap<leader>tt :!pub run test<CR>
+		autocmd FileType dart nmap<leader>tf :!pub run %<CR>
+		autocmd FileType dart nmap<leader>a :FlutterSplit<CR>
+		autocmd FileType dart nmap<leader>r :FlutterHotReload<CR>
+		autocmd FileType dart nmap<leader>R :FlutterHotRestart<CR>
+		autocmd FileType dart nmap<leader>s :FlutterRun<CR>
+		autocmd FileType dart nmap<leader>q :FlutterQuit<CR>
+		autocmd FileType dart nmap<leader>e :split pubspec.yaml<CR>
+		autocmd FileType dart nmap<leader>p :!flutter pub get<CR>
+	augroup end
 
 "gol leaders
-	autocmd FileType go nmap<leader>r :GoRun<CR>
-	autocmd FileType go nmap<leader>t :GoTest<CR>
-	autocmd FileType go nmap<leader>i :GoInstall<CR>
-	autocmd FileType go nmap<leader>c :GoTestCompile<CR>
-	"run Go with arguments
-	autocmd FileType go nmap<leader>a :!go run %
-	autocmd FileType go nmap<leader>p :!go get<CR>
+	augroup go_cmds
+		autocmd!
 
-	"Debugging
-	autocmd FileType go nmap<F2> :GoDebugNext<CR>
-	autocmd FileType go nmap<F3> :GoDebugContinue<CR>
-	autocmd FileType go nmap<F4> :GoDebugBreakpoint<CR>
+		autocmd FileType go :compiler! gradle
+		autocmd FileType go nmap<leader>r :GoRun<CR>
+		autocmd FileType go nmap<leader>e :sp go.mod<CR>
+		autocmd FileType go nmap<leader>t :GoTest<CR>
+		autocmd FileType go nmap<leader>i :GoInstall<CR>
+		autocmd FileType go nmap<leader>c :GoTestCompile<CR>
+		"run Go with arguments
+		autocmd FileType go nmap<leader>a :!go run %
+		autocmd FileType go nmap<leader>p :!go get<CR>
 
-	autocmd FileType go nmap<F5> :GoDebugStart<CR>
-	autocmd FileType go nmap<F6> :GoDebugStep<CR>
-	autocmd FileType go nmap<F7> :GoDebugStepOut<CR>
-	autocmd FileType go nmap<F10> :GoDebugStop<CR>
-	autocmd FileType go nmap<F12> :GoDebugRestart<CR>
+		"Debugging
+		autocmd FileType go nmap<F2> :GoDebugNext<CR>
+		autocmd FileType go nmap<F3> :GoDebugContinue<CR>
+		autocmd FileType go nmap<F4> :GoDebugBreakpoint<CR>
+
+		autocmd FileType go nmap<F5> :GoDebugStart<CR>
+		autocmd FileType go nmap<F6> :GoDebugStep<CR>
+		autocmd FileType go nmap<F7> :GoDebugStepOut<CR>
+		autocmd FileType go nmap<F10> :GoDebugStop<CR>
+		autocmd FileType go nmap<F12> :GoDebugRestart<CR>
+	augroup end
 
 "viml leaders
-	autocmd FileType vim nmap<leader>u :PlugUpdate<CR>
-	autocmd FileType vim nmap<leader>c :so ~/.vimrc <bar> PlugClean<CR>
-	autocmd FileType vim nmap<leader>s :so ~/.vimrc<CR>
-	autocmd FileType vim nmap<leader>i :so ~/.vimrc <bar> PlugInstall<CR>
+	augroup vim_cmds
+		autocmd FileType vim nmap<leader>u :PlugUpdate<CR>
+		autocmd FileType vim nmap<leader>c :so ~/.vimrc <bar> PlugClean<CR>
+		autocmd FileType vim nmap<leader>s :so ~/.vimrc<CR>
+		autocmd FileType vim nmap<leader>i :so ~/.vimrc <bar> PlugInstall<CR>
+	augroup end
 
 "jsl leaders
-	autocmd FileType javascript nmap<leader>e :split package.json<CR>
-	autocmd FileType typescript nmap<leader>e :split package.json<CR>
+	augroup	js_mappings
+		autocmd!
 
-	autocmd FileType javascript nmap<leader>s :!yarn start<CR>
-	autocmd FileType typescript nmap<leader>s :!yarn start<CR>
-	autocmd FileType javascript nmap<leader>p :!yarn install<CR>
-	autocmd FileType typescript nmap<leader>p :!yarn install<CR>
+		autocmd FileType javascript,typescript nmap<leader>e :split package.json<CR>
+		autocmd FileType javascript,typescript nmap<leader>s :!yarn start<CR>
+		autocmd FileType javascript,typescript nmap<leader>p :!yarn install<CR>
+		autocmd FileType javascript,typescript nmap<leader>rr :!yarn run run <CR>
+		autocmd FileType javascript,typescript nmap<leader>rf :!node %<CR>
+		autocmd FileType javascript,typescript nmap<leader>cc :!yarn run compile<CR>
+		autocmd FileType typescript nmap<leader>cf :!tsc %<CR>
+	augroup end
+
+"markdown
+	augroup mark_mappings
+		autocmd!
+
+		autocmd FileType markdown :set dictionary+=/usr/share/dict/words
+		autocmd FileType markdown :set complete+=k
+	augroup end
 
 "plugin settings
 	let g:go_doc_url = 'https://pkg.go.dev'
@@ -177,13 +213,20 @@
 		Plug 'Dica-Developer/vim-jdb'
 		Plug 'tpope/vim-surround'
 		Plug 'BurntSushi/ripgrep'
+		Plug'google/vim-maktaba'
+		Plug 'google/vim-codefmt'
+		Plug 'google/vim-glaive'
 	call plug#end()
+
+	call glaive#Install()
+	Glaive codefmt google_java_executable="java -jar /home/joshu/deps/google-java-format-1.9-all-deps.jar"
 
 ""general settings
 	augroup ReactFiletypes
 		autocmd BufRead,BufNewFile *.jsx set filetype=javascriptreact
 		autocmd BufRead,BufNewFile *.tsx set filetype=typescriptreact
-	augroup END"
+	augroup END
+
 
 	" add jumps to jump list!
 	nnoremap <expr> k (v:count > 1 ? "m'" . v:count : '') . 'k'
