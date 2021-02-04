@@ -16,7 +16,7 @@ fi
 cd "$pset/src" || echo $pset/src Not Found || exit 1
 
 if [ ! -d '../output' ]; then
-	mkdir output
+	mkdir '../output'
 fi
 
 items=$(ls *.xopp)
@@ -24,5 +24,9 @@ items=$(ls *.xopp)
 for i in $items; do
 	echo $i
 	name="${i%%.x*}"
+	if [[ ! $name == *.pdf ]]
+	then
+		name="$name.pdf"
+	fi
 	xournalpp --create-pdf ../output/$name $i
 done
