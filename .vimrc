@@ -7,6 +7,7 @@
 	nnoremap <leader>, :bp<CR>
 	nnoremap <leader>. :bn<CR>
 	nnoremap <leader>g :Git<CR>
+	nnoremap <leader>G :GrammarousCheck<CR>
 	nnoremap <leader>w :w<CR>
 	nnoremap <leader><C-f> :Rg<CR>
 	nmap <leader>s :so ~/.vimrc<CR>
@@ -199,7 +200,7 @@
 		Plug 'alvan/vim-closetag' "closing tags
 		Plug 'prettier/vim-prettier', {
 					\ 'do': 'yarn install',
-					\ 'for': ['javascript', 'typescript', 'typescriptreact', 'javascriptreact', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+					\ 'for': ['javascript', 'typescript', 'typescriptreact', 'javascriptreact', 'css', 'less', 'scss', 'json', 'graphql', 'vue', 'yaml', 'html'] }
 		Plug 'vim-scripts/c.vim'
 		Plug 'tpope/vim-fugitive' "git stuff
 		Plug 'junegunn/fzf.vim'
@@ -216,6 +217,7 @@
 		Plug'google/vim-maktaba'
 		Plug 'google/vim-codefmt'
 		Plug 'google/vim-glaive'
+		Plug 'rhysd/vim-grammarous'
 	call plug#end()
 
 	call glaive#Install()
@@ -248,3 +250,5 @@
 	set number relativenumber
 	noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
 	noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
+
+
