@@ -1,17 +1,26 @@
-
+" settings
+	set wildmenu
+	set numberwidth=1
+	nnoremap - :m .+1<CR>
+	nnoremap _ :m .-2<CR>
+	imap <c-L> <plug>(fzf-complete-line)
 " leader keys
 	let mapleader=" "
 	nnoremap <leader><Space> :
 	vnoremap <leader><Space> :
-	nnoremap <leader>q :sh<CR>
+	nnoremap <leader>> :cnext<CR>
+	nnoremap <leader>< :cprev<CR>
+	nnoremap <leader>E :sh<CR>
 	nnoremap <leader>, :bp<CR>
 	nnoremap <leader>. :bn<CR>
 	nnoremap <leader>g :Git<CR>
 	nnoremap <leader>G :GrammarousCheck<CR>
 	nnoremap <leader>w :w<CR>
 	nnoremap <leader><C-f> :Rg<CR>
+	vnoremap ac :call NERDComment(0, "toggle")<CR>
 	nmap <leader>s :so ~/.vimrc<CR>
 	nmap <leader>f :Autoformat<CR>
+	nmap cp :let @" = expand("%")<CR>
 "cl leaders
 	augroup cstuff
 		autocmd!
@@ -25,6 +34,12 @@
 		autocmd FileType c nmap<F10> :Finish<CR>
 	augroup end
 
+"asml leaders
+	augroup asmstuff
+		autocmd!
+		autocmd FileType asm nmap<leader>r :!spim -file %<CR>
+	augroup end
+
 "bashl leaders
 	augroup bash
 		autocmd!
@@ -34,15 +49,15 @@
 "javal leaders
 	augroup	java_cmds
 		autocmd!
-
+		autocmd FileType java :iabbrev sout System.out.println
 		autocmd FileType java nmap	<leader>f :FormatCode google-java-format<CR>
 		autocmd FileType java :compiler! gradle
-		autocmd FileType java nmap<leader>cc :make compileJava<CR>
-		autocmd FileType java nmap<leader>ct :make testClasses<CR>
-		autocmd FileType java nmap<leader>t :make test<CR>
-		autocmd FileType java nmap<leader>b :make build<CR>
+		autocmd FileType java nmap<leader>cc :Make compileJava<CR>
+		autocmd FileType java nmap<leader>ct :Make testClasses<CR>
+		autocmd FileType java nmap<leader>t :Make test<CR>
+		autocmd FileType java nmap<leader>b :Make build<CR>
 		"compiles java test classes
-		autocmd FileType java nmap<leader>rr :make run<CR>
+		autocmd FileType java nmap<leader>rr :Make run<CR>
 		autocmd FileType java nmap<leader>rf :!java %<CR>
 		autocmd FileType java nmap<leader>e :split build.gradle<CR>
 	augroup end
@@ -101,12 +116,12 @@
 	augroup	js_mappings
 		autocmd!
 
-		autocmd FileType javascript,typescript nmap<leader>e :split package.json<CR>
-		autocmd FileType javascript,typescript nmap<leader>s :!yarn start<CR>
-		autocmd FileType javascript,typescript nmap<leader>p :!yarn install<CR>
-		autocmd FileType javascript,typescript nmap<leader>rr :!yarn run run <CR>
-		autocmd FileType javascript,typescript nmap<leader>rf :!node %<CR>
-		autocmd FileType javascript,typescript nmap<leader>cc :!yarn run compile<CR>
+		autocmd FileType javascript,typescript,typescriptreact nmap<leader>e :split package.json<CR>
+		autocmd FileType javascript,typescript,typescriptreact nmap<leader>s :!yarn start<CR>
+		autocmd FileType javascript,typescript,typescriptreact nmap<leader>p :!yarn install<CR>
+		autocmd FileType javascript,typescript,typescriptreact nmap<leader>rr :!yarn run run <CR>
+		autocmd FileType javascript,typescript,typescriptreact nmap<leader>rf :!node %<CR>
+		autocmd FileType javascript,typescript,typescriptreact nmap<leader>cc :!yarn run compile<CR>
 		autocmd FileType typescript nmap<leader>cf :!tsc %<CR>
 	augroup end
 
@@ -114,8 +129,7 @@
 	augroup mark_mappings
 		autocmd!
 
-		autocmd FileType markdown :set dictionary+=/usr/share/dict/words
-		autocmd FileType markdown :set complete+=k
+		imap <c-x><c-o> <plug>(fzf-complete-word)
 	augroup end
 
 "plugin settings
@@ -131,9 +145,11 @@
 	let g:dart_format_on_save = 1
 
 	let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx,*.tsx'
-
+	let g:NERDCreateDefaultMappings = 0
 	"nerdtree
 	nnoremap Q :NERDTreeToggle<cr>
+	let g:UltiSnipsJumpForwardTrigger="<tab>"                                       
+	let g:UltiSnipsJumpBackwardTrigger="<s-tab>"  
 
 	"tagbar
 	nmap <S-T> :TagbarToggle<CR>
@@ -198,9 +214,9 @@
 		Plug 'tmhedberg/matchit' "extended %!
 		Plug 'scrooloose/nerdtree-project-plugin' "Nerd tree stuff
 		Plug 'alvan/vim-closetag' "closing tags
-		Plug 'prettier/vim-prettier', {
-					\ 'do': 'yarn install',
-					\ 'for': ['javascript', 'typescript', 'typescriptreact', 'javascriptreact', 'css', 'less', 'scss', 'json', 'graphql', 'vue', 'yaml', 'html'] }
+		"Plug 'prettier/vim-prettier', {
+					"\ 'do': 'yarn install',
+					"\ 'for': ['javascript', 'typescript', 'typescriptreact', 'javascriptreact', 'css', 'less', 'scss', 'json', 'graphql', 'vue', 'yaml', 'html'] }
 		Plug 'vim-scripts/c.vim'
 		Plug 'tpope/vim-fugitive' "git stuff
 		Plug 'junegunn/fzf.vim'
@@ -214,14 +230,37 @@
 		Plug 'Dica-Developer/vim-jdb'
 		Plug 'tpope/vim-surround'
 		Plug 'BurntSushi/ripgrep'
-		Plug'google/vim-maktaba'
+		Plug 'google/vim-maktaba'
 		Plug 'google/vim-codefmt'
 		Plug 'google/vim-glaive'
 		Plug 'rhysd/vim-grammarous'
+		Plug 'PeterRincker/vim-argumentative'
+		Plug 'hdiniz/vim-gradle'
+		Plug 'tpope/vim-dispatch'
+		Plug 'preservim/nerdcommenter'
+		Plug 'machakann/vim-Verdin'
+		Plug 'SirVer/ultisnips'
 	call plug#end()
 
 	call glaive#Install()
 	Glaive codefmt google_java_executable="java -jar /home/joshu/deps/google-java-format-1.9-all-deps.jar"
+
+
+	function! s:build_quickfix_list(lines)
+			call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+			copen
+			cc
+	endfunction
+
+	let g:lines_action = {
+											\ 'ctrl-q': function('s:build_quickfix_list'),
+											\ 'ctrl-t': 'tab split',
+											\ 'ctrl-x': 'split',
+											\ 'ctrl-v': 'vsplit' }
+	nnoremap <leader>o <plug>(fzf-complete-line)
+
+
+
 
 ""general settings
 	augroup ReactFiletypes
@@ -243,12 +282,15 @@
 	set wildignore+=*/node_modules/*,_site,*/__pycache__/,*/venv/*,*/target/*,*/.vim$,\~$,*/.log,*/.aux,*/.cls,*/.aux,*/.bbl,*/.blg,*/.fls,*/.fdb*/,*/.toc,*/.out,*/.glo,*/.log,*/.ist,*/.fdb_latexmk
 	set wildignore+=*/.git/*,*/build/*
 	" General formatting
-	set ts=4 sw=4
+	set ts=2 sw=2
 	set is "highlight while searching
+
 	set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 	hi Pmenu ctermbg=black ctermfg=white
 	set number relativenumber
 	noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
 	noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
+	autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=markdown 
+
 
 
