@@ -1,0 +1,5 @@
+#/bin/bash
+
+word=$(pactl list short sinks | grep Bose)
+pactl set-default-sink ${word:0:1}
+ 
