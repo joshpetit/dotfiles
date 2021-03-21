@@ -1,3 +1,7 @@
+![](assets/rice1.png)
+![](assets/rice2.png)
+![](assets/rice3.png)
+
 deleteLastImage - deletes the last image added to Pictures. 
 Because that folder is a rat's nest honestly.
 
