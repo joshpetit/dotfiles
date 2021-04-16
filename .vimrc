@@ -3,23 +3,28 @@ set numberwidth=1
 set scrolloff=8
 set wildmode=longest,list,full
 set wildmenu
+set keywordprg=
+set incsearch
 nnoremap - :m .+1<CR>
 nnoremap _ :m .-2<CR>
 imap <c-L> <plug>(fzf-complete-line)
 " leader keys
 let mapleader=" "
-nnoremap <leader><Space> :
-vnoremap <leader><Space> :
+nnoremap <leader>hl :nohl<CR>
 nnoremap <leader>> :cnext<CR>
 nnoremap <leader>< :cprev<CR>
-nnoremap <leader>E :sh<CR>
 nnoremap <leader>, :bp<CR>
 nnoremap <leader>. :bn<CR>
 nnoremap <leader>g :Git<CR>
+nnoremap <leader>co :copen<CR>
 nnoremap <leader>G :GrammarousCheck<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader><C-f> :Rg<CR>
-vnoremap ac :call NERDComment(0, "toggle")<CR>
+nnoremap <Backspace> :Goyo<CR>
+nmap <Leader>aa :CodeClimateAnalyzeProject<CR>
+nmap <Leader>ao :CodeClimateAnalyzeOpenFiles<CR>
+nmap <Leader>af :CodeClimateAnalyzeCurrentFile<CR>
+vnoremap c :call NERDComment(0, "toggle")<CR>
 nmap <leader>s :so ~/.vimrc<CR>
 nmap <leader>f :Autoformat<CR>
 nmap cp :let @" = expand("%")<CR>
@@ -52,6 +57,7 @@ augroup end
 "javal leaders
 augroup	java_cmds
 	autocmd!
+
 	autocmd FileType java :iabbrev sout System.out.println
 	autocmd FileType java nmap	<leader>f :FormatCode google-java-format<CR>
 	autocmd FileType java :compiler! gradle
@@ -61,7 +67,7 @@ augroup	java_cmds
 	autocmd FileType java nmap<leader>b :Make build<CR>
 	"compiles java test classes
 	autocmd FileType java nmap<leader>rr :Make run<CR>
-	autocmd FileType java nmap<leader>rf :!java %<CR>
+	autocmd FileType java nmap<leader>rf :!java -ea %<CR>
 	autocmd FileType java nmap<leader>e :split build.gradle<CR>
 augroup end
 
@@ -80,6 +86,7 @@ augroup dart_cmds
 	autocmd FileType dart nmap<leader>e :split pubspec.yaml<CR>
 	autocmd FileType dart nmap<leader>p :!flutter pub get<CR>
 augroup end
+
 
 "gol leaders
 augroup go_cmds
@@ -131,8 +138,9 @@ augroup end
 "markdown
 augroup mark_mappings
 	autocmd!
-
-	imap <c-x><c-o> <plug>(fzf-complete-word)
+	autocmd FileType markdown imap <c-x><c-o> <plug>(fzf-complete-word)
+	autocmd FileType markdown set textwidth=80
+	autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
 augroup end
 "
 "markdown
@@ -170,6 +178,8 @@ nmap <S-T> :TagbarToggle<CR>
 "Coc
 let g:coc_start_at_startup = v:false
 nmap <F3> <Plug>(coc-rename)
+inoremap <silent><expr> <c-k> coc#refresh()
+
 
 "autoformat
 let g:formatters_typescript= ['prettier']
@@ -202,7 +212,8 @@ let g:tagbar_type_markdown = {
 					\ 'sort': 0,
 					\ }
 let g:windowswap_map_keys = 0 "prevent default bindings
-nnoremap <leader>yw :call WindowSwap#MarkWindowSwap()<CR>
+nnoremap <leader>yw :call WindowSwap#EasyWindowSwap()<CR>
+set encoding=UTF-8
 "plgns
 call plug#begin('~/.vim/plugged')
 Plug 'iamcco/markdown-preview.nvim'
@@ -241,7 +252,6 @@ Plug'Chiel92/vim-autoformat'
 Plug 'fs111/pydoc.vim'
 Plug 'python-mode/python-mode'
 Plug 'ap/vim-css-color'
-Plug 'Dica-Developer/vim-jdb'
 Plug 'tpope/vim-surround'
 Plug 'BurntSushi/ripgrep'
 "needed for codefmt
@@ -259,6 +269,16 @@ Plug 'tpope/vim-rhubarb'
 Plug 'idanarye/vim-merginal'
 Plug 'wesQ3/vim-windowswap'
 Plug 'kristijanhusak/vim-hybrid-material'
+Plug 'ferrine/md-img-paste.vim'
+Plug 'junegunn/goyo.vim'
+"Plug 'dhruvasagar/vim-table-mode'
+Plug 'DougBeney/pickachu'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-afterimage'
+Plug 'dhruvasagar/vim-prosession'
+Plug 'wfleming/vim-codeclimate'
+Plug 'ThePrimeagen/git-worktree.nvim'
 call plug#end()
 
 call glaive#Install()
@@ -270,11 +290,17 @@ function! s:build_quickfix_list(lines)
 	cc
 endfunction
 
+func! s:insert_file_name(lines)
+	let @@ = fnamemodify(a:lines[0], ":f")
+	normal! p
+endfunc
 let g:fzf_action = {
 			\ 'ctrl-q': function('s:build_quickfix_list'),
 			\ 'ctrl-t': 'tab split',
 			\ 'ctrl-x': 'split',
-			\ 'ctrl-v': 'vsplit' }
+			\ 'ctrl-v': 'vsplit',
+			\ 'ctrl-r': function('s:insert_file_name')}
+
 nnoremap <leader>o <plug>(fzf-complete-line)
 
 ""general settings
@@ -307,9 +333,9 @@ noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
 noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=markdown
 
-if (has("termguicolors"))
-  set termguicolors
-endif
+"if (has("termguicolors"))
+"  set termguicolors
+"endif
 
 let g:enable_italic_font = 1
 let g:hybrid_transparent_background = 1
