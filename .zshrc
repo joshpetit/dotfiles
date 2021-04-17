@@ -1,11 +1,13 @@
 export PATH=/home/joshu/.local/bin/:$PATH
-# Lines configured by zsh-newuser-install
 
 # History
 setopt APPEND_HISTORY
 HISTFILE=/home/joshu/.config/zsh/histfile
 HISTSIZE=2500
 SAVEHIST=2500
+
+# Go
+export GO111MODULE=auto
 
 # Vim 
 #bindkey -v

@@ -15,6 +15,9 @@ Plug 'flazz/vim-colorschemes' " color scheme bundles
 Plug 'junegunn/goyo.vim' " Focus! Good for writing
 call plug#end()
 
+" Git
+nnoremap <leader>gs :Git<CR>
+
 "Goyo
 nnoremap <F11> :Goyo<CR>
 
@@ -66,10 +69,14 @@ nnoremap <C-l> <C-w>l
 nmap <leader>sv :so ~/.config/nvim/init.vim<CR>
 
 " Theme
-let g:enable_italic_font = 1
-let g:hybrid_transparent_background = 1
 set background=dark
 colorscheme hhpink
+
+let g:enable_italic_font = 1
+let g:hybrid_transparent_background = 1
+hi Pmenu ctermbg=black ctermfg=white
+
+
 
 "" Random things
 "set clipboard+=unnamedplus
