@@ -39,8 +39,9 @@ URxvt.resize-font.step: 1
 !URxvt.font: xft:Courier-10
 
 !!Inconsolata
-URxvt.font: xft:Inconsolata:size=12
-URxvt.boldFont: xft:Inconsolata:size=12
+URxvt.font: xft:Inconsolata Nerd Font Mono:style=Regular:size=14
+URxvt.boldFont xft:Inconsolata Nerd Font Mono:style=Regular:size=14
+URxvt.italicFont: xft:Inconsolata Nerd Font Mono:style=Italic:size=14
 !URxvt.letterSpace: -1
 
 !Inconsolata-g
