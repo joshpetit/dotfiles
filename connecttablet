@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ -z "$1" ];
+then
+	MONITOR="DP-0.2"
+else
+	MONITOR="DP-0.3"
+fi
+	id=$(xinput | grep -oP "S Pen Pen.*\s*id=\K\d+")
+
+xinput map-to-output $id $MONITOR
