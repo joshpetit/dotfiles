@@ -1,6 +1,3 @@
-export PATH=/home/joshu/.local/bin/:$PATH
-export JAVA_HOME=/usr/lib/jvm/liberica-jdk-full/
-
 # History
 setopt APPEND_HISTORY
 HISTFILE=/home/joshu/.config/zsh/histfile
@@ -39,7 +36,7 @@ alias l='ls -CF'
 
 # Prompt
 
-PROMPT="%B%F{211}[->%f%b%d%F{211}]%f "
+PROMPT="%B%F{147}[->%f%b%d%B%F{147}]%f%b "
 
 
 if type rg &>/dev/null; then
@@ -49,7 +46,6 @@ fi
 
 
 # Zplug
-export ZPLUG_HOME=/home/joshu/.config/zsh/zplug/
 source /home/joshu/.config/zsh/zplug/init.zsh
 
 

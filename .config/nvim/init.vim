@@ -34,6 +34,9 @@ Plug 'google/vim-codefmt'
 Plug 'google/vim-glaive'
 "cs308 end
 Plug 'roggan87/vim-bible'
+Plug 'tpope/vim-eunuch' " SudoWrite!
+Plug 'ap/vim-css-color'
+Plug 'ferrine/md-img-paste.vim'
 call plug#end()
 "
 " Java
@@ -55,6 +58,7 @@ augroup end
 augroup md
 	autocmd!
 	autocmd FileType markdown set textwidth=80
+	autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
 augroup end
 
 " Git
@@ -68,7 +72,6 @@ nnoremap <F11> :Goyo<CR>
 nnoremap <leader>ff :Autoformat<CR>
 
 " Darkmode Popups
-hi Pmenu ctermbg=black ctermfg=white
 
 nnoremap <leader>w :w<CR>
 
@@ -112,9 +115,10 @@ nmap <leader>sv :so ~/.config/nvim/init.vim<CR>
 
 " Theme
 set background=dark
-colorscheme hhpink
+colorscheme hhpurple
 "set termguicolors
 highlight LineNr ctermfg=grey " Grey unfocused lines
+"hi CursorLineNr ctermfg="#7f87bd"
 
 "let g:enable_italic_font = 1
 "let g:hybrid_transparent_background = 1
@@ -136,4 +140,3 @@ set scrolloff=8
 " Treat line wraps as lines
 noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
 noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
-
