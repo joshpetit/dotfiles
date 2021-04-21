@@ -61,6 +61,11 @@ augroup md
 	autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
 augroup end
 
+augroup bash
+	autocmd!
+	autocmd FileType sh nmap<leader>r :!./%<CR>
+augroup end
+
 " Git
 nnoremap <leader>gs :Git<CR>
 nnoremap <leader>gb :Merginal<CR>
@@ -117,9 +122,8 @@ nmap <leader>sv :so ~/.config/nvim/init.vim<CR>
 set background=dark
 colorscheme hhpink
 
-let path=expand("%:p:h")
 " Literally the most ghetto way to source a file
-exec 'source' path . '/purple.vim'
+exec 'source ~/.config/nvim/purple.vim'
 "set termguicolors
 highlight LineNr ctermfg=grey " Grey unfocused lines
 "hi CursorLineNr ctermfg="#7f87bd"

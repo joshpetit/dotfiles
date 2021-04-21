@@ -18,4 +18,5 @@ exe 'hi Special ctermfg='s:cooldude
 exe 'hi Error ctermbg='s:primary_darker
 exe 'hi Error ctermfg=black'
 exe 'hi Todo ctermbg='s:primary
-
+exe 'hi CursorLineNr ctermfg='s:primary_weird
+exe 'hi LineNr ctermfg=grey'
