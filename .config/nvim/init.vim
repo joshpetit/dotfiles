@@ -115,7 +115,11 @@ nmap <leader>sv :so ~/.config/nvim/init.vim<CR>
 
 " Theme
 set background=dark
-colorscheme hhpurple
+colorscheme hhpink
+
+let path=expand("%:p:h")
+" Literally the most ghetto way to source a file
+exec 'source' path . '/purple.vim'
 "set termguicolors
 highlight LineNr ctermfg=grey " Grey unfocused lines
 "hi CursorLineNr ctermfg="#7f87bd"
