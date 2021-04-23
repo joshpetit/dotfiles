@@ -2,11 +2,25 @@ let mapleader=" "
 " Coc
 nmap <leader>cd <Plug>(coc-definition)
 nmap <leader>cn <Plug>(coc-rename)
+nmap <leader>cgp <Plug>(coc-diagnostic-next)
+nmap <leader>cgP <Plug>(coc-diagnostic-prev)
+
 inoremap <silent><expr> <c-k> coc#refresh()
+
+" Show the type under the cursor, also gets documentation
+nnoremap <silent><leader>cst :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 
 " Unicode/emoi stuff
 let g:Unicode_no_default_mappings = v:true
 imap <C-E> <Plug>(UnicodeFuzzy)
+
 
 " plugins
 call plug#begin(stdpath('data') . '/plugged')
@@ -68,6 +82,9 @@ augroup end
 
 " Git
 nnoremap <leader>gs :Git<CR>
+nnoremap <leader>gSS :Git stash<CR>
+nnoremap <leader>gSA :Git stash apply<CR>
+nnoremap <leader>gcb :Git checkout 
 nnoremap <leader>gb :Merginal<CR>
 
 "Goyo

@@ -29,6 +29,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
+exec --no-startup-id /home/joshu/.fehbg
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -41,7 +42,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -209,8 +210,6 @@ bindsym Print exec flameshot gui
 # Make sure it floats
 for_window [class="^flameshot$"] floating enable
 for_window [class="^flameshot$"] border pixel 0 
-for_window [title="^pulsemixer$"] floating enable
-for_window [title="^pulsemixer$"] border pixel 0 
 
 # CS 308, delete later
 for_window [class="ooga.Main"] floating enable
@@ -225,3 +224,15 @@ client.placeholder      #000000 #0C0C0C #FFFFFF #000000   #0C0C0C
 
 client.background       #FFFFFF
 
+# Audio
+for_window [title="^pulsemixer$"] floating enable
+for_window [title="^pulsemixer$"] border pixel 1 
+bindsym $mod + Shift + A exec --no-startup-id alacritty -e pulsemixer
+
+# Video
+for_window [title=".*mpv$"] border pixel 2
+
+# File manager
+for_window [title="^ranger$"] floating enable
+for_window [title="^ranger$"] border pixel 1 
+bindsym $mod + Shift + F exec --no-startup-id alacritty -e ranger
