@@ -13,6 +13,9 @@ export VISUAL=nvim
 export EDITOR=/usr/bin/nvim
 
 zstyle :compinstall filename '/home/joshu/.zshrc'
+zstyle ':completion:*' rehash true
+zstyle ':completion:*' menu select
+
 
 # No Stupid beeps
 unsetopt BEEP

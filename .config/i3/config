@@ -12,7 +12,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:InconsolataLGC Nerd Font 8
+font pango:InconsolataLGC Nerd Font 6
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -25,6 +25,7 @@ font pango:InconsolataLGC Nerd Font 8
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
+exec --no-startup-id setxkbmap -option caps:swapescape
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -236,3 +237,9 @@ for_window [title=".*mpv$"] border pixel 2
 for_window [title="^ranger$"] floating enable
 for_window [title="^ranger$"] border pixel 1 
 bindsym $mod + Shift + F exec --no-startup-id alacritty -e ranger
+
+# Gaps
+gaps inner 5
+for_window [class=".*"] border pixel 4
+
+exec --no-startup-id picom -b

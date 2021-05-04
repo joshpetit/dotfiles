@@ -1,10 +1,13 @@
 let mapleader=" "
 " Coc
 nmap <leader>cd <Plug>(coc-definition)
-nmap <leader>cn <Plug>(coc-rename)
-nmap <leader>cgp <Plug>(coc-diagnostic-next)
-nmap <leader>cgP <Plug>(coc-diagnostic-prev)
+nmap <leader>crn <Plug>(coc-rename)
+nmap <leader>ca :CocAction<CR>
+nmap <leader>c. <Plug>(coc-diagnostic-next)
+nmap <leader>c, <Plug>(coc-diagnostic-prev)
 
+" Dispatch
+let g:disable_no_maps = 1
 inoremap <silent><expr> <c-k> coc#refresh()
 
 " Show the type under the cursor, also gets documentation
@@ -21,6 +24,9 @@ endfunction
 let g:Unicode_no_default_mappings = v:true
 imap <C-E> <Plug>(UnicodeFuzzy)
 
+" Colorizer
+let g:colorizer_auto_filetype='qf'
+let g:colorizer_disable_bufleave = 1
 
 " plugins
 call plug#begin(stdpath('data') . '/plugged')
@@ -51,6 +57,8 @@ Plug 'roggan87/vim-bible'
 Plug 'tpope/vim-eunuch' " SudoWrite!
 Plug 'ap/vim-css-color'
 Plug 'ferrine/md-img-paste.vim'
+Plug 'chrisbra/Colorizer'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 "
 " Java
@@ -77,7 +85,8 @@ augroup end
 
 augroup bash
 	autocmd!
-	autocmd FileType sh nmap<leader>r :!./%<CR>
+	autocmd FileType sh nmap<leader>rr :!./%<CR>
+	autocmd FileType sh nmap<leader>ra :!./% 
 augroup end
 
 " Git
@@ -108,6 +117,7 @@ nnoremap <C-f> :FZF<CR>
 nnoremap <leader><C-f> :Rg<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
 nnoremap <leader>l <plug>(fzf-complete-line)
+imap <c-L> <plug>(fzf-complete-line)
 
 " Tagbar Settings
 nmap <S-T> :TagbarToggle<CR>
@@ -133,7 +143,12 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " Generic Leaders
+set notimeout
 nmap <leader>sv :so ~/.config/nvim/init.vim<CR>
+nnoremap <leader>. :bnext<CR>
+nnoremap <leader>, :bprev<CR>
+nnoremap <leader>c. :cnext<CR>
+nnoremap c, :cprev<CR>
 
 " Theme
 set background=dark
