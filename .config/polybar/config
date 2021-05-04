@@ -52,13 +52,13 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = fixed:pixelsize=10;1
+font-0 = Inconsolata Nerd Font:pixelsize=12
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = siji:pixelsize=10;1
+font-2 = Weather Icons:pixelsize=10;1
 
-modules-left = bspwm i3
+modules-left = i3
 modules-center = mpd
-modules-right = filesystem xbacklight pulseaudio memory cpu wlan eth battery date powermenu
+modules-right = filesystem xbacklight pulseaudio memory cpu wlan eth battery date powermenu weather
 
 tray-position = right
 tray-padding = 2
@@ -225,7 +225,7 @@ interface = wlp82s0
 interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
+format-connected-underline = ${colors.primary}
 label-connected = %essid%
 
 format-disconnected =
@@ -269,7 +269,7 @@ time-alt = %H:%M:%S
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
+format-underline = ${colors.primary}
 
 label = %date% %time%
 
@@ -420,5 +420,11 @@ screenchange-reload = true
 [global/wm]
 margin-top = 5
 margin-bottom = 5
+
+[module/weather]
+type = custom/script
+exec = /usr/share/polybar/scripts/openweathermap-fullfeatured.sh
+interval = 600
+label-font = 3
 
 ; vim:ft=dosini
