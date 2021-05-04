@@ -238,5 +238,5 @@ bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
 
 # Polybar
-exec_always ~/.config/polybar/launch.sh
+exec_always ~/.config/polybar/launch.sh --material
 bindsym $mod+b exec polybar-msg cmd toggle
