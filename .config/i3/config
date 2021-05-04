@@ -12,7 +12,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:InconsolataLGC Nerd Font 6
+font pango:InconsolataLGC Nerd Font 5
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -33,11 +33,10 @@ exec --no-startup-id nm-applet
 exec --no-startup-id /home/joshu/.fehbg
 
 # Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -179,25 +178,9 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-bar {
-        status_command i3status
-        colors {
-          background #000000
-          statusline #FFFFFF
-          separator  #666666
 
-          focused_workspace  #7F87BD #7F87BD #FFFFFF
-          active_workspace   #333333 #222222 #FFFFFF
-          inactive_workspace #333333 #222222 #888888
-          urgent_workspace   #2F343A #3743BD #FFFFFF
-          binding_mode       #2F343A #3743BD #FFFFFF
-        }
-}
 
 # My Stuff
-
 # For the eyes 👀
 exec redshift -P  -O 4000
 
@@ -253,3 +236,7 @@ bindsym XF86AudioPrev exec playerctl previous
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+
+# Polybar
+exec_always ~/.config/polybar/launch.sh
+bindsym $mod+b exec polybar-msg cmd toggle
