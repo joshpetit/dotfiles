@@ -423,7 +423,7 @@ margin-bottom = 5
 
 [module/weather]
 type = custom/script
-exec = /usr/share/polybar/scripts/openweathermap-fullfeatured.sh
+exec = /usr/share/polybar/scripts/openweathermap-forecast.sh
 interval = 600
 label-font = 3
 
