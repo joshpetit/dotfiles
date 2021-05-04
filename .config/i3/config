@@ -227,7 +227,7 @@ client.background       #FFFFFF
 
 # Audio
 for_window [title="^pulsemixer$"] floating enable
-for_window [title="^pulsemixer$"] border pixel 1 
+#for_window [title="^pulsemixer$"] border pixel 0
 bindsym $mod + Shift + A exec --no-startup-id alacritty -e pulsemixer
 
 # Video
@@ -243,3 +243,13 @@ gaps inner 5
 for_window [class=".*"] border pixel 4
 
 exec --no-startup-id picom -b
+
+# Media Keys
+bindsym XF86AudioPlay exec playerctl play
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# Sreen brightness controls
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
