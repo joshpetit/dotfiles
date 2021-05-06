@@ -1,19 +1,21 @@
 configuration {
+  background-color: @fg-alt;
   display-run: " ";
   display-drun: "  ";
   display-window: "  ";
   drun-display-format: "{icon} {name}";
-  font: "JetBrainsMono Nerd Font Medium 10";
+  font: "JetBrainsMono Nerd Font Medium 13";
   modi: "window,run,drun";
   show-icons: true;
 }
 
 * {
-  bg: rgba(5, 5, 5, 0.4);
+  bg: rgba(127, 135, 189, 0.2);
   bg-alt: #232323;
 
   fg: #FFFFFF;
-  fg-alt: #424242;
+  fg-alt: #8f8f8f;
+  fg-alt-alt: rgba(127, 135, 189, 0.5);
   
   background-color: @bg;
   
@@ -23,19 +25,34 @@ configuration {
   spacing: 0;
 }
 
+element-icon {
+  size: 3ch;
+  align: center;
+  vertical-align: 0;
+  yoffset: 50;
+}
+
+element-text {
+  vertical-align: 1;
+}
+
 element {
   padding: 20;
-  orientation: vertical;
+  orientation: horizontal;
   text-color: @fg-alt;
+  position: east;
+  vertical-align: 0;
 }
 
 element selected {
   text-color: @fg;
+  background-color: @fg-alt-alt;
 }
 
 entry {
   background-color: @bg-alt;
   padding: 12;
+  vertical-align: 0;
   text-color: @fg;
 }
 

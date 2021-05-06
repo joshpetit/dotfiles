@@ -105,6 +105,7 @@ nnoremap <leader>ff :Autoformat<CR>
 " Darkmode Popups
 
 nnoremap <leader>w :w<CR>
+nnoremap <leader>W :SudoWrite<CR>
 
 " NERDTree
 nnoremap Q :NERDTreeToggle<CR>
@@ -180,3 +181,5 @@ set scrolloff=8
 " Treat line wraps as lines
 noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
 noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
+
+au BufEnter * set noro
