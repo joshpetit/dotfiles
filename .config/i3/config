@@ -191,6 +191,9 @@ exec kdeconnect-cli
 exec --no-startup-id flameshot
 bindsym Print exec flameshot gui
 
+# KDEConnect
+bindsym $mod+Shift+Insert exec xclip -selection clipboard -t image/png -o > /tmp/clipboard.png && kdeconnect-handler /tmp/clipboard.png
+
 # Make sure it floats
 for_window [class="^flameshot$"] floating enable
 for_window [class="^flameshot$"] border pixel 0 
