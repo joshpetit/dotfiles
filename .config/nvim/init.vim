@@ -106,6 +106,7 @@ nnoremap <F11> :Goyo<CR>
 
 " AutoFormat stuff
 nnoremap <leader>ff :Autoformat<CR>
+"let g:formatters_python = ['pylint']
 
 " Darkmode Popups
 
