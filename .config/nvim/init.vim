@@ -89,6 +89,11 @@ augroup bash
 	autocmd FileType sh nmap<leader>ra :!./% 
 augroup end
 
+augroup pyjunk
+	autocmd!
+	autocmd FileType python nmap<leader>rf :!python3.9 %<CR>
+augroup end
+
 " Git
 nnoremap <leader>gs :Git<CR>
 nnoremap <leader>gSS :Git stash<CR>
