@@ -6,7 +6,11 @@ nmap <leader>ca :CocAction<CR>
 nmap <leader>c. <Plug>(coc-diagnostic-next)
 nmap <leader>c, <Plug>(coc-diagnostic-prev)
 
-" Dispatch
+nmap <silent> cgd <Plug>(coc-definition)
+nmap <silent> cgt <Plug>(coc-type-definition)
+nmap <silent> cgi <Plug>(coc-implementation)
+nmap <silent> cgr <Plug>(coc-references)
+
 let g:disable_no_maps = 1
 inoremap <silent><expr> <c-k> coc#refresh()
 
@@ -19,6 +23,13 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+
+nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-b>"
+nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-B>"
+inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 
 " Unicode/emoi stuff
 let g:Unicode_no_default_mappings = v:true
@@ -59,6 +70,8 @@ Plug 'ap/vim-css-color'
 Plug 'ferrine/md-img-paste.vim'
 Plug 'chrisbra/Colorizer'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'puremourning/vimspector' " Learn later
+
 call plug#end()
 "
 " Java
@@ -92,6 +105,8 @@ augroup end
 augroup pyjunk
 	autocmd!
 	autocmd FileType python nmap<leader>rf :!python3.9 %<CR>
+	autocmd FileType python nmap<leader>tt :!pytest<CR>
+	autocmd FileType python nmap<leader>tf :!pytest %<CR>
 augroup end
 
 " Git
@@ -106,7 +121,7 @@ nnoremap <F11> :Goyo<CR>
 
 " AutoFormat stuff
 nnoremap <leader>ff :Autoformat<CR>
-"let g:formatters_python = ['pylint']
+let g:python3_host_prog="/bin/python"
 
 " Darkmode Popups
 

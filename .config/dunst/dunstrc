@@ -16,7 +16,7 @@
     separator_color = frame
     sort = yes
     idle_threshold = 120
-    font = Fantasque Sans Mono 11
+    font = Fantasque Sans Mono 9
     line_height = 0
     markup = full
     format = "<span foreground='#f3f4f5'><b>%s %p</b></span>\n%b"

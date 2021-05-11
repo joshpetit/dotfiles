@@ -9,9 +9,9 @@ alias lnvm='source /usr/share/nvm/init-nvm.sh'
 # Go
 export GO111MODULE=auto
 
-# Vim 
-#bindkey -v
-export VISUAL=nvim                 
+# Vim
+# bindkey -v
+export VISUAL=nvim
 export EDITOR=/usr/bin/nvim
 
 zstyle :compinstall filename '/home/joshu/.zshrc'
@@ -22,7 +22,6 @@ zstyle ':completion:*' menu select
 # No Stupid beeps
 unsetopt BEEP
 
-
 alias e=exit
 
 autoload -Uz compinit
@@ -31,8 +30,8 @@ compinit
 #
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'                                        
-fi               
+    alias ls='ls --color=auto'
+fi
 setxkbmap -option caps:swapescape
 
 alias ll='ls -alF'
@@ -43,36 +42,39 @@ alias l='ls -CF'
 
 PROMPT="%B%F{147}[->%f%b%d%B%F{147}]%f%b "
 
-
 if type rg &>/dev/null; then
     export FZF_DEFAULT_COMMAND='rg --files --hidden'
     export FZF_DEFAULT_OPTS='-m --height 50% --border'
 fi
 
-
 # Zplug
 source /home/joshu/.config/zsh/zplug/init.zsh
 
-
 zplug "zsh-users/zsh-history-substring-search"
-zplug "arialdomartini/oh-my-git"
 
 # c-N to search back in history c-P to search forward (swapped for convenience)
 bindkey '^p' history-substring-search-down
 bindkey '^n' history-substring-search-up
 zplug load
 
-# Pip env completions aparently
-export BASE_SHELL=$(basename $SHELL)
 
-if [[ "$BASE_SHELL" == "zsh" ]] ; then
-autoload bashcompinit && bashcompinit
-fi
-
-_pipenv-pipes_completions() {
-COMPREPLY=($(compgen -W "$(pipes --_completion)" -- "${COMP_WORDS[1]}"))
+# pip zsh completion start
+function _pip_completion {
+  local words cword
+  read -Ac words
+  read -cn cword
+  reply=( $( COMP_WORDS="$words[*]" \
+             COMP_CWORD=$(( cword-1 )) \
+             PIP_AUTO_COMPLETE=1 $words[1] 2>/dev/null ))
 }
+compctl -K _pip_completion pip
+# pip zsh completion end
 
-complete -F _pipenv-pipes_completions pipes
-
-eval "`pip completion --zsh`"
+#pipenv zsh completion start
+_pipenv() {
+  eval $(env COMMANDLINE="${words[1,$CURRENT]}" _PIPENV_COMPLETE=complete-zsh  pipenv)
+}
+if [[ "$(basename -- ${(%):-%x})" != "_pipenv" ]]; then
+  compdef _pipenv pipenv
+fi
+# end
