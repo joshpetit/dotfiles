@@ -1,6 +1,6 @@
 # History
 setopt APPEND_HISTORY
-HISTFILE=/home/joshu/.config/zsh/histfile
+HISTFILE="$HOME/.config/zsh/histfile"
 HISTSIZE=2500
 SAVEHIST=2500
 
@@ -14,7 +14,7 @@ export GO111MODULE=auto
 export VISUAL=nvim
 export EDITOR=/usr/bin/nvim
 
-zstyle :compinstall filename '/home/joshu/.zshrc'
+zstyle :compinstall filename "$HOME/.zshrc"
 zstyle ':completion:*' rehash true
 zstyle ':completion:*' menu select
 
@@ -48,7 +48,7 @@ if type rg &>/dev/null; then
 fi
 
 # Zplug
-source /home/joshu/.config/zsh/zplug/init.zsh
+source "$HOME/.config/zsh/zplug/init.zsh"
 
 zplug "zsh-users/zsh-history-substring-search"
 
