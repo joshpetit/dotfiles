@@ -11,6 +11,21 @@ nmap <silent> cgt <Plug>(coc-type-definition)
 nmap <silent> cgi <Plug>(coc-implementation)
 nmap <silent> cgr <Plug>(coc-references)
 
+" Spector
+nmap <leader>dd :call vimspector#Launch()<CR>
+"Exit spector
+nmap <leader>de :call vimspector#Reset()<CR> 
+nmap <leader>dl <Plug>VimspectorStepInto
+nmap <leader>dj <Plug>VimspectorStepOver
+nmap <leader>dk <Plug>VimspectorStepOut
+nmap <leader>drc <Plug>VimspectorRunToCursor
+
+nmap <leader>dR <Plug>VimspectorRestart
+nmap <leader>dc :call vimspector#Continue()<CR>
+nmap <leader>db <Plug>VimspectorToggleBreakpoint
+nmap <leader>dB <Plug>VimspectorToggleConditionalBreakpoint
+
+
 let g:disable_no_maps = 1
 inoremap <silent><expr> <c-k> coc#refresh()
 
@@ -71,7 +86,7 @@ Plug 'ferrine/md-img-paste.vim'
 Plug 'chrisbra/Colorizer'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'puremourning/vimspector' " Learn later
-
+Plug 'szw/vim-maximizer'
 call plug#end()
 "
 " Java
@@ -164,12 +179,13 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Generic Leaders
+"leaders
 set notimeout
 nmap <leader>sv :so ~/.config/nvim/init.vim<CR>
 nnoremap <leader>. :bnext<CR>
 nnoremap <leader>, :bprev<CR>
 nnoremap <leader>c. :cnext<CR>
+nnoremap <leader>m :MaximizerToggle<CR>
 nnoremap c, :cprev<CR>
 
 " Theme

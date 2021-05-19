@@ -1,4 +1,0 @@
-pane	0	1	:nvim	1	:*	1	:/home/joshu	1	nvim	:nvim .config/tmux/tmux.conf
-pane	0	1	:nvim	1	:*	2	:/home/joshu	0	man	:man tmux
-window	0	1	1	:*	0845,270x71,0,0{135x71,0,0,0,134x71,136,0,1}
-state	0	

@@ -4,6 +4,9 @@ HISTFILE="$HOME/.config/zsh/histfile"
 HISTSIZE=2500
 SAVEHIST=2500
 
+#autoload -z edit-command-line
+#bindkey "^X^E" edit-command-line
+
 alias lnvm='source /usr/share/nvm/init-nvm.sh'
 
 # Go
