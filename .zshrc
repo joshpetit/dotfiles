@@ -81,3 +81,6 @@ if [[ "$(basename -- ${(%):-%x})" != "_pipenv" ]]; then
   compdef _pipenv pipenv
 fi
 # end
+
+#. /opt/asdf-vm/asdf.sh
+alias lasdf="source /opt/asdf-vm/asdf.sh"
