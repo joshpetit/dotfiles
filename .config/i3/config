@@ -134,16 +134,28 @@ bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace number $ws1
-bindsym $mod+Shift+2 move container to workspace number $ws2
-bindsym $mod+Shift+3 move container to workspace number $ws3
-bindsym $mod+Shift+4 move container to workspace number $ws4
-bindsym $mod+Shift+5 move container to workspace number $ws5
-bindsym $mod+Shift+6 move container to workspace number $ws6
-bindsym $mod+Shift+7 move container to workspace number $ws7
-bindsym $mod+Shift+8 move container to workspace number $ws8
-bindsym $mod+Shift+9 move container to workspace number $ws9
-bindsym $mod+Shift+0 move container to workspace number $ws10
+bindsym $mod+Ctrl+1 move container to workspace number $ws1  
+bindsym $mod+Ctrl+2 move container to workspace number $ws2
+bindsym $mod+Ctrl+3 move container to workspace number $ws3
+bindsym $mod+Ctrl+4 move container to workspace number $ws4
+bindsym $mod+Ctrl+5 move container to workspace number $ws5
+bindsym $mod+Ctrl+6 move container to workspace number $ws6
+bindsym $mod+Ctrl+7 move container to workspace number $ws7
+bindsym $mod+Ctrl+8 move container to workspace number $ws8
+bindsym $mod+Ctrl+9 move container to workspace number $ws9
+bindsym $mod+Ctrl+0 move container to workspace number $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1 workspace number $ws1, focus
+bindsym $mod+Shift+2 move container to workspace number $ws2 workspace number $ws2, focus
+bindsym $mod+Shift+3 move container to workspace number $ws3 workspace number $ws3, focus
+bindsym $mod+Shift+4 move container to workspace number $ws4 workspace number $ws4, focus
+bindsym $mod+Shift+5 move container to workspace number $ws5 workspace number $ws5, focus
+bindsym $mod+Shift+6 move container to workspace number $ws6 workspace number $ws6, focus
+bindsym $mod+Shift+7 move container to workspace number $ws7 workspace number $ws7, focus
+bindsym $mod+Shift+8 move container to workspace number $ws8 workspace number $ws8, focus
+bindsym $mod+Shift+9 move container to workspace number $ws9 workspace number $ws9, focus
+bindsym $mod+Shift+0 move container to workspace number $ws10 workspace number $ws10, focus
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -244,3 +256,10 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightne
 # Polybar
 exec_always ~/.config/polybar/launch.sh --material
 bindsym $mod+b exec polybar-msg cmd toggle
+
+bindsym Alt_R+h exec xdotool key left
+bindsym Alt_R+j exec xdotool key Down
+bindsym Alt_R+k exec xdotool key Up
+bindsym Alt_R+l exec xdotool key Right
+
+exec --no-startup-id dockd --daemon
