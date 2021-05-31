@@ -1,3 +1,6 @@
+#if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  #exec tmux
+#fi
 # History
 setopt APPEND_HISTORY
 HISTFILE="$HOME/.config/zsh/histfile"
@@ -32,8 +35,8 @@ compinit
 # End of lines added by compinstall
 #
 if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  alias ls='ls --color=auto'
 fi
 setxkbmap -option caps:swapescape
 
@@ -46,8 +49,8 @@ alias l='ls -CF'
 PROMPT="%B%F{147}[->%f%b%d%B%F{147}]%f%b "
 
 if type rg &>/dev/null; then
-    export FZF_DEFAULT_COMMAND='rg --files --hidden'
-    export FZF_DEFAULT_OPTS='-m --height 50% --border'
+  export FZF_DEFAULT_COMMAND='rg --files --hidden'
+  export FZF_DEFAULT_OPTS='-m --height 50% --border'
 fi
 
 # Zplug
@@ -67,9 +70,9 @@ function _pip_completion {
   read -Ac words
   read -cn cword
   reply=( $( COMP_WORDS="$words[*]" \
-             COMP_CWORD=$(( cword-1 )) \
-             PIP_AUTO_COMPLETE=1 $words[1] 2>/dev/null ))
-}
+    COMP_CWORD=$(( cword-1 )) \
+    PIP_AUTO_COMPLETE=1 $words[1] 2>/dev/null ))
+  }
 compctl -K _pip_completion pip
 # pip zsh completion end
 
@@ -84,3 +87,7 @@ fi
 
 #. /opt/asdf-vm/asdf.sh
 alias lasdf="source /opt/asdf-vm/asdf.sh"
+
+autoload -U +X bashcompinit && bashcompinit
+#autoload bashcompinit && bashcompinit source /etc/bash_completion.d/azure-cli
+source /etc/bash_completion.d/azure-cli

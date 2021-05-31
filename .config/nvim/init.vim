@@ -3,13 +3,14 @@ let mapleader=" "
 nmap <leader>cd <Plug>(coc-definition)
 nmap <leader>crn <Plug>(coc-rename)
 nmap <leader>ca :CocAction<CR>
+vmap <leader>ca :CocAction<CR>
 nmap <leader>c. <Plug>(coc-diagnostic-next)
 nmap <leader>c, <Plug>(coc-diagnostic-prev)
 
 nmap <silent> cgd <Plug>(coc-definition)
 nmap <silent> cgt <Plug>(coc-type-definition)
 nmap <silent> cgi <Plug>(coc-implementation)
-nmap <silent> cgr <Plug>(coc-references)
+nmap <silent> csr <Plug>(coc-references)
 
 " Spector
 nmap <leader>dd :call vimspector#Launch()<CR>
@@ -19,6 +20,8 @@ nmap <leader>dl <Plug>VimspectorStepInto
 nmap <leader>dj <Plug>VimspectorStepOver
 nmap <leader>dk <Plug>VimspectorStepOut
 nmap <leader>drc <Plug>VimspectorRunToCursor
+nmap <leader>dwa :VimspectorWatch <C-R><C-W><CR>
+nmap <leader>dsa <Plug>VimspectorBalloonEval
 
 nmap <leader>dR <Plug>VimspectorRestart
 nmap <leader>dc :call vimspector#Continue()<CR>
@@ -87,6 +90,7 @@ Plug 'chrisbra/Colorizer'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'puremourning/vimspector' " Learn later
 Plug 'szw/vim-maximizer'
+Plug 'thosakwe/vim-flutter'
 call plug#end()
 "
 " Java
@@ -187,6 +191,7 @@ nnoremap <leader>, :bprev<CR>
 nnoremap <leader>c. :cnext<CR>
 nnoremap <leader>m :MaximizerToggle<CR>
 nnoremap c, :cprev<CR>
+nnoremap <leader>nh :nohl<CR>
 
 " Theme
 set background=dark
