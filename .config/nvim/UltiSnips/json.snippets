@@ -1,0 +1,99 @@
+snippet javad
+{
+  "adapters": {
+    "java-debug-server": {
+      "name": "vscode-java",
+      "port": "${AdapterPort}"
+    }
+  },
+  "configurations": {
+    "Java Attach": {
+      "default": true,
+      "adapter": "java-debug-server",
+      "configuration": {
+        "request": "attach",
+        "host": "127.0.0.1",
+        "port": "5005"
+      },
+      "breakpoints": {
+        "exception": {
+          "caught": "N",
+          "uncaught": "N"
+        }
+      }
+    }
+  }
+}
+endsnippet
+
+snippet flutterd
+{
+ "configurations": {
+   "launch": {
+     "adapter": "dart-code-flutter",
+     "configuration": {
+       "request": "launch",
+       "type": "flutter",
+       "flutterSdkPath": "/opt/flutter/",
+       "dartSdkPath": "/opt/flutter/bin/cache/dart-sdk",
+       "program": "${workspaceRoot}/lib/main.dart",
+       "cwd": "${workspaceRoot}"
+     }
+   }
+ }
+}
+endsnippet
+
+snippet dartd
+{
+ "configurations": {
+   "launch": {
+     "adapter": "dart-code-flutter",
+     "configuration": {
+       "request": "launch",
+       "type": "dart",
+       "flutterSdkPath": "/opt/flutter/",
+       "dartSdkPath": "/opt/flutter/bin/cache/dart-sdk",
+       "program": "${workspaceRoot}/$1",
+       "cwd": "${workspaceRoot}"
+     }
+   }
+ }
+}
+endsnippet
+
+snippet noded
+{
+  "configurations": {
+    "run": {
+      "adapter": "vscode-node",
+      "configuration": {
+        "request": "launch",
+        "protocol": "auto",
+        "stopOnEntry": true,
+        "console": "integratedTerminal",
+        "program": "${workspaceRoot}/src/index.js",
+        "cwd": "${workspaceRoot}",
+        "runtimeExecutable": "node", //possibly don't need
+        "envFile": "${workspaceRoot}/config/dev.env"
+      }
+    }
+  }
+}
+endsnippet
+
+snippet chromed
+{
+  "configurations": {
+    "launch": {
+      "adapter": "chrome",
+      "configuration": {
+        "request": "launch",
+        "url": "localhost:3000",
+        "webRoot": "${workspaceRoot}/src",
+        "runtimeExecutable": "/bin/google-chrome-stable"
+      }
+    }
+  }
+}
+endsnippet
