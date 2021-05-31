@@ -43,12 +43,10 @@ function! s:show_documentation()
   endif
 endfunction
 
-nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-b>"
-nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-B>"
-inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
 
 " Unicode/emoi stuff
 let g:Unicode_no_default_mappings = v:true
@@ -92,6 +90,9 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'puremourning/vimspector' " Learn later
 Plug 'szw/vim-maximizer'
 Plug 'thosakwe/vim-flutter'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+"Plug 'ycm-core/YouCompleteMe'
 call plug#end()
 "
 " Java
@@ -101,6 +102,7 @@ augroup	java_cmds
 	autocmd FileType java :compiler! gradle
 	autocmd FileType java :iabbrev sout System.out.println
 	autocmd FileType java nmap<leader>ff :FormatCode google-java-format<CR>
+	autocmd FileType java nmap<leader>dd :CocCommand java.debug.vimspector.start<CR>
 	autocmd FileType java nmap<leader>cc :Make compileJava<CR>
 	autocmd FileType java nmap<leader>ct :Make testClasses<CR>
 	autocmd FileType java nmap<leader>t :Make test<CR>
@@ -127,6 +129,21 @@ augroup pyjunk
 	autocmd FileType python nmap<leader>rf :!python3.9 %<CR>
 	autocmd FileType python nmap<leader>tt :!pytest<CR>
 	autocmd FileType python nmap<leader>tf :!pytest %<CR>
+augroup end
+
+augroup dart_cmds
+	autocmd!
+
+	autocmd FileType dart nmap<leader>rf :!dart %<CR>
+	autocmd FileType dart nmap<leader>tt :!pub run test<CR>
+	autocmd FileType dart nmap<leader>tf :!pub run %<CR>
+	autocmd FileType dart nmap<leader>rs :FlutterSplit<CR>
+	autocmd FileType dart nmap<leader>R :FlutterHotReload<CR>
+	autocmd FileType dart nmap<leader>rs :FlutterHotRestart<CR>
+	autocmd FileType dart nmap<leader>rr :FlutterRun<CR>
+	autocmd FileType dart nmap<leader>rq :FlutterQuit<CR>
+	autocmd FileType dart nmap<leader>e :split pubspec.yaml<CR>
+	autocmd FileType dart nmap<leader>p :!flutter pub get<CR>
 augroup end
 
 " Git
@@ -232,3 +249,4 @@ cnoremap <C-h> <Left>
 cnoremap <C-j> <Down>
 cnoremap <C-k> <Up>
 cnoremap <C-l> <Right>
+set mouse=a
