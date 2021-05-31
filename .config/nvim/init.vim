@@ -2,6 +2,7 @@ let mapleader=" "
 " Coc
 nmap <leader>cd <Plug>(coc-definition)
 nmap <leader>crn <Plug>(coc-rename)
+nmap <leader>cgt <Plug>(coc-type-definition)
 nmap <leader>ca :CocAction<CR>
 vmap <leader>ca :CocAction<CR>
 nmap <leader>c. <Plug>(coc-diagnostic-next)
