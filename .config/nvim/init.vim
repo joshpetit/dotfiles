@@ -92,7 +92,10 @@ Plug 'szw/vim-maximizer'
 Plug 'thosakwe/vim-flutter'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+"Plug 'uiiaoo/java-syntax.vim'
 "Plug 'ycm-core/YouCompleteMe'
+Plug 'vim-scripts/groovyindent-unix'
+
 call plug#end()
 "
 " Java
@@ -204,6 +207,8 @@ nnoremap <C-l> <C-w>l
 "leaders
 set notimeout
 nmap <leader>sv :so ~/.config/nvim/init.vim<CR>
+nmap <leader>ss :so Session.vim<CR>
+nmap <leader>sz :!source ~/.zshrc<CR>
 nnoremap <leader>. :bnext<CR>
 nnoremap <leader>, :bprev<CR>
 nnoremap <leader>c. :cnext<CR>
@@ -220,6 +225,8 @@ exec 'source ~/.config/nvim/purple.vim'
 "set termguicolors
 highlight LineNr ctermfg=grey " Grey unfocused lines
 "hi CursorLineNr ctermfg="#7f87bd"
+highlight link javaIdentifier NONE
+"highlight link javaDelimiter NONE
 
 "let g:enable_italic_font = 1
 "let g:hybrid_transparent_background = 1
@@ -250,3 +257,4 @@ cnoremap <C-j> <Down>
 cnoremap <C-k> <Up>
 cnoremap <C-l> <Right>
 set mouse=a
+au BufNewFile,BufRead *.gradle setf groovy
