@@ -14,6 +14,7 @@ alias lnvm='source /usr/share/nvm/init-nvm.sh'
 
 # Go
 export GO111MODULE=auto
+export CHROME_EXECUTABLE="/bin/google-chrome-stable"
 
 # Vim
 # bindkey -v
