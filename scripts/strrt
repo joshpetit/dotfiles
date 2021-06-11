@@ -1,0 +1,83 @@
+#!/bin/sh
+
+main() {
+	space="$1"
+	quit_$space "$@" > /dev/null
+	if [[ $2 == '-q' ]]
+	then
+		exit
+	fi
+	create_$space "$@"
+	echo ok
+}
+
+function quit_woto() {
+	tmux kill-session -t woto/be > /dev/null
+	tmux kill-session -t woto/fe > /dev/null
+}
+
+function create_woto() {
+	cd "/home/joshu/projects/daml/woto/be/"
+	tmux new-session -d -s woto/be -n code
+	tmux new-window -t woto/be -n output
+	tmux send-keys -t woto/be:code "nvim -S Session.vim" ENTER
+	tmux send-keys -t woto/be:output "npm run dev" ENTER
+
+	cd "/home/joshu/projects/daml/woto/fe/"
+	tmux new-session -d -s woto/fe -n code
+	tmux new-window -t woto/fe -n output
+	tmux send-keys -t woto/fe:code "nvim -S Session.vim" ENTER
+	tmux send-keys -t woto/fe:output "npm start" ENTER
+	tmux attach -t woto/fe
+}
+
+function quit_lc() {
+	tmux kill-session -t lc/admin > /dev/null
+	tmux kill-session -t lc/web > /dev/null
+	tmux kill-session -t lc/ion > /dev/null
+	tmux kill-session -t lc/mono > /dev/null
+}
+
+function create_lc() {
+	session_name="lc/admin"
+	cd "/home/joshu/projects/life.church/admin-client/"
+	tmux new-session -d -s $session_name -n code
+	tmux new-window -t $session_name -n output
+	tmux send-keys -t $session_name:code "nvim -S Session.vim" ENTER
+	tmux send-keys -t $session_name:output "npm run dev" ENTER
+
+	cd "/home/joshu/projects/life.church/web-client/"
+	session_name="lc/web"
+	tmux new-session -d -s $session_name -n code
+	tmux new-window -t $session_name -n output
+	tmux send-keys -t $session_name:code "nvim -S Session.vim" ENTER
+	tmux send-keys -t $session_name:output "npm start" ENTER
+
+	cd "/home/joshu/projects/life.church/react-ion/"
+	session_name="lc/ion"
+	tmux new-session -d -s $session_name -n code
+	tmux new-window -t $session_name -n output
+	tmux send-keys -t $session_name:code "nvim -S Session.vim" ENTER
+	tmux send-keys -t $session_name:output "npm run storybook" ENTER
+
+	cd "/home/joshu/projects/life.church/churchonline/"
+	session_name="lc/mono"
+	tmux new-session -d -s $session_name -n code
+	tmux new-window -t $session_name -n output
+	tmux send-keys -t $session_name:code "nvim -S Session.vim" ENTER
+	tmux send-keys -t $session_name:output "npm run storybook" ENTER
+	tmux attach -t "lc/web"
+}
+
+function create_config() {
+	cd "/home/joshu/dotfiles/arch"
+	tmux new-session -d -s config -n code
+	# other stuff but im lazy
+}
+
+function create_hylio() {
+	cd "/home/joshu/projects/daml/hylio"
+	tmux new-session -d -s hylio -n code
+}
+
+main "$@"; exit
