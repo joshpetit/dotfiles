@@ -1,0 +1,89 @@
+# Snippets for dart in flutter project, to use add the following to your .vimrc
+# `autocmd BufRead,BufNewFile,BufEnter *.dart UltiSnipsAddFiletypes dart-flutter`
+# Flutter stateless widget
+snippet stless "Stateless widget" b
+class ${1:widget} extends StatelessWidget {
+	const ${1}({
+		Key? key,
+	}) : super(key: key);
+
+	@override
+	Widget build(BuildContext context) {
+		return Text(
+			${2}
+		);
+	}
+}
+endsnippet
+
+snippet stful "Stateful widget" b
+class ${1:widget} extends StatefulWidget {
+	const ${1}({
+		key? key,
+	}) : super(key: key);
+
+	@override
+	_${1}State createState() => _${1}State();
+}
+
+class _${1}State extends State<${1}> {
+	@override
+	Widget build(BuildContext context) {
+		return $0Container(
+			${2}
+		);
+	}
+}
+endsnippet
+
+# Flutter widget with AnimationController
+snippet stanim
+class ${1:widget} extends StatefulWidget {
+	const ${1}({
+		key? key,
+	}) : super(key: key);
+
+	@override
+	_${1}State createState() => _${1}State();
+}
+
+class _${1}State extends State<${1}>
+		with SingleTickerProviderStateMixin {
+	AnimationController _controller;
+
+	@override
+	void initState() {
+		super.initState();
+		_controller = AnimationController(vsync: this);
+	}
+
+	@override
+	void dispose() {
+		super.dispose();
+		_controller.dispose();
+	}
+
+	@override
+	Widget build(BuildContext context) {
+		return Container(
+			${2}
+		);
+	}
+}
+endsnippet
+
+snippet fluttest "Flutter pump test"
+void main() {
+  testWidgets('Test Name', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      // setupSignupPump won't work for some reason
+      MaterialApp(
+        home: Scaffold(
+          body: Text('Test'),
+        ),
+      ),
+    );
+    expect(find.text('Test'), findsOneWidget);
+  }, skip: false);
+}
+endsnippet

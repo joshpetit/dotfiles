@@ -6,7 +6,9 @@ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk/
 export ZPLUG_HOME=/home/joshu/.config/zsh/zplug/
 
 export ANDROID_SDK_ROOT='/opt/android-sdk'
+export FLUTTER_ROOT='/opt/flutter/'
 export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools/
 export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin/
 export PATH=$PATH:$ANDROID_ROOT/emulator
 export PATH=$PATH:$ANDROID_SDK_ROOT/tools/
+#export VIRSH_DEFAULT_CONNECT_URI=qemu:///system 

@@ -1,10 +1,34 @@
 let mapleader=" "
+
+" Git
+nnoremap <leader>gs :Git<CR>
+nnoremap <leader>gSS :Git stash<CR>
+nnoremap <leader>gSA :Git stash apply<CR>
+nnoremap <leader>gcb :Git checkout 
+nnoremap <leader>gcl :Git checkout -<CR>
+nnoremap <leader>gpl :Git pull<CR>
+nnoremap <leader>gl :Git log<CR>
+nnoremap <leader>glc :Gclog<CR>
+nnoremap <leader>gpu :Git push<CR>
+nnoremap <leader>gfo :Git fetch origin<CR>
+nnoremap <leader>gmo :Git merge origin/master<CR>
+" Git diff of current file
+nnoremap <leader>gdf :Gvdiffsplit<CR>
+nnoremap <leader>gb :Merginal<CR>
+
+"Make
+nmap <leader>mv :Make validate<CR>
 " Coc
 nmap <leader>cd <Plug>(coc-definition)
 nmap <leader>crn <Plug>(coc-rename)
 nmap <leader>cgt <Plug>(coc-type-definition)
 nmap <leader>ca :CocAction<CR>
 vmap <leader>ca :CocAction<CR>
+nmap <leader>cld :CocList diagnostics<CR>
+nmap <leader>cls :CocList outline<CR>
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+vmap <leader>cR :CocRestart<CR>
 nmap <leader>c. <Plug>(coc-diagnostic-next)
 nmap <leader>c, <Plug>(coc-diagnostic-prev)
 
@@ -28,6 +52,13 @@ nmap <leader>dR <Plug>VimspectorRestart
 nmap <leader>dc :call vimspector#Continue()<CR>
 nmap <leader>db <Plug>VimspectorToggleBreakpoint
 nmap <leader>dB <Plug>VimspectorToggleConditionalBreakpoint
+
+"Vim test
+let test#strategy = "dispatch"
+nmap <leader>tn :TestNearest<CR>
+nmap <leader>tf :TestFile<CR>
+nmap <leader>ts :TestSuite<CR>
+nmap <leader>tl :TestLast<CR>
 
 
 let g:disable_no_maps = 1
@@ -73,7 +104,6 @@ Plug 'sheerun/vim-polyglot' " Syntax highlighting
 Plug 'flazz/vim-colorschemes' " color scheme bundles
 Plug 'junegunn/goyo.vim' " Focus! Good for writing
 Plug 'idanarye/vim-merginal' " Git branches and stuff
-Plug 'ThePrimeagen/git-worktree.nvim' | Plug 'nvim-lua/plenary.nvim' " worktrees!
 Plug 'chrisbra/unicode.vim'
 Plug 'tpope/vim-dispatch'
 " cs308
@@ -81,21 +111,16 @@ Plug 'google/vim-maktaba'
 Plug 'google/vim-codefmt'
 Plug 'google/vim-glaive'
 "cs308 end
-Plug 'roggan87/vim-bible'
 Plug 'tpope/vim-eunuch' " SudoWrite!
 Plug 'ap/vim-css-color'
 Plug 'ferrine/md-img-paste.vim'
 Plug 'chrisbra/Colorizer'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'puremourning/vimspector' " Learn later
 Plug 'szw/vim-maximizer'
-Plug 'thosakwe/vim-flutter'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-"Plug 'uiiaoo/java-syntax.vim'
-"Plug 'ycm-core/YouCompleteMe'
 Plug 'vim-scripts/groovyindent-unix'
-
+Plug 'vim-test/vim-test'
 call plug#end()
 "
 " Java
@@ -138,23 +163,20 @@ augroup dart_cmds
 	autocmd!
 
 	autocmd FileType dart nmap<leader>rf :!dart %<CR>
-	autocmd FileType dart nmap<leader>tt :!pub run test<CR>
-	autocmd FileType dart nmap<leader>tf :!pub run %<CR>
-	autocmd FileType dart nmap<leader>rs :FlutterSplit<CR>
-	autocmd FileType dart nmap<leader>R :FlutterHotReload<CR>
-	autocmd FileType dart nmap<leader>rs :FlutterHotRestart<CR>
-	autocmd FileType dart nmap<leader>rr :FlutterRun<CR>
-	autocmd FileType dart nmap<leader>rq :FlutterQuit<CR>
+	autocmd FileType dart nmap<leader>tt :!flutter test<CR>
+	"autocmd FileType dart nmap<leader>tf :!pub run %<CR>
+	autocmd FileType dart nmap<leader>rs :CocCommand flutter.dev.hotReload<CR>
+	autocmd FileType dart nmap<leader>R :CocCommand flutter.dev.hotRestart<CR>
+	autocmd FileType dart nmap<leader>ra :CocCommand flutter.run -d Pixel<CR>
+	autocmd FileType dart nmap<leader>rD :CocCommand flutter.dev.detach<CR>
+	autocmd FileType dart nmap<leader>rA :CocCommand flutter.attach<CR>
+	autocmd FileType dart nmap<leader>rd :CocCommand flutter.run -d Pixel -t lib/story.dart<CR>
+	autocmd FileType dart nmap<leader>dL :CocCommand flutter.dev.openDevLog<CR>
+	autocmd FileType dart nmap<leader>rq :CocCommand flutter.dev.quit<CR>
 	autocmd FileType dart nmap<leader>e :split pubspec.yaml<CR>
 	autocmd FileType dart nmap<leader>p :!flutter pub get<CR>
 augroup end
 
-" Git
-nnoremap <leader>gs :Git<CR>
-nnoremap <leader>gSS :Git stash<CR>
-nnoremap <leader>gSA :Git stash apply<CR>
-nnoremap <leader>gcb :Git checkout 
-nnoremap <leader>gb :Merginal<CR>
 
 "Goyo
 nnoremap <F11> :Goyo<CR>
@@ -180,6 +202,7 @@ nnoremap <leader><C-f> :Rg<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
 nnoremap <leader>l <plug>(fzf-complete-line)
 imap <c-L> <plug>(fzf-complete-line)
+let g:fzf_history_dir='~/.config/fzf_history'
 
 " Tagbar Settings
 nmap <S-T> :TagbarToggle<CR>
@@ -211,9 +234,9 @@ nmap <leader>ss :so Session.vim<CR>
 nmap <leader>sz :!source ~/.zshrc<CR>
 nnoremap <leader>. :bnext<CR>
 nnoremap <leader>, :bprev<CR>
-nnoremap <leader>c. :cnext<CR>
-nnoremap <leader>m :MaximizerToggle<CR>
+nnoremap <leader>ma :MaximizerToggle<CR>
 nnoremap c, :cprev<CR>
+nnoremap c. :cnext<CR>
 nnoremap <leader>nh :nohl<CR>
 
 " Theme
@@ -222,6 +245,7 @@ colorscheme hhpink
 
 " Literally the most ghetto way to source a file
 exec 'source ~/.config/nvim/purple.vim'
+exec 'source ~/.config/nvim/secret.vim'
 "set termguicolors
 highlight LineNr ctermfg=grey " Grey unfocused lines
 "hi CursorLineNr ctermfg="#7f87bd"

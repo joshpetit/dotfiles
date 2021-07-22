@@ -91,4 +91,5 @@ alias lasdf="source /opt/asdf-vm/asdf.sh"
 
 autoload -U +X bashcompinit && bashcompinit
 #autoload bashcompinit && bashcompinit source /etc/bash_completion.d/azure-cli
-source /etc/bash_completion.d/azure-cli
+export MS5_STORE=8080
+export MS5_AUTH=9099

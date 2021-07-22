@@ -44,28 +44,28 @@ function create_lc() {
 	tmux new-session -d -s $session_name -n code
 	tmux new-window -t $session_name -n output
 	tmux send-keys -t $session_name:code "nvim -S Session.vim" ENTER
-	tmux send-keys -t $session_name:output "npm run dev" ENTER
+	tmux send-keys -t $session_name:output "yarn run dev" ENTER
 
 	cd "/home/joshu/projects/life.church/web-client/"
 	session_name="lc/web"
 	tmux new-session -d -s $session_name -n code
 	tmux new-window -t $session_name -n output
 	tmux send-keys -t $session_name:code "nvim -S Session.vim" ENTER
-	tmux send-keys -t $session_name:output "npm start" ENTER
+	tmux send-keys -t $session_name:output "yarn start" ENTER
 
 	cd "/home/joshu/projects/life.church/react-ion/"
 	session_name="lc/ion"
 	tmux new-session -d -s $session_name -n code
 	tmux new-window -t $session_name -n output
 	tmux send-keys -t $session_name:code "nvim -S Session.vim" ENTER
-	tmux send-keys -t $session_name:output "npm run storybook" ENTER
+	tmux send-keys -t $session_name:output "yarn run storybook" ENTER
 
 	cd "/home/joshu/projects/life.church/churchonline/"
 	session_name="lc/mono"
 	tmux new-session -d -s $session_name -n code
 	tmux new-window -t $session_name -n output
 	tmux send-keys -t $session_name:code "nvim -S Session.vim" ENTER
-	tmux send-keys -t $session_name:output "npm run storybook" ENTER
+	tmux send-keys -t $session_name:output "yarn run storybook" ENTER
 	tmux attach -t "lc/web"
 }
 
@@ -78,6 +78,19 @@ function create_config() {
 function create_hylio() {
 	cd "/home/joshu/projects/daml/hylio"
 	tmux new-session -d -s hylio -n code
+}
+
+function create_ms5() {
+	session_name="ms5"
+	cd "/home/joshu/projects/joshpetit.dev/milestone5/app/"
+	session_name="lc/mono"
+	tmux new-session -d -s $session_name -n code
+	tmux new-window -t $session_name -n output
+	tmux send-keys -t $session_name:code "nvim -S Session.vim" ENTER
+	tmux send-keys -t $session_name:output "yarn run storybook" ENTER
+	cd "/home/joshu/projects/joshpetit.dev/milestone5/firebase/"
+
+	tmux attach -t "ms5/app"
 }
 
 main "$@"; exit
