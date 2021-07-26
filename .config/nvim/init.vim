@@ -10,6 +10,7 @@ nnoremap <leader>gpl :Git pull<CR>
 nnoremap <leader>gl :Git log<CR>
 nnoremap <leader>glc :Gclog<CR>
 nnoremap <leader>gpu :Git push<CR>
+nnoremap <leader>gpo :Git push -u origin HEAD<CR>
 nnoremap <leader>gfo :Git fetch origin<CR>
 nnoremap <leader>gmo :Git merge origin/master<CR>
 " Git diff of current file
@@ -89,7 +90,7 @@ let g:colorizer_disable_bufleave = 1
 
 " plugins
 call plug#begin(stdpath('data') . '/plugged')
-Plug 'iamcco/markdown-preview.nvim' " Preview markdown
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompleten what not
 Plug 'preservim/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin' | Plug 'PhilRunninger/nerdtree-visual-selection' |
 			\ Plug 'ryanoasis/vim-devicons'
@@ -121,6 +122,7 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'vim-scripts/groovyindent-unix'
 Plug 'vim-test/vim-test'
+Plug 'tpope/vim-abolish'
 call plug#end()
 "
 " Java
