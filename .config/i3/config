@@ -264,3 +264,4 @@ bindsym Alt_R+h exec xdotool key left
 bindsym Alt_R+j exec xdotool key Down
 bindsym Alt_R+k exec xdotool key Up
 bindsym Alt_R+l exec xdotool key Right
+bindsym $mod+Shift + KP_1 exec ~/.screenlayout/normal.sh; reload

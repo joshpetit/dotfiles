@@ -282,5 +282,7 @@ cnoremap <C-h> <Left>
 cnoremap <C-j> <Down>
 cnoremap <C-k> <Up>
 cnoremap <C-l> <Right>
+
+inoremap <C-j> <Down>
 set mouse=a
 au BufNewFile,BufRead *.gradle setf groovy
