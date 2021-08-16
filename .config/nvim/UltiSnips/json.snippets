@@ -48,7 +48,7 @@ snippet dartd
 {
  "configurations": {
    "launch": {
-     "adapter": "dart-code-flutter",
+     "adapter": "dart-code-dart",
      "configuration": {
        "request": "launch",
        "type": "dart",
@@ -114,5 +114,23 @@ snippet nodeportd
       }
     }
   }
+}
+endsnippet
+
+snippet fluttertestd
+{
+ "configurations": {
+   "launch": {
+     "adapter": "dart-code-flutter-test",
+     "configuration": {
+       "request": "launch",
+       "type": "flutter_test",
+       "flutterSdkPath": "/opt/flutter/",
+       "dartSdkPath": "/opt/flutter/bin/cache/dart-sdk",
+       "program": "test/test.dart",
+       "cwd": "${workspaceRoot}"
+     }
+   }
+ }
 }
 endsnippet

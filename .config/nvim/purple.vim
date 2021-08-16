@@ -20,3 +20,4 @@ exe 'hi Error ctermfg=black'
 exe 'hi Todo ctermbg='s:primary
 exe 'hi CursorLineNr ctermfg='s:primary_weird
 exe 'hi LineNr ctermfg=grey'
+exe 'hi MatchParen cterm=none ctermfg=white ctermbg='s:primary

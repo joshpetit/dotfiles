@@ -76,12 +76,7 @@ snippet fluttest "Flutter pump test"
 void main() {
   testWidgets('Test Name', (WidgetTester tester) async {
     await tester.pumpWidget(
-      // setupSignupPump won't work for some reason
-      MaterialApp(
-        home: Scaffold(
-          body: Text('Test'),
-        ),
-      ),
+      renderWith(),
     );
     expect(find.text('Test'), findsOneWidget);
   }, skip: false);

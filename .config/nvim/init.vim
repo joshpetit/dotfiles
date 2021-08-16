@@ -17,8 +17,13 @@ nnoremap <leader>gmo :Git merge origin/master<CR>
 nnoremap <leader>gdf :Gvdiffsplit<CR>
 nnoremap <leader>gb :Merginal<CR>
 
+"Plug
+nmap <leader>pi :PlugInstall<CR>
+nmap <leader>pc :PlugClean<CR>
+
 "Make
 nmap <leader>mv :Make validate<CR>
+nmap <leader>mt :Make types<CR>
 " Coc
 nmap <leader>cd <Plug>(coc-definition)
 nmap <leader>crn <Plug>(coc-rename)
@@ -40,6 +45,7 @@ nmap <silent> csr <Plug>(coc-references)
 
 " Spector
 nmap <leader>dd :call vimspector#Launch()<CR>
+nmap <leader>dt :call vimspector#LaunchWithSettings(#{configuration: 'debugTest'})<CR>
 "Exit spector
 nmap <leader>de :call vimspector#Reset()<CR> 
 nmap <leader>dl <Plug>VimspectorStepInto
@@ -123,6 +129,8 @@ Plug 'honza/vim-snippets'
 Plug 'vim-scripts/groovyindent-unix'
 Plug 'vim-test/vim-test'
 Plug 'tpope/vim-abolish'
+Plug 'delphinus/vim-firestore'
+Plug 'DougBeney/pickachu'
 call plug#end()
 "
 " Java
