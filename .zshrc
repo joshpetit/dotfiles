@@ -9,8 +9,11 @@ SAVEHIST=2500
 
 #autoload -z edit-command-line
 #bindkey "^X^E" edit-command-line
+#git
+alias gpo='git push -u origin HEAD'
 
 alias lnvm='source /usr/share/nvm/init-nvm.sh'
+alias cleanup='pacman -Rs $(pacman -Qtdq)'
 
 # Go
 export GO111MODULE=auto

@@ -1,5 +1,6 @@
 {
 	"suggest.autoTrigger": "none",
 	"java.home": "/usr/lib/jvm/java-15-openjdk/",
-	"python.pythonPath": "/bin/python"
+	"python.pythonPath": "/bin/python",
+	"flutter.trace.server": "verbose"
 }

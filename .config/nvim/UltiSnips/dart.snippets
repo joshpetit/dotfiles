@@ -73,6 +73,17 @@ class _${1}State extends State<${1}>
 endsnippet
 
 snippet fluttest "Flutter pump test"
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+Widget renderWith() {
+  return MaterialApp(
+    home: Scaffold(
+      body: widget(),
+    ),
+  );
+}
+
 void main() {
   testWidgets('Test Name', (WidgetTester tester) async {
     await tester.pumpWidget(
@@ -81,4 +92,35 @@ void main() {
     expect(find.text('Test'), findsOneWidget);
   }, skip: false);
 }
+endsnippet
+
+snippet ft "Find text test"
+expect(find.text(${1}), findsOneWidget);
+endsnippet
+
+snippet fd "Find descendant test"
+Finder item = find.descendant(
+	of: find.byKey(const Key('${1}')),
+	matching: find.byKey(const Key('${2}')),
+);
+endsnippet
+
+snippet fet "Enter text in flutter test"
+await tester.enterText(
+	find.byKey(const Key('$1')), '$2');
+await tester.pumpAndSettle();
+endsnippet
+
+snippet ftp "Tap thing in flutter"
+await tester.tap(find.byKey(const Key('$1')));
+await tester.pumpAndSettle();
+endsnippet
+
+snippet fft "Flutter full test"
+testWidgets('${1}', (WidgetTester tester) async {
+  await tester.pumpWidget(
+    renderWith(),
+  );
+  expect(find.text('Test'), findsOneWidget);
+}, skip: false);
 endsnippet

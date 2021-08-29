@@ -33,13 +33,13 @@ function create_woto() {
 }
 
 function create_ms5() {
-	cd "/home/joshu/projects/joshpetit.dev/milestone5/app/"
+	cd "/home/joshu/projects/petit.dev/milestone5/app/"
 
 	session_name="ms5/app"
 	tmux new-session -d -s $session_name -n code
 	tmux send-keys -t $session_name:code "nvim -S Session.vim" ENTER
 
-	cd "/home/joshu/projects/joshpetit.dev/milestone5/firebase/"
+	cd "/home/joshu/projects/petit.dev/milestone5/firebase/"
 	session_name="ms5/firebase"
 	tmux new-session -d -s $session_name -n code
 	tmux new-window -t $session_name -n output

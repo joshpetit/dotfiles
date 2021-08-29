@@ -1,5 +1,10 @@
 let mapleader=" "
 
+" close tag
+"
+
+ let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx"
+
 " Git
 nnoremap <leader>gs :Git<CR>
 nnoremap <leader>gSS :Git stash<CR>
@@ -19,6 +24,7 @@ nnoremap <leader>gb :Merginal<CR>
 
 "Plug
 nmap <leader>pi :PlugInstall<CR>
+nmap <leader>pu :PlugUpdate<CR>
 nmap <leader>pc :PlugClean<CR>
 
 "Make
@@ -67,6 +73,9 @@ nmap <leader>tf :TestFile<CR>
 nmap <leader>ts :TestSuite<CR>
 nmap <leader>tl :TestLast<CR>
 
+"Float term
+nmap <leader>ft :FloatermNew<CR>
+
 
 let g:disable_no_maps = 1
 inoremap <silent><expr> <c-k> coc#refresh()
@@ -85,6 +94,9 @@ nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<
 nnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
 inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+
+"nnoremap <nowait><expr> <C-j> coc#float#has_float() ? "<Down>" : "\<C-f>"
+"nnoremap <nowait><expr> <C-k> coc#float#has_float() ? "<Up>" : "\<C-f>"
 
 " Unicode/emoi stuff
 let g:Unicode_no_default_mappings = v:true
@@ -131,9 +143,21 @@ Plug 'vim-test/vim-test'
 Plug 'tpope/vim-abolish'
 Plug 'delphinus/vim-firestore'
 Plug 'DougBeney/pickachu'
+Plug 'wlangstroth/vim-racket'
+Plug 'voldikss/vim-floaterm'
+Plug 'alvan/vim-closetag'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+
 call plug#end()
 "
 " Java
+"
+augroup cs230
+  autocmd!
+  autocmd FileType racket vmap<leader>rt :w !racket<CR>
+  autocmd FileType racket nmap<leader>rf :!racket %<CR>
+augroup end
 augroup	java_cmds
 	autocmd!
 
@@ -256,6 +280,9 @@ colorscheme hhpink
 " Literally the most ghetto way to source a file
 exec 'source ~/.config/nvim/purple.vim'
 exec 'source ~/.config/nvim/secret.vim'
+
+nnoremap <Space><Enter> :source ~/.config/nvim/purple.vim<Enter>
+
 "set termguicolors
 highlight LineNr ctermfg=grey " Grey unfocused lines
 "hi CursorLineNr ctermfg="#7f87bd"
@@ -293,4 +320,14 @@ cnoremap <C-l> <Right>
 
 inoremap <C-j> <Down>
 set mouse=a
+
+" Remove leading whitespace
+nnoremap <S-Tab> ^d0
+" run with...
+vnoremap <leader>rw :w !
+
+"copy file path
+nmap cp :let @+ = expand("%")<cr>
+nmap <leader>cp :let @+ = expand("%:p")<cr>
+
 au BufNewFile,BufRead *.gradle setf groovy

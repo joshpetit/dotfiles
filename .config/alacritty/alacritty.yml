@@ -1,7 +1,7 @@
 font:
   family: InconsolataGC
   style: Medium
-  size: 9
+  size: 12
 key_bindings:
   - { key: Return,   mods: Control|Shift, action: SpawnNewInstance }
 
