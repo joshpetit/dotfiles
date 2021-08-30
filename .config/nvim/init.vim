@@ -5,6 +5,7 @@ let mapleader=" "
 
  let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx"
 
+
 " Git
 nnoremap <leader>gs :Git<CR>
 nnoremap <leader>gSS :Git stash<CR>

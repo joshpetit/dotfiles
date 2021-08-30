@@ -98,6 +98,14 @@ snippet ft "Find text test"
 expect(find.text(${1}), findsOneWidget);
 endsnippet
 
+snippet fbk "Find by key"
+find.byKey(const Key('${1}'));
+endsnippet
+
+snippet fbt "Find by text"
+find.text('$1');
+endsnippet
+
 snippet fd "Find descendant test"
 Finder item = find.descendant(
 	of: find.byKey(const Key('${1}')),
