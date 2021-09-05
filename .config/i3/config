@@ -215,7 +215,7 @@ for_window [class="^flameshot$"] floating enable
 for_window [class="^flameshot$"] border pixel 0 
 
 # CS 308, delete later
-for_window [class="ooga.Main"] floating enable
+for_window [class="breakout.Main"] floating enable
 
 # Colors
 # class                 border  bground text    indicator child_border

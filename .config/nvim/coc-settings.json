@@ -1,6 +1,6 @@
 {
 	"suggest.autoTrigger": "none",
-	"java.home": "/usr/lib/jvm/java-15-openjdk/",
+	"java.home": "/usr/lib/jvm/liberica-jdk-full/",
 	"python.pythonPath": "/bin/python",
 	"flutter.trace.server": "verbose"
 }

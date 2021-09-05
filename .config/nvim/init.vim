@@ -1,10 +1,11 @@
 let mapleader=" "
-
 " close tag
-"
+ let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx,*.tsx"
 
- let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx"
-
+" Autoformat
+let g:formatters_typescriptreact = ['prettier']
+let g:formatters_typescript= ['eslint_local']
+let g:autoformat_verbosemode = 1
 
 " Git
 nnoremap <leader>gs :Git<CR>
@@ -156,8 +157,9 @@ call plug#end()
 "
 augroup cs230
   autocmd!
-  autocmd FileType racket vmap<leader>rt :w !racket<CR>
-  autocmd FileType racket nmap<leader>rf :!racket %<CR>
+  autocmd FileType scheme vmap<leader>rs :w !racket<CR>
+  autocmd FileType scheme nmap<leader>rf :!racket %<CR>
+  autocmd FileType scheme :set filetype=racket
 augroup end
 augroup	java_cmds
 	autocmd!
@@ -330,5 +332,6 @@ vnoremap <leader>rw :w !
 "copy file path
 nmap cp :let @+ = expand("%")<cr>
 nmap <leader>cp :let @+ = expand("%:p")<cr>
+nmap <leader>q :
 
 au BufNewFile,BufRead *.gradle setf groovy
