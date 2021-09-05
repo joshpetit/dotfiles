@@ -213,6 +213,9 @@ bindsym $mod+Shift+Insert exec xclip -selection clipboard -t image/png -o > /tmp
 # Make sure it floats
 for_window [class="^flameshot$"] floating enable
 for_window [class="^flameshot$"] border pixel 0 
+for_window [class="gnome-calculator"] floating enable
+for_window [title="Calculator"] floating enable
+
 
 # CS 308, delete later
 for_window [class="breakout.Main"] floating enable
@@ -265,3 +268,5 @@ bindsym Alt_R+j exec xdotool key Down
 bindsym Alt_R+k exec xdotool key Up
 bindsym Alt_R+l exec xdotool key Right
 bindsym $mod+Shift + KP_1 exec ~/.screenlayout/normal.sh; reload
+
+bindsym $mod+shift+Delete exec xclip -i /dev/null
