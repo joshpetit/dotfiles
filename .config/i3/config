@@ -27,6 +27,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 exec --no-startup-id setxkbmap -option caps:swapescape
 exec --no-startup-id xrandr --dpi 93
+exec --no-startup-id dockd --daemon
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -267,6 +268,8 @@ bindsym Alt_R+h exec xdotool key left
 bindsym Alt_R+j exec xdotool key Down
 bindsym Alt_R+k exec xdotool key Up
 bindsym Alt_R+l exec xdotool key Right
-bindsym $mod+Shift + KP_1 exec ~/.screenlayout/normal.sh; reload
+
+bindsym $mod+Shift+KP_1 exec /home/joshu/.screenlayout/normal.sh; reload
+bindsym $mod+Shift+KP_2 exec /home/joshu/.screenlayout/znormal.sh; reload
 
 bindsym $mod+shift+Delete exec xclip -i /dev/null

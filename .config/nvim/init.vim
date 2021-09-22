@@ -2,10 +2,23 @@ let mapleader=" "
 " close tag
  let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx,*.tsx"
 
+
 " Autoformat
 let g:formatters_typescriptreact = ['prettier']
 let g:formatters_typescript= ['eslint_local']
-let g:autoformat_verbosemode = 1
+"let g:autoformat_verbosemode = 1
+
+
+" NERDS
+nnoremap <leader>nc :call nerdcommenter#Comment('0',"toggle")<CR>
+vnoremap <leader>nc :call nerdcommenter#Comment('x',"toggle")<CR>
+
+let g:NERDCreateDefaultMappings = 0
+nnoremap Q :NERDTreeToggle<CR>
+" NERDTree
+" Make sure things don't open up inside of nerdtree windows
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
 " Git
 nnoremap <leader>gs :Git<CR>
@@ -150,9 +163,16 @@ Plug 'voldikss/vim-floaterm'
 Plug 'alvan/vim-closetag'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
+Plug 'preservim/nerdcommenter'
+"Plug 'MicahElliott/vrod'
+Plug 'axvr/zepl.vim'
+Plug 'supermomonga/neocomplete-source-javafx-css.vim'
+Plug 'tpope/vim-rhubarb'
 
 call plug#end()
-"
+
+
+
 " Java
 "
 augroup cs230
@@ -214,6 +234,15 @@ augroup dart_cmds
 	autocmd FileType dart nmap<leader>p :!flutter pub get<CR>
 augroup end
 
+augroup typescript_cmds
+	autocmd!
+
+	autocmd FileType typescript nmap<leader>rf :!ts-node %<CR>
+	autocmd FileType typescript nmap<leader>tf :CocCommand jest.fileTest<CR>
+	autocmd FileType typescript nmap<leader>ts :CocCommand jest.singleTest<CR>
+	autocmd FileType typescript nmap<leader>tt :CocCommand jest.projectTest<CR>
+augroup end
+
 
 "Goyo
 nnoremap <F11> :Goyo<CR>
@@ -226,13 +255,6 @@ let g:python3_host_prog="/bin/python"
 
 nnoremap <leader>w :w<CR>
 nnoremap <leader>W :SudoWrite<CR>
-
-" NERDTree
-nnoremap Q :NERDTreeToggle<CR>
-" Make sure things don't open up inside of nerdtree windows
-autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
-    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
-
 " FZF settings
 nnoremap <C-f> :FZF<CR>
 nnoremap <leader><C-f> :Rg<CR>
@@ -333,5 +355,7 @@ vnoremap <leader>rw :w !
 nmap cp :let @+ = expand("%")<cr>
 nmap <leader>cp :let @+ = expand("%:p")<cr>
 nmap <leader>q :
+
+inoremap <C-Backspace> <C-w>
 
 au BufNewFile,BufRead *.gradle setf groovy
