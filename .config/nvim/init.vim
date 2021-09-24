@@ -168,6 +168,7 @@ Plug 'preservim/nerdcommenter'
 Plug 'axvr/zepl.vim'
 Plug 'supermomonga/neocomplete-source-javafx-css.vim'
 Plug 'tpope/vim-rhubarb'
+Plug 'kristijanhusak/vim-create-pr'
 
 call plug#end()
 
@@ -241,6 +242,10 @@ augroup typescript_cmds
 	autocmd FileType typescript nmap<leader>tf :CocCommand jest.fileTest<CR>
 	autocmd FileType typescript nmap<leader>ts :CocCommand jest.singleTest<CR>
 	autocmd FileType typescript nmap<leader>tt :CocCommand jest.projectTest<CR>
+
+	autocmd FileType typescriptreact nmap<leader>tf :CocCommand jest.fileTest<CR>
+	autocmd FileType typescriptreact nmap<leader>ts :CocCommand jest.singleTest<CR>
+	autocmd FileType typescriptreact nmap<leader>tt :CocCommand jest.projectTest<CR>
 augroup end
 
 
@@ -355,7 +360,11 @@ vnoremap <leader>rw :w !
 nmap cp :let @+ = expand("%")<cr>
 nmap <leader>cp :let @+ = expand("%:p")<cr>
 nmap <leader>q :
-
 inoremap <C-Backspace> <C-w>
+
+" Open certain buffers
+nnoremap <leader>ev :e ~/.config/nvim/init.vim<ENTER>
+nnoremap <leader>eu :UltiSnipsEdit<ENTER>
+nnoremap <leader>ef :e<ENTER>
 
 au BufNewFile,BufRead *.gradle setf groovy
