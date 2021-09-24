@@ -1,3 +1,4 @@
+runtime misc.vim
 let mapleader=" "
 " close tag
  let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx,*.tsx"
@@ -38,7 +39,7 @@ nnoremap <leader>gdf :Gvdiffsplit<CR>
 nnoremap <leader>gb :Merginal<CR>
 
 " Go to a file in fugitive
-function GitGoFile(file)
+fu! GitGoFile(file)
   let @/= a:file
   :Git | /
 endfunction
@@ -325,16 +326,10 @@ nnoremap <Space><Enter> :source ~/.config/nvim/purple.vim<Enter>
 
 "set termguicolors
 highlight LineNr ctermfg=grey " Grey unfocused lines
-"hi CursorLineNr ctermfg="#7f87bd"
 highlight link javaIdentifier NONE
-"highlight link javaDelimiter NONE
 
-"let g:enable_italic_font = 1
-"let g:hybrid_transparent_background = 1
 hi Pmenu ctermbg=black ctermfg=white
 
-"" Random things
-"set clipboard+=unnamedplus " yank also goes to clipboard
 
 set numberwidth=1
 set ts=2 sw=2
@@ -345,36 +340,5 @@ set scrolloff=8
 set number
 set relativenumber
 set scrolloff=8
-
-" Treat line wraps as lines
-noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
-noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
-
-au BufEnter * set noro
-
-" Navigaiton in command mode
-cnoremap <C-h> <Left>
-cnoremap <C-j> <Down>
-cnoremap <C-k> <Up>
-cnoremap <C-l> <Right>
-
-inoremap <C-j> <Down>
-set mouse=a
-
-" Remove leading whitespace
-nnoremap <S-Tab> ^d0
-" run with...
-vnoremap <leader>rw :w !
-
-"copy file path
-nmap cp :let @+ = expand("%")<cr>
-nmap <leader>cp :let @+ = expand("%:p")<cr>
-nmap <leader>q :
-inoremap <C-Backspace> <C-w>
-
-" Open certain buffers
-nnoremap <leader>ev :e ~/.config/nvim/init.vim<ENTER>
-nnoremap <leader>eu :UltiSnipsEdit<ENTER>
-nnoremap <leader>ef :e<ENTER>
 
 au BufNewFile,BufRead *.gradle setf groovy
