@@ -21,7 +21,7 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
     \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
 " Git
-nnoremap <leader>gs :Git<CR>
+nnoremap <leader>gs :Git <bar>normal 4j<CR>
 nnoremap <leader>gSS :Git stash<CR>
 nnoremap <leader>gSA :Git stash apply<CR>
 nnoremap <leader>gcb :Git checkout 
@@ -36,6 +36,16 @@ nnoremap <leader>gmo :Git merge origin/master<CR>
 " Git diff of current file
 nnoremap <leader>gdf :Gvdiffsplit<CR>
 nnoremap <leader>gb :Merginal<CR>
+
+" Go to a file in fugitive
+function GitGoFile(file)
+  let @/= a:file
+  :Git | /
+endfunction
+
+nnoremap <leader>ggf :call GitGoFile(expand("%"))<CR>
+
+nmap <leader>gf :let @+ = expand("%:p")<cr>
 
 "Plug
 nmap <leader>pi :PlugInstall<CR>
