@@ -1,4 +1,4 @@
-inoremap <C-W> <ESC>:wq<CR>
+inoremap <C-Q> <ESC>:wq<CR>
 "
 " Remove leading whitespace
 nnoremap <S-Tab> ^d0
@@ -28,3 +28,9 @@ noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
 noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 
 inoremap <C-j> <Down>
+
+fu! GetIp()
+    "let s:ip = !ip route get 1.2.3.4 | awk '{print $7}'
+endfunction
+
+":call GetIp()

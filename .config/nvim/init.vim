@@ -1,4 +1,5 @@
 runtime misc.vim
+runtime settings.vim
 let mapleader=" "
 " close tag
  let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx,*.tsx"
@@ -37,6 +38,8 @@ nnoremap <leader>gmo :Git merge origin/master<CR>
 " Git diff of current file
 nnoremap <leader>gdf :Gvdiffsplit<CR>
 nnoremap <leader>gb :Merginal<CR>
+"Git pull request
+nnoremap <leader>gpr :PR<CR>
 
 " Go to a file in fugitive
 fu! GitGoFile(file)
