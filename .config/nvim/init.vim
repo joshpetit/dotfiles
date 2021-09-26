@@ -4,7 +4,6 @@ let mapleader=" "
 " close tag
  let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx,*.tsx"
 
-
 " Autoformat
 let g:formatters_typescriptreact = ['prettier']
 let g:formatters_typescript= ['eslint_local']
@@ -59,28 +58,13 @@ nmap <leader>pc :PlugClean<CR>
 "Make
 nmap <leader>mv :Make validate<CR>
 nmap <leader>mt :Make types<CR>
-" Coc
-nmap <leader>cd <Plug>(coc-definition)
-nmap <leader>crn <Plug>(coc-rename)
-nmap <leader>cgt <Plug>(coc-type-definition)
-nmap <leader>ca :CocAction<CR>
-vmap <leader>ca :CocAction<CR>
-nmap <leader>cld :CocList diagnostics<CR>
-nmap <leader>cls :CocList outline<CR>
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-vmap <leader>cR :CocRestart<CR>
-nmap <leader>c. <Plug>(coc-diagnostic-next)
-nmap <leader>c, <Plug>(coc-diagnostic-prev)
 
-nmap <silent> cgd <Plug>(coc-definition)
-nmap <silent> cgt <Plug>(coc-type-definition)
-nmap <silent> cgi <Plug>(coc-implementation)
-nmap <silent> csr <Plug>(coc-references)
+runtime coc.vim
 
 " Spector
 nmap <leader>dd :call vimspector#Launch()<CR>
 nmap <leader>dt :call vimspector#LaunchWithSettings(#{configuration: 'debugTest'})<CR>
+
 "Exit spector
 nmap <leader>de :call vimspector#Reset()<CR> 
 nmap <leader>dl <Plug>VimspectorStepInto
@@ -105,27 +89,10 @@ nmap <leader>tl :TestLast<CR>
 "Float term
 nmap <leader>ft :FloatermNew<CR>
 
-
 let g:disable_no_maps = 1
-inoremap <silent><expr> <c-k> coc#refresh()
 
 " Show the type under the cursor, also gets documentation
-nnoremap <silent><leader>cst :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
 
-nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-nnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-
-"nnoremap <nowait><expr> <C-j> coc#float#has_float() ? "<Down>" : "\<C-f>"
-"nnoremap <nowait><expr> <C-k> coc#float#has_float() ? "<Up>" : "\<C-f>"
 
 " Unicode/emoi stuff
 let g:Unicode_no_default_mappings = v:true
