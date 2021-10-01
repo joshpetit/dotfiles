@@ -13,7 +13,7 @@ nnoremap Q :NERDTreeToggle<CR>
 " NERDTree
 " Make sure things don't open up inside of nerdtree windows
 
-runtime git.vim
+runtime explugins/git.vim
 
 "Plug
 nmap <leader>pi :PlugInstall<CR>
@@ -24,8 +24,8 @@ nmap <leader>pc :PlugClean<CR>
 nmap <leader>mv :Make validate<CR>
 nmap <leader>mt :Make types<CR>
 
-runtime coc.vim
-runtime vimspector.vim
+runtime explugins/coc.vim
+runtime explugins/vimspector.vim
 
 "Vim test
 let test#strategy = "dispatch"
