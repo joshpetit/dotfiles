@@ -132,3 +132,28 @@ testWidgets('${1}', (WidgetTester tester) async {
   expect(find.text('Test'), findsOneWidget);
 }, skip: false);
 endsnippet
+
+snippet fst "Flutter setup test"
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+Widget renderWith({
+	
+}) {
+  return MaterialApp(
+    home: Scaffold(
+      body: $1(
+			),
+    ),
+  );
+}
+
+void main() {
+  testWidgets('Test', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      renderWith(),
+    );
+    expect(find.text(''), findsOneWidget);
+  });
+}
+endsnippet

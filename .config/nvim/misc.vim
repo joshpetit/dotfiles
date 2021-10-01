@@ -14,6 +14,7 @@ inoremap <C-Backspace> <C-w>
 " Open certain buffers
 nnoremap <leader>ev :e ~/.config/nvim/init.vim<ENTER>
 nnoremap <leader>eu :UltiSnipsEdit<ENTER>
+
 nnoremap <leader>ef :e<ENTER>
 
 
@@ -28,6 +29,7 @@ noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
 noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 
 inoremap <C-j> <Down>
+inoremap <C-k> <Up>
 
 fu! GetIp()
     "let s:ip = !ip route get 1.2.3.4 | awk '{print $7}'

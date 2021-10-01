@@ -50,6 +50,7 @@ imap <C-E> <Plug>(UnicodeFuzzy)
 runtime pluginSettings.vim
 runtime plugins.vim
 
+
 "Goyo
 nnoremap <F11> :Goyo<CR>
 
@@ -64,19 +65,12 @@ nnoremap <leader>W :SudoWrite<CR>
 nnoremap <C-f> :FZF<CR>
 nnoremap <leader><C-f> :Rg<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
+nnoremap <leader>ntf :NERDTreeFind <cWORD><CR>
 nnoremap <leader>l <plug>(fzf-complete-line)
-imap <c-L> <plug>(fzf-complete-line)
+"imap <c-L> <plug>(fzf-complete-line)
 
 " Tagbar Settings
 nmap <S-T> :TagbarToggle<CR>
-
-" QuickFix junk
-function! s:build_quickfix_list(lines)
-    call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
-    copen
-    cc
-endfunction
-
 
 " Windowing
 " Go through windows easily
@@ -125,3 +119,8 @@ set relativenumber
 set scrolloff=8
 
 au BufNewFile,BufRead *.gradle setf groovy
+
+augroup Mkdir
+  autocmd!
+  autocmd BufWritePre * call mkdir(expand("<afile>:p:h"), "p")
+augroup END

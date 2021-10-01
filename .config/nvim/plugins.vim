@@ -45,5 +45,19 @@ Plug 'axvr/zepl.vim'
 Plug 'supermomonga/neocomplete-source-javafx-css.vim'
 Plug 'tpope/vim-rhubarb'
 Plug 'kristijanhusak/vim-create-pr'
-
+Plug 'bogado/file-line'
+Plug 'codegram/vim-codereview'
 call plug#end()
+
+" QuickFix junk
+function! s:build_quickfix_list(lines)
+    call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+    copen
+    cc
+endfunction
+
+let g:fzf_action = {
+            \ 'ctrl-q': function('s:build_quickfix_list'),
+            \ 'ctrl-t': 'tab split',
+            \ 'ctrl-x': 'split',
+            \ 'ctrl-v': 'vsplit'}

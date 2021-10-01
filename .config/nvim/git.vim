@@ -13,6 +13,7 @@ nnoremap <leader>gmo :Git merge origin/master<CR>
 " Git diff of current file
 nnoremap <leader>gdf :Gvdiffsplit<CR>
 nnoremap <leader>gb :Merginal<CR>
+nnoremap <leader>gB :Git blame<CR>
 "Git pull request
 nnoremap <leader>gpr :PR<CR>
 
@@ -22,6 +23,6 @@ fu! GitGoFile(file)
   :Git | /
 endfunction
 
-nnoremap <leader>ggf :call GitGoFile(expand("%"))<CR>
+nnoremap <leader>gff :call GitGoFile(expand("%"))<CR>
 
 nmap <leader>gf :let @+ = expand("%:p")<cr>
