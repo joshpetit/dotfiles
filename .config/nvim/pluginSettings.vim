@@ -19,6 +19,9 @@ let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx,*.tsx"
 " Autoformat
 let g:formatters_typescriptreact = ['prettier']
 let g:formatters_typescript= ['prettier']
+let g:formatdef_dart_format="'dart format'"
+let g:formatters_dart=['dart_format']
+let g:autoformat_verbosemode=1
 
 if filereadable(".eslintrc.js")
     let g:formatters_typescript= ['eslint_local']

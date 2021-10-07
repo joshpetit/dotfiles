@@ -1,4 +1,3 @@
-runtime misc.vim
 runtime settings.vim
 let mapleader=" "
 " close tag
@@ -99,11 +98,12 @@ colorscheme hhpink
 exec 'source ~/.config/nvim/purple.vim'
 exec 'source ~/.config/nvim/secret.vim'
 
-nnoremap <Space><Enter> :source ~/.config/nvim/purple.vim<Enter>
-
 "set termguicolors
 highlight LineNr ctermfg=grey " Grey unfocused lines
 highlight link javaIdentifier NONE
+
+nnoremap <Space><Enter> :source ~/.config/nvim/purple.vim<Enter>
+
 
 hi Pmenu ctermbg=black ctermfg=white
 
@@ -124,3 +124,5 @@ augroup Mkdir
   autocmd!
   autocmd BufWritePre * call mkdir(expand("<afile>:p:h"), "p")
 augroup END
+
+runtime misc.vim
