@@ -47,6 +47,7 @@ Plug 'tpope/vim-rhubarb'
 Plug 'kristijanhusak/vim-create-pr'
 Plug 'bogado/file-line'
 Plug 'codegram/vim-codereview'
+Plug 'mtth/scratch.vim'
 call plug#end()
 
 " QuickFix junk

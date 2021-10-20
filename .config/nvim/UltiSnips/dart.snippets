@@ -98,11 +98,11 @@ snippet ft "Find text test"
 expect(find.text(${1}), findsOneWidget);
 endsnippet
 
-snippet fbk "Find by key"
+snippet fbk "Find by key" i
 find.byKey(const Key('${1}'));
 endsnippet
 
-snippet fbt "Find by text"
+snippet fbt "Find by text" i
 find.text('$1');
 endsnippet
 
@@ -113,13 +113,13 @@ Finder item = find.descendant(
 );
 endsnippet
 
-snippet fet "Enter text in flutter test"
+snippet fet "Enter text in flutter test" i
 await tester.enterText(
 	find.byKey(const Key('$1')), '$2');
 await tester.pumpAndSettle();
 endsnippet
 
-snippet ftp "Tap thing in flutter"
+snippet ftp "Tap thing in flutter" i
 await tester.tap(find.byKey(const Key('$1')));
 await tester.pumpAndSettle();
 endsnippet

@@ -5,8 +5,6 @@ let g:python3_host_prog="/bin/python"
 
 let g:colorizer_auto_filetype='qf'
 
-"let g:autoformat_verbosemode = 1
-
 let g:colorizer_disable_bufleave = 1
 
 let g:disable_no_maps = 1
@@ -21,7 +19,11 @@ let g:formatters_typescriptreact = ['prettier']
 let g:formatters_typescript= ['prettier']
 let g:formatdef_dart_format="'dart format'"
 let g:formatters_dart=['dart_format']
-let g:autoformat_verbosemode=1
+
+let g:formatdef_racket_format="'raco fmt'"
+let g:formatters_racket=['racket_format']
+
+"let g:autoformat_verbosemode=0
 
 if filereadable(".eslintrc.js")
     let g:formatters_typescript= ['eslint_local']

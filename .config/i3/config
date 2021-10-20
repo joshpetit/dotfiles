@@ -269,7 +269,9 @@ bindsym Alt_R+j exec xdotool key Down
 bindsym Alt_R+k exec xdotool key Up
 bindsym Alt_R+l exec xdotool key Right
 
-bindsym $mod+Shift+KP_1 exec /home/joshu/.screenlayout/normal.sh; reload
-bindsym $mod+Shift+KP_2 exec /home/joshu/.screenlayout/znormal.sh; reload
+bindsym $mod+ Shift + KP_End exec /home/joshu/.screenlayout/normal.sh; restart
+bindsym $mod+Shift+KP_Down exec /home/joshu/.screenlayout/znormal.sh; restart
 
-bindsym $mod+shift+Delete exec xclip -i /dev/null
+bindsym $mod+Shift+Delete exec xclip -i /dev/null
+
+bindcode $mod+62+s restart

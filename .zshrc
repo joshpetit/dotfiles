@@ -33,6 +33,7 @@ zstyle ':completion:*' menu select
 unsetopt BEEP
 
 alias e=exit
+alias t=tmux
 
 autoload -Uz compinit
 compinit
