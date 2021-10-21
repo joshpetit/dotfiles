@@ -35,4 +35,15 @@ fu! GetIp()
     "let s:ip = !ip route get 1.2.3.4 | awk '{print $7}'
 endfunction
 
+fu! LastFile(currFile)
+    let s:curr = a:currFile
+    while @% == a:currFile
+        :normal <CR>
+    endwhile
+endfunction
+
+nnoremap <leader>o :call LastFile(expand("%"))<CR>
+"nnoremap <C-O> :call LastFile(expand("%"))<CR>
+
+
 ":call GetIp()

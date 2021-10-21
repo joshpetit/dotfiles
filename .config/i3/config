@@ -242,7 +242,7 @@ for_window [title=".*mpv$"] border pixel 2
 # File manager
 for_window [title="^ranger$"] floating enable
 for_window [title="^ranger$"] border pixel 1 
-bindsym $mod + Shift + F exec --no-startup-id alacritty -e ranger
+bindsym $mod + Shift + F exec --no-startup-id alacritty -e vifm
 
 # Gaps
 gaps inner 5

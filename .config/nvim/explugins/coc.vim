@@ -1,6 +1,8 @@
 
 " Coc
 nmap <leader>cd <Plug>(coc-definition)
+nmap <leader>ce :CocEnable<CR>
+nmap <leader>cE :CocDisable<CR>
 nmap <leader>crn <Plug>(coc-rename)
 nmap <leader>cgt <Plug>(coc-type-definition)
 nmap <leader>ca :CocAction<CR>

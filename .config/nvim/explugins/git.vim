@@ -1,4 +1,4 @@
-nnoremap <leader>gs :Git <bar>normal 4j<CR>
+nnoremap <leader>gs :Git <bar> normal 4j<CR>
 nnoremap <leader>gSS :Git stash<CR>
 nnoremap <leader><leader>gs :Git stash<CR>
 nnoremap <leader>gSA :Git stash apply<CR>
@@ -26,6 +26,6 @@ fu! GitGoFile(file)
   :Git | /
 endfunction
 
-nnoremap <leader>gff :call GitGoFile(expand("%"))<CR>
+nnoremap <leader>ggf :call GitGoFile(expand("%"))<CR>
 
 nmap <leader>gf :let @+ = expand("%:p")<cr>
