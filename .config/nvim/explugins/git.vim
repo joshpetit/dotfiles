@@ -13,12 +13,15 @@ nnoremap <leader>gpu :Git push<CR>
 nnoremap <leader>gpo :Git push -u origin HEAD<CR>
 nnoremap <leader>gfo :Git fetch origin<CR>
 nnoremap <leader>gmo :Git merge origin/master<CR>
+nnoremap <leader>gmm :Git merge origin/master<CR>
 " Git diff of current file
 nnoremap <leader>gdf :Gvdiffsplit<CR>
 nnoremap <leader>gb :Merginal<CR>
 nnoremap <leader>gB :Git blame<CR>
 "Git pull request
 nnoremap <leader>gpr :PR<CR>
+nnoremap <leader>gif :Git update-index --assume-unchanged %<CR>
+nnoremap <leader>giF :Git update-index --no-assume-unchanged %<CR>
 
 " Go to a file in fugitive
 fu! GitGoFile(file)

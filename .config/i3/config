@@ -27,7 +27,8 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 exec --no-startup-id setxkbmap -option caps:swapescape
 exec --no-startup-id xrandr --dpi 93
-exec --no-startup-id dockd --daemon
+#exec --no-startup-id dockd --daemon
+exec --no-startup-id clipmenud
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -275,3 +276,11 @@ bindsym $mod+Shift+KP_Down exec /home/joshu/.screenlayout/znormal.sh; restart
 bindsym $mod+Shift+Delete exec xclip -i /dev/null
 
 bindcode $mod+62+s restart
+
+# Stupid zoom notifications
+for_window [title="^zoom$" class="[zoom]*"] floating enable
+bindsym $mod+Ctrl+c exec clipmenu
+bindsym $mod+Ctrl+a exec /home/joshu/.local/bin/scriptlauncher
+bindsym $mod+Shift+S scratchpad show
+bindsym $mod+Ctrl+S move scratchpad
+

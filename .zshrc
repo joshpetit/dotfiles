@@ -13,6 +13,7 @@ SAVEHIST=2500
 alias gpo='git push -u origin HEAD'
 
 alias lnvm='source /usr/share/nvm/init-nvm.sh'
+alias n='nvim'
 alias cleanup='pacman -Rs $(pacman -Qtdq)'
 
 # Go

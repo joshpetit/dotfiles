@@ -48,6 +48,7 @@ Plug 'kristijanhusak/vim-create-pr'
 Plug 'bogado/file-line'
 Plug 'codegram/vim-codereview'
 Plug 'mtth/scratch.vim'
+Plug 'lervag/vimtex'
 call plug#end()
 
 " QuickFix junk
@@ -62,3 +63,4 @@ let g:fzf_action = {
             \ 'ctrl-t': 'tab split',
             \ 'ctrl-x': 'split',
             \ 'ctrl-v': 'vsplit'}
+let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'

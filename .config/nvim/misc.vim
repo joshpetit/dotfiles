@@ -16,6 +16,8 @@ nnoremap <leader>ev :e ~/.config/nvim/init.vim<ENTER>
 nnoremap <leader>eu :UltiSnipsEdit<ENTER>
 
 nnoremap <leader>ef :e<ENTER>
+nnoremap <leader>sf /\c
+nnoremap <leader>sb ?\c
 
 
 " Navigaiton in command mode
@@ -44,6 +46,20 @@ endfunction
 
 nnoremap <leader>o :call LastFile(expand("%"))<CR>
 "nnoremap <C-O> :call LastFile(expand("%"))<CR>
+"
+func! GetSelectedText()
+  normal gv"xy
+  let result = getreg("x")
+  normal gv
+  return result
+endfunc
 
+func! GetIp()
+  let s:thing = system("ip route get 1.2.3.4 | awk '{print $7}' | head -n 1")
+  return s:thing[0:-2]
+endfunc
 
+inoremap <C-R>I <C-R>=GetIp()<C-M>
 ":call GetIp()
+
+

@@ -2,5 +2,6 @@
 	"suggest.autoTrigger": "none",
 	"java.home": "/usr/lib/jvm/liberica-jdk-full/",
 	"python.pythonPath": "/bin/python",
-	"flutter.trace.server": "verbose"
+	"flutter.trace.server": "verbose",
+	"translator.toLang": "ht"
 }

@@ -103,7 +103,7 @@ find.byKey(const Key('${1}'));
 endsnippet
 
 snippet fbt "Find by text" i
-find.text('$1');
+find.text('$1')
 endsnippet
 
 snippet fd "Find descendant test"
@@ -156,4 +156,18 @@ void main() {
     expect(find.text(''), findsOneWidget);
   });
 }
+endsnippet
+
+snippet fbd "Find by descendant" i
+find.descendant(
+      of: find.byKey(const Key('')),
+      matching: find.byKey(const Key('')),
+    );
+endsnippet
+snippet route "Material page route" i
+() => Navigator.of(context).push(
+				MaterialPageRoute<Widget>(
+						builder: (_) => $1(),
+				),
+			),
 endsnippet
