@@ -126,3 +126,15 @@ augroup Mkdir
 augroup END
 
 runtime misc.vim
+
+func! NerdExtraMenu()
+  "call NERDTreeAddMenuItem({'text': '(D)rag and drop',
+        "\'shortcut': 'D',
+        "\'callback': 'DragnDrop'})
+
+endfunc
+
+if !exists('g:loaded_nerdtree_stuff_menu')
+  call NerdExtraMenu()
+  let g:loaded_nerdtree_stuff_menu = 1
+endif

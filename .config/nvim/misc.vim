@@ -2,6 +2,7 @@ inoremap <C-Q> <ESC>:wq<CR>
 "
 " Remove leading whitespace
 nnoremap <S-Tab> ^d0
+nnoremap Y y$
 " run with...
 vnoremap <leader>rw :w !
 
@@ -10,7 +11,8 @@ nmap cp :let @+ = expand("%")<cr>
 nmap <leader>cp :let @+ = expand("%:p")<cr>
 nmap <leader>q :
 inoremap <C-Backspace> <C-w>
-
+"inoremap <C-I> <ESC>I
+"
 " Open certain buffers
 nnoremap <leader>ev :e ~/.config/nvim/init.vim<ENTER>
 nnoremap <leader>eu :UltiSnipsEdit<ENTER>
@@ -62,4 +64,4 @@ endfunc
 inoremap <C-R>I <C-R>=GetIp()<C-M>
 ":call GetIp()
 
-
+command Dnd :!dragon-drag-and-drop % & disown

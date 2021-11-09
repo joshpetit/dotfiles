@@ -6,11 +6,14 @@ setopt APPEND_HISTORY
 HISTFILE="$HOME/.config/zsh/histfile"
 HISTSIZE=2500
 SAVEHIST=2500
+alias ssh="TERM=xterm-256color ssh"
 
 #autoload -z edit-command-line
 #bindkey "^X^E" edit-command-line
 #git
 alias gpo='git push -u origin HEAD'
+alias gcl='git checkout -'
+alias src='source ~/.zshrc'
 
 alias lnvm='source /usr/share/nvm/init-nvm.sh'
 alias n='nvim'
@@ -67,6 +70,8 @@ zplug "zsh-users/zsh-history-substring-search"
 # c-N to search back in history c-P to search forward (swapped for convenience)
 bindkey '^p' history-substring-search-down
 bindkey '^n' history-substring-search-up
+bindkey "^k" up-line-or-search
+bindkey "^j" down-line-or-search
 zplug load
 
 

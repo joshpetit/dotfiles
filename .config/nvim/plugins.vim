@@ -1,3 +1,4 @@
+
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompleten what not
@@ -47,9 +48,9 @@ Plug 'tpope/vim-rhubarb'
 Plug 'kristijanhusak/vim-create-pr'
 Plug 'bogado/file-line'
 Plug 'codegram/vim-codereview'
-Plug 'mtth/scratch.vim'
 Plug 'lervag/vimtex'
 call plug#end()
+
 
 " QuickFix junk
 function! s:build_quickfix_list(lines)
@@ -61,6 +62,13 @@ endfunction
 let g:fzf_action = {
             \ 'ctrl-q': function('s:build_quickfix_list'),
             \ 'ctrl-t': 'tab split',
-            \ 'ctrl-x': 'split',
+            \ 'ctrl-s': 'split',
             \ 'ctrl-v': 'vsplit'}
 let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
+
+func! DragnDrop()
+    exe "!dragon-drag-and-drop " . g:NERDTreeFileNode.GetSelected().path.str()  . " & disown"
+endfunc
+" THIS IS HOW YOU CAN GET INPUT IN VIM!!!
+"let command = input('Command: ') . ' ' . g:NERDTreeFileNode.GetSelected().path.str()
+
