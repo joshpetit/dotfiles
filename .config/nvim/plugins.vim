@@ -49,7 +49,12 @@ Plug 'kristijanhusak/vim-create-pr'
 Plug 'bogado/file-line'
 Plug 'codegram/vim-codereview'
 Plug 'lervag/vimtex'
+Plug 'mboughaba/i3config.vim'
+Plug 'brooth/far.vim'
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+Plug 'kyazdani42/nvim-tree.lua'
 call plug#end()
+
 
 
 " QuickFix junk

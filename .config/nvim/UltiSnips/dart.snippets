@@ -1,7 +1,12 @@
 # Snippets for dart in flutter project, to use add the following to your .vimrc
 # `autocmd BufRead,BufNewFile,BufEnter *.dart UltiSnipsAddFiletypes dart-flutter`
-# Flutter stateless widget
+snippet txt "Stateless widget" b
+const Text('$1'),
+endsnippet
+
 snippet stless "Stateless widget" b
+import 'package:flutter/material.dart';
+
 class ${1:widget} extends StatelessWidget {
 	const ${1}({
 		Key? key,
@@ -9,14 +14,16 @@ class ${1:widget} extends StatelessWidget {
 
 	@override
 	Widget build(BuildContext context) {
-		return Text(
-			${2}
+		return Scaffold(
+			body: ${2}
 		);
 	}
 }
 endsnippet
 
 snippet stful "Stateful widget" b
+import 'package:flutter/material.dart';
+
 class ${1:widget} extends StatefulWidget {
 	const ${1}({
 		Key? key,
@@ -149,7 +156,7 @@ Widget renderWith({
 }
 
 void main() {
-  testWidgets('Test', (WidgetTester tester) async {
+  testWidgets('Text Renders', (WidgetTester tester) async {
     await tester.pumpWidget(
       renderWith(),
     );
@@ -170,4 +177,20 @@ snippet route "Material page route" i
 						builder: (_) => $1(),
 				),
 			),
+endsnippet
+
+snippet cbt "Callback test"
+  testWidgets('Clicking on $2 calls $1',
+      (WidgetTester tester) async {
+    bool $1 = false;
+    await tester.pumpWidget(
+      renderWith(
+        $1: () => $1 = true,
+      ),
+    );
+    await tester.tap(find.text(''));
+    await tester.pumpAndSettle();
+
+    expect($1, isTrue);
+  }, skip: false);
 endsnippet

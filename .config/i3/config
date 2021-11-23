@@ -280,8 +280,7 @@ bindcode $mod+62+s restart
 
 # Stupid zoom notifications
 for_window [title="^zoom$" class="[zoom]*"] floating enable
-bindsym $mod+Ctrl+c exec clipmenu
 bindsym $mod+Ctrl+a exec /home/joshu/.local/bin/scriptlauncher
 bindsym $mod+Shift+S scratchpad show
 bindsym $mod+Ctrl+S move scratchpad
-
+bindsym $mod+Ctrl+c exec copyq menu

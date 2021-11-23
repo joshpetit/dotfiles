@@ -3,5 +3,12 @@
 	"java.home": "/usr/lib/jvm/liberica-jdk-full/",
 	"python.pythonPath": "/bin/python",
 	"flutter.trace.server": "verbose",
-	"translator.toLang": "ht"
+	"translator.toLang": "ht",
+	"languageserver": {
+		"racket": {
+			"command": "racket",
+			"args": ["--lib", "racket-langserver"],
+      "filetypes": ["scheme"]
+		}
+	}
 }

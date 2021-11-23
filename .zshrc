@@ -18,6 +18,7 @@ alias src='source ~/.zshrc'
 alias lnvm='source /usr/share/nvm/init-nvm.sh'
 alias n='nvim'
 alias cleanup='pacman -Rs $(pacman -Qtdq)'
+alias shp='ssh my.phone -p 8022'
 
 # Go
 export GO111MODULE=auto

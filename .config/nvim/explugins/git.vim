@@ -1,8 +1,8 @@
 nnoremap <leader>gs :Git <bar> normal 4j<CR>
 nnoremap <leader>gSS :Git stash<CR>
-nnoremap <leader><leader>gs :Git stash<CR>
+nnoremap <leader><leader>gS :Git stash<CR>
 nnoremap <leader>gSA :Git stash apply<CR>
-nnoremap <leader><leader>ga :Git stash apply<CR>
+nnoremap <leader><leader>gsa :Git stash apply<CR>
 nnoremap <leader>gcb :Git checkout 
 nnoremap <leader>gcf :Git checkout %<CR> 
 nnoremap <leader>gcl :Git checkout -<CR>
