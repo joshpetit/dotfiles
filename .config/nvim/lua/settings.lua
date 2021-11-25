@@ -1,6 +1,6 @@
 require('nightfox').load('nightfox', {transparent = true})
 vim.g.mapleader = " "
-
+vim.o.mouse = 'a'
 -- Formatters
 --
 local prettierFormatter = {

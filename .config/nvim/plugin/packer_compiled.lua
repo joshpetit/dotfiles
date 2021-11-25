@@ -94,11 +94,6 @@ _G.packer_plugins = {
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/cmp-path",
     url = "https://github.com/hrsh7th/cmp-path"
   },
-  ["diaglist.nvim"] = {
-    loaded = true,
-    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/diaglist.nvim",
-    url = "https://github.com/onsails/diaglist.nvim"
-  },
   ["flutter-tools.nvim"] = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/flutter-tools.nvim",
@@ -163,15 +158,15 @@ _G.packer_plugins = {
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
+  ["telescope-media-files.nvim"] = {
+    loaded = true,
+    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/telescope-media-files.nvim",
+    url = "https://github.com/nvim-telescope/telescope-media-files.nvim"
+  },
   ["telescope.nvim"] = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
-  },
-  vim = {
-    loaded = true,
-    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/vim",
-    url = "https://github.com/dracula/vim"
   }
 }
 

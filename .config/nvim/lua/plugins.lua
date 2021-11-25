@@ -1,7 +1,6 @@
 ---@diagnostic disable: undefined-global
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 return require('packer').startup(function()
-    use 'dracula/vim'
     use {
         'kyazdani42/nvim-tree.lua',
         requires = 'kyazdani42/nvim-web-devicons',
@@ -27,6 +26,11 @@ return require('packer').startup(function()
     }
 
     use {
+        'nvim-telescope/telescope-media-files.nvim',
+        requires = {{'nvim-telescope/telescope.nvim'}}
+    }
+
+    use {
         'TimUntersberger/neogit',
         requires = 'nvim-lua/plenary.nvim',
         config = function() require'neogit'.setup {} end
@@ -38,18 +42,4 @@ return require('packer').startup(function()
         config = function() require'gitsigns'.setup {} end
     }
     use {'pwntester/octo.nvim', config = function() require'octo'.setup() end}
-    use {'onsails/diaglist.nvim',
-        config = require("diaglist").init({
-            -- optional settings
-            -- below are defaults
-
-            -- increase for noisy servers
-            debounce_ms = 50,
-
-            -- list in quickfix only diagnostics from clients
-            -- attached to a current buffer
-            -- if false, all buffers' clients diagnostics is collected
-            buf_clients_only = true
-        })
-    }
 end)
