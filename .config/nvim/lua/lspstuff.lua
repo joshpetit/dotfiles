@@ -74,7 +74,10 @@ local on_attach = function(_, bufnr)
     buf_set_keymap('n', '<leader>cgt',
                    '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
     buf_set_keymap('n', '<leader>crn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>',
+    -- buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>',
+    -- opts)
+    buf_set_keymap('n', '<leader>ca',
+                   '<cmd>lua require("telescope.builtin").lsp_code_actions()<CR>',
                    opts)
     buf_set_keymap('n', '<leader>csr', '<cmd>lua vim.lsp.buf.references()<CR>',
                    opts)
