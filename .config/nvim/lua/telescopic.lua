@@ -63,7 +63,7 @@ function exports.cooler()
                 AsyncRun("dragon-drag-and-drop", entry.value)
 
             end)
-            map("i,n", "<c-o>", function(_)
+            map("i", "<c-o>", function(_)
                 local entry =
                     require("telescope.actions.state").get_selected_entry()
                 AsyncRun("xdg-open", entry.value)

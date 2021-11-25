@@ -4,7 +4,12 @@ return require('packer').startup(function()
     use {
         'kyazdani42/nvim-tree.lua',
         requires = 'kyazdani42/nvim-web-devicons',
-        config = function() require'nvim-tree'.setup {} end
+        config = function()
+            require'nvim-tree'.setup {
+                disable_netrw = true,
+                hijack_netrw = false
+            }
+        end
     }
     use 'EdenEast/nightfox.nvim'
     use {
@@ -42,4 +47,9 @@ return require('packer').startup(function()
         config = function() require'gitsigns'.setup {} end
     }
     use {'pwntester/octo.nvim', config = function() require'octo'.setup() end}
+    use {
+        "terrortylor/nvim-comment",
+        require('nvim_comment').setup {operator_mapping = "<leader>nc"}
+    }
+
 end)
