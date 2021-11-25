@@ -29,6 +29,7 @@ exec --no-startup-id setxkbmap -option caps:swapescape
 exec --no-startup-id xrandr --dpi 93
 #exec --no-startup-id dockd --daemon
 exec --no-startup-id clipmenud
+exec --no-startup-id copyq
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.

@@ -27,6 +27,18 @@ require('formatter').setup {
         lua = {
             -- luafmt
             function() return {exe = "lua-format", stdin = true} end
+        },
+        dart = {
+            -- Shell Script Formatter
+            function()
+                return {exe = "dart", args = {"format"}, stdin = true}
+            end
+        },
+        racket = {
+            -- Shell Script Formatter
+            function()
+                return {exe = "raco ", args = {"fmt", "--width 40"}, stdin = true}
+            end
         }
     }
 }
