@@ -89,7 +89,7 @@ local on_attach = function(_, bufnr)
     buf_set_keymap('n', '<leader>c.',
                    '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
     buf_set_keymap('n', '<leader>cld',
-                   '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+                   '<cmd>Telescope lsp_workspace_diagnostics<CR>', opts)
     -- LSP formatting unreliable
     -- buf_set_keymap('n', '<leader>ff', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
     buf_set_keymap('v', '<leader>ca',
@@ -141,3 +141,6 @@ require'lspconfig'.sumneko_lua.setup {
         }
     }
 }
+
+
+require('lspconfig').tailwindcss.setup{}

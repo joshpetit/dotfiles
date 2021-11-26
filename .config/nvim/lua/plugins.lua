@@ -1,16 +1,7 @@
 ---@diagnostic disable: undefined-global
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 return require('packer').startup(function()
-    use {
-        'kyazdani42/nvim-tree.lua',
-        requires = 'kyazdani42/nvim-web-devicons',
-        config = function()
-            require'nvim-tree'.setup {
-                disable_netrw = true,
-                hijack_netrw = false
-            }
-        end
-    }
+    use {'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons'}
     use 'EdenEast/nightfox.nvim'
     use {
         'williamboman/nvim-lsp-installer',
@@ -50,6 +41,20 @@ return require('packer').startup(function()
     use {
         "terrortylor/nvim-comment",
         require('nvim_comment').setup {operator_mapping = "<leader>nc"}
+    }
+    use {
+        'rcarriga/nvim-notify',
+        config = function() vim.notify = require 'notify' end
+    }
+
+    use {
+        'norcalli/nvim-colorizer.lua',
+        config = function() require'colorizer'.setup() end
+    }
+    use {
+        'windwp/nvim-ts-autotag',
+	requires = {'nvim-treesitter/nvim-treesitter'},
+	config = function() require'nvim-ts-autotag'.setup() end
     }
 
 end)

@@ -47,7 +47,7 @@ nmap('<leader>tb', '<cmd>TOhtml<CR>')
 nmap('<leader>tn', '<cmd>TOhtml<CR>')
 nmap('<leader>nh', '<cmd>noh<CR>')
 nmap('<leader>nc', '<cmd>CommentToggle<CR>')
---vmap('<leader>nc', "<cmd>CommentToggle<CR>")
 
 nmap('<leader>sv', '<cmd>:lua require("telescopic").reload()<CR>')
 nmap('<c-f>', '<cmd>:lua require("telescopic").cooler()<CR>')
+

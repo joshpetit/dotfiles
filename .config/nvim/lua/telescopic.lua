@@ -57,7 +57,7 @@ function exports.cooler()
         cwd = path,
 
         attach_mappings = function(_, map)
-            map("n", "d", function(_)
+            map("n", "D", function(_)
                 local entry =
                     require("telescope.actions.state").get_selected_entry()
                 AsyncRun("dragon-drag-and-drop", entry.value)
