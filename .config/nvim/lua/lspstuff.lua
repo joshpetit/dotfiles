@@ -7,9 +7,9 @@ cmp.setup({
         -- REQUIRED - you must specify a snippet engine
         expand = function(args)
             -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-            require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+            -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
             -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-            -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
+            require'snippy'.expand_snippet(args.body) -- For `snippy` users.
         end
     },
     mapping = {
@@ -32,9 +32,9 @@ cmp.setup({
     completion = {autocomplete = false},
     sources = cmp.config.sources({
         {name = 'nvim_lsp'}, -- { name = 'vsnip' }, -- For vsnip users.
-        {name = 'luasnip'} -- For luasnip users.
+        -- {name = 'luasnip'}, -- For luasnip users.
         -- { name = 'ultisnips' }, -- For ultisnips users.
-        -- { name = 'snippy' }, -- For snippy users.
+        {name = 'snippy'} -- For snippy users.
     }, {{name = 'buffer'}})
 })
 
@@ -49,7 +49,7 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp
 --
 --
 
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
     local function buf_set_keymap(...)
         vim.api.nvim_buf_set_keymap(bufnr, ...)
     end
@@ -94,6 +94,11 @@ local on_attach = function(_, bufnr)
     -- buf_set_keymap('n', '<leader>ff', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
     buf_set_keymap('v', '<leader>ca',
                    '<Cmd>lua vim.lsp.buf.range_code_action()<CR>', opts)
+    local ts_utils = require("nvim-lsp-ts-utils")
+    ts_utils.setup {}
+
+    -- required to fix code action ranges and filter diagnostics
+    ts_utils.setup_client(client)
 end
 
 local servers = {'tsserver'}
@@ -142,5 +147,4 @@ require'lspconfig'.sumneko_lua.setup {
     }
 }
 
-
-require('lspconfig').tailwindcss.setup{}
+require('lspconfig').tailwindcss.setup {}

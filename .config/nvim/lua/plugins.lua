@@ -53,8 +53,16 @@ return require('packer').startup(function()
     }
     use {
         'windwp/nvim-ts-autotag',
-	requires = {'nvim-treesitter/nvim-treesitter'},
-	config = function() require'nvim-ts-autotag'.setup() end
+        requires = {'nvim-treesitter/nvim-treesitter'},
+        config = function() require'nvim-ts-autotag'.setup() end
     }
-
+    -- Lua
+    use {"folke/trouble.nvim", requires = "kyazdani42/nvim-web-devicons"}
+    use {"jose-elias-alvarez/nvim-lsp-ts-utils"}
+    use {"akinsho/toggleterm.nvim"}
+    use {"sheerun/vim-polyglot"}
+    use "tversteeg/registers.nvim"
+    use {'tpope/vim-fugitive'}
+    use {"dcampos/nvim-snippy"}
+    use {"dcampos/cmp-snippy"}
 end)

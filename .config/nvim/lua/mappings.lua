@@ -51,3 +51,8 @@ nmap('<leader>nc', '<cmd>CommentToggle<CR>')
 nmap('<leader>sv', '<cmd>:lua require("telescopic").reload()<CR>')
 nmap('<c-f>', '<cmd>:lua require("telescopic").cooler()<CR>')
 
+-- Git mappings
+nmap('<leader>gmo', '<cmd>!git merge origin/master<CR>')
+nmap('<leader>gpo', '<cmd>!git push -u origin HEAD<CR>')
+nmap('<leader>gpu', '<cmd>!git push origin HEAD<CR>')
+nmap('<leader>gpl', '<cmd>!git pull<CR>')

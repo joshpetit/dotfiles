@@ -1,4 +1,4 @@
-local lib = require'nvim-tree.lib'
+local lib = require 'nvim-tree.lib'
 require('utils')
 require('nightfox').load('nightfox', {transparent = true})
 vim.notify = require 'notify'
@@ -30,6 +30,11 @@ require('formatter').setup {
         javascriptreact = prettierFormatter,
         typescript = prettierFormatter,
         typescriptreact = prettierFormatter,
+        java = {
+            function()
+                return {exe = "google-java-format", stdin = true}
+            end
+        },
         lua = {
             -- luafmt
             function() return {exe = "lua-format", stdin = true} end
@@ -56,20 +61,42 @@ require'nvim-tree'.setup {
     view = {
         mappings = {
             custom_only = false,
-            list = {{key = {"D"}, cb = "<cmd>lua print(OpenNvimTreeFile())<cr>"}}
+            list = {
+                {key = {"D"}, cb = "<cmd>lua print(OpenNvimTreeFile())<cr>"}
+            }
         }
     }
 }
 
 function OpenNvimTreeFile()
-	local node = lib.get_node_at_cursor()
-	AsyncRun("dragon-drag-and-drop", node.absolute_path)
-	print(node.absolute_path)
+    local node = lib.get_node_at_cursor()
+    AsyncRun("dragon-drag-and-drop", node.absolute_path)
+    print(node.absolute_path)
 end
 
-require'nvim-treesitter.configs'.setup {
-  autotag = {
-    enable = true,
-  }
-}
+require'nvim-treesitter.configs'.setup {autotag = {enable = true}}
 
+require("trouble").setup {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+}
+vim.cmd([[
+augroup custom_term
+    autocmd!
+    autocmd TermOpen * setlocal bufhidden=hide
+augroup END
+]])
+
+local snippy = require("snippy")
+snippy.setup({
+    mappings = {
+        is = {
+            ["<Tab>"] = "expand_or_advance",
+            ["<S-Tab>"] = "previous",
+        },
+        nx = {
+            ["<leader>x"] = "cut_text",
+        },
+    },
+})
