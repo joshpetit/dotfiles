@@ -57,7 +57,7 @@ end
 time([[Luarocks path setup]], false)
 time([[try_loadstring definition]], true)
 local function try_loadstring(s, component, name)
-  local success, result = pcall(loadstring(s))
+  local success, result = pcall(loadstring(s), name, _G.packer_plugins[name])
   if not success then
     vim.schedule(function()
       vim.api.nvim_notify('packer.nvim: Error running ' .. component .. ' for ' .. name .. ': ' .. result, vim.log.levels.ERROR, {})
@@ -69,6 +69,11 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["DAPInstall.nvim"] = {
+    loaded = true,
+    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/DAPInstall.nvim",
+    url = "https://github.com/Pocco81/DAPInstall.nvim"
+  },
   LuaSnip = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/LuaSnip",
@@ -115,6 +120,16 @@ _G.packer_plugins = {
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
   },
+  ["gtranslate.nvim"] = {
+    loaded = true,
+    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/gtranslate.nvim",
+    url = "https://github.com/kraftwerk28/gtranslate.nvim"
+  },
+  ["markdown-preview.nvim"] = {
+    loaded = true,
+    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/markdown-preview.nvim",
+    url = "https://github.com/iamcco/markdown-preview.nvim"
+  },
   neogit = {
     config = { "\27LJ\1\0028\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\vneogit\frequire\0" },
     loaded = true,
@@ -141,6 +156,16 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/nvim-comment",
     url = "https://github.com/terrortylor/nvim-comment"
+  },
+  ["nvim-dap"] = {
+    loaded = true,
+    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/nvim-dap",
+    url = "https://github.com/mfussenegger/nvim-dap"
+  },
+  ["nvim-dap-ui"] = {
+    loaded = true,
+    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/nvim-dap-ui",
+    url = "https://github.com/rcarriga/nvim-dap-ui"
   },
   ["nvim-lsp-installer"] = {
     loaded = true,
@@ -195,6 +220,11 @@ _G.packer_plugins = {
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/octo.nvim",
     url = "https://github.com/pwntester/octo.nvim"
   },
+  orgmode = {
+    loaded = true,
+    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/orgmode",
+    url = "https://github.com/nvim-orgmode/orgmode"
+  },
   ["plenary.nvim"] = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/plenary.nvim",
@@ -225,6 +255,11 @@ _G.packer_plugins = {
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/trouble.nvim",
     url = "https://github.com/folke/trouble.nvim"
   },
+  ["vim-firestore"] = {
+    loaded = true,
+    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/vim-firestore",
+    url = "https://github.com/delphinus/vim-firestore"
+  },
   ["vim-fugitive"] = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/vim-fugitive",
@@ -234,14 +269,19 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/vim-polyglot",
     url = "https://github.com/sheerun/vim-polyglot"
+  },
+  ["zepl.vim"] = {
+    loaded = true,
+    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/zepl.vim",
+    url = "https://github.com/axvr/zepl.vim"
   }
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: nvim-ts-autotag
-time([[Config for nvim-ts-autotag]], true)
-try_loadstring("\27LJ\1\2=\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\20nvim-ts-autotag\frequire\0", "config", "nvim-ts-autotag")
-time([[Config for nvim-ts-autotag]], false)
+-- Config for: octo.nvim
+time([[Config for octo.nvim]], true)
+try_loadstring("\27LJ\1\0022\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\tocto\frequire\0", "config", "octo.nvim")
+time([[Config for octo.nvim]], false)
 -- Config for: gitsigns.nvim
 time([[Config for gitsigns.nvim]], true)
 try_loadstring("\27LJ\1\2:\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\rgitsigns\frequire\0", "config", "gitsigns.nvim")
@@ -254,14 +294,14 @@ time([[Config for nvim-colorizer.lua]], false)
 time([[Config for nvim-notify]], true)
 try_loadstring("\27LJ\1\0022\0\0\3\0\3\0\0064\0\0\0004\1\2\0%\2\1\0>\1\2\2:\1\1\0G\0\1\0\frequire\vnotify\bvim\0", "config", "nvim-notify")
 time([[Config for nvim-notify]], false)
--- Config for: octo.nvim
-time([[Config for octo.nvim]], true)
-try_loadstring("\27LJ\1\0022\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\tocto\frequire\0", "config", "octo.nvim")
-time([[Config for octo.nvim]], false)
 -- Config for: neogit
 time([[Config for neogit]], true)
 try_loadstring("\27LJ\1\0028\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\vneogit\frequire\0", "config", "neogit")
 time([[Config for neogit]], false)
+-- Config for: nvim-ts-autotag
+time([[Config for nvim-ts-autotag]], true)
+try_loadstring("\27LJ\1\2=\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\20nvim-ts-autotag\frequire\0", "config", "nvim-ts-autotag")
+time([[Config for nvim-ts-autotag]], false)
 if should_profile then save_profiles() end
 
 end)

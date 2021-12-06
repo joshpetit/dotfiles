@@ -36,7 +36,6 @@ function exports.reload()
                 R(name)
             end)
 
-            return true
         end
     }
 
@@ -69,7 +68,6 @@ function exports.cooler()
                 AsyncRun("xdg-open", entry.value)
 
             end)
-
             return true
         end
     }

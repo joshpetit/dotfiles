@@ -11,6 +11,13 @@ main() {
 	echo ok
 }
 
+function create_ec() {
+	cd "/home/joshu/dotfiles/arch/.config/nvim/"
+	session="conf"
+	tmux new-session -d -s $session -n nvim
+	tmux send-keys -t $session:code "nvim" ENTER
+}
+
 function quit_woto() {
 	tmux kill-session -t woto/be > /dev/null
 	tmux kill-session -t woto/fe > /dev/null

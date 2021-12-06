@@ -34,7 +34,8 @@ cmp.setup({
         {name = 'nvim_lsp'}, -- { name = 'vsnip' }, -- For vsnip users.
         -- {name = 'luasnip'}, -- For luasnip users.
         -- { name = 'ultisnips' }, -- For ultisnips users.
-        {name = 'snippy'} -- For snippy users.
+        {name = 'snippy'}, -- For snippy users.
+        {name = 'orgmode'},
     }, {{name = 'buffer'}})
 })
 
@@ -101,7 +102,7 @@ local on_attach = function(client, bufnr)
     ts_utils.setup_client(client)
 end
 
-local servers = {'tsserver'}
+local servers = {'tsserver', 'jdtls'}
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup {
         capabilities = capabilities,

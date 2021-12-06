@@ -12,7 +12,7 @@ nmap('<leader>dL', '<cmd>b __FLUTTER_DEV_LOG__<cr>')
 
 function GoToTestFile()
     local file = vim.fn.expand('%')
-    local testFile = 'test' .. string.sub(file, 4, -6) .. '_test.dart'
-    print(testFile)
+    local relative_path = string.sub(file, 4, -6)
+    local testFile = 'test' .. relative_path .. '_test.dart'
     vim.cmd("split " .. testFile)
 end
