@@ -1,5 +1,5 @@
 local lib = require 'nvim-tree.lib'
-require('utils')
+require('mystuff/utils')
 require('nightfox').load('nightfox', {transparent = true})
 vim.notify = require 'notify'
 
@@ -126,7 +126,7 @@ require'nvim-treesitter.configs'.setup {
 }
 
 require('orgmode').setup({
-    org_agenda_files = {'~/sync/org/**/*'},
+    org_agenda_files = {'~/sync/org/**/*', '~/sync/org/refile.org'},
     org_default_notes_file = '~/sync/org/refile.org',
     org_deadline_warning_days = 31,
     org_agenda_start_on_weekday = 7,

@@ -287,3 +287,4 @@ bindsym $mod+Ctrl+a exec /home/joshu/.local/bin/scriptlauncher
 bindsym $mod+Shift+S scratchpad show
 bindsym $mod+Ctrl+S move scratchpad
 bindsym $mod+Ctrl+c exec copyq menu
+bindsym $mod+Ctrl+e exec rofi -show emoji -modi emoji

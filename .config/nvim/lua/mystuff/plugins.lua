@@ -74,4 +74,5 @@ return require('packer').startup(function()
     use {'axvr/zepl.vim'}
     use {"kraftwerk28/gtranslate.nvim", requires = {"nvim-lua/plenary.nvim"}}
     use {'delphinus/vim-firestore'}
+    use {'stevearc/dressing.nvim'}
 end)

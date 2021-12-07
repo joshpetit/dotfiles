@@ -1,4 +1,4 @@
-require('utils')
+require('mystuff/utils')
 local exports = {}
 
 function exports.reload()
