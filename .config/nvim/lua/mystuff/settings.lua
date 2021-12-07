@@ -24,9 +24,7 @@ local prettierFormatter = {
     end
 }
 
-require('neogit').setup {
-  disable_commit_confirmation = true,
-}
+require('neogit').setup {disable_commit_confirmation = true}
 
 require('formatter').setup {
     filetype = {
@@ -38,7 +36,11 @@ require('formatter').setup {
         ['creole.markdown'] = prettierFormatter,
         java = {
             function()
-                return {exe = "google-java-format", stdin = true}
+                return {
+                    exe = "google-java-format",
+                    args = {vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))},
+                    stdin = true
+                }
             end
         },
         lua = {

@@ -30,8 +30,8 @@ m.nmap('<leader>tn', '<cmd>TOhtml<CR>')
 m.nmap('<leader>nh', '<cmd>noh<CR>')
 m.nmap('<leader>nc', '<cmd>CommentToggle<CR>')
 
-m.nmap('<leader>sv', '<cmd>:lua require("telescopic").reload()<CR>')
-m.nmap('<c-f>', '<cmd>:lua require("telescopic").cooler()<CR>')
+m.nmap('<leader>sv', '<cmd>:lua require("mystuff/telescopic").reload()<CR>')
+m.nmap('<c-f>', '<cmd>:lua require("mystuff/telescopic").cooler()<CR>')
 
 m.nmap('<leader>gmo', '<cmd>!git merge origin/master<CR>')
 m.nmap('<leader>gpo', '<cmd>!git push -u origin HEAD<CR>')
@@ -40,4 +40,3 @@ m.nmap('<leader>gpl', '<cmd>!git pull<CR>')
 m.nmap('<leader>gb', '<cmd>Git blame<CR>')
 m.nmap('Y', 'y$')
 m.nmap('<leader>ev', '<cmd>e ~/.config/nvim/init.lua<ENTER>')
-
