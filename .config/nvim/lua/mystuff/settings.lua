@@ -175,3 +175,4 @@ require('orgmode').setup({
 vim.cmd([[
     let g:mkdp_filetypes = ['markdown', 'org']
     ]])
+

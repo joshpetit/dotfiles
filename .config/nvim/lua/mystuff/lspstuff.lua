@@ -35,7 +35,7 @@ cmp.setup({
         -- {name = 'luasnip'}, -- For luasnip users.
         -- { name = 'ultisnips' }, -- For ultisnips users.
         {name = 'snippy'}, -- For snippy users.
-        {name = 'orgmode'},
+        {name = 'orgmode'}
     }, {{name = 'buffer'}})
 })
 
@@ -57,6 +57,8 @@ local on_attach = function(client, bufnr)
     local function buf_set_option(...)
         vim.api.nvim_buf_set_option(bufnr, ...)
     end
+
+    require"lsp_signature".on_attach()
 
     -- Enable completion triggered by <c-x><c-o>
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -102,7 +104,8 @@ local on_attach = function(client, bufnr)
     ts_utils.setup_client(client)
 end
 
-local servers = {'tsserver', 'jdtls'}
+
+local servers = {'tsserver', 'jdtls', 'tailwindcss'}
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup {
         capabilities = capabilities,
@@ -110,7 +113,8 @@ for _, lsp in ipairs(servers) do
         flags = {debounce_text_changes = 150}
     }
 end
--- imap('<c-j>','<Down>')
+
+--imap('<c-j>','<Down>')
 
 require("flutter-tools").setup {
     lsp = {
@@ -121,7 +125,7 @@ require("flutter-tools").setup {
     }
 }
 
-require'lspconfig'.sumneko_lua.setup {
+local luaLspConfig = {
     cmd = {'lua-language-server'},
     capabilities = capabilities,
     on_attach = on_attach,
@@ -148,4 +152,7 @@ require'lspconfig'.sumneko_lua.setup {
     }
 }
 
-require('lspconfig').tailwindcss.setup {}
+local luadev = require("lua-dev").setup({lspconfig = luaLspConfig})
+
+require'lspconfig'.sumneko_lua.setup(luaLspConfig)
+-- require'lspconfig'.sumneko_lua.setup(luadev)

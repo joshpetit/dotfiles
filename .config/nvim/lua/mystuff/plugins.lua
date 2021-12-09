@@ -39,8 +39,8 @@ return require('packer').startup(function()
     }
     use {'pwntester/octo.nvim', config = function() require'octo'.setup() end}
     use {
-        "terrortylor/nvim-comment",
-        require('nvim_comment').setup {operator_mapping = "<leader>nc"}
+        'numToStr/Comment.nvim',
+        config = function() require('Comment').setup() end
     }
     use {
         'rcarriga/nvim-notify',
@@ -75,4 +75,7 @@ return require('packer').startup(function()
     use {"kraftwerk28/gtranslate.nvim", requires = {"nvim-lua/plenary.nvim"}}
     use {'delphinus/vim-firestore'}
     use {'stevearc/dressing.nvim'}
+    use {'ray-x/lsp_signature.nvim'}
+    use {'simrat39/symbols-outline.nvim'}
+    use "folke/lua-dev.nvim"
 end)
