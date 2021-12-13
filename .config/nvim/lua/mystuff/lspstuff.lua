@@ -104,6 +104,13 @@ local on_attach = function(client, bufnr)
     ts_utils.setup_client(client)
 end
 
+local lsp_installer = require("nvim-lsp-installer")
+
+lsp_installer.on_server_ready(function(server)
+    local opts = {capabilities = capabilities, on_attach = on_attach}
+
+    server:setup(opts)
+end)
 
 local servers = {'tsserver', 'jdtls', 'tailwindcss'}
 for _, lsp in ipairs(servers) do
@@ -114,7 +121,7 @@ for _, lsp in ipairs(servers) do
     }
 end
 
---imap('<c-j>','<Down>')
+-- imap('<c-j>','<Down>')
 
 require("flutter-tools").setup {
     lsp = {

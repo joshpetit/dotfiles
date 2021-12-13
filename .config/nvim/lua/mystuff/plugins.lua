@@ -13,17 +13,13 @@ return require('packer').startup(function()
         'hrsh7th/nvim-cmp',
         requires = {
             'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path',
-            'hrsh7th/cmp-cmdline', 'neovim/nvim-lspconfig', 'L3MON4D3/LuaSnip'
+            'hrsh7th/cmp-cmdline', 'neovim/nvim-lspconfig',
+            'dcampos/nvim-snippy', 'dcampos/cmp-snippy'
         }
     }
     use {
         'nvim-telescope/telescope.nvim',
         requires = {{'nvim-lua/plenary.nvim'}}
-    }
-
-    use {
-        'nvim-telescope/telescope-media-files.nvim',
-        requires = {{'nvim-telescope/telescope.nvim'}}
     }
 
     use {
@@ -64,7 +60,6 @@ return require('packer').startup(function()
     use "tversteeg/registers.nvim"
     use {'tpope/vim-fugitive'}
     use {"dcampos/nvim-snippy"}
-    use {"dcampos/cmp-snippy"}
     use {"mfussenegger/nvim-dap"}
     use {"Pocco81/DAPInstall.nvim"}
     use {"rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"}}
@@ -78,4 +73,22 @@ return require('packer').startup(function()
     use {'ray-x/lsp_signature.nvim'}
     use {'simrat39/symbols-outline.nvim'}
     use "folke/lua-dev.nvim"
+    use "Pocco81/TrueZen.nvim"
+    -- For some reason it auto changes my dir which is super annoying
+    -- use {
+    --     "ahmedkhalf/project.nvim",
+    --     config = function()
+    --
+    -- require('telescope').load_extension('projects')
+    --         require("project_nvim").setup {
+    --             show_hidden = true -- or leave it empty to use the default settings
+    --             -- refer to the configuration section below
+    --         }
+    --     end
+    -- }
+    use {
+        'lewis6991/impatient.nvim',
+        config = function() require('impatient') end
+    }
+    use {"vuki656/package-info.nvim", requires = "MunifTanjim/nui.nvim"}
 end)

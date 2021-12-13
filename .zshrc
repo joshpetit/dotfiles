@@ -16,6 +16,7 @@ alias gcb='git checkout -b '
 alias gpl='git pull'
 alias gcl='git checkout -'
 alias src='source ~/.zshrc'
+alias envim='nvim ~/.config/nvim/'
 
 alias lnvm='source /usr/share/nvm/init-nvm.sh'
 alias n='nvim'

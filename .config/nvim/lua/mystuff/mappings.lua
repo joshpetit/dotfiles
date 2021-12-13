@@ -30,7 +30,7 @@ m.nmap('<leader>tn', '<cmd>TOhtml<CR>')
 m.nmap('<leader>nh', '<cmd>noh<CR>')
 m.nmap('<leader>nc', '<cmd>CommentToggle<CR>')
 
-m.nmap('<leader>sv', '<cmd>:lua require("mystuff/telescopic").reload()<CR>')
+--m.nmap('<leader>sv', '<cmd>:lua require("mystuff/telescopic").reload()<CR>')
 m.nmap('<c-f>', '<cmd>:lua require("mystuff/telescopic").cooler()<CR>')
 
 m.nmap('<leader>gmo', '<cmd>!git merge origin/master<CR>')
@@ -39,6 +39,24 @@ m.nmap('<leader>gpu', '<cmd>!git push origin HEAD<CR>')
 m.nmap('<leader>gpl', '<cmd>!git pull<CR>')
 m.nmap('<leader>gb', '<cmd>Git blame<CR>')
 m.nmap('<leader>ev', '<cmd>e ~/.config/nvim/init.lua<ENTER>')
-m.nmap('<leader>css', '<cmd>SymbolsOutline<cr>')
+m.nmap('<leader>cls', '<cmd>SymbolsOutline<cr>')
+m.nmap('<F11>', '<cmd>TZAtaraxis<cr>')
 -- m.nmap("<leader>nc", "<Plug>kommentary_jine_default")
 -- m.vmap("<leader>nc", "<Plug>kommentary_visual_default")
+--
+function _G.ReloadConfig()
+    local hls_status = vim.v.hlsearch
+    for name,_ in pairs(package.loaded) do
+        if name:match('^mystuff') then
+            package.loaded[name] = nil
+        end
+    end
+    dofile(vim.env.MYVIMRC)
+    if hls_status == 0 then
+        vim.opt.hlsearch = false
+    end
+    print('sup')
+end
+
+m.nmap('<leader>rv', '<cmd>lua ReloadConfig()<cr>')
+vim.cmd('command! ReloadConfig lua ReloadConfig()')

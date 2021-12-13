@@ -17,7 +17,7 @@ function exports.reload()
     local prompt_title = "~ neovim modules ~"
 
     -- sets the path to the lua folder
-    local path = "~/.config/nvim/lua"
+    local path = "~/.config/nvim/lua/mystuff"
 
     local opts = {
         prompt_title = prompt_title,

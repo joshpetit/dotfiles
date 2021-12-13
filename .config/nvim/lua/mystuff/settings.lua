@@ -28,6 +28,7 @@ require('neogit').setup {disable_commit_confirmation = true}
 
 require('formatter').setup {
     filetype = {
+        jsonc = prettierFormatter,
         javascript = prettierFormatter,
         javascriptreact = prettierFormatter,
         typescript = prettierFormatter,
@@ -63,7 +64,10 @@ require('formatter').setup {
     }
 }
 
+vim.g.nvim_tree_respect_buf_cwd = 1
 require'nvim-tree'.setup {
+    update_cwd = true,
+    update_focused_file = {enable = true, update_cwd = true},
     disable_netrw = false,
     hijack_netrw = false,
     view = {
@@ -128,7 +132,7 @@ require'nvim-treesitter.configs'.setup {
 }
 
 require('orgmode').setup({
-    org_agenda_files = {'~/sync/org/**/*', '~/sync/org/refile.org'},
+    org_agenda_files = {'~/sync/org/**/*'},
     org_default_notes_file = '~/sync/org/refile.org',
     org_deadline_warning_days = 31,
     org_agenda_start_on_weekday = 7,
@@ -175,4 +179,5 @@ require('orgmode').setup({
 vim.cmd([[
     let g:mkdp_filetypes = ['markdown', 'org']
     ]])
+
 
