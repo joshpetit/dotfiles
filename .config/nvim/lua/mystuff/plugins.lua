@@ -91,4 +91,6 @@ return require('packer').startup(function()
         config = function() require('impatient') end
     }
     use {"vuki656/package-info.nvim", requires = "MunifTanjim/nui.nvim"}
+    use {"lervag/vimtex"}
+    use {"jamestthompson3/nvim-remote-containers"}
 end)

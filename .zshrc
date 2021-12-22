@@ -19,6 +19,7 @@ alias src='source ~/.zshrc'
 alias envim='nvim ~/.config/nvim/'
 
 alias lnvm='source /usr/share/nvm/init-nvm.sh'
+alias lnvmx='source /usr/share/nvm/init-nvm.sh && nvm use'
 alias n='nvim'
 alias cleanup='pacman -Rs $(pacman -Qtdq)'
 alias shp='ssh my.phone -p 8022'

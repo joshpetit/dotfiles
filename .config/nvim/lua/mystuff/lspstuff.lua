@@ -91,8 +91,7 @@ local on_attach = function(client, bufnr)
                    '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
     buf_set_keymap('n', '<leader>c.',
                    '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-    buf_set_keymap('n', '<leader>cld',
-                   '<cmd>Telescope lsp_workspace_diagnostics<CR>', opts)
+    buf_set_keymap('n', '<leader>cld', '<cmd>Telescope diagnostics<CR>', opts)
     -- LSP formatting unreliable
     -- buf_set_keymap('n', '<leader>ff', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
     buf_set_keymap('v', '<leader>ca',
@@ -117,7 +116,7 @@ for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup {
         capabilities = capabilities,
         on_attach = on_attach,
-        flags = {debounce_text_changes = 150}
+        flags = {debounce_text_changes = 150},
     }
 end
 

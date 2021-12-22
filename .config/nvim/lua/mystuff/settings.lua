@@ -3,6 +3,8 @@ require('mystuff/utils')
 require('nightfox').load('nightfox', {transparent = true})
 vim.notify = require 'notify'
 
+vim.o.timeout = false;
+
 vim.g.mapleader = " "
 vim.o.mouse = 'a'
 vim.o.relativenumber = true
@@ -12,7 +14,7 @@ vim.o.number = true
 local prettierFormatter = {
     -- prettier
     function()
-        return {
+return {
             exe = "prettier",
             args = {
                 "--stdin-filepath",
@@ -138,21 +140,11 @@ require('orgmode').setup({
     org_agenda_start_on_weekday = 7,
     org_highlight_latex_and_related = 'native',
     org_agenda_templates = {
-        j = {
-            description = 'Journal',
-            template = '\n*** %<%Y-%m-%d> %<%A>\n**** %U\n\n%?',
-            target = '~/sync/org/journal.org'
+        m = {
+            description = 'Working on Ms5',
+            template = [[** Working on Ms5 %<%Y-%m-%d>\n%?\n]],
+            target = '~/sync/org/refile.org'
         },
-        p = {
-            description = 'Prayer Request',
-            template = '\n*** %<%Y-%m-%d> %<%A>\n**** %U\n\n%?',
-            target = '~/sync/org/prayers.org'
-        },
-        e = {
-            description = 'Egw book Education',
-            template = '\n*** %<%Y-%m-%d> %<%A>\n**** %U\n\n%?',
-            target = '~/sync/org/egw-education.org'
-        }
     },
     org_custom_expots = {
         z = {
@@ -181,3 +173,26 @@ vim.cmd([[
     ]])
 
 
+local dap_install = require('dap-install')
+dap_install.config('jsnode', {})
+local dap = require('dap')
+
+dap.configurations.typescript = {
+  {
+    name = 'Run',
+    type = 'node2',
+    request = 'launch',
+    program = '${file}',
+    cwd = vim.fn.getcwd(),
+    sourceMaps = true,
+    protocol = 'inspector',
+    console = 'integratedTerminal',
+    outFiles = {"${workspaceFolder}/lib/**/*.js"},
+  },
+  {
+    name = 'Attach to process',
+    type = 'node2',
+    request = 'attach',
+    processId = require'dap.utils'.pick_process,
+  },
+}
