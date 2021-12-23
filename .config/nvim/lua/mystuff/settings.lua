@@ -2,6 +2,9 @@ local lib = require 'nvim-tree.lib'
 require('mystuff/utils')
 require('nightfox').load('nightfox', {transparent = true})
 vim.notify = require 'notify'
+vim.cmd([[
+let test#strategy = "dispatch"
+]])
 
 vim.o.timeout = false;
 
@@ -14,7 +17,7 @@ vim.o.number = true
 local prettierFormatter = {
     -- prettier
     function()
-return {
+        return {
             exe = "prettier",
             args = {
                 "--stdin-filepath",
@@ -144,7 +147,7 @@ require('orgmode').setup({
             description = 'Working on Ms5',
             template = [[** Working on Ms5 %<%Y-%m-%d>\n%?\n]],
             target = '~/sync/org/refile.org'
-        },
+        }
     },
     org_custom_expots = {
         z = {
@@ -172,27 +175,27 @@ vim.cmd([[
     let g:mkdp_filetypes = ['markdown', 'org']
     ]])
 
-
 local dap_install = require('dap-install')
 dap_install.config('jsnode', {})
 local dap = require('dap')
 
 dap.configurations.typescript = {
-  {
-    name = 'Run',
-    type = 'node2',
-    request = 'launch',
-    program = '${file}',
-    cwd = vim.fn.getcwd(),
-    sourceMaps = true,
-    protocol = 'inspector',
-    console = 'integratedTerminal',
-    outFiles = {"${workspaceFolder}/lib/**/*.js"},
-  },
-  {
-    name = 'Attach to process',
-    type = 'node2',
-    request = 'attach',
-    processId = require'dap.utils'.pick_process,
-  },
+    {
+        name = 'Run',
+        type = 'node2',
+        request = 'launch',
+        program = '${file}',
+        cwd = vim.fn.getcwd(),
+        sourceMaps = true,
+        protocol = 'inspector',
+        console = 'integratedTerminal',
+        outFiles = {"${workspaceFolder}/lib/**/*.js"}
+    }, {
+        name = 'Attach to process',
+        type = 'node2',
+        request = 'attach',
+        processId = require'dap.utils'.pick_process
+    }
 }
+
+require('lsp_signature').setup({floating_window = false})

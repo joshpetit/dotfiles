@@ -70,7 +70,8 @@ return require('packer').startup(function()
     use {"kraftwerk28/gtranslate.nvim", requires = {"nvim-lua/plenary.nvim"}}
     use {'delphinus/vim-firestore'}
     use {'stevearc/dressing.nvim'}
-    use {'ray-x/lsp_signature.nvim'}
+    --Gets a little annoying
+    --use {'ray-x/lsp_signature.nvim'}
     use {'simrat39/symbols-outline.nvim'}
     use "folke/lua-dev.nvim"
     use "Pocco81/TrueZen.nvim"
@@ -93,4 +94,6 @@ return require('packer').startup(function()
     use {"vuki656/package-info.nvim", requires = "MunifTanjim/nui.nvim"}
     use {"lervag/vimtex"}
     use {"jamestthompson3/nvim-remote-containers"}
+    use {'vim-test/vim-test'}
+    use {'tpope/vim-dispatch'}
 end)

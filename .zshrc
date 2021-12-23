@@ -12,7 +12,8 @@ alias ssh="TERM=xterm-256color ssh"
 #bindkey "^X^E" edit-command-line
 #git
 alias gpo='git push -u origin HEAD'
-alias gcb='git checkout -b '
+alias gcnb='git checkout -b '
+alias gcb='git checkout '
 alias gpl='git pull'
 alias gcl='git checkout -'
 alias src='source ~/.zshrc'

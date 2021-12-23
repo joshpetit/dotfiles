@@ -292,6 +292,11 @@ _G.packer_plugins = {
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/trouble.nvim",
     url = "https://github.com/folke/trouble.nvim"
   },
+  ["vim-dispatch"] = {
+    loaded = true,
+    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/vim-dispatch",
+    url = "https://github.com/tpope/vim-dispatch"
+  },
   ["vim-firestore"] = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/vim-firestore",
@@ -306,6 +311,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/vim-polyglot",
     url = "https://github.com/sheerun/vim-polyglot"
+  },
+  ["vim-test"] = {
+    loaded = true,
+    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/vim-test",
+    url = "https://github.com/vim-test/vim-test"
   },
   vimtex = {
     loaded = true,

@@ -57,3 +57,9 @@ m.nmap('<leader>de', "<cmd>lua require'dap'.terminate(); require'dapui'.close()<
 m.nmap('<leader>nc', "<cmd>lua require('notify').dismiss({pending = true})<cr>")
 m.nmap('<leader>cQ', "<cmd>LspStop<cr>")
 m.nmap('<leader>cS', "<cmd>LspStart<cr>")
+
+m.nmap('<leader>tf', "<cmd>TestFile<cr>")
+m.nmap('<leader>tl', "<cmd>TestLast<cr>")
+m.nmap('<leader>tn', "<cmd>TestNearest<cr>")
+m.nmap('<leader>tt', "<cmd>TestSuite<cr>")
+m.nmap('<leader>tv', "<cmd>TestVisit<cr>")
