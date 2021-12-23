@@ -1,8 +1,8 @@
 local map = require('mystuff/mapping_utils')
 vim.o.ignorecase = true;
 vim.o.infercase = true;
-vim.o.spellfile = '~/.config/nvim/spell/creole.utf-8.add';
-vim.o.dictionary = '~/.config/nvim/spell/creole.utf-8.add';
+vim.o.spellfile = '/home/joshu/.config/nvim/spell/creole.utf-8.add';
+vim.o.dictionary = '/home/joshu/.config/nvim/spell/creole.utf-8.add';
 vim.opt_local.complete:append('k');
 vim.opt_local.iskeyword:append('-');
 
