@@ -12,11 +12,11 @@ map.nmap('<leader>gts',
 map.nmap('<leader>gtz',
          '<cmd>!xdg-open https://duke.zoom.us/j/95035654091 & disown<CR>')
 map.nmap('<leader>gta',
-         '<cmd>!zathura --fork "~/creole/books/Ann Pale Kreyol.pdf"')
+         '<cmd>!zathura --fork "~/creole/books/Ann Pale Kreyol.pdf"<CR>')
 map.nmap('<leader>gtt',
          '<cmd>!xdg-open "https://translate.google.com/?sl=en&tl=ht&op=translate" & disown<CR>')
 
 map.nmap('<leader>ttc', '<cmd>Translate ht<cr>', {buffer = true})
-map.vmap('<leader>ttc', '<cmd>Translate ht<cr>', {buffer = true})
+map.vmap('<leader>ttc', '<Esc>:Translate ht<cr>gv', {buffer = true})
 map.nmap('<leader>tte', '<cmd>Translate en<cr>', {buffer = true})
-map.vmap('<leader>tte', '<cmd>Translate en<cr>', {buffer = true})
+map.vmap('<leader>tte', '<Esc>:Translate en<cr>gv', {buffer = true})

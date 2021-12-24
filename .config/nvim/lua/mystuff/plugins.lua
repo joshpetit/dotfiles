@@ -71,7 +71,7 @@ return require('packer').startup(function()
     use {'delphinus/vim-firestore'}
     use {'stevearc/dressing.nvim'}
     --Gets a little annoying
-    --use {'ray-x/lsp_signature.nvim'}
+    use {'ray-x/lsp_signature.nvim'}
     use {'simrat39/symbols-outline.nvim'}
     use "folke/lua-dev.nvim"
     use "Pocco81/TrueZen.nvim"
