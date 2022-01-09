@@ -152,7 +152,7 @@ require('orgmode').setup({
     org_agenda_templates = {
         m = {
             description = 'Working on Ms5',
-            template = [[** Working on Ms5 %<%Y-%m-%d>\n%?\n]],
+            template = '** Working on Ms5 %<%Y-%m-%d>\nSCHEDULED: %t\n:LOGBOOK:\nCLOCK: %U\n:END:',
             target = '~/sync/org/refile.org'
         }
     },
