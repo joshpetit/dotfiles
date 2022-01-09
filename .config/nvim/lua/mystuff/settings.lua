@@ -59,6 +59,12 @@ require('formatter').setup {
                 return {exe = "dart", args = {"format"}, stdin = true}
             end
         },
+        -- org = {
+        --     -- Shell Script Formatter
+        --     function()
+        --         return {exe = "go-org", args = {"render org"}, stdin = true}
+        --     end
+        -- },
         racket = {
             -- Shell Script Formatter
             function()
@@ -139,9 +145,12 @@ require'nvim-treesitter.configs'.setup {
 require('orgmode').setup({
     org_agenda_files = {'~/sync/org/**/*'},
     org_default_notes_file = '~/sync/org/refile.org',
-    org_deadline_warning_days = 31,
+    org_deadline_warning_days = 5,
     org_agenda_start_on_weekday = 7,
     org_highlight_latex_and_related = 'native',
+    notifications = {
+        enabled = true,
+    },
     org_agenda_templates = {
         m = {
             description = 'Working on Ms5',
@@ -198,4 +207,20 @@ dap.configurations.typescript = {
     }
 }
 
-require('lsp_signature').setup({floating_window = false})
+require('telescope').setup {
+    extensions = {
+        fzf = {
+            fuzzy = true, -- false will only do exact matching
+            override_generic_sorter = true, -- override the generic sorter
+            override_file_sorter = true, -- override the file sorter
+            case_mode = "smart_case" -- or "ignore_case" or "respect_case"
+        }
+    }
+}
+
+require('telescope').load_extension('fzf')
+
+require('lsp_signature').setup({floating_window = false, toggle_key = '<C-b>'})
+
+require("toggleterm").setup {}
+

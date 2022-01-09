@@ -49,14 +49,16 @@ function create_ms5() {
 	cd "/home/joshu/projects/petit.dev/milestone5/firebase/"
 	session_name="ms5/firebase/rules"
 	tmux new-session -d -s $session_name -n code
-	tmux new-window -t $session_name -n output
-	tmux send-keys -t $session_name:code "nvim -S Session.vim" ENTER
-	tmux send-keys -t $session_name:output "firebase emulators:start --inspect-functions --import=./export --export-on-exit=./export " ENTER
 
 	cd "/home/joshu/projects/petit.dev/milestone5/firebase/functions/"
 	session_name="ms5/firebase/functions"
 	tmux new-session -d -s $session_name -n code
 	tmux send-keys -t $session_name:code "nvim -S Session.vim" ENTER
+
+	tmux new-window -t $session_name -n output
+	tmux send-keys -t $session_name:code "nvim -S Session.vim" ENTER
+	tmux send-keys -t $session_name:output "cd .." ENTER
+	tmux send-keys -t $session_name:output "firebase emulators:start --inspect-functions --import=./export --export-on-exit=./export" ENTER
 
 	tmux attach -t "ms5/app"; tmux select-window -t code
 }

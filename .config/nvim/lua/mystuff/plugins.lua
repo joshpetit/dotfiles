@@ -28,6 +28,7 @@ return require('packer').startup(function()
         config = function() require'neogit'.setup {} end
     }
     use {'mhartington/formatter.nvim'}
+    -- Git diffs on the column
     use {
         'lewis6991/gitsigns.nvim',
         requires = {'nvim-lua/plenary.nvim'},
@@ -66,34 +67,33 @@ return require('packer').startup(function()
     use {'nvim-treesitter/nvim-treesitter'}
     use {'nvim-orgmode/orgmode'}
     use {'iamcco/markdown-preview.nvim'}
-    use {'axvr/zepl.vim'}
+    -- use {'axvr/zepl.vim'}
     use {"kraftwerk28/gtranslate.nvim", requires = {"nvim-lua/plenary.nvim"}}
     use {'delphinus/vim-firestore'}
     use {'stevearc/dressing.nvim'}
-    --Gets a little annoying
+    -- Gets a little annoying
     use {'ray-x/lsp_signature.nvim'}
     use {'simrat39/symbols-outline.nvim'}
     use "folke/lua-dev.nvim"
+    -- F11, focused mode!
     use "Pocco81/TrueZen.nvim"
-    -- For some reason it auto changes my dir which is super annoying
-    -- use {
-    --     "ahmedkhalf/project.nvim",
-    --     config = function()
-    --
-    -- require('telescope').load_extension('projects')
-    --         require("project_nvim").setup {
-    --             show_hidden = true -- or leave it empty to use the default settings
-    --             -- refer to the configuration section below
-    --         }
-    --     end
-    -- }
+    -- Make vim start faster!
     use {
         'lewis6991/impatient.nvim',
         config = function() require('impatient') end
     }
-    use {"vuki656/package-info.nvim", requires = "MunifTanjim/nui.nvim"}
+    -- use {"vuki656/package-info.nvim", requires = "MunifTanjim/nui.nvim"}
     use {"lervag/vimtex"}
-    use {"jamestthompson3/nvim-remote-containers"}
+    -- use {"jamestthompson3/nvim-remote-containers"}
     use {'vim-test/vim-test'}
     use {'tpope/vim-dispatch'}
+    use {
+        "rcarriga/vim-ultest",
+        requires = {"vim-test/vim-test"},
+        run = ":UpdateRemotePlugins"
+    }
+    use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
+    use 'tpope/vim-eunuch' -- SudoWrite!
+    use 'junegunn/fzf.vim'
+    --use 'jalvesaq/nvim-r'
 end)

@@ -87,10 +87,10 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<leader>csd',
                    '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',
                    opts)
-    buf_set_keymap('n', '<leader>c,',
-                   '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-    buf_set_keymap('n', '<leader>c.',
-                   '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+    buf_set_keymap('n', '<leader>c,', '<cmd>lua vim.diagnostic.goto_prev()<CR>',
+                   opts)
+    buf_set_keymap('n', '<leader>c.', '<cmd>lua vim.diagnostic.goto_next()<CR>',
+                   opts)
     buf_set_keymap('n', '<leader>cld', '<cmd>Telescope diagnostics<CR>', opts)
     -- LSP formatting unreliable
     -- buf_set_keymap('n', '<leader>ff', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
@@ -116,9 +116,19 @@ for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup {
         capabilities = capabilities,
         on_attach = on_attach,
-        flags = {debounce_text_changes = 150},
+        flags = {debounce_text_changes = 150}
     }
 end
+
+-- lspconfig['languageserver'].setup {
+--     capabilities = capabilities,
+--     on_attach = on_attach,
+--     flags = {debounce_text_changes = 150},
+--     cmd = '/usr/bin/R',
+--     args = {'--slave', '-e', 'languageserver::run()'},
+--     filetypes = {'r'},
+--     single_file_support = true,
+-- }
 
 -- imap('<c-j>','<Down>')
 
@@ -158,7 +168,8 @@ local luaLspConfig = {
     }
 }
 
-local luadev = require("lua-dev").setup({lspconfig = luaLspConfig})
+--local luadev = require("lua-dev").setup({lspconfig=luaLspConfig})
+local luadev = require("lua-dev").setup({})
 
-require'lspconfig'.sumneko_lua.setup(luaLspConfig)
--- require'lspconfig'.sumneko_lua.setup(luadev)
+--require'lspconfig'.sumneko_lua.setup(luaLspConfig)
+ require'lspconfig'.sumneko_lua.setup(luadev)

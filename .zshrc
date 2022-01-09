@@ -18,6 +18,7 @@ alias gpl='git pull'
 alias gcl='git checkout -'
 alias src='source ~/.zshrc'
 alias envim='nvim ~/.config/nvim/'
+alias eorg='nvim ~/sync/org'
 
 alias lnvm='source /usr/share/nvm/init-nvm.sh'
 alias lnvmx='source /usr/share/nvm/init-nvm.sh && nvm use'

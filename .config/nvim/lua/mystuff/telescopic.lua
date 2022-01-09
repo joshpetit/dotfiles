@@ -75,4 +75,5 @@ function exports.cooler()
     require('telescope.builtin').find_files(opts)
 end
 
+
 return exports;

@@ -3,6 +3,7 @@ local nmap = function(keys, command)
 end
 
 nmap('<leader>ra', '<cmd>FlutterRun<cr>')
+nmap('<leader>rw', '<cmd>FlutterRun -t lib/widgetbook/main.dart -d linux<cr>')
 nmap('<leader>rf', '<cmd>!dart %<cr>')
 nmap('<leader>et', '<cmd>lua GoToTestFile()<cr>')
 nmap('<leader>rr', '<cmd>FlutterReload<cr>')

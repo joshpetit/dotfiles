@@ -1,6 +1,6 @@
 local m = require('mystuff/mapping_utils')
 
-m.nmap('<leader>rf', '<cmd>!ts-node %<cr>', {buffer = true})
+m.nmap('<leader>rf', '<cmd>!esr %<cr>', {buffer = true})
 m.nmap('<leader>tf', '<cmd>CocCommand jest.fileTest<cr>', {buffer = true})
 m.nmap('<leader>ts', '<cmd>CocCommand jest.singleTest<cr>', {buffer = true})
 m.nmap('<leader>tt', '<cmd>CocCommand jest.projectTest<cr>', {buffer = true})

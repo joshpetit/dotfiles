@@ -125,6 +125,11 @@ _G.packer_plugins = {
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/formatter.nvim",
     url = "https://github.com/mhartington/formatter.nvim"
   },
+  ["fzf.vim"] = {
+    loaded = true,
+    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/fzf.vim",
+    url = "https://github.com/junegunn/fzf.vim"
+  },
   ["gitsigns.nvim"] = {
     config = { "\27LJ\1\2:\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\rgitsigns\frequire\0" },
     loaded = true,
@@ -141,6 +146,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/impatient.nvim",
     url = "https://github.com/lewis6991/impatient.nvim"
+  },
+  ["lsp_signature.nvim"] = {
+    loaded = true,
+    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim",
+    url = "https://github.com/ray-x/lsp_signature.nvim"
   },
   ["lua-dev.nvim"] = {
     loaded = true,
@@ -162,11 +172,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/nightfox.nvim",
     url = "https://github.com/EdenEast/nightfox.nvim"
-  },
-  ["nui.nvim"] = {
-    loaded = true,
-    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/nui.nvim",
-    url = "https://github.com/MunifTanjim/nui.nvim"
   },
   ["nvim-cmp"] = {
     loaded = true,
@@ -210,11 +215,6 @@ _G.packer_plugins = {
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/nvim-notify",
     url = "https://github.com/rcarriga/nvim-notify"
   },
-  ["nvim-remote-containers"] = {
-    loaded = true,
-    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/nvim-remote-containers",
-    url = "https://github.com/jamestthompson3/nvim-remote-containers"
-  },
   ["nvim-snippy"] = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/nvim-snippy",
@@ -252,11 +252,6 @@ _G.packer_plugins = {
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/orgmode",
     url = "https://github.com/nvim-orgmode/orgmode"
   },
-  ["package-info.nvim"] = {
-    loaded = true,
-    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/package-info.nvim",
-    url = "https://github.com/vuki656/package-info.nvim"
-  },
   ["plenary.nvim"] = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/plenary.nvim",
@@ -271,6 +266,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/symbols-outline.nvim",
     url = "https://github.com/simrat39/symbols-outline.nvim"
+  },
+  ["telescope-fzf-native.nvim"] = {
+    loaded = true,
+    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim",
+    url = "https://github.com/nvim-telescope/telescope-fzf-native.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,
@@ -292,6 +292,11 @@ _G.packer_plugins = {
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/vim-dispatch",
     url = "https://github.com/tpope/vim-dispatch"
   },
+  ["vim-eunuch"] = {
+    loaded = true,
+    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/vim-eunuch",
+    url = "https://github.com/tpope/vim-eunuch"
+  },
   ["vim-firestore"] = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/vim-firestore",
@@ -312,15 +317,15 @@ _G.packer_plugins = {
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/vim-test",
     url = "https://github.com/vim-test/vim-test"
   },
+  ["vim-ultest"] = {
+    loaded = true,
+    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/vim-ultest",
+    url = "https://github.com/rcarriga/vim-ultest"
+  },
   vimtex = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/vimtex",
     url = "https://github.com/lervag/vimtex"
-  },
-  ["zepl.vim"] = {
-    loaded = true,
-    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/zepl.vim",
-    url = "https://github.com/axvr/zepl.vim"
   }
 }
 
