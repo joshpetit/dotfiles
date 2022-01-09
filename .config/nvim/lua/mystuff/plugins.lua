@@ -95,5 +95,6 @@ return require('packer').startup(function()
     use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
     use 'tpope/vim-eunuch' -- SudoWrite!
     use 'junegunn/fzf.vim'
+    use 'BurntSushi/ripgrep'
     --use 'jalvesaq/nvim-r'
 end)

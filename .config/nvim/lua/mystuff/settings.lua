@@ -148,9 +148,7 @@ require('orgmode').setup({
     org_deadline_warning_days = 5,
     org_agenda_start_on_weekday = 7,
     org_highlight_latex_and_related = 'native',
-    notifications = {
-        enabled = true,
-    },
+    notifications = {enabled = true},
     org_agenda_templates = {
         m = {
             description = 'Working on Ms5',
@@ -210,10 +208,9 @@ dap.configurations.typescript = {
 require('telescope').setup {
     extensions = {
         fzf = {
-            fuzzy = true, -- false will only do exact matching
             override_generic_sorter = true, -- override the generic sorter
             override_file_sorter = true, -- override the file sorter
-            case_mode = "smart_case" -- or "ignore_case" or "respect_case"
+            case_mode = "ignore_case" -- or "ignore_case" or "respect_case"
         }
     }
 }
@@ -223,4 +220,3 @@ require('telescope').load_extension('fzf')
 require('lsp_signature').setup({floating_window = false, toggle_key = '<C-b>'})
 
 require("toggleterm").setup {}
-
