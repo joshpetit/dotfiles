@@ -3,6 +3,7 @@ local action_set = require "telescope.actions.set"
 local action_state = require "telescope.actions.state"
 local pickers = require "telescope.pickers"
 local finders = require "telescope.finders"
+local conf = require("telescope.config").values
 
 M = {}
 
@@ -18,35 +19,19 @@ local goToHeading = function() vim.fn.search([[^\* ]], 'bW') end
 
 local goToProperty = function(prop) vim.fn.search(':' .. prop .. ':', 'eW') end
 
+M.goToHeading = function()
+    vim.cmd([[vim /^\* / %]])
+    require('telescope.builtin').quickfix({});
+end
+
+M.goToHomework = function()
+    vim.cmd([[vim/\*\*\* \zs.*\ze:homework:/%]])
+    require('telescope.builtin').quickfix({});
+end
+
 M.goToZoom = function()
     local pos = save_position();
     goToHeading()
-    --local res = vim.api.nvim_exec([[g/^\* /p]], true);
-    --print(res);
-
-  --   pickers.new({
-  --   prompt_title = "Classes to zoom from",
-  --   finder = finders.new_table {
-  --     results = acceptable_files,
-  --     entry_maker = function(line)
-  --     end,
-  --   },
-  --   attach_mappings = function(prompt_bufnr)
-  --     actions.select_default:replace(function()
-  --       local selection = action_state.get_selected_entry()
-  --       if selection == nil then
-  --         print "[telescope] Nothing currently selected"
-  --         return
-  --       end
-  --
-  --       actions.close(prompt_bufnr)
-  --       print("Enjoy astronomy! You viewed:", selection.display)
-  --     end)
-  --
-  --     return true
-  --   end,
-  -- }):find();
-
     goToProperty('zoom');
     vim.cmd([[normal Wgx]])
     load_position(pos);
@@ -67,3 +52,15 @@ M.goToNotes = function()
 end
 
 return M;
+
+-- Example of way to do picker
+-- pickers.new({}, {
+--     prompt_title = "Find Files",
+--     finder = require("telescope.finders").new_table({
+--         results = {"sup", "my", "dude"}
+--     }),
+--     sorter = require("telescope.config").values.generic_sorter({})
+-- }):find()
+--
+-- Regex to find a property
+-- ^\* .*\_.\{-}:zoom:\s*\zs.*
