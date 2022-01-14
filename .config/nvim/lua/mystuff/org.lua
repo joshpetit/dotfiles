@@ -25,7 +25,7 @@ M.goToHeading = function()
 end
 
 M.goToHomework = function()
-    vim.cmd([[vim/\*\*\* \zs.*\ze:homework:/%]])
+    vim.cmd([[vim /:homework:.*\_.\{-}\*\*\* \zs.*\ze/ %]])
     require('telescope.builtin').quickfix({});
 end
 

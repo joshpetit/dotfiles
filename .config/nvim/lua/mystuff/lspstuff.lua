@@ -111,7 +111,7 @@ lsp_installer.on_server_ready(function(server)
     server:setup(opts)
 end)
 
-local servers = {'tsserver', 'jdtls', 'tailwindcss'}
+local servers = {'tsserver', 'jdtls', 'tailwindcss', 'r_language_server'}
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup {
         capabilities = capabilities,
@@ -169,7 +169,12 @@ local luaLspConfig = {
 }
 
 --local luadev = require("lua-dev").setup({lspconfig=luaLspConfig})
-local luadev = require("lua-dev").setup({})
+local luadev = require("lua-dev").setup({
+        lspconfig = {
+            on_attach = on_attach,
+            capabilities = capabilities,
+        }
+    })
 
---require'lspconfig'.sumneko_lua.setup(luaLspConfig)
- require'lspconfig'.sumneko_lua.setup(luadev)
+-- require'lspconfig'.sumneko_lua.setup(luaLspConfig)
+require'lspconfig'.sumneko_lua.setup(luadev)

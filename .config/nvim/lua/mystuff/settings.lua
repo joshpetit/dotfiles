@@ -12,6 +12,7 @@ vim.g.mapleader = " "
 vim.o.mouse = 'a'
 vim.o.relativenumber = true
 vim.o.number = true
+vim.o.scrolloff = 8
 -- Formatters
 --
 local prettierFormatter = {
@@ -153,7 +154,17 @@ require('orgmode').setup({
         m = {
             description = 'Working on Ms5',
             template = '** Working on Ms5 %<%Y-%m-%d>\nSCHEDULED: %t\n:LOGBOOK:\nCLOCK: %U\n:END:',
-            target = '~/sync/org/refile.org'
+            target = '~/sync/org/refile.org',
+            headline = 'MS5 Timesheet'
+        },
+        c = {
+            description = 'CRandom note',
+            template = '* ',
+        },
+         t = {
+            description = 'Todo',
+            template = '* TODO',
+            target = '~/sync/org/todo.org'
         }
     },
     org_custom_expots = {
@@ -220,3 +231,5 @@ require('telescope').load_extension('fzf')
 require('lsp_signature').setup({floating_window = false, toggle_key = '<C-b>'})
 
 require("toggleterm").setup {}
+
+vim.cmd([[let R_openhtml = 1]])

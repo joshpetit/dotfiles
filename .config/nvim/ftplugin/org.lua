@@ -3,9 +3,15 @@ local m = require('mystuff/mapping_utils')
 local o = require('mystuff/option_utils')
 o.set_buf_option('textwidth', 80)
 
+m.nmap('<leader>gtz', [[<cmd>lua require'mystuff/org'.goToZoom()<CR>]],
+       {buffer = true})
 
-m.nmap('gtz', [[<cmd>lua require'mystuff/org'.goToZoom()<CR>]])
-m.nmap('gts', [[<cmd>lua require'mystuff/org'.goToSite()<CR>]])
-m.nmap('gtn', [[<cmd>lua require'mystuff/org'.goToNotes()<CR>]])
-m.nmap('gth', [[<cmd>lua require'mystuff/org'.goToHeading()<CR>]])
-m.nmap('gtH', [[<cmd>lua require'mystuff/org'.goToHomework()<CR>]])
+m.nmap('<leader>gts', [[<cmd>lua require'mystuff/org'.goToSite()<CR>]],
+       {buffer = true})
+
+m.nmap('<leader>gtn', [[<cmd>lua require'mystuff/org'.goToNotes()<CR>]],
+       {buffer = true})
+m.nmap('<leader>gth', [[<cmd>lua require'mystuff/org'.goToHeading()<CR>]],
+       {buffer = true})
+m.nmap('<leader>gtH', [[<cmd>lua require'mystuff/org'.goToHomework()<CR>]],
+       {buffer = true})

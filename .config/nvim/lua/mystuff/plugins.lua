@@ -7,6 +7,7 @@ return require('packer').startup(function()
         'williamboman/nvim-lsp-installer',
         requires = {'neovim/nvim-lspconfig'}
     }
+    --use {'~/projects/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim'}
     use {'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim'}
     -- tag = 'release' -- To use the latest release
     use {
@@ -65,7 +66,8 @@ return require('packer').startup(function()
     use {"Pocco81/DAPInstall.nvim"}
     use {"rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"}}
     use {'nvim-treesitter/nvim-treesitter'}
-    use {'nvim-orgmode/orgmode'}
+    --use {'nvim-orgmode/orgmode'}
+     use {'~/projects/orgmode'}
     use {'iamcco/markdown-preview.nvim'}
     -- use {'axvr/zepl.vim'}
     use {"kraftwerk28/gtranslate.nvim", requires = {"nvim-lua/plenary.nvim"}}
@@ -78,10 +80,10 @@ return require('packer').startup(function()
     -- F11, focused mode!
     use "Pocco81/TrueZen.nvim"
     -- Make vim start faster!
-    use {
-        'lewis6991/impatient.nvim',
-        config = function() require('impatient') end
-    }
+    -- use {
+    --     'lewis6991/impatient.nvim',
+    --     config = function() require('impatient') end
+    -- }
     -- use {"vuki656/package-info.nvim", requires = "MunifTanjim/nui.nvim"}
     use {"lervag/vimtex"}
     -- use {"jamestthompson3/nvim-remote-containers"}
@@ -96,5 +98,9 @@ return require('packer').startup(function()
     use 'tpope/vim-eunuch' -- SudoWrite!
     use 'junegunn/fzf.vim'
     use 'BurntSushi/ripgrep'
-    --use 'jalvesaq/nvim-r'
+    -- \rf=Start R
+    -- \pp to send paragraph
+    -- \rm to remove previous output
+    -- \kr to produce rmarkdown as html and open in browser
+    use 'jalvesaq/nvim-r'
 end)

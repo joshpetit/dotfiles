@@ -49,6 +49,7 @@ function create_ms5() {
 	cd "/home/joshu/projects/petit.dev/milestone5/firebase/"
 	session_name="ms5/firebase/rules"
 	tmux new-session -d -s $session_name -n code
+	tmux send-keys -t $session_name:code "nvim firestore.rules" ENTER
 
 	cd "/home/joshu/projects/petit.dev/milestone5/firebase/functions/"
 	session_name="ms5/firebase/functions"
