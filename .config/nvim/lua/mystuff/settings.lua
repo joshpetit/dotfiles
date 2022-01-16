@@ -52,7 +52,7 @@ require('formatter').setup {
         },
         lua = {
             -- luafmt
-            function() return {exe = "lua-format", stdin = true} end
+            function() return {exe = "stylua", stdin = true, args= {'-'}} end
         },
         dart = {
             -- Shell Script Formatter
@@ -219,6 +219,7 @@ dap.configurations.typescript = {
 require('telescope').setup {
     extensions = {
         fzf = {
+            fuzzy = true,
             override_generic_sorter = true, -- override the generic sorter
             override_file_sorter = true, -- override the file sorter
             case_mode = "ignore_case" -- or "ignore_case" or "respect_case"
