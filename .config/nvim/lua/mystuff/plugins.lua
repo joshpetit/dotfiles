@@ -67,7 +67,7 @@ return require('packer').startup(function()
     use {"rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"}}
     use {'nvim-treesitter/nvim-treesitter'}
     --use {'nvim-orgmode/orgmode'}
-     use {'~/projects/orgmode'}
+    use {'~/projects/orgmode'}
     use {'iamcco/markdown-preview.nvim'}
     -- use {'axvr/zepl.vim'}
     use {"kraftwerk28/gtranslate.nvim", requires = {"nvim-lua/plenary.nvim"}}

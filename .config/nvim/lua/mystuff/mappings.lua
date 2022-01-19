@@ -13,6 +13,8 @@ m.nmap('<leader>,', '<cmd>bprev<cr>')
 m.nmap('<leader>.', '<cmd>bnext<cr>')
 m.nmap('<leader>nf', '<cmd>NvimTreeFindFileToggle<cr>')
 m.nmap('<leader>ff', '<cmd>Format<CR>')
+m.nmap('di$', 'T$dt$')
+m.nmap('ci$', 'T$ct$')
 
 vim.cmd([[
 
