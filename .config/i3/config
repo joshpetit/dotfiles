@@ -286,6 +286,7 @@ bindcode $mod+62+s restart
 for_window [title="^zoom$" class="[zoom]*"] floating enable
 bindsym $mod+Ctrl+a exec /home/joshu/.local/bin/scriptlauncher
 bindsym $mod+Shift+S scratchpad show
+bindsym $mod+u exec --no-startup-id tdrop -a -w 60% -h 60% -y 20% -x 20% -n 1 alacritty
 bindsym $mod+Ctrl+S move scratchpad
 bindsym $mod+Ctrl+c exec copyq menu
 bindsym $mod+Ctrl+e exec rofi -show emoji -modi emoji

@@ -58,7 +58,7 @@ return require('packer').startup(function()
     use {"folke/trouble.nvim", requires = "kyazdani42/nvim-web-devicons"}
     use {"jose-elias-alvarez/nvim-lsp-ts-utils"}
     use {"akinsho/toggleterm.nvim"}
-    use {"sheerun/vim-polyglot"}
+    --use {"sheerun/vim-polyglot"}
     use "tversteeg/registers.nvim"
     use {'tpope/vim-fugitive'}
     use {"dcampos/nvim-snippy"}
@@ -66,8 +66,8 @@ return require('packer').startup(function()
     use {"Pocco81/DAPInstall.nvim"}
     use {"rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"}}
     use {'nvim-treesitter/nvim-treesitter'}
-    --use {'nvim-orgmode/orgmode'}
-     use {'~/projects/orgmode'}
+    use {'nvim-orgmode/orgmode'}
+    -- use {'~/projects/orgmode'}
     use {'iamcco/markdown-preview.nvim'}
     -- use {'axvr/zepl.vim'}
     use {"kraftwerk28/gtranslate.nvim", requires = {"nvim-lua/plenary.nvim"}}
@@ -103,4 +103,8 @@ return require('packer').startup(function()
     -- \rm to remove previous output
     -- \kr to produce rmarkdown as html and open in browser
     use 'jalvesaq/nvim-r'
+    use 'tpope/vim-rhubarb'
+    use 'shumphrey/fugitive-gitlab.vim'
+    use 'willchao612/vim-diagon'
+    use 'nvim-treesitter/playground'
 end)

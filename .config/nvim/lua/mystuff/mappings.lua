@@ -35,7 +35,7 @@ m.nmap('<leader>nh', '<cmd>noh<CR>')
 m.nmap('<c-f>', '<cmd>:lua require("mystuff/telescopic").cooler()<CR>')
 
 -- Git
-m.nmap('<leader>gs', '<Cmd>Git<CR>')
+m.nmap('<leader>gs', ':Git<CR>/Un<CR>')
 m.nmap('<leader>gmo', '<cmd>!git merge origin/master<CR>')
 m.nmap('<leader>gpr', '<cmd>Octo pr create<cr>')
 m.nmap('<leader>glp', '<cmd>Octo pr list<cr>')

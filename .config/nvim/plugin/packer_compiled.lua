@@ -118,12 +118,17 @@ _G.packer_plugins = {
   ["flutter-tools.nvim"] = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/flutter-tools.nvim",
-    url = "/home/joshu/projects/flutter-tools.nvim"
+    url = "https://github.com/akinsho/flutter-tools.nvim"
   },
   ["formatter.nvim"] = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/formatter.nvim",
     url = "https://github.com/mhartington/formatter.nvim"
+  },
+  ["fugitive-gitlab.vim"] = {
+    loaded = true,
+    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/fugitive-gitlab.vim",
+    url = "https://github.com/shumphrey/fugitive-gitlab.vim"
   },
   ["fzf.vim"] = {
     loaded = true,
@@ -249,7 +254,12 @@ _G.packer_plugins = {
   orgmode = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/orgmode",
-    url = "/home/joshu/projects/orgmode"
+    url = "https://github.com/nvim-orgmode/orgmode"
+  },
+  playground = {
+    loaded = true,
+    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/playground",
+    url = "https://github.com/nvim-treesitter/playground"
   },
   ["plenary.nvim"] = {
     loaded = true,
@@ -291,6 +301,11 @@ _G.packer_plugins = {
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/trouble.nvim",
     url = "https://github.com/folke/trouble.nvim"
   },
+  ["vim-diagon"] = {
+    loaded = true,
+    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/vim-diagon",
+    url = "https://github.com/willchao612/vim-diagon"
+  },
   ["vim-dispatch"] = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/vim-dispatch",
@@ -311,10 +326,10 @@ _G.packer_plugins = {
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/vim-fugitive",
     url = "https://github.com/tpope/vim-fugitive"
   },
-  ["vim-polyglot"] = {
+  ["vim-rhubarb"] = {
     loaded = true,
-    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/vim-polyglot",
-    url = "https://github.com/sheerun/vim-polyglot"
+    path = "/home/joshu/.local/share/nvim/site/pack/packer/start/vim-rhubarb",
+    url = "https://github.com/tpope/vim-rhubarb"
   },
   ["vim-test"] = {
     loaded = true,
@@ -338,10 +353,10 @@ time([[Defining packer_plugins]], false)
 time([[Config for octo.nvim]], true)
 try_loadstring("\27LJ\1\0022\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\tocto\frequire\0", "config", "octo.nvim")
 time([[Config for octo.nvim]], false)
--- Config for: neogit
-time([[Config for neogit]], true)
-try_loadstring("\27LJ\1\0028\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\vneogit\frequire\0", "config", "neogit")
-time([[Config for neogit]], false)
+-- Config for: gitsigns.nvim
+time([[Config for gitsigns.nvim]], true)
+try_loadstring("\27LJ\1\2:\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\rgitsigns\frequire\0", "config", "gitsigns.nvim")
+time([[Config for gitsigns.nvim]], false)
 -- Config for: nvim-colorizer.lua
 time([[Config for nvim-colorizer.lua]], true)
 try_loadstring("\27LJ\1\0027\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\14colorizer\frequire\0", "config", "nvim-colorizer.lua")
@@ -354,14 +369,14 @@ time([[Config for Comment.nvim]], false)
 time([[Config for nvim-notify]], true)
 try_loadstring("\27LJ\1\0022\0\0\3\0\3\0\0064\0\0\0004\1\2\0%\2\1\0>\1\2\2:\1\1\0G\0\1\0\frequire\vnotify\bvim\0", "config", "nvim-notify")
 time([[Config for nvim-notify]], false)
+-- Config for: neogit
+time([[Config for neogit]], true)
+try_loadstring("\27LJ\1\0028\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\vneogit\frequire\0", "config", "neogit")
+time([[Config for neogit]], false)
 -- Config for: nvim-ts-autotag
 time([[Config for nvim-ts-autotag]], true)
 try_loadstring("\27LJ\1\2=\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\20nvim-ts-autotag\frequire\0", "config", "nvim-ts-autotag")
 time([[Config for nvim-ts-autotag]], false)
--- Config for: gitsigns.nvim
-time([[Config for gitsigns.nvim]], true)
-try_loadstring("\27LJ\1\2:\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\rgitsigns\frequire\0", "config", "gitsigns.nvim")
-time([[Config for gitsigns.nvim]], false)
 if should_profile then save_profiles() end
 
 end)
