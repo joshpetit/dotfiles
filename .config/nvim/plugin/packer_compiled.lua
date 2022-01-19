@@ -254,7 +254,7 @@ _G.packer_plugins = {
   orgmode = {
     loaded = true,
     path = "/home/joshu/.local/share/nvim/site/pack/packer/start/orgmode",
-    url = "https://github.com/nvim-orgmode/orgmode"
+    url = "/home/joshu/projects/orgmode"
   },
   playground = {
     loaded = true,

@@ -13,6 +13,9 @@ vim.o.mouse = "a"
 vim.o.relativenumber = true
 vim.o.number = true
 vim.o.scrolloff = 8
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
 -- Formatters
 --
 local prettierFormatter = {
@@ -109,6 +112,7 @@ require("trouble").setup({
 	-- or leave it empty to use the default settings
 	-- refer to the configuration section below
 })
+
 vim.cmd([[
 augroup custom_term
     autocmd!
@@ -138,7 +142,10 @@ require("nvim-treesitter.configs").setup({
 	-- If TS highlights are not enabled at all, or disabled via `disable` prop, highlighting will fallback to default Vim syntax highlighting
 	highlight = {
 		enable = true,
-		disable = { "org" }, -- Remove this to use TS highlighter for some of the highlights (Experimental)
+		--disable = { "org" }, -- Remove this to use TS highlighter for some of the highlights (Experimental)
+		-- disable = function(lang, bufnr)
+		-- 	return lang == "org"
+		-- end,
 		additional_vim_regex_highlighting = { "org" }, -- Required since TS highlighter doesn't support all syntax features (conceal)
 	},
 	ensure_installed = { "org" }, -- Or run :TSUpdate org
@@ -240,3 +247,4 @@ require("lsp_signature").setup({ floating_window = false, toggle_key = "<C-b>" }
 require("toggleterm").setup({})
 
 vim.cmd([[let R_openhtml = 1]])
+vim.cmd([[let R_assign = 0]])
