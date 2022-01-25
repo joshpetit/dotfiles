@@ -4,13 +4,18 @@ return require("packer").startup(function()
 	use({
 		"kyazdani42/nvim-tree.lua",
 		requires = "kyazdani42/nvim-web-devicons",
-		disable = true,
+		disable = false,
 		config = function()
-			require("mystuff/mappings").nvimTree()
-			require("mystuff/settings").nvimTree()
+			require("mystuff/mappings")["nvim-tree"]()
+			require("mystuff/settings")["nvim-tree"]()
 		end,
 	})
-	use("EdenEast/nightfox.nvim")
+	use({
+		"EdenEast/nightfox.nvim",
+		config = function()
+			require("mystuff/settings")["nightfox"]()
+		end,
+	})
 	use({
 		"williamboman/nvim-lsp-installer",
 		requires = { "neovim/nvim-lspconfig" },

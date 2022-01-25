@@ -1,7 +1,7 @@
 local M = {}
 local m = require("mystuff/mapping_utils")
 
-M.nvimTree = function()
+M['nvim-tree'] = function()
 	m.nmap("<S-q>", "<cmd>NvimTreeToggle<cr>")
 end
 

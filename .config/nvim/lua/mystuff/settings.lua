@@ -1,6 +1,12 @@
 local M = {}
+vim.opt.termguicolors = true
+require("mystuff/utils")
 
-M.nvimTree = function()
+M['nightfox'] = function()
+    require("nightfox").load("nightfox", { transparent = true })
+end
+
+M['nvim-tree'] = function()
 	local lib = require("nvim-tree.lib")
 	function OpenNvimTreeFile()
 		local node = lib.get_node_at_cursor()
@@ -9,7 +15,7 @@ M.nvimTree = function()
 	end
 	require("nvim-tree").setup({
 		update_cwd = true,
-		update_focused_file = { enable = true, update_cwd = true },
+		--update_focused_file = { enable = true, update_cwd = true },
 		disable_netrw = false,
 		hijack_netrw = false,
 		view = {
@@ -24,8 +30,6 @@ M.nvimTree = function()
 	})
 end
 
-require("mystuff/utils")
-require("nightfox").load("nightfox", { transparent = true })
 vim.notify = require("notify")
 vim.cmd([[
 let test#strategy = "dispatch"
