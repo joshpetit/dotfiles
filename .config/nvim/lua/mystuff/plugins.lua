@@ -21,7 +21,10 @@ return require("packer").startup(function()
 		requires = { "neovim/nvim-lspconfig" },
 	})
 	--use {'~/projects/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim'}
-	use({ "akinsho/flutter-tools.nvim", requires = "nvim-lua/plenary.nvim" })
+	use({
+		"akinsho/flutter-tools.nvim",
+		requires = "nvim-lua/plenary.nvim",
+	})
 	-- tag = 'release' -- To use the latest release
 	use({
 		"hrsh7th/nvim-cmp",
@@ -146,5 +149,11 @@ return require("packer").startup(function()
 	--     require('cokeline').setup()
 	--   end
 	-- })
-	use({ "jose-elias-alvarez/null-ls.nvim", requires = { "nvim-lua/plenary.nvim" } })
+	use({
+		"jose-elias-alvarez/null-ls.nvim",
+		requires = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("mystuff/settings")["null-ls"]()
+		end,
+	})
 end)

@@ -2,11 +2,11 @@ local M = {}
 vim.opt.termguicolors = true
 require("mystuff/utils")
 
-M['nightfox'] = function()
-    require("nightfox").load("nightfox", { transparent = true })
+M["nightfox"] = function()
+	require("nightfox").load("nightfox", { transparent = true })
 end
 
-M['nvim-tree'] = function()
+M["nvim-tree"] = function()
 	local lib = require("nvim-tree.lib")
 	function OpenNvimTreeFile()
 		local node = lib.get_node_at_cursor()
@@ -242,28 +242,29 @@ require("toggleterm").setup({})
 vim.cmd([[let R_openhtml = 1]])
 vim.cmd([[let R_assign = 0]])
 
--- R markdown
-local null_ls = require("null-ls")
+M["null-ls"] = function()
+	-- R markdown
+	local null_ls = require("null-ls")
 
-local formatting = null_ls.builtins.formatting
+	local formatting = null_ls.builtins.formatting
 
-local h = require("null-ls.helpers")
-local methods = require("null-ls.methods")
+	local h = require("null-ls.helpers")
+	local methods = require("null-ls.methods")
 
-local FORMATTING = methods.internal.FORMATTING
+	local FORMATTING = methods.internal.FORMATTING
 
-local stylermd = h.make_builtin({
-	name = "stylermd",
-	method = { FORMATTING },
-	filetypes = { "rmd" },
-	generator_opts = {
-		command = "R",
-		args = h.range_formatting_args_factory({
-			"--slave",
-			"--no-restore",
-			"--no-save",
-			"-e",
-			[[
+	local stylermd = h.make_builtin({
+		name = "stylermd",
+		method = { FORMATTING },
+		filetypes = { "rmd" },
+		generator_opts = {
+			command = "R",
+			args = h.range_formatting_args_factory({
+				"--slave",
+				"--no-restore",
+				"--no-save",
+				"-e",
+				[[
         options(styler.quiet = TRUE)
         con <- file("stdin")
         temp <- tempfile("styler", fileext = ".Rmd")
@@ -273,27 +274,28 @@ local stylermd = h.make_builtin({
         cat(output)
         close(con)
       ]],
-		}),
-		to_stdin = true,
-	},
-	factory = h.formatter_factory,
-})
--- End R markdown
---
-null_ls.setup({
-	debug = true,
-	sources = {
-		-- Make builtin styler works with R file only
-		formatting.styler.with({
-			filetypes = { "r" },
-		}),
-		stylermd,
-		require("null-ls").builtins.formatting.stylua,
-		null_ls.builtins.formatting.prettier.with({
-			extra_filetypes = { "toml" },
-		}),
-		null_ls.builtins.formatting.google_java_format,
-	},
-})
+			}),
+			to_stdin = true,
+		},
+		factory = h.formatter_factory,
+	})
+	-- End R markdown
+	--
+	null_ls.setup({
+		debug = true,
+		sources = {
+			-- Make builtin styler works with R file only
+			formatting.styler.with({
+				filetypes = { "r" },
+			}),
+			stylermd,
+			require("null-ls").builtins.formatting.stylua,
+			null_ls.builtins.formatting.prettier.with({
+				extra_filetypes = { "toml" },
+			}),
+			null_ls.builtins.formatting.google_java_format,
+		},
+	})
+end
 
 return M
