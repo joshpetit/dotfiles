@@ -25,6 +25,7 @@ alias lnvmx='source /usr/share/nvm/init-nvm.sh && nvm use'
 alias n='nvim'
 alias cleanup='pacman -Rs $(pacman -Qtdq)'
 alias shp='ssh my.phone -p 8022'
+alias zathura='zathura --fork'
 
 # Go
 export GO111MODULE=auto
