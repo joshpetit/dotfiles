@@ -1,7 +1,15 @@
 ---@diagnostic disable: undefined-global
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 return require("packer").startup(function()
-	use({ "kyazdani42/nvim-tree.lua", requires = "kyazdani42/nvim-web-devicons" })
+	use({
+		"kyazdani42/nvim-tree.lua",
+		requires = "kyazdani42/nvim-web-devicons",
+		disable = true,
+		config = function()
+			require("mystuff/mappings").nvimTree()
+			require("mystuff/settings").nvimTree()
+		end,
+	})
 	use("EdenEast/nightfox.nvim")
 	use({
 		"williamboman/nvim-lsp-installer",

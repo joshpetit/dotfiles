@@ -1,4 +1,29 @@
-local lib = require("nvim-tree.lib")
+local M = {}
+
+M.nvimTree = function()
+	local lib = require("nvim-tree.lib")
+	function OpenNvimTreeFile()
+		local node = lib.get_node_at_cursor()
+		AsyncRun("dragon-drag-and-drop", node.absolute_path)
+		print(node.absolute_path)
+	end
+	require("nvim-tree").setup({
+		update_cwd = true,
+		update_focused_file = { enable = true, update_cwd = true },
+		disable_netrw = false,
+		hijack_netrw = false,
+		view = {
+			relativenumber = true,
+			mappings = {
+				custom_only = false,
+				list = {
+					{ key = { "D" }, cb = "<cmd>lua print(OpenNvimTreeFile())<cr>" },
+				},
+			},
+		},
+	})
+end
+
 require("mystuff/utils")
 require("nightfox").load("nightfox", { transparent = true })
 vim.notify = require("notify")
@@ -36,21 +61,8 @@ local prettierFormatter = {
 require("formatter").setup({
 	filetype = {
 		jsonc = prettierFormatter,
-		javascript = prettierFormatter,
-		javascriptreact = prettierFormatter,
-		typescript = prettierFormatter,
-		typescriptreact = prettierFormatter,
 		markdown = prettierFormatter,
 		["creole.markdown"] = prettierFormatter,
-		java = {
-			function()
-				return {
-					exe = "google-java-format",
-					args = { vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)) },
-					stdin = true,
-				}
-			end,
-		},
 		lua = {
 			-- luafmt
 			function()
@@ -79,29 +91,8 @@ require("formatter").setup({
 })
 
 vim.g.nvim_tree_respect_buf_cwd = 1
-require("nvim-tree").setup({
-	update_cwd = true,
-	update_focused_file = { enable = true, update_cwd = true },
-	disable_netrw = false,
-	hijack_netrw = false,
-	view = {
-		relativenumber = true,
-		mappings = {
-			custom_only = false,
-			list = {
-				{ key = { "D" }, cb = "<cmd>lua print(OpenNvimTreeFile())<cr>" },
-			},
-		},
-	},
-})
 
 require("dapui").setup()
-
-function OpenNvimTreeFile()
-	local node = lib.get_node_at_cursor()
-	AsyncRun("dragon-drag-and-drop", node.absolute_path)
-	print(node.absolute_path)
-end
 
 require("nvim-treesitter.configs").setup({ autotag = { enable = true } })
 
@@ -283,7 +274,8 @@ local stylermd = h.make_builtin({
 	},
 	factory = h.formatter_factory,
 })
-
+-- End R markdown
+--
 null_ls.setup({
 	debug = true,
 	sources = {
@@ -296,6 +288,8 @@ null_ls.setup({
 		null_ls.builtins.formatting.prettier.with({
 			extra_filetypes = { "toml" },
 		}),
+		null_ls.builtins.formatting.google_java_format,
 	},
 })
--- End R markdown
+
+return M

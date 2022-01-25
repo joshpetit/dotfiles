@@ -1,7 +1,7 @@
 local m = require('mystuff/mapping_utils')
 
 vim.cmd([[
-:compiler! gradle
+":compiler! gradle
 :iabbrev sout System.out.println
     ]])
 
