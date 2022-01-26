@@ -13,4 +13,9 @@ M.node = function()
     require("dapui").open();
 end
 
+M.dart = function()
+    require('dap').run('dart')
+    require("dapui").open();
+end
+
 return M;
