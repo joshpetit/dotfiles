@@ -1,6 +1,17 @@
-local M = {}
-vim.opt.termguicolors = true
 require("mystuff/utils")
+local M = {}
+
+
+vim.o.timeout = false
+vim.g.mapleader = " "
+vim.o.mouse = "a"
+vim.o.relativenumber = true
+vim.o.number = true
+vim.o.scrolloff = 8
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
+vim.opt.termguicolors = true
 
 M["nightfox"] = function()
 	require("nightfox").load("nightfox", { transparent = true })
@@ -33,18 +44,8 @@ end
 vim.notify = require("notify")
 vim.cmd([[
 let test#strategy = "dispatch"
+let g:vim_markdown_folding_disabled = 1
 ]])
-
-vim.o.timeout = false
-
-vim.g.mapleader = " "
-vim.o.mouse = "a"
-vim.o.relativenumber = true
-vim.o.number = true
-vim.o.scrolloff = 8
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
-vim.o.expandtab = true
 -- Formatters
 --
 local prettierFormatter = {
@@ -129,6 +130,14 @@ parser_config.org = {
 		files = { "src/parser.c", "src/scanner.cc" },
 	},
 	filetype = "org",
+}
+parser_config.md = {
+	install_info = {
+		url = "https://github.com/ikatyang/tree-sitter-markdown",
+		revision = "master",
+		files = { "src/parser.c", "src/scanner.cc" },
+	},
+	filetype = "markdown",
 }
 
 require("nvim-treesitter.configs").setup({
@@ -239,8 +248,10 @@ require("lsp_signature").setup({ floating_window = false, toggle_key = "<C-b>" }
 
 require("toggleterm").setup({})
 
-vim.cmd([[let R_openhtml = 1]])
-vim.cmd([[let R_assign = 0]])
+M["nvim-r"] = function()
+	vim.cmd([[let R_openhtml = 1]])
+	vim.cmd([[let R_assign = 0]])
+end
 
 M["null-ls"] = function()
 	-- R markdown

@@ -137,18 +137,17 @@ return require("packer").startup(function()
 	-- \pp to send paragraph
 	-- \rm to remove previous output
 	-- \kr to produce rmarkdown as html and open in browser
-	use("jalvesaq/nvim-r")
+	use({
+		"jalvesaq/nvim-r",
+		config = function()
+			require("mystuff/settings")["nvim-r"]()
+		end,
+	})
 	use("tpope/vim-rhubarb")
 	use("shumphrey/fugitive-gitlab.vim")
 	use("willchao612/vim-diagon")
 	use("nvim-treesitter/playground")
-	--     use({
-	--   'noib3/nvim-cokeline',
-	--   requires = 'kyazdani42/nvim-web-devicons', -- If you want devicons
-	--   config = function()
-	--     require('cokeline').setup()
-	--   end
-	-- })
+	use({ "preservim/vim-markdown", disable = true })
 	use({
 		"jose-elias-alvarez/null-ls.nvim",
 		requires = { "nvim-lua/plenary.nvim" },
