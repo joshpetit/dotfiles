@@ -221,6 +221,7 @@ for_window [class="^flameshot$"] floating enable
 for_window [class="^flameshot$"] border pixel 0 
 for_window [class="gnome-calculator"] floating enable
 for_window [title="Calculator"] floating enable
+for_window [title="^R Graphics:"] floating enable
 
 
 # CS 308, delete later
@@ -248,7 +249,6 @@ for_window [title=".*mpv$"] border pixel 2
 for_window [title="^ranger$"] floating enable
 for_window [class="jfxcss.example.App"] floating enable
 for_window [title="^ranger$"] border pixel 1 
-bindsym $mod + Shift + F exec --no-startup-id alacritty -e vifm
 
 # Gaps
 gaps inner 5
@@ -285,7 +285,7 @@ bindcode $mod+62+s restart
 # Stupid zoom notifications
 for_window [title="^zoom$" class="[zoom]*"] floating enable
 bindsym $mod+Ctrl+a exec /home/joshu/.local/bin/scriptlauncher
-bindsym $mod+Shift+S [class="[^dropdownt]"] scratchpad show, [class="dropdownt"] move scratchpad 
+bindsym $mod+Shift+S [class="[^dropdownt"] scratchpad show, [class="dropdownt"] move scratchpad 
 bindsym $mod+u exec --no-startup-id tdrop -a -w 60% -h 60% -y 20% -x 20% -n 1 alacritty
 
 bindsym $mod+Ctrl+S  move scratchpad
@@ -298,3 +298,4 @@ for_window [class="dropdownt"] move scratchpad
 
 bindsym $mod+Shift+e exec "alacritty --class quickedit,quickedit -e nvim"
 for_window [class="quickedit"] floating enable, focus
+bindsym $mod+Shift+f exec "firefox"

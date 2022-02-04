@@ -16,10 +16,6 @@ return require("packer").startup(function()
 			require("mystuff/settings")["nightfox"]()
 		end,
 	})
-	use({
-		"williamboman/nvim-lsp-installer",
-		requires = { "neovim/nvim-lspconfig" },
-	})
 	--use {'~/projects/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim'}
 	use({
 		"akinsho/flutter-tools.nvim",
@@ -43,11 +39,6 @@ return require("packer").startup(function()
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
 
-	-- use {
-	--     'TimUntersberger/neogit',
-	--     requires = 'nvim-lua/plenary.nvim',
-	--     config = function() require'neogit'.setup {} end
-	-- }
 	use({ "mhartington/formatter.nvim" })
 	-- Git diffs on the column
 	use({
@@ -94,7 +85,6 @@ return require("packer").startup(function()
 	use({ "jose-elias-alvarez/nvim-lsp-ts-utils" })
 	use({ "akinsho/toggleterm.nvim" })
 	--use {"sheerun/vim-polyglot"}
-	use("tversteeg/registers.nvim")
 	use({ "tpope/vim-fugitive" })
 	use({ "dcampos/nvim-snippy" })
 	use({ "mfussenegger/nvim-dap" })
@@ -150,9 +140,7 @@ return require("packer").startup(function()
 	})
 	use("tpope/vim-rhubarb")
 	use("shumphrey/fugitive-gitlab.vim")
-	use("willchao612/vim-diagon")
 	use("nvim-treesitter/playground")
-	use({ "preservim/vim-markdown", disable = true })
 	use({
 		"jose-elias-alvarez/null-ls.nvim",
 		requires = { "nvim-lua/plenary.nvim" },
@@ -160,5 +148,12 @@ return require("packer").startup(function()
 			require("mystuff/settings")["null-ls"]()
 		end,
 	})
-    use({'soywod/himalaya', rtp='/vim'})
+	use({
+		"theHamsta/nvim-dap-virtual-text",
+		config = function()
+			require("nvim-dap-virtual-text").setup({})
+		end,
+	})
+	use("mechatroner/rainbow_csv")
+	use("chrisbra/csv.vim")
 end)

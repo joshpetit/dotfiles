@@ -14,7 +14,8 @@ M.node = function()
 end
 
 M.dart = function()
-    require('dap').run('dart')
+    require('dap').continue()
+    require("dapui").close()
     require("dapui").open();
 end
 

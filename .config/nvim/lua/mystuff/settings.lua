@@ -1,7 +1,7 @@
 require("mystuff/utils")
 local M = {}
 
-
+vim.o.runtimepath = vim.o.runtimepath .. ",~/.local/share/nvim/site/pack/packer/start/himalaya/vim"
 vim.o.timeout = false
 vim.g.mapleader = " "
 vim.o.mouse = "a"
@@ -12,6 +12,7 @@ vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
 vim.opt.termguicolors = true
+vim.cmd 'abbrev %% expand("%")'
 
 M["nightfox"] = function()
 	require("nightfox").load("nightfox", { transparent = true })
@@ -153,56 +154,64 @@ require("nvim-treesitter.configs").setup({
 	ensure_installed = { "org" }, -- Or run :TSUpdate org
 })
 
-require("orgmode").setup({
-	org_agenda_files = { "~/sync/org/**/*" },
-	org_default_notes_file = "~/sync/org/refile.org",
-	org_deadline_warning_days = 5,
-	org_agenda_start_on_weekday = 7,
-	org_highlight_latex_and_related = "native",
-	mappings = {
-		org = {
-			org_next_visible_heading = "g}",
-			org_previous_visible_heading = "g{",
+M["orgmode"] = function()
+	require("orgmode").setup({
+		org_agenda_files = { "~/sync/org/**/*" },
+		org_default_notes_file = "~/sync/org/refile.org",
+		org_deadline_warning_days = 5,
+		org_agenda_start_on_weekday = 7,
+		org_highlight_latex_and_related = "native",
+		mappings = {
+			org = {
+				org_next_visible_heading = "g}",
+				org_previous_visible_heading = "g{",
+			},
 		},
-	},
-	notifications = { enabled = true },
-	org_agenda_templates = {
-		m = {
-			description = "Working on Ms5",
-			template = "** Working on Ms5 %<%Y-%m-%d>\nSCHEDULED: %t\n:LOGBOOK:\nCLOCK: %U\n:END:",
-			target = "~/sync/org/refile.org",
-			headline = "MS5 Timesheet",
+		notifications = { enabled = true },
+		org_agenda_templates = {
+			m = {
+				description = "Working on Ms5",
+				template = "** Working on Ms5 %<%Y-%m-%d>\nSCHEDULED: %t\n:LOGBOOK:\nCLOCK: %U\n:END:",
+				target = "~/sync/org/refile.org",
+				headline = "MS5 Timesheet",
+			},
+			i = {
+				description = "Thoughts",
+				template = "** %?",
+				target = "~/sync/org/refile.org",
+				headline = "Thoughts",
+			},
+			c = {
+				description = "CRandom note",
+				template = "* %?",
+			},
+			t = {
+				description = "Todo",
+				template = "* TODO: %?",
+				target = "~/sync/org/todo.org",
+			},
 		},
-		c = {
-			description = "CRandom note",
-			template = "* ",
+		org_custom_expots = {
+			z = {
+				label = "Export to RTF format",
+				action = function(exporter)
+					local current_file = vim.api.nvim_buf_get_name(0)
+					local target = vim.fn.fnamemodify(current_file, ":p:r") .. ".rtf"
+					local command = { "pandoc", current_file, "-o", target }
+					local on_success = function(output)
+						print("Success!")
+						vim.api.nvim_echo({ { table.concat(output, "\n") } }, true, {})
+					end
+					local on_error = function(err)
+						print("Error!")
+						vim.api.nvim_echo({ { table.concat(err, "\n"), "ErrorMsg" } }, true, {})
+					end
+					return exporter(command, target, on_success, on_error)
+				end,
+			},
 		},
-		t = {
-			description = "Todo",
-			template = "* TODO",
-			target = "~/sync/org/todo.org",
-		},
-	},
-	org_custom_expots = {
-		z = {
-			label = "Export to RTF format",
-			action = function(exporter)
-				local current_file = vim.api.nvim_buf_get_name(0)
-				local target = vim.fn.fnamemodify(current_file, ":p:r") .. ".rtf"
-				local command = { "pandoc", current_file, "-o", target }
-				local on_success = function(output)
-					print("Success!")
-					vim.api.nvim_echo({ { table.concat(output, "\n") } }, true, {})
-				end
-				local on_error = function(err)
-					print("Error!")
-					vim.api.nvim_echo({ { table.concat(err, "\n"), "ErrorMsg" } }, true, {})
-				end
-				return exporter(command, target, on_success, on_error)
-			end,
-		},
-	},
-})
+	})
+end
 vim.cmd([[
     let g:mkdp_filetypes = ['markdown', 'org']
     ]])
@@ -231,6 +240,34 @@ dap.configurations.typescript = {
 	},
 }
 
+dap.adapters.dart = {
+	type = "executable",
+	command = "node",
+	args = {"/home/joshu/aur/Dart-Code/out/dist/debug.js", "flutter" },
+}
+
+dap.configurations.dart = {
+	{
+		type = "dart",
+		request = "launch",
+		name = "Launch flutter",
+		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
+		flutterSdkPath = "/opt/flutter",
+		program = "${workspaceFolder}/lib/main.dart",
+		cwd = "${workspaceFolder}",
+	},
+	{
+		type = "dart",
+		request = "launch",
+		name = "Launch flutter Linux",
+		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
+		flutterSdkPath = "/opt/flutter",
+		program = "${workspaceFolder}/lib/main.dart",
+        deviceId = "linux",
+		cwd = "${workspaceFolder}",
+	},
+}
+
 require("telescope").setup({
 	extensions = {
 		fzf = {
@@ -249,8 +286,11 @@ require("lsp_signature").setup({ floating_window = false, toggle_key = "<C-b>" }
 require("toggleterm").setup({})
 
 M["nvim-r"] = function()
-	vim.cmd([[let R_openhtml = 1]])
-	vim.cmd([[let R_assign = 0]])
+	vim.cmd([[
+    let R_openhtml = 1
+    let R_assign = 0
+    "let R_csv_app = 'localc'
+    ]])
 end
 
 M["null-ls"] = function()
@@ -308,5 +348,56 @@ M["null-ls"] = function()
 		},
 	})
 end
+vim.cmd([[
+let g:himalaya_mailbox_picker =  'telescope'
+]])
+
+vim.cmd([[
+aug CSV_Editing
+		au!
+		au FileType csv :%ArrangeColumn
+aug end
+]])
 
 return M
+
+-- Dart code configuration options
+-- {
+  -- "adapters" {
+  --     "dart-code": {
+  --       "name": "dart",
+  --       "command": [
+  --          "node",
+  --          "$HOME/.vscode/<PATH TO BUNDLE>/src/debug/dart_debug_entry.js"
+  --       ],
+  --       "attach": {
+  --         "pidProperty": "observatoryUri",
+  --         "pidSelect": "ask"
+  --       }
+  --     }
+  -- },
+  -- "configurations": {
+  --   "Dart - Launch": {
+  --     "adapter": "dart-code",
+  --     "configuration": {
+  --       "request": "launch",
+  --       "cwd": "string",
+  --       "deviceId": "string",
+  --       "enableAsserts": "boolean",
+  --       "program": "string",
+  --       "showMemoryUsage": "boolean",
+  --       "flutterMode": "enum [ debug, release, profile ]",
+  --       "args": "array[string]",
+  --       "env": " ?? ",
+  --       "vmAdditionalArgs": "array[string]"
+  --     }
+  --   },
+  --   "Dart - Attach": {
+  --     "adapter": "dart-code",
+  --     "configuration": {
+  --       "request": "attach",
+  --       "cwd": "string",
+  --       "packages": "string"
+  --     }
+  --   }
+  -- }

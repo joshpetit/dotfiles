@@ -19,6 +19,7 @@ m.nmap("<leader>nf", "<cmd>NvimTreeFindFileToggle<cr>")
 m.nmap("<leader>ff", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>")
 m.nmap("di$", "T$dt$")
 m.nmap("ci$", "T$ct$")
+m.cmap("%%", "call expand(%)")
 
 vim.cmd([[
 
@@ -87,4 +88,8 @@ m.nmap("<leader>tS", "<cmd>UltestStop<cr>")
 m.nmap("<leader>tv", "<cmd>TestVisit<cr>")
 m.nmap("<leader>ps", "<cmd>PackerSync<cr>")
 --m.imap('<c-e>', "<esc><leader><cr>")
+vim.cmd([[
+nmap gw <plug>(himalaya-msg-write)
+]])
 return M;
+

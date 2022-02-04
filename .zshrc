@@ -6,6 +6,7 @@ setopt APPEND_HISTORY
 HISTFILE="$HOME/.config/zsh/histfile"
 HISTSIZE=2500
 SAVEHIST=2500
+alias restartmouse='sudo modprobe -r psmouse && sudo modprobe psmouse'
 alias ssh="TERM=xterm-256color ssh"
 
 #autoload -z edit-command-line
@@ -111,3 +112,5 @@ autoload -U +X bashcompinit && bashcompinit
 #autoload bashcompinit && bashcompinit source /etc/bash_completion.d/azure-cli
 export MS5_STORE=8080
 export MS5_AUTH=9099
+
+bindkey  '^[[Z' reverse-menu-complete

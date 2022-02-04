@@ -57,7 +57,6 @@ function create_ms5() {
 	tmux send-keys -t $session_name:code "nvim -S Session.vim" ENTER
 
 	tmux new-window -t $session_name -n output
-	tmux send-keys -t $session_name:code "nvim -S Session.vim" ENTER
 	tmux send-keys -t $session_name:output "cd .." ENTER
 	tmux send-keys -t $session_name:output "firebase emulators:start --inspect-functions --import=./export --export-on-exit=./export" ENTER
 
