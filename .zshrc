@@ -18,8 +18,8 @@ alias gcb='git checkout '
 alias gpl='git pull'
 alias gcl='git checkout -'
 alias src='source ~/.zshrc'
-alias envim='nvim ~/.config/nvim/'
-alias eorg='nvim ~/sync/org/'
+alias envim='pushd ~/.config/nvim && nvim && popd'
+alias eorg='pushd ~/sync/org/ && nvim && popd'
 
 alias lnvm='source /usr/share/nvm/init-nvm.sh'
 alias lnvmx='source /usr/share/nvm/init-nvm.sh && nvm use'
@@ -30,7 +30,7 @@ alias zathura='zathura --fork'
 
 # Go
 export GO111MODULE=auto
-export CHROME_EXECUTABLE="/bin/google-chrome-stable"
+#export CHROME_EXECUTABLE="/bin/google-chrome-stable"
 
 # Vim
 # bindkey -v
@@ -114,3 +114,7 @@ export MS5_STORE=8080
 export MS5_AUTH=9099
 
 bindkey  '^[[Z' reverse-menu-complete
+
+clone_ae() {
+    git clone "git@github.com:sta199-s22/ae$1-joshpetit.git" ~/sta199/ae$1-joshpetit
+}

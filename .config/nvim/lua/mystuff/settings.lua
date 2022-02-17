@@ -1,7 +1,6 @@
 require("mystuff/utils")
 local M = {}
 
-vim.o.runtimepath = vim.o.runtimepath .. ",~/.local/share/nvim/site/pack/packer/start/himalaya/vim"
 vim.o.timeout = false
 vim.g.mapleader = " "
 vim.o.mouse = "a"
@@ -12,7 +11,7 @@ vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
 vim.opt.termguicolors = true
-vim.cmd 'abbrev %% expand("%")'
+vim.cmd('abbrev %% expand("%")')
 
 M["nightfox"] = function()
 	require("nightfox").load("nightfox", { transparent = true })
@@ -108,13 +107,6 @@ require("trouble").setup({
 	-- refer to the configuration section below
 })
 
-vim.cmd([[
-augroup custom_term
-    autocmd!
-    autocmd TermOpen * setlocal bufhidden=hide
-augroup END
-]])
-
 local snippy = require("snippy")
 snippy.setup({
 	mappings = {
@@ -131,6 +123,14 @@ parser_config.org = {
 		files = { "src/parser.c", "src/scanner.cc" },
 	},
 	filetype = "org",
+}
+parser_config.puml = {
+	install_info = {
+		url = "https://github.com/ahlinc/tree-sitter-plantuml",
+		revision = "demo",
+		files = { "src/scanner.cc" },
+	},
+	filetype = "puml",
 }
 parser_config.md = {
 	install_info = {
@@ -216,8 +216,6 @@ vim.cmd([[
     let g:mkdp_filetypes = ['markdown', 'org']
     ]])
 
-local dap_install = require("dap-install")
-dap_install.config("jsnode", {})
 local dap = require("dap")
 
 dap.configurations.typescript = {
@@ -243,9 +241,8 @@ dap.configurations.typescript = {
 dap.adapters.dart = {
 	type = "executable",
 	command = "node",
-	args = {"/home/joshu/aur/Dart-Code/out/dist/debug.js", "flutter" },
+	args = { "/home/joshu/aur/Dart-Code/out/dist/debug.js", "flutter" },
 }
-
 dap.configurations.dart = {
 	{
 		type = "dart",
@@ -259,12 +256,53 @@ dap.configurations.dart = {
 	{
 		type = "dart",
 		request = "launch",
+		name = "Test flutter",
+		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
+		flutterSdkPath = "/opt/flutter",
+		program = "${file}",
+		cwd = "${workspaceFolder}",
+	},
+	{
+		type = "dart",
+		request = "launch",
 		name = "Launch flutter Linux",
 		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
 		flutterSdkPath = "/opt/flutter",
 		program = "${workspaceFolder}/lib/main.dart",
-        deviceId = "linux",
+		deviceId = "linux",
 		cwd = "${workspaceFolder}",
+	},
+	{
+		type = "dart",
+		request = "launch",
+		name = "Launch Current File",
+		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
+		flutterSdkPath = "/opt/flutter",
+		program = "${file}",
+		deviceId = "linux",
+		cwd = "${workspaceFolder}",
+	},
+	{
+		type = "dart",
+		request = "launch",
+		name = "Widgetbook Current File",
+		flutterMode = "debug",
+		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
+		flutterSdkPath = "/opt/flutter",
+		program = "${file}",
+		deviceId = "linux",
+		cwd = "${workspaceFolder}/examples/widgetbook_example/",
+	},
+	{
+		type = "dart",
+		request = "attach",
+		name = "Attach Widgetbook Current File",
+		flutterMode = "debug",
+		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
+		flutterSdkPath = "/opt/flutter",
+		program = "${file}",
+		deviceId = "linux",
+		cwd = "${workspaceFolder}/examples/widgetbook_example/",
 	},
 }
 
@@ -282,8 +320,6 @@ require("telescope").setup({
 require("telescope").load_extension("fzf")
 
 require("lsp_signature").setup({ floating_window = false, toggle_key = "<C-b>" })
-
-require("toggleterm").setup({})
 
 M["nvim-r"] = function()
 	vim.cmd([[
@@ -348,56 +384,53 @@ M["null-ls"] = function()
 		},
 	})
 end
-vim.cmd([[
-let g:himalaya_mailbox_picker =  'telescope'
-]])
 
 vim.cmd([[
-aug CSV_Editing
-		au!
-		au FileType csv :%ArrangeColumn
-aug end
+"aug CSV_Editing
+"		au!
+"		au FileType csv :%ArrangeColumn
+"aug end
 ]])
 
 return M
 
 -- Dart code configuration options
 -- {
-  -- "adapters" {
-  --     "dart-code": {
-  --       "name": "dart",
-  --       "command": [
-  --          "node",
-  --          "$HOME/.vscode/<PATH TO BUNDLE>/src/debug/dart_debug_entry.js"
-  --       ],
-  --       "attach": {
-  --         "pidProperty": "observatoryUri",
-  --         "pidSelect": "ask"
-  --       }
-  --     }
-  -- },
-  -- "configurations": {
-  --   "Dart - Launch": {
-  --     "adapter": "dart-code",
-  --     "configuration": {
-  --       "request": "launch",
-  --       "cwd": "string",
-  --       "deviceId": "string",
-  --       "enableAsserts": "boolean",
-  --       "program": "string",
-  --       "showMemoryUsage": "boolean",
-  --       "flutterMode": "enum [ debug, release, profile ]",
-  --       "args": "array[string]",
-  --       "env": " ?? ",
-  --       "vmAdditionalArgs": "array[string]"
-  --     }
-  --   },
-  --   "Dart - Attach": {
-  --     "adapter": "dart-code",
-  --     "configuration": {
-  --       "request": "attach",
-  --       "cwd": "string",
-  --       "packages": "string"
-  --     }
-  --   }
-  -- }
+-- "adapters" {
+--     "dart-code": {
+--       "name": "dart",
+--       "command": [
+--          "node",
+--          "$HOME/.vscode/<PATH TO BUNDLE>/src/debug/dart_debug_entry.js"
+--       ],
+--       "attach": {
+--         "pidProperty": "observatoryUri",
+--         "pidSelect": "ask"
+--       }
+--     }
+-- },
+-- "configurations": {
+--   "Dart - Launch": {
+--     "adapter": "dart-code",
+--     "configuration": {
+--       "request": "launch",
+--       "cwd": "string",
+--       "deviceId": "string",
+--       "enableAsserts": "boolean",
+--       "program": "string",
+--       "showMemoryUsage": "boolean",
+--       "flutterMode": "enum [ debug, release, profile ]",
+--       "args": "array[string]",
+--       "env": " ?? ",
+--       "vmAdditionalArgs": "array[string]"
+--     }
+--   },
+--   "Dart - Attach": {
+--     "adapter": "dart-code",
+--     "configuration": {
+--       "request": "attach",
+--       "cwd": "string",
+--       "packages": "string"
+--     }
+--   }
+-- }

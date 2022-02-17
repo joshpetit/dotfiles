@@ -83,12 +83,13 @@ return require("packer").startup(function()
 	-- Lua
 	use({ "folke/trouble.nvim", requires = "kyazdani42/nvim-web-devicons" })
 	use({ "jose-elias-alvarez/nvim-lsp-ts-utils" })
-	use({ "akinsho/toggleterm.nvim" })
-	--use {"sheerun/vim-polyglot"}
 	use({ "tpope/vim-fugitive" })
 	use({ "dcampos/nvim-snippy" })
 	use({ "mfussenegger/nvim-dap" })
-	use({ "Pocco81/DAPInstall.nvim" })
+	use({
+		"williamboman/nvim-lsp-installer",
+		requires = { "neovim/nvim-lspconfig" },
+	})
 	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
 	use({ "nvim-treesitter/nvim-treesitter" })
 	--use {'nvim-orgmode/orgmode'}
@@ -156,4 +157,9 @@ return require("packer").startup(function()
 	})
 	use("mechatroner/rainbow_csv")
 	use("chrisbra/csv.vim")
+    use({
+        "weirongxu/plantuml-previewer.vim",
+        requires = {"tyru/open-browser.vim", "aklt/plantuml-syntax"}
+
+    })
 end)
