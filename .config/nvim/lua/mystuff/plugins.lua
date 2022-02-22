@@ -16,7 +16,7 @@ return require("packer").startup(function()
 			require("mystuff/settings")["nightfox"]()
 		end,
 	})
-	--use {'~/projects/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim'}
+	-- use {'~/projects/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim'}
 	use({
 		"akinsho/flutter-tools.nvim",
 		requires = "nvim-lua/plenary.nvim",
@@ -92,7 +92,12 @@ return require("packer").startup(function()
 	})
 	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
 	use({ "nvim-treesitter/nvim-treesitter" })
-	--use {'nvim-orgmode/orgmode'}
+	-- use({
+	-- 	"nvim-orgmode/orgmode",
+	-- 	config = function()
+	-- 		require("mystuff/settings")["orgmode"]()
+	-- 	end,
+	-- })
 	use({
 		"~/projects/orgmode",
 		config = function()

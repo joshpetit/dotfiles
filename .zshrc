@@ -118,3 +118,7 @@ bindkey  '^[[Z' reverse-menu-complete
 clone_ae() {
     git clone "git@github.com:sta199-s22/ae$1-joshpetit.git" ~/sta199/ae$1-joshpetit
 }
+
+clone_lab() {
+    git clone "git@github.com:sta199-s22/lab$1-14.git"
+}

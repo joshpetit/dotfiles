@@ -128,6 +128,75 @@ require("flutter-tools").setup({
 		--- OR you can specify a function to deactivate or change or control how the config is created
 		settings = { showTodos = true, completeFunctionCalls = true },
 	},
+	debugger = {
+		enabled = true,
+		run_via_dap = true,
+		register_configurations = function(_)
+			local dap = require("dap")
+			dap.configurations.dart = {
+				{
+					type = "dart",
+					request = "launch",
+					name = "Launch flutter",
+					dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
+					flutterSdkPath = "/opt/flutter",
+					program = "${workspaceFolder}/lib/main.dart",
+					cwd = "${workspaceFolder}",
+				},
+				{
+					type = "dart",
+					request = "launch",
+					name = "Test flutter",
+					dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
+					flutterSdkPath = "/opt/flutter",
+					program = "${file}",
+					cwd = "${workspaceFolder}",
+				},
+				{
+					type = "dart",
+					request = "launch",
+					name = "Launch flutter Linux",
+					dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
+					flutterSdkPath = "/opt/flutter",
+					program = "${workspaceFolder}/lib/main.dart",
+					deviceId = "linux",
+					cwd = "${workspaceFolder}",
+				},
+				{
+					type = "dart",
+					request = "launch",
+					name = "Launch Current File",
+					dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
+					flutterSdkPath = "/opt/flutter",
+					program = "${file}",
+					deviceId = "linux",
+					cwd = "${workspaceFolder}",
+				},
+				{
+					type = "dart",
+					request = "launch",
+					name = "Widgetbook Current File",
+					flutterMode = "debug",
+					dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
+					flutterSdkPath = "/opt/flutter",
+					program = "${file}",
+					deviceId = "linux",
+					cwd = "${workspaceFolder}/examples/widgetbook_example/",
+				},
+				{
+					type = "dart",
+					request = "attach",
+					name = "Attach Widgetbook Current File",
+					flutterMode = "debug",
+					dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
+					flutterSdkPath = "/opt/flutter",
+					program = "${file}",
+					deviceId = "linux",
+					cwd = "${workspaceFolder}/examples/widgetbook_example/",
+				},
+			}
+		end,
+	},
 })
 
 local luaLspConfig = {
@@ -154,12 +223,6 @@ local luaLspConfig = {
 				},
 			},
 		},
-	},
-	debugger = {
-		enabled = true,
-		run_via_dap = true,
-		-- register_configurations = function(_)
-		-- end,
 	},
 }
 
