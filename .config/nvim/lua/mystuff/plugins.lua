@@ -167,4 +167,7 @@ return require("packer").startup(function()
         requires = {"tyru/open-browser.vim", "aklt/plantuml-syntax"}
 
     })
+    use 'ferrine/md-img-paste.vim'
+    use 'godlygeek/tabular'
+    use 'svermeulen/vimpeccable'
 end)

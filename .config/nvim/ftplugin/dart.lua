@@ -16,7 +16,8 @@ nmap("<leader>da", '<cmd>lua require("mystuff/debug").dart()<cr>')
 
 function GoToTestFile()
 	local file = vim.fn.expand("%")
-	local relative_path = string.sub(file, 4, -6)
-	local testFile = "test" .. relative_path .. "_test.dart"
+    local lib_beg = string.find(file, 'lib');
+	local relative_path = string.sub(file, lib_beg + 4, -6)
+	local testFile = "test/" .. relative_path .. "_test.dart"
 	vim.cmd("split " .. testFile)
 end

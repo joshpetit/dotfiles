@@ -1,2 +1,75 @@
 snippet cl
 	console.log($1);
+
+snippet testchange
+	test("$1", async () => {
+	  const wrapped = ft.wrap(functions.$2);
+
+	  const before: $4 = {
+	  	$5
+	  }
+	  const beforeDoc = ft.firestore.makeDocumentSnapshot(
+		before,
+		$3
+	  );
+
+	  const after: $4 = {
+	  	$5
+	  };
+	  const afterDoc = ft.firestore.makeDocumentSnapshot(
+		after,
+		$3
+	  );
+
+	  const change = ft.makeChange(beforeDoc, afterDoc);
+	  await wrapped(change);
+	});
+
+snippet exp
+	expect($1).$2
+
+snippet newtestfile
+	import * as admin from "firebase-admin";
+	const PROJECT_ID = "milestone-five-dev-event";
+	admin.initializeApp({ projectId: PROJECT_ID });
+	import tester from "firebase-functions-test";
+	import * as userFunctions from "../../src/user/user";
+	import * as eventFunctions from "../../src/event/event";
+	import * as updateFunctions from "../../src/update/update";
+
+	import * as userConstants from "../../src/user/constants";
+	import * as eventConstants from "../../src/event/constants";
+	import * as updateConstants from "../../src/event/constants";
+
+	import * as userModels from "../../src/user/models";
+	import * as eventModels from "../../src/event/models";
+	import * as updateModels from "../../src/update/models";
+
+	import * as userMocks from "../user/mocks";
+	import * as eventMocks from "./mocks";
+	import { teardownTest } from "../util";
+
+	const ft = tester();
+
+	beforeEach(async () => {
+	  await ft.firestore.clearFirestoreData({ projectId: PROJECT_ID });
+	});
+
+	describe("", () => {
+	  beforeEach(async () => {
+		// Here
+	  });
+
+	  test("", async () => {
+		// Here
+	  });
+	});
+
+	afterAll(async () => {
+	  teardownTest({ ft: ft, projectId: PROJECT_ID });
+	});
+
+snippet tst
+	test("$1", async () => {
+
+	});

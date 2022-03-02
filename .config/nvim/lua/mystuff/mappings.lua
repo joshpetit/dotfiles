@@ -1,5 +1,11 @@
 local M = {}
 local m = require("mystuff/mapping_utils")
+local vimp = require('vimp')
+
+vimp.unmap_all()
+vimp.nnoremap('<leader>hw', function()
+  print('hello')
+end)
 
 M['nvim-tree'] = function()
 	m.nmap("<S-q>", "<cmd>NvimTreeToggle<cr>")
@@ -20,6 +26,8 @@ m.nmap("<leader>ff", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>")
 m.vmap("<leader>ff", "<cmd>lua vim.lsp.buf.range_formatting()<CR>")
 m.nmap("di$", "T$dt$")
 m.nmap("ci$", "T$ct$")
+m.nmap("<leader>hn", "<cmd>:setlocal nonumber norelativenumber<CR>")
+m.nmap("<leader>hN", "<cmd>:setlocal number relativenumber<CR>")
 
 vim.cmd([[
 
@@ -53,6 +61,7 @@ m.nmap("<leader>grS", "<cmd>Octo review submit<cr>")
 m.nmap("<leader>grc", "<cmd>OctoAddReviewComment<cr>")
 m.nmap("<leader>grC", "<cmd>OctoAddReviewSuggestion<cr>")
 m.nmap("<leader>gcb", ":Git checkout ")
+m.nmap("<leader>gcl", ":Git checkout -<cr>")
 m.nmap("<leader>gcnb", ":Git checkout -b ")
 m.nmap("<leader>gpo", "<cmd>Git push -u origin HEAD<CR>")
 m.nmap("<leader>gpu", "<cmd>Git push origin HEAD<CR>")
