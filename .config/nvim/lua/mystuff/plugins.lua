@@ -92,18 +92,18 @@ return require("packer").startup(function()
 	})
 	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
 	use({ "nvim-treesitter/nvim-treesitter" })
-	-- use({
-	-- 	"nvim-orgmode/orgmode",
-	-- 	config = function()
-	-- 		require("mystuff/settings")["orgmode"]()
-	-- 	end,
-	-- })
 	use({
-		"~/projects/orgmode",
+		"nvim-orgmode/orgmode",
 		config = function()
 			require("mystuff/settings")["orgmode"]()
 		end,
 	})
+	-- use({
+	-- 	"~/projects/orgmode",
+	-- 	config = function()
+	-- 		require("mystuff/settings")["orgmode"]()
+	-- 	end,
+	-- })
 	use({ "iamcco/markdown-preview.nvim" })
 	-- use {'axvr/zepl.vim'}
 	use({ "kraftwerk28/gtranslate.nvim", requires = { "nvim-lua/plenary.nvim" } })
@@ -170,4 +170,6 @@ return require("packer").startup(function()
     use 'ferrine/md-img-paste.vim'
     use 'godlygeek/tabular'
     use 'svermeulen/vimpeccable'
+    use 'tpope/vim-abolish'
+    use 'jbyuki/nabla.nvim'
 end)

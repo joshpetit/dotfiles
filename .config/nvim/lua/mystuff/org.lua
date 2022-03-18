@@ -20,7 +20,7 @@ local goToHeading = function() vim.fn.search([[^\* ]], 'bW') end
 local goToProperty = function(prop) vim.fn.search(':' .. prop .. ':', 'eW') end
 
 M.goToHeading = function()
-    vim.cmd([[vim /^\* / %]])
+    vim.cmd([[vim /^\*\+ / %]])
     require('telescope.builtin').quickfix({});
 end
 

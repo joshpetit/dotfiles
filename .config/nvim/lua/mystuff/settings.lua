@@ -14,7 +14,8 @@ vim.opt.termguicolors = true
 --vim.cmd('abbrev %% expand("%")')
 
 M["nightfox"] = function()
-	require("nightfox").load("nightfox", { transparent = true })
+	--require("nightfox").load("nightfox", { transparent = true })
+    vim.cmd(":colorscheme nightfox")
 end
 
 M["nvim-tree"] = function()
@@ -245,7 +246,7 @@ dap.configurations.typescript = {
 		sourceMaps = true,
 	},
 	{
-        name = "IDEK!",
+		name = "IDEK!",
 		type = "node2",
 		request = "attach",
 		cwd = vim.fn.getcwd(),
@@ -254,7 +255,6 @@ dap.configurations.typescript = {
 		skipFiles = { "<node_internals>/**/*.js" },
 	},
 }
-
 
 dap.adapters.dart = {
 	type = "executable",
@@ -314,6 +314,17 @@ dap.configurations.dart = {
 	},
 	{
 		type = "dart",
+		request = "launch",
+		name = "Widgetbook main",
+		flutterMode = "debug",
+		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
+		flutterSdkPath = "/opt/flutter",
+		program = "widgetbook/main.dart",
+		deviceId = "linux",
+		cwd = "${workspaceFolder}/examples/widgetbook_example/",
+	},
+	{
+		type = "dart",
 		request = "attach",
 		name = "Attach Widgetbook Current File",
 		flutterMode = "debug",
@@ -326,6 +337,12 @@ dap.configurations.dart = {
 }
 
 require("telescope").setup({
+	mappings = {
+		i = {
+			["<C-Down>"] = require("telescope.actions").cycle_history_next,
+			["<C-Up>"] = require("telescope.actions").cycle_history_prev,
+		},
+	},
 	extensions = {
 		fzf = {
 			fuzzy = true,
@@ -380,7 +397,7 @@ M["null-ls"] = function()
         cat(output)
         close(con)
       ]],
-			}),
+			}, "--range-start", "--range-end", { row_offset = -1, col_offset = -1 }),
 			to_stdin = true,
 		},
 		factory = h.formatter_factory,

@@ -7,10 +7,27 @@ vimp.nnoremap('<leader>hw', function()
   print('hello')
 end)
 
+vimp.nnoremap('<leader>ef', function()
+    local ft = vim.bo.filetype;
+    vim.cmd("split ~/.config/nvim/ftplugin/" .. ft .. ".lua");
+end)
+
+vimp.nnoremap('<leader>et', function()
+    local ft = vim.bo.filetype;
+    require('mystuff/test_path')[ft]();
+end)
+
+vimp.nnoremap('<leader>es', function()
+    local ft = vim.bo.filetype;
+    vim.cmd("split ~/.config/nvim/snippets/" .. ft .. ".snippets");
+end)
+
 M['nvim-tree'] = function()
 	m.nmap("<S-q>", "<cmd>NvimTreeToggle<cr>")
 end
 
+m.nmap("<leader>pp", " :lua require('nabla').popup()<CR>")
+m.vmap("<leader>pp", " :lua require('nabla').popup()<CR>")
 m.nmap("K", "<Cmd>lua vim.lsp.buf.hover()<CR>")
 m.nmap("<leader>w", "<Cmd>w<CR>")
 m.nmap("<leader><c-f>", '<cmd>Telescope grep_string search=""<cr>')
@@ -28,6 +45,10 @@ m.nmap("di$", "T$dt$")
 m.nmap("ci$", "T$ct$")
 m.nmap("<leader>hn", "<cmd>:setlocal nonumber norelativenumber<CR>")
 m.nmap("<leader>hN", "<cmd>:setlocal number relativenumber<CR>")
+m.nmap("_", "<C-W><")
+m.nmap("+", "<C-W>>")
+m.nmap("-", "<C-W>-")
+m.nmap("=", "<C-W>+")
 
 vim.cmd([[
 
