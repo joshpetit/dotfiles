@@ -25,6 +25,7 @@ alias dropdownt='alacritty --class dropdownt,dropdownt -e tmux & disown'
 alias lnvm='source /usr/share/nvm/init-nvm.sh'
 alias lnvmx='source /usr/share/nvm/init-nvm.sh && nvm use'
 alias n='nvim'
+alias nvims='nvim -S Session.vim'
 alias cleanup='pacman -Rs $(pacman -Qtdq)'
 alias shp='ssh my.phone -p 8022'
 alias zathura='zathura --fork'
@@ -117,15 +118,5 @@ export MS5_AUTH=9099
 
 bindkey  '^[[Z' reverse-menu-complete
 
-clone_ae() {
-    git clone "git@github.com:sta199-s22/ae$1-joshpetit.git" ~/sta199/ae$1-joshpetit
-}
 
-clone_lab() {
-    git clone "git@github.com:sta199-s22/lab$1-team14.git"
-}
-
-clone_hw() {
-    git clone "git@github.com:sta199-s22/hw$1-joshpetit.git" ~/sta199/hw$1-joshpetit
-}
 alias git-line-stats="git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr"

@@ -1,6 +1,11 @@
 local m = require('mystuff/mapping_utils')
 
 local o = require('mystuff/option_utils')
+local vimp = require('vimp')
+vimp.nnoremap('<leader>gtp', function()
+    vim.fn.search([[^\* ]], 'bW')
+end)
+
 o.set_buf_option('textwidth', 80)
 
 m.nmap('<leader>gtz', [[<cmd>lua require'mystuff/org'.goToZoom()<CR>]],
@@ -14,4 +19,6 @@ m.nmap('<leader>gtn', [[<cmd>lua require'mystuff/org'.goToNotes()<CR>]],
 m.nmap('<leader>gth', [[<cmd>lua require'mystuff/org'.goToHeading()<CR>]],
        {buffer = true})
 m.nmap('<leader>gtH', [[<cmd>lua require'mystuff/org'.goToHomework()<CR>]],
+       {buffer = true})
+m.nmap('<leader>gtP', [[<cmd>lua require'mystuff/org'.goToHomework()<CR>]],
        {buffer = true})

@@ -1,0 +1,8 @@
+paused=$(dunstctl is-paused)
+echo $paused
+
+if [ $paused == "false" ]; then
+    dunstctl set-paused true && polybar-msg hook dunst 2
+else
+    dunstctl set-paused false && polybar-msg hook dunst 1
+fi

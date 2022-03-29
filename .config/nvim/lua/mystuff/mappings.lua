@@ -45,10 +45,10 @@ m.nmap("di$", "T$dt$")
 m.nmap("ci$", "T$ct$")
 m.nmap("<leader>hn", "<cmd>:setlocal nonumber norelativenumber<CR>")
 m.nmap("<leader>hN", "<cmd>:setlocal number relativenumber<CR>")
-m.nmap("_", "<C-W><")
-m.nmap("+", "<C-W>>")
-m.nmap("-", "<C-W>-")
-m.nmap("=", "<C-W>+")
+m.nmap("-", "<C-W><")
+m.nmap("_", "<C-W>>")
+m.nmap("=", "<C-W>-")
+m.nmap("+", "<C-W>+")
 
 vim.cmd([[
 
