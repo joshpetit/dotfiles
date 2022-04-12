@@ -58,9 +58,10 @@ function create_ms5() {
 
 	tmux new-window -t $session_name -n output
 	tmux send-keys -t $session_name:output "cd .." ENTER
-	tmux send-keys -t $session_name:output "firebase emulators:start --inspect-functions --import=./export --export-on-exit=./export" ENTER
+	tmux send-keys -t $session_name:output "yarn start" ENTER
 
 	tmux attach -t "ms5/app"; tmux select-window -t code
+    kill-port 8080
 }
 
 function quit_ms5() {

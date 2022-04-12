@@ -68,6 +68,8 @@ function exports.cooler()
                 AsyncRun("xdg-open", entry.value)
 
             end)
+            map("i", "<C-Up>", require("telescope.actions").cycle_history_prev)
+            map("i", "<C-Down>", require("telescope.actions").cycle_history_next)
             return true
         end
     }

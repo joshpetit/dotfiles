@@ -117,3 +117,7 @@ snippet fbd "Find by descendant" i
 				of: find.byKey(const Key('')),
 				matching: find.byKey(const Key('')),
 			);
+snippet test
+    test('$1', () {
+      expect($2, $3);
+    });

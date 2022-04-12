@@ -18,3 +18,4 @@ export PATH=$PATH:$ANDROID_ROOT/emulator
 export PATH=$PATH:$ANDROID_SDK_ROOT/tools/
 export CALIBRE_USE_DARK_PALETTE=1
 #export VIRSH_DEFAULT_CONNECT_URI=qemu:///system 
+export PATH="$PATH":"$HOME/.pub-cache/bin"

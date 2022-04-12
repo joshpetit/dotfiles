@@ -172,4 +172,11 @@ return require("packer").startup(function()
     use 'svermeulen/vimpeccable'
     use 'tpope/vim-abolish'
     use 'jbyuki/nabla.nvim'
+    use ({
+        'ThePrimeagen/harpoon',
+		config = function()
+			--require("mystuff/settings")["harpoon"]()
+			require("mystuff/mappings")["harpoon"]()
+		end,
+    })
 end)

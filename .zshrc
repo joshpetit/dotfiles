@@ -21,16 +21,22 @@ alias src='source ~/.zshrc'
 alias envim='pushd ~/.config/nvim && nvim && popd'
 alias eorg='pushd ~/sync/org/ && nvim && popd'
 alias dropdownt='alacritty --class dropdownt,dropdownt -e tmux & disown'
+alias fixresjunk='xrandr --output DP-3 --mode 1920x1080'
+alias setclip="xclip -selection c"
+alias getclip="xclip -selection c -o"
 
+alias fpg='flutter pub get'
 alias lnvm='source /usr/share/nvm/init-nvm.sh'
 alias lnvmx='source /usr/share/nvm/init-nvm.sh && nvm use'
 alias n='nvim'
 alias nvims='nvim -S Session.vim'
+alias ns='nvim -S Session.vim'
 alias cleanup='pacman -Rs $(pacman -Qtdq)'
 alias shp='ssh my.phone -p 8022'
 alias zathura='zathura --fork'
 alias connect_speaker='bluetoothctl power on && bluetoothctl connect 04:21:44:C4:0F:8E'
 alias connect_headphones='bluetoothctl power on && bluetoothctl connect 74:45:CE:46:CD:31'
+alias disconnect_bt='bluetoothctl disconnect'
 # Go
 export GO111MODULE=auto
 #export CHROME_EXECUTABLE="/bin/google-chrome-stable"

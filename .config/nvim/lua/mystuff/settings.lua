@@ -15,7 +15,7 @@ vim.opt.termguicolors = true
 
 M["nightfox"] = function()
 	--require("nightfox").load("nightfox", { transparent = true })
-    vim.cmd(":colorscheme nightfox")
+	vim.cmd(":colorscheme nightfox")
 end
 
 M["nvim-tree"] = function()
@@ -167,13 +167,13 @@ M["orgmode"] = function()
 			m = {
 				description = "Working on Ms5",
 				template = "** Working on Ms5 %<%Y-%m-%d>\nSCHEDULED: %t\n:LOGBOOK:\nCLOCK: %U\n:END:",
-				target = "~/sync/org/refile.org",
+				target = "~/sync/org/programming/ms5.org",
 				headline = "MS5 Timesheet",
 			},
 			i = {
 				description = "Thoughts",
 				template = "** %?",
-				target = "~/sync/org/refile.org",
+				target = "~/sync/org/life.org",
 				headline = "Thoughts",
 			},
 			c = {
@@ -184,25 +184,6 @@ M["orgmode"] = function()
 				description = "Todo",
 				template = "* TODO: %?",
 				target = "~/sync/org/todo.org",
-			},
-		},
-		org_custom_expots = {
-			z = {
-				label = "Export to RTF format",
-				action = function(exporter)
-					local current_file = vim.api.nvim_buf_get_name(0)
-					local target = vim.fn.fnamemodify(current_file, ":p:r") .. ".rtf"
-					local command = { "pandoc", current_file, "-o", target }
-					local on_success = function(output)
-						print("Success!")
-						vim.api.nvim_echo({ { table.concat(output, "\n") } }, true, {})
-					end
-					local on_error = function(err)
-						print("Error!")
-						vim.api.nvim_echo({ { table.concat(err, "\n"), "ErrorMsg" } }, true, {})
-					end
-					return exporter(command, target, on_success, on_error)
-				end,
 			},
 		},
 	})
@@ -259,7 +240,8 @@ dap.configurations.typescript = {
 dap.adapters.dart = {
 	type = "executable",
 	command = "node",
-	args = { "/home/joshu/aur/Dart-Code/out/dist/debug.js", "flutter" },
+	--args = { "/home/joshu/aur/Dart-Code/out/dist/debug.js", "flutter" },
+	args = { "/home/joshu/aur/Dart-Code/out/dist/debug.js" },
 }
 
 dap.configurations.dart = {
@@ -406,6 +388,7 @@ M["null-ls"] = function()
 	--
 	null_ls.setup({
 		debug = true,
+		default_timeout = 5000,
 		sources = {
 			-- Make builtin styler works with R file only
 			formatting.styler.with({
