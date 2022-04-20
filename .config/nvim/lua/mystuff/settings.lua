@@ -296,17 +296,6 @@ dap.configurations.dart = {
 	},
 	{
 		type = "dart",
-		request = "launch",
-		name = "Widgetbook main",
-		flutterMode = "debug",
-		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
-		flutterSdkPath = "/opt/flutter",
-		program = "widgetbook/main.dart",
-		deviceId = "linux",
-		cwd = "${workspaceFolder}/examples/widgetbook_example/",
-	},
-	{
-		type = "dart",
 		request = "attach",
 		name = "Attach Widgetbook Current File",
 		flutterMode = "debug",
@@ -314,7 +303,7 @@ dap.configurations.dart = {
 		flutterSdkPath = "/opt/flutter",
 		program = "${file}",
 		deviceId = "linux",
-		cwd = "${workspaceFolder}/examples/widgetbook_example/",
+		cwd = "${workspaceFolder}/examples/knobs_example/",
 	},
 }
 

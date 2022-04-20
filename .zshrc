@@ -20,6 +20,7 @@ alias gcl='git checkout -'
 alias src='source ~/.zshrc'
 alias envim='pushd ~/.config/nvim && nvim && popd'
 alias eorg='pushd ~/sync/org/ && nvim && popd'
+alias nr='pushd ~/sync/org/ && nvim refile.org && popd'
 alias dropdownt='alacritty --class dropdownt,dropdownt -e tmux & disown'
 alias fixresjunk='xrandr --output DP-3 --mode 1920x1080'
 alias setclip="xclip -selection c"
