@@ -1,29 +1,25 @@
 local M = {}
 local m = require("mystuff/mapping_utils")
-local vimp = require('vimp')
 
-vimp.unmap_all()
-vimp.nnoremap('<leader>hw', function()
-  print('hello')
-end)
-
-vimp.nnoremap('<leader>ef', function()
+vim.keymap.set('n', '<leader>ef', function()
     local ft = vim.bo.filetype;
     vim.cmd("split ~/.config/nvim/ftplugin/" .. ft .. ".lua");
 end)
 
-vimp.nnoremap('<leader>et', function()
+vim.keymap.set("n", '<leader>et', function()
     local ft = vim.bo.filetype;
     require('mystuff/test_path')[ft]();
 end)
 
-vimp.nnoremap('<leader>es', function()
+vim.keymap.set("n", '<leader>es', function()
     local ft = vim.bo.filetype;
     vim.cmd("split ~/.config/nvim/snippets/" .. ft .. ".snippets");
 end)
 
 M['nvim-tree'] = function()
-	m.nmap("<S-q>", "<cmd>NvimTreeToggle<cr>")
+	--m.nmap("<S-q>", "<cmd>NvimTreeToggle<cr>")
+	m.nmap("<S-q>", "<cmd>NvimTreeFindFileToggle<cr>")
+    m.nmap("<leader>nf", "<cmd>NvimTreeFindFileToggle<cr>")
 end
 M['harpoon'] = function()
 	m.nmap("<leader>ha", [[:lua require("harpoon.mark").add_file()<cr>]])
@@ -42,7 +38,6 @@ m.nmap("c,", "<cmd>cprev<cr>")
 m.nmap("c.", "<cmd>cnext<cr>")
 m.nmap("<leader>,", "<cmd>bprev<cr>")
 m.nmap("<leader>.", "<cmd>bnext<cr>")
-m.nmap("<leader>nf", "<cmd>NvimTreeFindFileToggle<cr>")
 m.nmap("<leader>ff", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>")
 m.vmap("<leader>ff", "<cmd>lua vim.lsp.buf.range_formatting()<CR>")
 m.nmap("di$", "T$dt$")

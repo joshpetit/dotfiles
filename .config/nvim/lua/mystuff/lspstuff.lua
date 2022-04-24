@@ -100,7 +100,7 @@ lsp_installer.on_server_ready(function(server)
 	server:setup(opts)
 end)
 
-local servers = { "tsserver", "jdtls", "tailwindcss", "r_language_server" }
+local servers = { "tsserver", "jdtls", "tailwindcss", "r_language_server", "gopls" }
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup({
 		capabilities = capabilities,

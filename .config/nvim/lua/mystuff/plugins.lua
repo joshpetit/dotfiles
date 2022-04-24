@@ -169,7 +169,6 @@ return require("packer").startup(function()
     })
     use 'ferrine/md-img-paste.vim'
     use 'godlygeek/tabular'
-    use 'svermeulen/vimpeccable'
     use 'tpope/vim-abolish'
     use 'jbyuki/nabla.nvim'
     use ({

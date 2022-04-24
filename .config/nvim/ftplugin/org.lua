@@ -1,8 +1,7 @@
 local m = require('mystuff/mapping_utils')
 
 local o = require('mystuff/option_utils')
-local vimp = require('vimp')
-vimp.nnoremap('<leader>gtp', function()
+vim.keymap.set("n", '<leader>gtp', function()
     vim.fn.search([[^\* ]], 'bW')
 end)
 

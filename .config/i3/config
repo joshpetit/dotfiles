@@ -28,7 +28,6 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id setxkbmap -option caps:swapescape
 exec --no-startup-id xrandr --dpi 93
 #exec --no-startup-id dockd --daemon
-exec --no-startup-id clipmenud
 exec --no-startup-id copyq
 exec --no-startup-id nextcloud
 exec --no-startup-id xbacklight -set 50
@@ -291,7 +290,7 @@ bindsym $mod+u exec --no-startup-id tdrop -a -w 60% -h 60% -y 20% -x 20% -n 1 al
 
 bindsym $mod+Ctrl+S  move scratchpad
 bindsym $mod+Ctrl+c exec copyq menu
-bindsym $mod+Ctrl+e exec rofi -show emoji -modi emoji
+bindsym $mod+Ctrl+e exec rofimoji
 bindsym $mod+Shift+n exec ~/dotfiles/arch/scripts/toggle_notifications
 
 bindsym $mod+Shift+d [class="dropdownt"] scratchpad show,

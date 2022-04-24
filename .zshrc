@@ -38,6 +38,7 @@ alias zathura='zathura --fork'
 alias connect_speaker='bluetoothctl power on && bluetoothctl connect 04:21:44:C4:0F:8E'
 alias connect_headphones='bluetoothctl power on && bluetoothctl connect 74:45:CE:46:CD:31'
 alias disconnect_bt='bluetoothctl disconnect'
+alias firestoredeleteall='firebase firestore:delete --all-collections'
 # Go
 export GO111MODULE=auto
 #export CHROME_EXECUTABLE="/bin/google-chrome-stable"
