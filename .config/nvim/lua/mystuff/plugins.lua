@@ -178,4 +178,10 @@ return require("packer").startup(function()
 			require("mystuff/mappings")["harpoon"]()
 		end,
     })
+    use {
+    "kwkarlwang/bufresize.nvim",
+    config = function()
+        require("bufresize").setup()
+    end
+}
 end)

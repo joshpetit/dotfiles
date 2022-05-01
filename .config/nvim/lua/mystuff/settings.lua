@@ -32,6 +32,7 @@ M["nvim-tree"] = function()
 		hijack_netrw = false,
 		view = {
 			relativenumber = true,
+			width = 40,
 			mappings = {
 				custom_only = false,
 				list = {
@@ -225,6 +226,8 @@ dap.configurations.typescript = {
 		request = "attach",
 		port = 9229,
 		sourceMaps = true,
+		outDir = "${workspaceRoot}/lib",
+		outFiles = { "${workspaceRoot}/lib/**/*.js" },
 	},
 	{
 		name = "IDEK!",

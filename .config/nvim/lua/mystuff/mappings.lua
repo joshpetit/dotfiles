@@ -10,12 +10,12 @@ vim.keymap.set("n", '<leader>et', function()
     local ft = vim.bo.filetype;
     require('mystuff/test_path')[ft]();
 end)
-
-vim.keymap.set("n", '<leader>es', function()
+vim.keymap.set("n", '<leader>et', function()
     local ft = vim.bo.filetype;
-    vim.cmd("split ~/.config/nvim/snippets/" .. ft .. ".snippets");
+    require('mystuff/test_path')[ft]();
 end)
 
+vim.keymap.set("n", '<c-w>bo', ":%bdelete|edit #|normal `<cr>")
 M['nvim-tree'] = function()
 	--m.nmap("<S-q>", "<cmd>NvimTreeToggle<cr>")
 	m.nmap("<S-q>", "<cmd>NvimTreeFindFileToggle<cr>")
@@ -38,7 +38,7 @@ m.nmap("c,", "<cmd>cprev<cr>")
 m.nmap("c.", "<cmd>cnext<cr>")
 m.nmap("<leader>,", "<cmd>bprev<cr>")
 m.nmap("<leader>.", "<cmd>bnext<cr>")
-m.nmap("<leader>ff", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>")
+m.nmap("<leader>ff", "<cmd>lua vim.lsp.buf.formatting()<CR>")
 m.vmap("<leader>ff", "<cmd>lua vim.lsp.buf.range_formatting()<CR>")
 m.nmap("di$", "T$dt$")
 m.nmap("ci$", "T$ct$")
@@ -120,6 +120,8 @@ m.nmap("<leader>ts", "<cmd>UltestSummary<cr>")
 m.nmap("<leader>tS", "<cmd>UltestStop<cr>")
 m.nmap("<leader>tv", "<cmd>TestVisit<cr>")
 m.nmap("<leader>ps", "<cmd>PackerSync<cr>")
+m.nmap("<leader>ll", [[<cmd>lua vim.notify("lol u suck", 4)<cr>]])
+m.nmap("<leader>ll", [[<cmd>lua vim.notify("lol u suck", 4)<cr>]])
 --m.imap('<c-e>', "<esc><leader><cr>")
 return M;
 
