@@ -128,3 +128,4 @@ bindkey  '^[[Z' reverse-menu-complete
 
 
 alias git-line-stats="git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr"
+zplug "TheLocehiliosan/yadm", use:"completion/zsh/_yadm", as:command, defer:2
