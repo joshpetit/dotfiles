@@ -215,6 +215,7 @@ bindsym Print exec flameshot gui
 
 # KDEConnect
 bindsym $mod+Shift+Insert exec xclip -selection clipboard -t image/png -o > /tmp/clipboard.png && kdeconnect-handler /tmp/clipboard.png
+bindsym $mod+Insert exec kdeconnect-handler ~/move/"$(ls -Art ~/move/| tail -n 1)"
 
 # Make sure it floats
 for_window [class="^flameshot$"] floating enable
@@ -277,6 +278,8 @@ bindsym Alt_R+l exec xdotool key Right
 
 bindsym $mod+ Shift + KP_End exec /home/joshu/.screenlayout/normal.sh; restart
 bindsym $mod+Shift+KP_Down exec /home/joshu/.screenlayout/znormal.sh; restart
+bindsym $mod+Shift+KP_Left exec /home/joshu/.screenlayout/san_fran_monitor.sh; restart
+bindsym $mod+Shift+KP_Right exec /home/joshu/.screenlayout/san_fran_monitor_dual.sh; restart
 
 bindsym $mod+Shift+Delete exec xclip -i /dev/null
 

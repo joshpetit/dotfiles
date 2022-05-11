@@ -1,27 +1,27 @@
 local M = {}
 local m = require("mystuff/mapping_utils")
 
-vim.keymap.set('n', '<leader>ef', function()
-    local ft = vim.bo.filetype;
-    vim.cmd("split ~/.config/nvim/ftplugin/" .. ft .. ".lua");
+vim.keymap.set("n", "<leader>ef", function()
+	local ft = vim.bo.filetype
+	vim.cmd("split ~/.config/nvim/ftplugin/" .. ft .. ".lua")
 end)
 
-vim.keymap.set("n", '<leader>et', function()
-    local ft = vim.bo.filetype;
-    require('mystuff/test_path')[ft]();
+vim.keymap.set("n", "<leader>et", function()
+	local ft = vim.bo.filetype
+	require("mystuff/test_path")[ft]()
 end)
-vim.keymap.set("n", '<leader>et', function()
-    local ft = vim.bo.filetype;
-    require('mystuff/test_path')[ft]();
+vim.keymap.set("n", "<leader>es", function()
+	local ft = vim.bo.filetype
+	vim.cmd(":split ~/.config/nvim/snippets/" .. ft .. ".snippets")
 end)
 
-vim.keymap.set("n", '<c-w>bo', ":%bdelete|edit #|normal `<cr>")
-M['nvim-tree'] = function()
-	--m.nmap("<S-q>", "<cmd>NvimTreeToggle<cr>")
-	m.nmap("<S-q>", "<cmd>NvimTreeFindFileToggle<cr>")
-    m.nmap("<leader>nf", "<cmd>NvimTreeFindFileToggle<cr>")
+vim.keymap.set("n", "<c-w>bo", ":%bdelete|edit #|normal `<cr>")
+M["nvim-tree"] = function()
+	m.nmap("<S-q>", "<cmd>NvimTreeToggle<cr>")
+	--m.nmap("<S-q>", "<cmd>NvimTreeFindFileToggle<cr>")
+	m.nmap("<leader>nf", "<cmd>NvimTreeFindFileToggle<cr>")
 end
-M['harpoon'] = function()
+M["harpoon"] = function()
 	m.nmap("<leader>ha", [[:lua require("harpoon.mark").add_file()<cr>]])
 	m.nmap("<leader>hs", [[:lua require("harpoon.ui").toggle_quick_menu()<cr>]])
 end
@@ -38,7 +38,7 @@ m.nmap("c,", "<cmd>cprev<cr>")
 m.nmap("c.", "<cmd>cnext<cr>")
 m.nmap("<leader>,", "<cmd>bprev<cr>")
 m.nmap("<leader>.", "<cmd>bnext<cr>")
-m.nmap("<leader>ff", "<cmd>lua vim.lsp.buf.formatting()<CR>")
+m.nmap("<leader>ff", "<cmd>lua vim.lsp.buf.format({async = true})<CR>")
 m.vmap("<leader>ff", "<cmd>lua vim.lsp.buf.range_formatting()<CR>")
 m.nmap("di$", "T$dt$")
 m.nmap("ci$", "T$ct$")
@@ -123,5 +123,4 @@ m.nmap("<leader>ps", "<cmd>PackerSync<cr>")
 m.nmap("<leader>ll", [[<cmd>lua vim.notify("lol u suck", 4)<cr>]])
 m.nmap("<leader>ll", [[<cmd>lua vim.notify("lol u suck", 4)<cr>]])
 --m.imap('<c-e>', "<esc><leader><cr>")
-return M;
-
+return M
