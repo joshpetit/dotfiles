@@ -12,7 +12,9 @@ zstyle ':completion:*' rehash true
 zstyle ':completion:*' menu select
 autoload -Uz compinit
 compinit
-#
+autoload -U +X bashcompinit && bashcompinit
+bindkey  '^[[Z' reverse-menu-complete
+
 # Vim
 # bindkey -v
 export VISUAL=nvim
@@ -119,5 +121,3 @@ if [[ "$(basename -- ${(%):-%x})" != "_pipenv" ]]; then
 fi
 # end
 
-autoload -U +X bashcompinit && bashcompinit
-bindkey  '^[[Z' reverse-menu-complete
