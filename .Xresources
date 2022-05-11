@@ -1,1 +1,108 @@
-/home/joshu/dotfiles/arch/.Xresources
+! URxvt
+
+! General settings
+URxvt.saveLines: 2000
+URxvt.scrollBar: False
+URxvt.scrollstyle: rxvt
+URxvt.termName: xterm-256color
+URxvt.urgentOnBell: false
+URxvt.cursorBlink: False
+
+! Extensions
+URxvt.perl-ext-common: default,clipboard,keyboard-select,url-select,resize-font,clipboard,url-select,keyboard-select,tabbedex,selection-to-clipboard,config-reload,font-size
+URxvt.url-select.launcher:  firefox
+URxvt.url-select.underline: true
+URxvt.keysym.M-u:           perl:url-select:select_next
+URxvt.keysym.M-Escape:      perl:keyboard-select:activate
+URxvt.keysym.M-s:           perl:keyboard-select:search
+URxvt.keysym.M-c:           perl:clipboard:copy
+URxvt.keysym.M-v:           eval:paste_clipboard
+URxvt.keyboard-select.clipboard: true
+URxvt.urlLauncher:          xdg-open
+URxvt.urlButton: 	    1
+URxvt.underlineURLs:        true
+
+!URxvt.copyCommand:  xclip -i -selection clipboard
+!URxvt.pasteCommand: xclip -o -selection clipboard
+
+URxvt.tabbed.tabbar-fg: 2
+URxvt.tabbed.tabbar-bg: 0
+URxvt.tabbed.tab-fg: 3
+URxvt.tabbed.tab-bg: 0
+
+! Fonts
+URxvt.keysym.C-minus: resize-font:smaller
+URxvt.keysym.C-plus:  resize-font:bigger
+URxvt.resize-font.step: 1
+
+!Courier
+!URxvt.font: xft:Courier-10
+
+!!Inconsolata
+URxvt.font: xft:InconsolataLGC Nerd Font:style=Medium:size=12
+URxvt.boldFont xft:Inconsolata Nerd Font Mono:style=Regular:size=14
+URxvt.italicFont: xft:Inconsolata Nerd Font Mono:style=Italic:size=14
+!URxvt.letterSpace: -1
+
+!Inconsolata-g
+!URxvt.font: xft:InconsolataG-10
+!URxvt.letterSpace: -1
+
+!Anonymous Pro
+!URxvt.font: xft:Anonymous\ Pro-12
+!URxvt.letterSpace: -1
+
+!Monaco
+!URxvt.font: xft:Monaco-10
+!URxvt.letterSpace: -1
+
+!Droid Sans Mono
+!URxvt.font: xft:Droid Sans Mono-10
+!URxvt.letterSpace: -1
+
+!DejaVu Sans
+!URxvt.font: xft:DejaVu Sans Mono-10
+!URxvt.letterSpace: -1
+
+!Manospace
+!URxvt.font: xft:Monospace-10
+!URxvt.letterSpace: -1
+
+!Terminus
+!URxvt.font: xft:Terminus-10
+
+! Tango theme
+
+URxvt.background: #1C1C1C
+URxvt.foreground: #DEDEDE
+
+! black
+URxvt.color0  : #2E3436
+URxvt.color8  : #555753
+! red
+URxvt.color1  : #CC0000
+URxvt.color9  : #EF2929
+! green
+URxvt.color2  : #4E9A06
+URxvt.color10 : #8AE234
+! yellow
+URxvt.color3  : #C4A000
+URxvt.color11 : #FCE94F
+! blue
+URxvt.color4  : #3465A4
+URxvt.color12 : #7f87bd
+! magenta
+URxvt.color5  : #75507B
+URxvt.color13 : #AD7FA8
+! cyan
+URxvt.color6  : #06989A
+URxvt.color14 : #d0ddff
+! white
+URxvt.color7  : #D3D7CF
+URxvt.color15 : #EEEEEC
+
+! Weird ISO thing when i hold ctrl + shift, disabled
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+
+
