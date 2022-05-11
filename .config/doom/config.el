@@ -89,3 +89,10 @@
         ("n" "Note" entry (file "~/sync/org/refile.org")
          "* %?")))
 )
+(after! evil-snipe
+  (evil-snipe-mode -1))
+
+(after! evil-snipe
+(define-key evil-motion-state-map "s" 'evil-substitute)
+(define-key evil-motion-state-map "S" 'evil-change-whole-line))
+(setq-default fill-column 80)
