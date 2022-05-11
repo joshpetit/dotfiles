@@ -1,0 +1,123 @@
+snippet fst
+	import 'package:flutter/material.dart';
+	import 'package:flutter_test/flutter_test.dart';
+
+	Widget renderWith({
+		
+	}) {
+		return MaterialApp(
+			home: Scaffold(
+				body: $1(
+				),
+			),
+		);
+	}
+
+	void main() {
+		testWidgets('Text Renders', (WidgetTester tester) async {
+			await tester.pumpWidget(
+				renderWith(),
+			);
+			expect(find.text(''), findsOneWidget);
+		});
+	}
+
+snippet fft
+	testWidgets('${1}', (WidgetTester tester) async {
+		await tester.pumpWidget(
+			renderWith(),
+		);
+		expect(find.text('Test'), findsOneWidget);
+	}, skip: false);
+
+snippet stless
+	import 'package:flutter/material.dart';
+
+	class ${1:widget} extends StatelessWidget {
+		const ${1}({
+			Key? key,
+		}) : super(key: key);
+
+		@override
+		Widget build(BuildContext context) {
+			return Scaffold(
+				body: ${2}
+			);
+		}
+	}
+snippet stful
+	import 'package:flutter/material.dart';
+
+	class ${1:widget} extends StatefulWidget {
+		const ${1}({
+			Key? key,
+		}) : super(key: key);
+
+		@override
+		_${1}State createState() => _${1}State();
+	}
+
+	class _${1}State extends State<${1}> {
+		@override
+		Widget build(BuildContext context) {
+			return $0Container(
+				${2}
+			);
+		}
+	}
+
+snippet ft "Find text test"
+	expect(find.text(${1}), findsOneWidget);
+
+snippet fbk "Find by key" i
+	find.byKey(const Key('${1}'));
+
+snippet fbt "Find by text" i
+	find.text('$1')
+snippet fd "Find descendant test"
+	Finder item = find.descendant(
+		of: find.byKey(const Key('${1}')),
+		matching: find.byKey(const Key('${2}')),
+	);
+
+snippet fet "Enter text in flutter test" i
+	await tester.enterText(
+		find.byKey(const Key('$1')), '$2');
+	await tester.pumpAndSettle();
+
+snippet ftp "Tap thing in flutter" i
+	await tester.tap(find.byKey(const Key('$1')));
+	await tester.pumpAndSettle();
+
+snippet route "Material page route" i
+	() => Navigator.of(context).push(
+					MaterialPageRoute<Widget>(
+							builder: (_) => $1(),
+					),
+				),
+
+snippet cbt "Callback test"
+	testWidgets('Clicking on $1 calls $2',
+			(WidgetTester tester) async {
+		bool $2 = false;
+		await tester.pumpWidget(
+			renderWith(
+				$2: () => $2 = true,
+			),
+		);
+		await tester.tap(find.text(''));
+		await tester.pumpAndSettle();
+
+		expect($2, isTrue);
+	}, skip: false);
+# snippet ran "Just testing stuff"
+# 	Current Time is `lua print(os.time())`
+snippet fbd "Find by descendant" i
+	find.descendant(
+				of: find.byKey(const Key('')),
+				matching: find.byKey(const Key('')),
+			);
+snippet test
+    test('$1', () {
+      expect($2, $3);
+    });

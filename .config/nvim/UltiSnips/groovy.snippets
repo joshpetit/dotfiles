@@ -1,0 +1,194 @@
+snippet bad
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id "application"
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+}
+
+javafx {
+    version= "15.0.1"
+    modules= ['javafx.controls']
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2')
+    }
+    maven{
+        url = uri('https://mvnrepository.com/')
+    }   
+}
+
+ext {
+   javaMainClass = "breakout.Main"
+}
+
+applicationDefaultJvmArgs += ["--enable-preview"]
+
+
+application {
+    mainClassName = javaMainClass
+}
+
+dependencies {
+    implementation 'com.jfoenix:jfoenix:9.0.10'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+    testImplementation 'org.testfx:testfx-junit5:4.0.16-alpha'
+    implementation 'org.kordamp.ikonli:ikonli-javafx:12.2.0'
+    implementation("com.squareup.moshi:moshi:1.11.0")
+    implementation("com.squareup.moshi:moshi-adapters:1.11.0")
+    implementation 'org.kordamp.ikonli:ikonli-materialdesign2-pack:12.2.0'
+    implementation 'com.jfoenix:jfoenix:9.0.10'
+    implementation("com.google.guava:guava:30.1.1-jre")
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation group: 'org.reflections', name: 'reflections', version: '0.9.12'
+}
+
+group = 'CompSci308_2021Spring'
+version = 'master-SNAPSHOT'
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'iso-8859-1'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+        resources {
+            srcDirs = ['data', 'src']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['test']
+        }
+    }
+}
+
+test {
+	useJUnitPlatform()
+	testLogging {
+		showStandardStreams = true
+		events "passed", "skipped", "failed"
+		exceptionFormat = 'full'
+	}
+}
+tasks.withType(JavaCompile).each {
+    it.options.compilerArgs.add('--enable-preview')
+}
+
+test {
+    jvmArgs(['--enable-preview'])
+}
+endsnippet
+snippet bad2
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id "application"
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+}
+
+javafx {
+    version= "15.0.1"
+    modules= ['javafx.controls']
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2')
+    }
+    maven{
+        url = uri('https://mvnrepository.com/')
+    }   
+}
+
+ext {
+   javaMainClass = "oolala.DarwinMain"
+}
+
+applicationDefaultJvmArgs += ["--enable-preview"]
+
+
+application {
+    mainClassName = javaMainClass
+}
+
+dependencies {
+    implementation 'com.jfoenix:jfoenix:9.0.10'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+    testImplementation "org.testfx:testfx-core:4.0.16-alpha"
+    testImplementation "org.testfx:openjfx-monocle:jdk-12.0.1+2" // For Java 12
+    testImplementation "org.testfx:testfx-junit5:4.0.16-alpha"
+    implementation 'org.kordamp.ikonli:ikonli-javafx:12.2.0'
+    implementation("com.squareup.moshi:moshi:1.11.0")
+    implementation("com.squareup.moshi:moshi-adapters:1.11.0")
+    implementation 'org.kordamp.ikonli:ikonli-materialdesign2-pack:12.2.0'
+    implementation 'com.jfoenix:jfoenix:9.0.10'
+    implementation("com.google.guava:guava:30.1.1-jre")
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation group: 'org.reflections', name: 'reflections', version: '0.9.12'
+}
+
+group = 'CompSci308_2021Spring'
+version = 'master-SNAPSHOT'
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'iso-8859-1'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+        resources {
+            srcDirs = ['data', 'src']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['test']
+        }
+    }
+}
+
+test {
+	useJUnitPlatform()
+	testLogging {
+		showStandardStreams = true
+		events "passed", "skipped", "failed"
+		exceptionFormat = 'full'
+	}
+}
+tasks.withType(JavaCompile).each {
+    it.options.compilerArgs.add('--enable-preview')
+}
+
+test {
+    jvmArgs(['--enable-preview'])
+}
+endsnippet

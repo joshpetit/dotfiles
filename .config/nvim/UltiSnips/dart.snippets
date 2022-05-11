@@ -1,0 +1,196 @@
+# Snippets for dart in flutter project, to use add the following to your .vimrc
+# `autocmd BufRead,BufNewFile,BufEnter *.dart UltiSnipsAddFiletypes dart-flutter`
+snippet txt "Stateless widget" b
+const Text('$1'),
+endsnippet
+
+snippet stless "Stateless widget" b
+import 'package:flutter/material.dart';
+
+class ${1:widget} extends StatelessWidget {
+	const ${1}({
+		Key? key,
+	}) : super(key: key);
+
+	@override
+	Widget build(BuildContext context) {
+		return Scaffold(
+			body: ${2}
+		);
+	}
+}
+endsnippet
+
+snippet stful "Stateful widget" b
+import 'package:flutter/material.dart';
+
+class ${1:widget} extends StatefulWidget {
+	const ${1}({
+		Key? key,
+	}) : super(key: key);
+
+	@override
+	_${1}State createState() => _${1}State();
+}
+
+class _${1}State extends State<${1}> {
+	@override
+	Widget build(BuildContext context) {
+		return $0Container(
+			${2}
+		);
+	}
+}
+endsnippet
+
+# Flutter widget with AnimationController
+snippet stanim
+class ${1:widget} extends StatefulWidget {
+	const ${1}({
+		key? key,
+	}) : super(key: key);
+
+	@override
+	_${1}State createState() => _${1}State();
+}
+
+class _${1}State extends State<${1}>
+		with SingleTickerProviderStateMixin {
+	AnimationController _controller;
+
+	@override
+	void initState() {
+		super.initState();
+		_controller = AnimationController(vsync: this);
+	}
+
+	@override
+	void dispose() {
+		super.dispose();
+		_controller.dispose();
+	}
+
+	@override
+	Widget build(BuildContext context) {
+		return Container(
+			${2}
+		);
+	}
+}
+endsnippet
+
+snippet fluttest "Flutter pump test"
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+Widget renderWith() {
+  return MaterialApp(
+    home: Scaffold(
+      body: widget(),
+    ),
+  );
+}
+
+void main() {
+  testWidgets('Test Name', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      renderWith(),
+    );
+    expect(find.text('Test'), findsOneWidget);
+  }, skip: false);
+}
+endsnippet
+
+snippet ft "Find text test"
+expect(find.text(${1}), findsOneWidget);
+endsnippet
+
+snippet fbk "Find by key" i
+find.byKey(const Key('${1}'));
+endsnippet
+
+snippet fbt "Find by text" i
+find.text('$1')
+endsnippet
+
+snippet fd "Find descendant test"
+Finder item = find.descendant(
+	of: find.byKey(const Key('${1}')),
+	matching: find.byKey(const Key('${2}')),
+);
+endsnippet
+
+snippet fet "Enter text in flutter test" i
+await tester.enterText(
+	find.byKey(const Key('$1')), '$2');
+await tester.pumpAndSettle();
+endsnippet
+
+snippet ftp "Tap thing in flutter" i
+await tester.tap(find.byKey(const Key('$1')));
+await tester.pumpAndSettle();
+endsnippet
+
+snippet fft "Flutter full test"
+testWidgets('${1}', (WidgetTester tester) async {
+  await tester.pumpWidget(
+    renderWith(),
+  );
+  expect(find.text('Test'), findsOneWidget);
+}, skip: false);
+endsnippet
+
+snippet fst "Flutter setup test"
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+Widget renderWith({
+	
+}) {
+  return MaterialApp(
+    home: Scaffold(
+      body: $1(
+			),
+    ),
+  );
+}
+
+void main() {
+  testWidgets('Text Renders', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      renderWith(),
+    );
+    expect(find.text(''), findsOneWidget);
+  });
+}
+endsnippet
+
+snippet fbd "Find by descendant" i
+find.descendant(
+      of: find.byKey(const Key('')),
+      matching: find.byKey(const Key('')),
+    );
+endsnippet
+snippet route "Material page route" i
+() => Navigator.of(context).push(
+				MaterialPageRoute<Widget>(
+						builder: (_) => $1(),
+				),
+			),
+endsnippet
+
+snippet cbt "Callback test"
+  testWidgets('Clicking on $2 calls $1',
+      (WidgetTester tester) async {
+    bool $1 = false;
+    await tester.pumpWidget(
+      renderWith(
+        $1: () => $1 = true,
+      ),
+    );
+    await tester.tap(find.text(''));
+    await tester.pumpAndSettle();
+
+    expect($1, isTrue);
+  }, skip: false);
+endsnippet
