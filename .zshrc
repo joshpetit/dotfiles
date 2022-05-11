@@ -1,17 +1,29 @@
-#if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-  #exec tmux
-#fi
+# No Stupid beeps
+# Misc Settings
+unsetopt BEEP
 # History
 setopt APPEND_HISTORY
-HISTFILE="$HOME/.config/zsh/histfile"
+HISTFILE="$HOME/.local/share/zsh/histfile"
 HISTSIZE=2500
 SAVEHIST=2500
+
+zstyle :compinstall filename "$HOME/.zshrc"
+zstyle ':completion:*' rehash true
+zstyle ':completion:*' menu select
+autoload -Uz compinit
+compinit
+#
+# Vim
+# bindkey -v
+export VISUAL=nvim
+export EDITOR=/usr/bin/nvim
+
+
 alias restartmouse='sudo modprobe -r psmouse && sudo modprobe psmouse'
 alias ssh="TERM=xterm-256color ssh"
 
-#autoload -z edit-command-line
-#bindkey "^X^E" edit-command-line
-#git
+# Git
+alias git-line-stats="git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr"
 alias gpo='git push -u origin HEAD'
 alias gcnb='git checkout -b '
 alias gcb='git checkout '
@@ -39,93 +51,73 @@ alias connect_speaker='bluetoothctl power on && bluetoothctl connect 04:21:44:C4
 alias connect_headphones='bluetoothctl power on && bluetoothctl connect 74:45:CE:46:CD:31'
 alias disconnect_bt='bluetoothctl disconnect'
 alias firestoredeleteall='firebase firestore:delete --all-collections'
-# Go
-export GO111MODULE=auto
-#export CHROME_EXECUTABLE="/bin/google-chrome-stable"
-
-# Vim
-# bindkey -v
-export VISUAL=nvim
-export EDITOR=/usr/bin/nvim
-
-zstyle :compinstall filename "$HOME/.zshrc"
-zstyle ':completion:*' rehash true
-zstyle ':completion:*' menu select
-
-
-# No Stupid beeps
-unsetopt BEEP
-
-alias e=exit
-alias t=tmux
-
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
-#
-if [ -x /usr/bin/dircolors ]; then
-  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-  alias ls='ls --color=auto'
-fi
-setxkbmap -option caps:swapescape
-
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias e=exit
+alias t=tmux
+
+
+# Go
+export GO111MODULE=auto
+#export CHROME_EXECUTABLE="/bin/google-chrome-stable"
+# End of lines added by compinstall
+#
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+fi
+
+if type setxkbmap &>/dev/null; then
+    setxkbmap -option caps:swapescape
+fi
 
 # Prompt
 
 PROMPT="%B%F{147}[->%f%b%d%B%F{147}]%f%b "
 
 if type rg &>/dev/null; then
-  export FZF_DEFAULT_COMMAND='rg --files --hidden'
-  export FZF_DEFAULT_OPTS='-m --height 50% --border'
+    export FZF_DEFAULT_COMMAND='rg --files --hidden'
+    export FZF_DEFAULT_OPTS='-m --height 50% --border'
 fi
 
 # Zplug
-source "$HOME/.config/zsh/zplug/init.zsh"
+zplugfile="$HOME/.config/zsh/zplug/init.zsh"
+if [ -e $zplugfile ]
+then
+    source $zplugfile
+    zplug "zsh-users/zsh-history-substring-search"
+    zplug "TheLocehiliosan/yadm", use:"completion/zsh/_yadm", as:command, defer:2
+    # c-N to search back in history c-P to search forward (swapped for convenience)
+    bindkey '^p' history-substring-search-down
+    bindkey '^n' history-substring-search-up
+    bindkey "^k" up-line-or-search
+    bindkey "^j" down-line-or-search
+    zplug load
 
-zplug "zsh-users/zsh-history-substring-search"
-
-# c-N to search back in history c-P to search forward (swapped for convenience)
-bindkey '^p' history-substring-search-down
-bindkey '^n' history-substring-search-up
-bindkey "^k" up-line-or-search
-bindkey "^j" down-line-or-search
-zplug load
+fi
 
 
 # pip zsh completion start
 function _pip_completion {
-  local words cword
-  read -Ac words
-  read -cn cword
-  reply=( $( COMP_WORDS="$words[*]" \
-    COMP_CWORD=$(( cword-1 )) \
-    PIP_AUTO_COMPLETE=1 $words[1] 2>/dev/null ))
-  }
-compctl -K _pip_completion pip
-# pip zsh completion end
+    local words cword
+    read -Ac words
+    read -cn cword
+    reply=( $( COMP_WORDS="$words[*]" \
+        COMP_CWORD=$(( cword-1 )) \
+        PIP_AUTO_COMPLETE=1 $words[1] 2>/dev/null ))
+    }
+    compctl -K _pip_completion pip
+    # pip zsh completion end
 
 #pipenv zsh completion start
 _pipenv() {
-  eval $(env COMMANDLINE="${words[1,$CURRENT]}" _PIPENV_COMPLETE=complete-zsh  pipenv)
+    eval $(env COMMANDLINE="${words[1,$CURRENT]}" _PIPENV_COMPLETE=complete-zsh  pipenv)
 }
 if [[ "$(basename -- ${(%):-%x})" != "_pipenv" ]]; then
-  compdef _pipenv pipenv
+    compdef _pipenv pipenv
 fi
 # end
 
-#. /opt/asdf-vm/asdf.sh
-alias lasdf="source /opt/asdf-vm/asdf.sh"
-
 autoload -U +X bashcompinit && bashcompinit
-#autoload bashcompinit && bashcompinit source /etc/bash_completion.d/azure-cli
-export MS5_STORE=8080
-export MS5_AUTH=9099
-
 bindkey  '^[[Z' reverse-menu-complete
-
-
-alias git-line-stats="git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr"
-zplug "TheLocehiliosan/yadm", use:"completion/zsh/_yadm", as:command, defer:2
