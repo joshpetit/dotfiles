@@ -24,7 +24,6 @@ return require("packer").startup(function()
             local split = SplitString(plugin, "/")
             local plugin_name = split[2]
             plugin_name = plugin_name:gsub("%.", "-")
-            P(plugin_name)
             local plugin_dir = PLUGIN_CONF_PATH .. plugin_name .. "/"
             local dir_exists = FileExists(plugin_dir)
             if not dir_exists then

@@ -76,7 +76,7 @@ m.nmap("<leader>sb", "?\\c")
 
 m.nmap("<leader>nh", "<cmd>noh<CR>")
 
-m.nmap("<c-f>", '<cmd>:lua require("mystuff/telescopic").cooler()<CR>')
+m.nmap("<c-f>", '<cmd>Telescope find_files<CR>')
 
 -- Git
 m.nmap("<leader>gs", ":Git<CR> :call search('Un')<CR>")
