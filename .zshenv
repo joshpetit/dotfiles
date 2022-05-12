@@ -1,13 +1,13 @@
-export PATH=/home/joshu/.local/bin/:$PATH
-export PATH=/home/joshu/.local/share/gem/ruby/3.0.0/bin:$PATH
-export PATH=/home/joshu/.yarn/bin:$PATH
-export PATH=/home/joshu/.cargo/bin:$PATH
-export PATH=/home/joshu/go/bin:$PATH
+export PATH=$HOME/.local/bin/:$PATH
+export PATH=$HOME/.local/share/gem/ruby/3.0.0/bin:$PATH
+export PATH=$HOME/.yarn/bin:$PATH
+export PATH=$HOME/.cargo/bin:$PATH
+export PATH=$HOME/go/bin:$PATH
 export GEM_HOME=/home/joshu/.local/share/gem/ruby/3.0.0/bin
 #export JAVA_HOME=/usr/lib/jvm/java-8-openjdk/
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
 #export JAVA_HOME=/usr/lib/jvm/java-17-openjdk/
-export ZPLUG_HOME=/home/joshu/.config/zsh/zplug/
+export ZPLUG_HOME=$HOME/.local/share/zplug/
 export CM_LAUNCHER=rofi
 
 export ANDROID_SDK_ROOT='/opt/android-sdk/platform-tools/source.properties'

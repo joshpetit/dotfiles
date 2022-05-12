@@ -67,7 +67,10 @@ if [ -x /usr/bin/dircolors ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
   alias ls='ls --color=auto'
 fi
-setxkbmap -option caps:swapescape
+
+if type setxkbmap &>/dev/null; then
+    setxkbmap -option caps:swapescape
+fi
 
 alias ll='ls -alF'
 alias la='ls -A'
@@ -83,7 +86,7 @@ if type rg &>/dev/null; then
 fi
 
 # Zplug
-source "$HOME/.config/zsh/zplug/init.zsh"
+source $ZPLUG_HOME
 
 zplug "zsh-users/zsh-history-substring-search"
 
@@ -115,9 +118,6 @@ if [[ "$(basename -- ${(%):-%x})" != "_pipenv" ]]; then
   compdef _pipenv pipenv
 fi
 # end
-
-#. /opt/asdf-vm/asdf.sh
-alias lasdf="source /opt/asdf-vm/asdf.sh"
 
 autoload -U +X bashcompinit && bashcompinit
 #autoload bashcompinit && bashcompinit source /etc/bash_completion.d/azure-cli

@@ -1,0 +1,6 @@
+#!/bin/sh
+source $(dirname $0)/.zshenv
+if ! [ -d $ZPLUG_HOME ]; then
+    echo "Installing zplug...."
+    git clone https://github.com/zplug/zplug $ZPLUG_HOME
+fi
