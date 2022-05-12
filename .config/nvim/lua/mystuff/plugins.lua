@@ -182,13 +182,13 @@ return require("packer").startup(function()
     use("tpope/vim-rhubarb")
     use("shumphrey/fugitive-gitlab.vim")
     use("nvim-treesitter/playground")
-    use({
+    use_help({
         "jose-elias-alvarez/null-ls.nvim",
         requires = { "nvim-lua/plenary.nvim" },
         config = function()
             require("mystuff/settings")["null-ls"]()
         end,
-    })
+    }, true)
     use({
         "theHamsta/nvim-dap-virtual-text",
         config = function()

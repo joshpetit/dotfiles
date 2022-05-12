@@ -258,9 +258,6 @@ dap.configurations.dart = {
 	},
 }
 
-
-require("telescope").load_extension("fzf")
-
 require("lsp_signature").setup({ floating_window = false, toggle_key = "<C-b>" })
 
 M["nvim-r"] = function()
