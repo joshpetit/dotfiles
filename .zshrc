@@ -1,3 +1,4 @@
+source ~/.zshen
 autoload -U +X bashcompinit && bashcompinit
 # No Stupid beeps
 unsetopt BEEP

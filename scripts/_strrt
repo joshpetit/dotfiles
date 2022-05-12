@@ -1,4 +1,0 @@
-#compdef cmd
-local -a subcmds
-subcmds=('c:description for c command' 'd:description for d command')
-_describe 'command' subcmds

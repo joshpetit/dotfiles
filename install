@@ -22,6 +22,7 @@ picom=$(get_full_path .config/picom/)
 nvim=$(get_full_path .config/nvim/)
 i3=$(get_full_path .config/i3/)
 xresources=$(get_full_path .Xresources)
+scripts=$(get_full_path scripts/)
 
 ln -s $zshenv $HOME
 ln -s $xresources $HOME
@@ -36,3 +37,4 @@ ln -s $nvim $XDG_CONFIG_HOME
 ln -s $picom $XDG_CONFIG_HOME
 ln -s $rofi $XDG_CONFIG_HOME
 ln -s $polybar $XDG_CONFIG_HOME
+ln -s $scripts $HOME/.local/share
