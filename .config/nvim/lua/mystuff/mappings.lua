@@ -12,11 +12,13 @@ vim.keymap.set("n", "<leader>et", function()
 end)
 
 vim.keymap.set("n", "<leader>ggf", function()
+---@diagnostic disable-next-line: missing-parameter
 	local file = vim.fn.expand("%");
     vim.cmd([[:Git]]);
     vim.fn.search(file, 'W')
     print(file)
 end)
+
 vim.keymap.set("n", "<leader>es", function()
 	local ft = vim.bo.filetype
 	vim.cmd(":split ~/.config/nvim/snippets/" .. ft .. ".snippets")
