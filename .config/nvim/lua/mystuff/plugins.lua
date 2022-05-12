@@ -77,7 +77,7 @@ return require("packer").startup(function()
         requires = { { "nvim-lua/plenary.nvim" } },
     }, true)
 
-    use({ "mhartington/formatter.nvim" })
+    use_help({ "mhartington/formatter.nvim" }, true)
     -- Git diffs on the column
     use({
         "lewis6991/gitsigns.nvim",
