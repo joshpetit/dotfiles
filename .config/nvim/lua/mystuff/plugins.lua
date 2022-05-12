@@ -41,19 +41,19 @@ return require("packer").startup(function()
     use("wbthomason/packer.nvim")
     use_help({
         "kyazdani42/nvim-tree.lua",
-        requires = "kyazdani42/nvim-web-devicons",
+        requires = {"kyazdani42/nvim-web-devicons"},
         disable = false,
     }, true)
     use({
         "EdenEast/nightfox.nvim",
         config = function()
-            require("mystuff/settings")["nightfox"]()
+    vim.cmd(":colorscheme nightfox")
         end,
     })
     -- use {'~/projects/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim'}
     use({
         "akinsho/flutter-tools.nvim",
-        requires = "nvim-lua/plenary.nvim",
+        requires = {"nvim-lua/plenary.nvim"},
     })
     -- tag = 'release' -- To use the latest release
     use({
@@ -68,9 +68,10 @@ return require("packer").startup(function()
             "dcampos/cmp-snippy",
         },
     })
+    use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
     use_help({
         "nvim-telescope/telescope.nvim",
-        requires = { { "nvim-lua/plenary.nvim" } },
+        requires =  { "nvim-lua/plenary.nvim" },
     }, true)
 
     use_help({ "mhartington/formatter.nvim" }, true)
@@ -132,6 +133,7 @@ return require("packer").startup(function()
     })
     use_help({
         "neovim/nvim-lspconfig",
+	requires = { "folke/lua-dev.nvim" }
     }, true)
     use({
         "rcarriga/nvim-dap-ui",
@@ -158,7 +160,6 @@ return require("packer").startup(function()
     -- Gets a little annoying
     use({ "ray-x/lsp_signature.nvim" })
     use({ "simrat39/symbols-outline.nvim" })
-    use("folke/lua-dev.nvim")
     -- F11, focused mode!
     use("Pocco81/TrueZen.nvim")
     -- Make vim start faster!
@@ -176,7 +177,6 @@ return require("packer").startup(function()
         requires = { "vim-test/vim-test" },
         run = ":UpdateRemotePlugins",
     })
-    use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
     use("tpope/vim-eunuch") -- SudoWrite!
     --use 'junegunn/fzf.vim'
     use("BurntSushi/ripgrep")

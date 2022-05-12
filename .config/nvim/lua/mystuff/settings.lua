@@ -15,7 +15,6 @@ vim.opt.termguicolors = true
 
 M["nightfox"] = function()
     --require("nightfox").load("nightfox", { transparent = true })
-    vim.cmd(":colorscheme nightfox")
 end
 
 vim.notify = require("notify")
