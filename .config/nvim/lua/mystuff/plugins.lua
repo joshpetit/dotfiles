@@ -129,6 +129,9 @@ return require("packer").startup(function()
         "williamboman/nvim-lsp-installer",
         requires = { "neovim/nvim-lspconfig" },
     })
+    use_help({
+        "neovim/nvim-lspconfig",
+    }, true)
     use({
         "rcarriga/nvim-dap-ui",
         requires = { "mfussenegger/nvim-dap" },
