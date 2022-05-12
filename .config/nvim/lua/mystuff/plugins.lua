@@ -129,7 +129,7 @@ return require("packer").startup(function()
         requires = { "neovim/nvim-lspconfig" },
     })
     use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
-    use({ "nvim-treesitter/nvim-treesitter" })
+    use_help({ "nvim-treesitter/nvim-treesitter" }, true)
     use_help({
         "nvim-orgmode/orgmode",
     }, true)
