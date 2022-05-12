@@ -43,10 +43,6 @@ return require("packer").startup(function()
         "kyazdani42/nvim-tree.lua",
         requires = "kyazdani42/nvim-web-devicons",
         disable = false,
-        config = function()
-            require("mystuff/mappings")["nvim-tree"]()
-            require("mystuff/settings")["nvim-tree"]()
-        end,
     }, true)
     use({
         "EdenEast/nightfox.nvim",
@@ -118,17 +114,28 @@ return require("packer").startup(function()
             require("nvim-ts-autotag").setup()
         end,
     })
-    -- Lua
-    use({ "folke/trouble.nvim", requires = "kyazdani42/nvim-web-devicons" })
+    use({
+        "folke/trouble.nvim",
+        requires = "kyazdani42/nvim-web-devicons",
+        config = function()
+            require("trouble").setup({})
+        end,
+    })
     use({ "jose-elias-alvarez/nvim-lsp-ts-utils" })
     use({ "tpope/vim-fugitive" })
-    use({ "dcampos/nvim-snippy" })
+    use_help({ "dcampos/nvim-snippy" }, true)
     use({ "mfussenegger/nvim-dap" })
     use({
         "williamboman/nvim-lsp-installer",
         requires = { "neovim/nvim-lspconfig" },
     })
-    use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
+    use({
+        "rcarriga/nvim-dap-ui",
+        requires = { "mfussenegger/nvim-dap" },
+        config = function()
+            require("dapui").setup()
+        end,
+    })
     use_help({ "nvim-treesitter/nvim-treesitter" }, true)
     use_help({
         "nvim-orgmode/orgmode",
@@ -185,9 +192,6 @@ return require("packer").startup(function()
     use_help({
         "jose-elias-alvarez/null-ls.nvim",
         requires = { "nvim-lua/plenary.nvim" },
-        config = function()
-            require("mystuff/settings")["null-ls"]()
-        end,
     }, true)
     use({
         "theHamsta/nvim-dap-virtual-text",
@@ -205,13 +209,7 @@ return require("packer").startup(function()
     use("godlygeek/tabular")
     use("tpope/vim-abolish")
     use("jbyuki/nabla.nvim")
-    use({
-        "ThePrimeagen/harpoon",
-        config = function()
-            --require("mystuff/settings")["harpoon"]()
-            require("mystuff/mappings")["harpoon"]()
-        end,
-    }, true)
+    use({ "ThePrimeagen/harpoon" })
     use({
         "kwkarlwang/bufresize.nvim",
         config = function()

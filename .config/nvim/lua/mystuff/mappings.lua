@@ -25,15 +25,14 @@ vim.keymap.set("n", "<leader>es", function()
 end)
 
 vim.keymap.set("n", "<c-w>bo", ":%bdelete|edit #|normal `<cr>")
-M["nvim-tree"] = function()
-	m.nmap("<S-q>", "<cmd>NvimTreeToggle<cr>")
-	--m.nmap("<S-q>", "<cmd>NvimTreeFindFileToggle<cr>")
-	m.nmap("<leader>nf", "<cmd>NvimTreeFindFileToggle<cr>")
-end
-M["harpoon"] = function()
-	m.nmap("<leader>ha", [[:lua require("harpoon.mark").add_file()<cr>]])
-	m.nmap("<leader>hs", [[:lua require("harpoon.ui").toggle_quick_menu()<cr>]])
-end
+
+m.nmap("<S-q>", "<cmd>NvimTreeToggle<cr>")
+--m.nmap("<S-q>", "<cmd>NvimTreeFindFileToggle<cr>")
+m.nmap("<leader>nf", "<cmd>NvimTreeFindFileToggle<cr>")
+
+-- Harpoon
+m.nmap("<leader>ha", [[:lua require("harpoon.mark").add_file()<cr>]])
+m.nmap("<leader>hs", [[:lua require("harpoon.ui").toggle_quick_menu()<cr>]])
 
 m.nmap("<leader>pp", ":lua require('nabla').popup()<CR>")
 m.vmap("<leader>pp", ":lua require('nabla').popup()<CR>")

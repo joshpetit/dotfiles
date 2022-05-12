@@ -27,13 +27,7 @@ let g:vim_markdown_folding_disabled = 1
 --
 vim.g.nvim_tree_respect_buf_cwd = 1
 
-require("dapui").setup()
-require("nvim-treesitter.configs").setup({ autotag = { enable = true } })
-require("trouble").setup({
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-})
+require("trouble").setup({})
 
 local snippy = require("snippy")
 snippy.setup({
