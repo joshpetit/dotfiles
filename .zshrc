@@ -1,13 +1,27 @@
-#if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-  #exec tmux
-#fi
-# History
+autoload -U +X bashcompinit && bashcompinit
+# No Stupid beeps
+unsetopt BEEP
+autoload -Uz compinit
+compinit
+zstyle :compinstall filename "$HOME/.zshrc"
+zstyle ':completion:*' rehash true
+zstyle ':completion:*' menu select
+
+bindkey  '^[[Z' reverse-menu-complete
 setopt APPEND_HISTORY
-HISTFILE="$HOME/.config/zsh/histfile"
+HISTFILE="$HOME/.local/zsh/histfile"
 HISTSIZE=2500
 SAVEHIST=2500
+
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias git-line-stats="git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr"
 alias restartmouse='sudo modprobe -r psmouse && sudo modprobe psmouse'
 alias ssh="TERM=xterm-256color ssh"
+
+alias e=exit
+alias t=tmux
 
 #autoload -z edit-command-line
 #bindkey "^X^E" edit-command-line
@@ -48,19 +62,6 @@ export GO111MODULE=auto
 export VISUAL=nvim
 export EDITOR=/usr/bin/nvim
 
-zstyle :compinstall filename "$HOME/.zshrc"
-zstyle ':completion:*' rehash true
-zstyle ':completion:*' menu select
-
-
-# No Stupid beeps
-unsetopt BEEP
-
-alias e=exit
-alias t=tmux
-
-autoload -Uz compinit
-compinit
 # End of lines added by compinstall
 #
 if [ -x /usr/bin/dircolors ]; then
@@ -71,12 +72,6 @@ fi
 if type setxkbmap &>/dev/null; then
     setxkbmap -option caps:swapescape
 fi
-
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
-# Prompt
 
 PROMPT="%B%F{147}[->%f%b%d%B%F{147}]%f%b "
 
@@ -89,13 +84,11 @@ fi
 source $ZPLUG_HOME
 
 zplug "zsh-users/zsh-history-substring-search"
-
 # c-N to search back in history c-P to search forward (swapped for convenience)
 bindkey '^p' history-substring-search-down
 bindkey '^n' history-substring-search-up
 bindkey "^k" up-line-or-search
 bindkey "^j" down-line-or-search
-zplug load
 
 
 # pip zsh completion start
@@ -119,12 +112,4 @@ if [[ "$(basename -- ${(%):-%x})" != "_pipenv" ]]; then
 fi
 # end
 
-autoload -U +X bashcompinit && bashcompinit
-#autoload bashcompinit && bashcompinit source /etc/bash_completion.d/azure-cli
-export MS5_STORE=8080
-export MS5_AUTH=9099
-
-bindkey  '^[[Z' reverse-menu-complete
-
-
-alias git-line-stats="git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr"
+zplug load
