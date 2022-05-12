@@ -7,6 +7,7 @@ export PATH=$HOME/go/bin:$PATH
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
 #export JAVA_HOME=/usr/lib/jvm/java-17-openjdk/
 export ZPLUG_HOME=$HOME/.local/share/zplug/
+export ZPLUG_FILE=$HOME/.local/share/zplug/init.zsh
 export CM_LAUNCHER=rofi
 
 export ANDROID_SDK_ROOT='/opt/android-sdk/platform-tools/source.properties'

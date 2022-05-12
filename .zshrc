@@ -1,4 +1,4 @@
-source ~/.zshen
+source ~/.zshenv
 autoload -U +X bashcompinit && bashcompinit
 # No Stupid beeps
 unsetopt BEEP
@@ -74,7 +74,7 @@ if type setxkbmap &>/dev/null; then
     setxkbmap -option caps:swapescape
 fi
 
-PROMPT="%B%F{147}[->%f%b%d%B%F{147}]%f%b "
+PROMPT="%B%F{137}[->%f%b%d%B%F{137}]%f%b "
 
 if type rg &>/dev/null; then
   export FZF_DEFAULT_COMMAND='rg --files --hidden'
@@ -82,7 +82,7 @@ if type rg &>/dev/null; then
 fi
 
 # Zplug
-source $ZPLUG_HOME
+source $ZPLUG_FILE
 
 zplug "zsh-users/zsh-history-substring-search"
 # c-N to search back in history c-P to search forward (swapped for convenience)

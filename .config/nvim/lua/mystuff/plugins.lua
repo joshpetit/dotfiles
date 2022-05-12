@@ -87,6 +87,7 @@ return require("packer").startup(function()
         config = function()
             require("octo").setup()
         end,
+        disable = true,
     })
     use({
         "numToStr/Comment.nvim",
