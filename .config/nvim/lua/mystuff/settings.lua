@@ -14,33 +14,8 @@ vim.opt.termguicolors = true
 --vim.cmd('abbrev %% expand("%")')
 
 M["nightfox"] = function()
-	--require("nightfox").load("nightfox", { transparent = true })
-	vim.cmd(":colorscheme nightfox")
-end
-
-M["nvim-tree"] = function()
-	local lib = require("nvim-tree.lib")
-	function OpenNvimTreeFile()
-		local node = lib.get_node_at_cursor()
-		AsyncRun("dragon-drag-and-drop", node.absolute_path)
-		print(node.absolute_path)
-	end
-	require("nvim-tree").setup({
-		update_cwd = true,
-		--update_focused_file = { enable = true, update_cwd = true },
-		disable_netrw = false,
-		hijack_netrw = false,
-		view = {
-			relativenumber = true,
-			width = 40,
-			mappings = {
-				custom_only = false,
-				list = {
-					{ key = { "D" }, cb = "<cmd>lua print(OpenNvimTreeFile())<cr>" },
-				},
-			},
-		},
-	})
+    --require("nightfox").load("nightfox", { transparent = true })
+    vim.cmd(":colorscheme nightfox")
 end
 
 vim.notify = require("notify")
@@ -51,18 +26,18 @@ let g:vim_markdown_folding_disabled = 1
 -- Formatters
 --
 local prettierFormatter = {
-	-- prettier
-	function()
-		return {
-			exe = "prettier",
-			args = {
-				"--stdin-filepath",
-				vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)),
-				"--single-quote",
-			},
-			stdin = true,
-		}
-	end,
+    -- prettier
+    function()
+        return {
+            exe = "prettier",
+            args = {
+                "--stdin-filepath",
+                vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)),
+                "--single-quote",
+            },
+            stdin = true,
+        }
+    end,
 }
 
 vim.g.nvim_tree_respect_buf_cwd = 1
@@ -70,38 +45,37 @@ vim.g.nvim_tree_respect_buf_cwd = 1
 require("dapui").setup()
 require("nvim-treesitter.configs").setup({ autotag = { enable = true } })
 require("trouble").setup({
-	-- your configuration comes here
-	-- or leave it empty to use the default settings
-	-- refer to the configuration section below
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
 })
 
 local snippy = require("snippy")
 snippy.setup({
-	mappings = {
-		is = { ["<Tab>"] = "expand_or_advance", ["<S-Tab>"] = "previous" },
-		nx = { ["<leader>x"] = "cut_text" },
-	},
+    mappings = {
+        is = { ["<Tab>"] = "expand_or_advance", ["<S-Tab>"] = "previous" },
+        nx = { ["<leader>x"] = "cut_text" },
+    },
 })
 
 local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
 
 parser_config.puml = {
-	install_info = {
-		url = "https://github.com/ahlinc/tree-sitter-plantuml",
-		revision = "demo",
-		files = { "src/scanner.cc" },
-	},
-	filetype = "puml",
+    install_info = {
+        url = "https://github.com/ahlinc/tree-sitter-plantuml",
+        revision = "demo",
+        files = { "src/scanner.cc" },
+    },
+    filetype = "puml",
 }
 parser_config.md = {
-	install_info = {
-		url = "https://github.com/ikatyang/tree-sitter-markdown",
-		revision = "master",
-		files = { "src/parser.c", "src/scanner.cc" },
-	},
-	filetype = "markdown",
+    install_info = {
+        url = "https://github.com/ikatyang/tree-sitter-markdown",
+        revision = "master",
+        files = { "src/parser.c", "src/scanner.cc" },
+    },
+    filetype = "markdown",
 }
-
 
 local dap = require("dap")
 
@@ -110,124 +84,124 @@ vim.cmd([[
     ]])
 
 dap.adapters.node2 = {
-	type = "executable",
-	command = "node",
-	args = { os.getenv("HOME") .. "/aur/vscode-node-debug2/out/src/nodeDebug.js" },
+    type = "executable",
+    command = "node",
+    args = { os.getenv("HOME") .. "/aur/vscode-node-debug2/out/src/nodeDebug.js" },
 }
 
 dap.configurations.typescript = {
-	{
-		name = "Run",
-		type = "node2",
-		request = "launch",
-		program = "${file}",
-		cwd = vim.fn.getcwd(),
-		sourceMaps = true,
-		protocol = "inspector",
-		console = "integratedTerminal",
-		outFiles = { "${workspaceFolder}/lib/**/*.js" },
-	},
-	{
-		name = "Attach to process",
-		type = "node2",
-		request = "attach",
-		sourceMaps = true,
-		processId = require("dap.utils").pick_process,
-	},
-	{
-		name = "Attach to 9229",
-		type = "node2",
-		request = "attach",
-		port = 9229,
-		sourceMaps = true,
-		outDir = "${workspaceRoot}/lib",
-		outFiles = { "${workspaceRoot}/lib/**/*.js" },
-	},
-	{
-		name = "IDEK!",
-		type = "node2",
-		request = "attach",
-		cwd = vim.fn.getcwd(),
-		sourceMaps = true,
-		protocol = "inspector",
-		skipFiles = { "<node_internals>/**/*.js" },
-	},
+    {
+        name = "Run",
+        type = "node2",
+        request = "launch",
+        program = "${file}",
+        cwd = vim.fn.getcwd(),
+        sourceMaps = true,
+        protocol = "inspector",
+        console = "integratedTerminal",
+        outFiles = { "${workspaceFolder}/lib/**/*.js" },
+    },
+    {
+        name = "Attach to process",
+        type = "node2",
+        request = "attach",
+        sourceMaps = true,
+        processId = require("dap.utils").pick_process,
+    },
+    {
+        name = "Attach to 9229",
+        type = "node2",
+        request = "attach",
+        port = 9229,
+        sourceMaps = true,
+        outDir = "${workspaceRoot}/lib",
+        outFiles = { "${workspaceRoot}/lib/**/*.js" },
+    },
+    {
+        name = "IDEK!",
+        type = "node2",
+        request = "attach",
+        cwd = vim.fn.getcwd(),
+        sourceMaps = true,
+        protocol = "inspector",
+        skipFiles = { "<node_internals>/**/*.js" },
+    },
 }
 
 dap.adapters.dart = {
-	type = "executable",
-	command = "node",
-	--args = { "/home/joshu/aur/Dart-Code/out/dist/debug.js", "flutter" },
-	args = { "/home/joshu/aur/Dart-Code/out/dist/debug.js" },
+    type = "executable",
+    command = "node",
+    --args = { "/home/joshu/aur/Dart-Code/out/dist/debug.js", "flutter" },
+    args = { "/home/joshu/aur/Dart-Code/out/dist/debug.js" },
 }
 
 dap.configurations.dart = {
-	{
-		type = "dart",
-		request = "launch",
-		name = "Launch flutter",
-		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
-		flutterSdkPath = "/opt/flutter",
-		program = "${workspaceFolder}/lib/main.dart",
-		cwd = "${workspaceFolder}",
-	},
-	{
-		type = "dart",
-		request = "launch",
-		name = "Test flutter",
-		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
-		flutterSdkPath = "/opt/flutter",
-		program = "${file}",
-		cwd = "${workspaceFolder}",
-	},
-	{
-		type = "dart",
-		request = "launch",
-		name = "Launch flutter Linux",
-		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
-		flutterSdkPath = "/opt/flutter",
-		program = "${workspaceFolder}/lib/main.dart",
-		deviceId = "linux",
-		cwd = "${workspaceFolder}",
-	},
-	{
-		type = "dart",
-		request = "launch",
-		name = "Launch Current File",
-		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
-		flutterSdkPath = "/opt/flutter",
-		program = "${file}",
-		deviceId = "linux",
-		cwd = "${workspaceFolder}",
-	},
-	{
-		type = "dart",
-		request = "launch",
-		name = "Widgetbook Current File",
-		flutterMode = "debug",
-		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
-		flutterSdkPath = "/opt/flutter",
-		program = "${file}",
-		deviceId = "linux",
-		cwd = "${workspaceFolder}/examples/widgetbook_example/",
-	},
-	{
-		type = "dart",
-		request = "attach",
-		name = "Attach Widgetbook Current File",
-		flutterMode = "debug",
-		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
-		flutterSdkPath = "/opt/flutter",
-		program = "${file}",
-		deviceId = "linux",
-		cwd = "${workspaceFolder}/examples/knobs_example/",
-	},
+    {
+        type = "dart",
+        request = "launch",
+        name = "Launch flutter",
+        dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
+        flutterSdkPath = "/opt/flutter",
+        program = "${workspaceFolder}/lib/main.dart",
+        cwd = "${workspaceFolder}",
+    },
+    {
+        type = "dart",
+        request = "launch",
+        name = "Test flutter",
+        dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
+        flutterSdkPath = "/opt/flutter",
+        program = "${file}",
+        cwd = "${workspaceFolder}",
+    },
+    {
+        type = "dart",
+        request = "launch",
+        name = "Launch flutter Linux",
+        dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
+        flutterSdkPath = "/opt/flutter",
+        program = "${workspaceFolder}/lib/main.dart",
+        deviceId = "linux",
+        cwd = "${workspaceFolder}",
+    },
+    {
+        type = "dart",
+        request = "launch",
+        name = "Launch Current File",
+        dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
+        flutterSdkPath = "/opt/flutter",
+        program = "${file}",
+        deviceId = "linux",
+        cwd = "${workspaceFolder}",
+    },
+    {
+        type = "dart",
+        request = "launch",
+        name = "Widgetbook Current File",
+        flutterMode = "debug",
+        dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
+        flutterSdkPath = "/opt/flutter",
+        program = "${file}",
+        deviceId = "linux",
+        cwd = "${workspaceFolder}/examples/widgetbook_example/",
+    },
+    {
+        type = "dart",
+        request = "attach",
+        name = "Attach Widgetbook Current File",
+        flutterMode = "debug",
+        dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
+        flutterSdkPath = "/opt/flutter",
+        program = "${file}",
+        deviceId = "linux",
+        cwd = "${workspaceFolder}/examples/knobs_example/",
+    },
 }
 
 require("lsp_signature").setup({ floating_window = false, toggle_key = "<C-b>" })
 
 M["nvim-r"] = function()
-	vim.cmd([[
+    vim.cmd([[
     let R_openhtml = 1
     let R_assign = 0
     "let R_csv_app = 'localc'
