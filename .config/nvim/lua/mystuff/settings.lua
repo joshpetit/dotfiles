@@ -25,21 +25,6 @@ let g:vim_markdown_folding_disabled = 1
 ]])
 -- Formatters
 --
-local prettierFormatter = {
-    -- prettier
-    function()
-        return {
-            exe = "prettier",
-            args = {
-                "--stdin-filepath",
-                vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)),
-                "--single-quote",
-            },
-            stdin = true,
-        }
-    end,
-}
-
 vim.g.nvim_tree_respect_buf_cwd = 1
 
 require("dapui").setup()
@@ -57,25 +42,6 @@ snippy.setup({
         nx = { ["<leader>x"] = "cut_text" },
     },
 })
-
-local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-
-parser_config.puml = {
-    install_info = {
-        url = "https://github.com/ahlinc/tree-sitter-plantuml",
-        revision = "demo",
-        files = { "src/scanner.cc" },
-    },
-    filetype = "puml",
-}
-parser_config.md = {
-    install_info = {
-        url = "https://github.com/ikatyang/tree-sitter-markdown",
-        revision = "master",
-        files = { "src/parser.c", "src/scanner.cc" },
-    },
-    filetype = "markdown",
-}
 
 local dap = require("dap")
 
@@ -228,44 +194,3 @@ autocmd FileType markdown,tex nmap <buffer><silent> <leader>mp :call mdip#Markdo
 ]])
 
 return M
-
--- Dart code configuration options
--- {
--- "adapters" {
---     "dart-code": {
---       "name": "dart",
---       "command": [
---          "node",
---          "$HOME/.vscode/<PATH TO BUNDLE>/src/debug/dart_debug_entry.js"
---       ],
---       "attach": {
---         "pidProperty": "observatoryUri",
---         "pidSelect": "ask"
---       }
---     }
--- },
--- "configurations": {
---   "Dart - Launch": {
---     "adapter": "dart-code",
---     "configuration": {
---       "request": "launch",
---       "cwd": "string",
---       "deviceId": "string",
---       "enableAsserts": "boolean",
---       "program": "string",
---       "showMemoryUsage": "boolean",
---       "flutterMode": "enum [ debug, release, profile ]",
---       "args": "array[string]",
---       "env": " ?? ",
---       "vmAdditionalArgs": "array[string]"
---     }
---   },
---   "Dart - Attach": {
---     "adapter": "dart-code",
---     "configuration": {
---       "request": "attach",
---       "cwd": "string",
---       "packages": "string"
---     }
---   }
--- }
