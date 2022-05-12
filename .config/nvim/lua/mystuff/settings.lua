@@ -27,15 +27,6 @@ let g:vim_markdown_folding_disabled = 1
 --
 vim.g.nvim_tree_respect_buf_cwd = 1
 
-require("trouble").setup({})
-
-local snippy = require("snippy")
-snippy.setup({
-    mappings = {
-        is = { ["<Tab>"] = "expand_or_advance", ["<S-Tab>"] = "previous" },
-        nx = { ["<leader>x"] = "cut_text" },
-    },
-})
 
 local dap = require("dap")
 
