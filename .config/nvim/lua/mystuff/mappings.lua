@@ -42,6 +42,7 @@ m.nmap("<leader><c-f>", '<cmd>Telescope grep_string search=""<cr>')
 m.nmap("<leader><leader><c-f>", "<cmd>Telescope live_grep<cr>")
 m.nmap("<leader>fb", "<cmd>Telescope buffers<cr>")
 m.nmap("<leader>fh", "<cmd>Telescope help_tags<cr>")
+m.nmap("<c-f>", '<cmd>Telescope find_files hidden=true<CR>')
 m.nmap("c,", "<cmd>cprev<cr>")
 m.nmap("c.", "<cmd>cnext<cr>")
 m.nmap("<leader>,", "<cmd>bprev<cr>")
@@ -75,7 +76,6 @@ m.nmap("<leader>sb", "?\\c")
 
 m.nmap("<leader>nh", "<cmd>noh<CR>")
 
-m.nmap("<c-f>", '<cmd>Telescope find_files<CR>')
 
 -- Git
 m.nmap("<leader>gs", ":Git<CR> :call search('Un')<CR>")
