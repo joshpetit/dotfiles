@@ -22,7 +22,7 @@ return require("packer").startup(function()
         use({ plugin, requires = requires, config = config, disable = params.disable })
         if create_config then
             local split = SplitString(plugin, "/")
-            local plugin_name = split[2]
+            local plugin_name = split[GetLastIndex(split)]
             plugin_name = plugin_name:gsub("%.", "-")
             local plugin_dir = PLUGIN_CONF_PATH .. plugin_name .. "/"
             local dir_exists = FileExists(plugin_dir)
