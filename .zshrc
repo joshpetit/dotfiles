@@ -1,4 +1,6 @@
 source ~/.zshenv
+# In case some buttons done work while doing ssh
+stty sane
 autoload -U +X bashcompinit && bashcompinit
 # No Stupid beeps
 unsetopt BEEP
