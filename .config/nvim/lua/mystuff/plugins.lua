@@ -200,4 +200,9 @@ return require("packer").startup(function()
 	if packer_bootstrap then
 		require("packer").sync()
 	end
+
+    local use_help = function(plugin)
+        print(SplitString(plugin, '/')[1])
+        --print(fn.stdpath('config'))
+    end
 end)
