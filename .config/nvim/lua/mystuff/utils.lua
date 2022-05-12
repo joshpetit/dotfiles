@@ -39,4 +39,3 @@ function _G.ReloadConfig()
         vim.opt.hlsearch = false
     end
 end
-
