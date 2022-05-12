@@ -21,7 +21,10 @@ return require("packer").startup(function()
         local config = params.config
         use({ plugin, requires = requires, config = config, disable = params.disable })
         if create_config then
-            local plugin_name = SplitString(plugin, "/")[1]
+            local split = SplitString(plugin, "/")
+            local plugin_name = split[2]
+            plugin_name = plugin_name:gsub("%.", "-")
+            P(plugin_name)
             local plugin_dir = PLUGIN_CONF_PATH .. plugin_name .. "/"
             local dir_exists = FileExists(plugin_dir)
             if not dir_exists then
@@ -37,7 +40,7 @@ return require("packer").startup(function()
     end
 
     use("wbthomason/packer.nvim")
-    use({
+    use_help({
         "kyazdani42/nvim-tree.lua",
         requires = "kyazdani42/nvim-web-devicons",
         disable = false,
@@ -45,7 +48,7 @@ return require("packer").startup(function()
             require("mystuff/mappings")["nvim-tree"]()
             require("mystuff/settings")["nvim-tree"]()
         end,
-    })
+    }, true)
     use({
         "EdenEast/nightfox.nvim",
         config = function()
@@ -70,10 +73,10 @@ return require("packer").startup(function()
             "dcampos/cmp-snippy",
         },
     })
-    use({
+    use_help({
         "nvim-telescope/telescope.nvim",
         requires = { { "nvim-lua/plenary.nvim" } },
-    })
+    }, true)
 
     use({ "mhartington/formatter.nvim" })
     -- Git diffs on the column
@@ -130,9 +133,6 @@ return require("packer").startup(function()
     use({ "nvim-treesitter/nvim-treesitter" })
     use_help({
         "nvim-orgmode/orgmode",
-        config = function()
-            require("mystuff/settings")["orgmode"]()
-        end,
     }, true)
     -- use({
     -- 	"~/projects/orgmode",
