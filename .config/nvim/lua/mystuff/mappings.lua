@@ -10,6 +10,13 @@ vim.keymap.set("n", "<leader>et", function()
 	local ft = vim.bo.filetype
 	require("mystuff/test_path")[ft]()
 end)
+
+vim.keymap.set("n", "<leader>ggf", function()
+	local file = vim.fn.expand("%");
+    vim.cmd([[:Git]]);
+    vim.fn.search(file, 'W')
+    print(file)
+end)
 vim.keymap.set("n", "<leader>es", function()
 	local ft = vim.bo.filetype
 	vim.cmd(":split ~/.config/nvim/snippets/" .. ft .. ".snippets")

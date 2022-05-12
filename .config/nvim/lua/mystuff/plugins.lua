@@ -197,12 +197,14 @@ return require("packer").startup(function()
 			require("bufresize").setup()
 		end,
 	})
+	use({ "aymericbeaumet/vim-symlink", requires = "moll/vim-bbye" })
+
 	if Packer_bootstrap then
 		require("packer").sync()
 	end
 
-    local use_help = function(plugin)
-        print(SplitString(plugin, '/')[1])
-        --print(fn.stdpath('config'))
-    end
+	local use_help = function(plugin)
+		print(SplitString(plugin, "/")[1])
+		--print(fn.stdpath('config'))
+	end
 end)
