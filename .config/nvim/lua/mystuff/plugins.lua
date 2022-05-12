@@ -1,6 +1,20 @@
 ---@diagnostic disable: undefined-global
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
+-- local fn = vim.fn
+local fn = vim.fn
+local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+if fn.empty(fn.glob(install_path)) > 0 then
+	packer_bootstrap = fn.system({
+		"git",
+		"clone",
+		"--depth",
+		"1",
+		"https://github.com/wbthomason/packer.nvim",
+		install_path,
+	})
+end
 return require("packer").startup(function()
+	use("wbthomason/packer.nvim")
 	use({
 		"kyazdani42/nvim-tree.lua",
 		requires = "kyazdani42/nvim-web-devicons",
@@ -162,26 +176,28 @@ return require("packer").startup(function()
 	})
 	use("mechatroner/rainbow_csv")
 	use("chrisbra/csv.vim")
-    use({
-        "weirongxu/plantuml-previewer.vim",
-        requires = {"tyru/open-browser.vim", "aklt/plantuml-syntax"}
-
-    })
-    use 'ferrine/md-img-paste.vim'
-    use 'godlygeek/tabular'
-    use 'tpope/vim-abolish'
-    use 'jbyuki/nabla.nvim'
-    use ({
-        'ThePrimeagen/harpoon',
+	use({
+		"weirongxu/plantuml-previewer.vim",
+		requires = { "tyru/open-browser.vim", "aklt/plantuml-syntax" },
+	})
+	use("ferrine/md-img-paste.vim")
+	use("godlygeek/tabular")
+	use("tpope/vim-abolish")
+	use("jbyuki/nabla.nvim")
+	use({
+		"ThePrimeagen/harpoon",
 		config = function()
 			--require("mystuff/settings")["harpoon"]()
 			require("mystuff/mappings")["harpoon"]()
 		end,
-    })
-    use {
-    "kwkarlwang/bufresize.nvim",
-    config = function()
-        require("bufresize").setup()
-    end
-}
+	})
+	use({
+		"kwkarlwang/bufresize.nvim",
+		config = function()
+			require("bufresize").setup()
+		end,
+	})
+	if packer_bootstrap then
+		require("packer").sync()
+	end
 end)
