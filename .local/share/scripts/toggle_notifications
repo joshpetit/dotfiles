@@ -1,3 +1,4 @@
+#/bin/sh
 paused=$(dunstctl is-paused)
 echo $paused
 
