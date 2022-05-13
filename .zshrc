@@ -115,6 +115,6 @@ fi
 
 # Host specific configurations
 if [ -f ~/.zshextra ]; then
-    source source ~/.zshextra
+    source ~/.zshextra
 fi
 zplug load
