@@ -46,8 +46,8 @@ alias setclip="xclip -selection c"
 alias getclip="xclip -selection c -o"
 
 alias fpg='flutter pub get'
-alias lnvm='source $NVM_DIR'
-alias lnvmx='source $NVM_DIR && nvm use'
+alias lnvm='source $NVM_INIT_FILE'
+alias lnvmx='source $NVM_INIT_FILE && nvm use'
 alias n='nvim'
 alias nvims='nvim -S Session.vim'
 alias ns='nvim -S Session.vim'
