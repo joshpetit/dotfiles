@@ -113,4 +113,8 @@ if [[ "$(basename -- ${(%):-%x})" != "_pipenv" ]]; then
 fi
 # end
 
+# Host specific configurations
+if [ -f ~/.zshextra ]; then
+    source source ~/.zshextra
+fi
 zplug load
