@@ -1,5 +1,5 @@
 export PATH=$HOME/.local/bin/:$PATH
-export NVM_DIR=/usr/share/nvm/init-nvm.sh
+export NVM_DIR=/usr/share/nvm/
 export PATH=$HOME/.local/share/scripts/:$PATH
 export PATH=$HOME/.yarn/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
