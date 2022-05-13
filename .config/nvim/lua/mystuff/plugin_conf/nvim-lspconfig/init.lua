@@ -108,18 +108,6 @@ for _, lsp in ipairs(servers) do
     })
 end
 
--- lspconfig['languageserver'].setup {
---     capabilities = capabilities,
---     on_attach = on_attach,
---     flags = {debounce_text_changes = 150},
---     cmd = '/usr/bin/R',
---     args = {'--slave', '-e', 'languageserver::run()'},
---     filetypes = {'r'},
---     single_file_support = true,
--- }
-
--- imap('<c-j>','<Down>')
-
 require("flutter-tools").setup({
     lsp = {
         on_attach = on_attach,
