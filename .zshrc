@@ -1,6 +1,9 @@
 source ~/.zshenv
 # In case some buttons done work while doing ssh
 stty sane
+if [ -f ~/.zshextra ]; then
+    source ~/.zshextra
+fi
 autoload -U +X bashcompinit && bashcompinit
 # No Stupid beeps
 unsetopt BEEP
@@ -36,6 +39,7 @@ alias gpl='git pull'
 alias gcl='git checkout -'
 alias src='source ~/.zshrc && source ~/.zshenv'
 alias envim='pushd ~/.config/nvim && nvim && popd'
+alias edot='pushd ~/dotfiles/ && nvim && popd'
 alias eorg='pushd ~/sync/org/ && nvim && popd'
 alias nr='pushd ~/sync/org/ && nvim refile.org && popd'
 alias dropdownt='alacritty --class dropdownt,dropdownt -e tmux & disown'
@@ -44,8 +48,8 @@ alias setclip="xclip -selection c"
 alias getclip="xclip -selection c -o"
 
 alias fpg='flutter pub get'
-alias lnvm='source /usr/share/nvm/init-nvm.sh'
-alias lnvmx='source /usr/share/nvm/init-nvm.sh && nvm use'
+alias lnvm='source $NVM_INIT_FILE'
+alias lnvmx='source $NVM_INIT_FILE && nvm use'
 alias n='nvim'
 alias nvims='nvim -S Session.vim'
 alias ns='nvim -S Session.vim'
@@ -114,5 +118,9 @@ if [[ "$(basename -- ${(%):-%x})" != "_pipenv" ]]; then
   compdef _pipenv pipenv
 fi
 # end
+if [ -f ~/.zshextra ]; then
+    source ~/.zshextra
+fi
 
+# Host specific configurations
 zplug load

@@ -9,32 +9,20 @@ function get_full_path {
     echo $(readlink -f $(dirname $0)/$1)
 }
 
-zshenv=$(get_full_path .zshenv)
-zshrc=$(get_full_path .zshrc)
-tmux=$(get_full_path .tmux.conf)
-alac=$(get_full_path .config/alacritty/)
-doom=$(get_full_path .config/doom/)
-dunst=$(get_full_path .config/dunst/)
-jack=$(get_full_path .config/jack/)
-polybar=$(get_full_path .config/polybar/)
-rofi=$(get_full_path .config/rofi/)
-picom=$(get_full_path .config/picom/)
-nvim=$(get_full_path .config/nvim/)
-i3=$(get_full_path .config/i3/)
-xresources=$(get_full_path .Xresources)
-scripts=$(get_full_path scripts/)
+files=$(ls -ap $(get_full_path)| grep -v -E ".git*|/" | grep -E "^\.")
+for dotfile in $files; do
+    link_args="$(get_full_path)/$dotfile $HOME"
+    ln -s $link_args
+done
 
-ln -s $zshenv $HOME
-ln -s $xresources $HOME
-ln -s $zshrc $HOME
-ln -s $tmux $HOME
-ln -s $alac $XDG_CONFIG_HOME
-ln -s $doom $XDG_CONFIG_HOME
-ln -s $dunst $XDG_CONFIG_HOME
-ln -s $jack $XDG_CONFIG_HOME
-ln -s $i3 $XDG_CONFIG_HOME
-ln -s $nvim $XDG_CONFIG_HOME
-ln -s $picom $XDG_CONFIG_HOME
-ln -s $rofi $XDG_CONFIG_HOME
-ln -s $polybar $XDG_CONFIG_HOME
-ln -s $scripts $HOME/.local/share
+xdg_configs=$(ls $(get_full_path)/.config)
+for dotfile in $xdg_configs; do
+    link_args="$(get_full_path)/.config/$dotfile $HOME/.config/"
+    ln -s $link_args
+done
+
+xdg_data=$(ls $(get_full_path)/.local/share)
+for dotfile in $xdg_data; do
+    link_args="$(get_full_path)/.local/share/$dotfile $HOME/.local/share"
+    ln -s $link_args
+done

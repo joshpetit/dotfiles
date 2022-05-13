@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 PIXEL_ADD="60:B7:6E:30:72:42"
 
 HEADPHONES_ADD="74:45:CE:46:CD:31"

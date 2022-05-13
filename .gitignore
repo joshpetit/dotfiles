@@ -1,3 +1,1 @@
-tmux_resurrect_*.txt
-
-.tmux/resurrect/*
+.config/nvim/plugin/packer_compiled.lua
