@@ -1,4 +1,6 @@
 export PATH=$HOME/.local/bin/:$PATH
+# Update to be correct
+export NVM_DIR="$HOME/.nvm"
 export PATH=$HOME/.local/share/scripts/:$PATH
 export PATH=$HOME/.yarn/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH

@@ -1,4 +1,7 @@
 source ~/.zshenv
+if [ -f ~/.zshextra ]; then
+    source ~/.zshextra
+fi
 autoload -U +X bashcompinit && bashcompinit
 # No Stupid beeps
 unsetopt BEEP
@@ -43,8 +46,8 @@ alias setclip="xclip -selection c"
 alias getclip="xclip -selection c -o"
 
 alias fpg='flutter pub get'
-alias lnvm='source /usr/share/nvm/init-nvm.sh'
-alias lnvmx='source /usr/share/nvm/init-nvm.sh && nvm use'
+alias lnvm='source $NVM_DIR'
+alias lnvmx='source $NVM_DIR && nvm use'
 alias n='nvim'
 alias nvims='nvim -S Session.vim'
 alias ns='nvim -S Session.vim'
@@ -115,7 +118,4 @@ fi
 # end
 
 # Host specific configurations
-if [ -f ~/.zshextra ]; then
-    source ~/.zshextra
-fi
 zplug load
