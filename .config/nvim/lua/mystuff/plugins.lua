@@ -124,7 +124,7 @@ return require("packer").startup(function()
 	use({ "jose-elias-alvarez/nvim-lsp-ts-utils" })
 	use({ "tpope/vim-fugitive" })
 	use_help({ "dcampos/nvim-snippy" }, true)
-	use({ "mfussenegger/nvim-dap" })
+	use_help({ "mfussenegger/nvim-dap" }, true)
 	use({
 		"williamboman/nvim-lsp-installer",
 		requires = { "neovim/nvim-lspconfig" },
