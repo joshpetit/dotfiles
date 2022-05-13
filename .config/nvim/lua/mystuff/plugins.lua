@@ -125,10 +125,10 @@ return require("packer").startup(function()
 	use({ "tpope/vim-fugitive" })
 	use_help({ "dcampos/nvim-snippy" }, true)
 	use_help({ "mfussenegger/nvim-dap" }, true)
-	use({
+	use_help({
 		"williamboman/nvim-lsp-installer",
 		requires = { "neovim/nvim-lspconfig" },
-	})
+	}, true)
 	use_help({
 		"neovim/nvim-lspconfig",
 		requires = { "folke/lua-dev.nvim" },
