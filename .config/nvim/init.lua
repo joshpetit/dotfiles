@@ -1,4 +1,4 @@
-require('mystuff/utils')
-require('mystuff/plugins')
-require('mystuff/settings')
-require('mystuff/mappings')
+pcall(require('mystuff/utils'))
+pcall(require('mystuff/plugins'))
+pcall(require('mystuff/settings'))
+pcall(require('mystuff/mappings'))
