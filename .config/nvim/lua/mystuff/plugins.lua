@@ -193,7 +193,11 @@ return require("packer").startup(function()
     use({
         "jalvesaq/nvim-r",
         config = function()
-            require("mystuff/settings")["nvim-r"]()
+            vim.cmd([[
+    let R_openhtml = 1
+    let R_assign = 0
+    "let R_csv_app = 'localc'
+    ]]       )
         end,
     })
     use("tpope/vim-rhubarb")

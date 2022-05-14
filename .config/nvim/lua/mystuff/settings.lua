@@ -13,7 +13,6 @@ vim.o.expandtab = true
 vim.opt.termguicolors = true
 --vim.cmd('abbrev %% expand("%")')
 
-vim.notify = require("notify")
 vim.cmd([[
 let test#strategy = "dispatch"
 let g:vim_markdown_folding_disabled = 1
@@ -25,15 +24,6 @@ vim.g.nvim_tree_respect_buf_cwd = 1
 vim.cmd([[
     let g:mkdp_filetypes = ['markdown', 'org']
     ]])
-require("lsp_signature").setup({ floating_window = false, toggle_key = "<C-b>" })
-
-M["nvim-r"] = function()
-    vim.cmd([[
-    let R_openhtml = 1
-    let R_assign = 0
-    "let R_csv_app = 'localc'
-    ]])
-end
 
 vim.cmd([[
 "aug CSV_Editing
