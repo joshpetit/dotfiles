@@ -1,3 +1,5 @@
+-- Call a function and if it errors out print the error it will continue with
+-- the script though
 function Jcall(func, ...)
     local res, err = pcall(func, ...)
     if not res then
