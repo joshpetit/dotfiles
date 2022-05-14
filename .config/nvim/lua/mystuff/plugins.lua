@@ -35,6 +35,10 @@ return require("packer").startup(function()
 				os.execute("touch " .. init_file)
 			end
 			pcall(require, "mystuff/plugin_conf/" .. plugin_name)
+			res, err = pcall(require, "mystuff/plugin_conf/" .. plugin_name)
+			if err ~= true then
+				print(err)
+			end
 		end
 	end
 	use("wbthomason/packer.nvim")
