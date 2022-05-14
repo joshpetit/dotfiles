@@ -13,10 +13,6 @@ vim.o.expandtab = true
 vim.opt.termguicolors = true
 --vim.cmd('abbrev %% expand("%")')
 
-M["nightfox"] = function()
-    --require("nightfox").load("nightfox", { transparent = true })
-end
-
 vim.notify = require("notify")
 vim.cmd([[
 let test#strategy = "dispatch"
