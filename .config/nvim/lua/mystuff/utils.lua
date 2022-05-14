@@ -1,3 +1,11 @@
+function Jcall(func, ...)
+    local res, err = pcall(func, ...)
+    if not res then
+        print(err)
+        return
+    end
+end
+
 function FileExists(file)
     local ok, err, code = os.rename(file, file)
     if not ok then
