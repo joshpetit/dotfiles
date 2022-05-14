@@ -1,5 +1,6 @@
 -- Call a function and if it errors out print the error it will continue with
--- the script though
+-- the script though. use just like pcall, first argument the function and than
+-- res tof arguments are the arguments to that function
 function Jcall(func, ...)
     local res, err = pcall(func, ...)
     if not res then
