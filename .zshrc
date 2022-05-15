@@ -28,6 +28,7 @@ alias ssh="TERM=xterm-256color ssh"
 
 alias e=exit
 alias t=tmux
+alias tn='env TP=nested tmux'
 
 #autoload -z edit-command-line
 #bindkey "^X^E" edit-command-line
