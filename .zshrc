@@ -66,7 +66,7 @@ export GO111MODULE=auto
 #export CHROME_EXECUTABLE="/bin/google-chrome-stable"
 
 # Vim
-# bindkey -v
+bindkey -v
 export VISUAL=nvim
 export EDITOR=/usr/bin/nvim
 
