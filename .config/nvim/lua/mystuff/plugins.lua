@@ -73,6 +73,7 @@ return require("packer").startup(function()
 	}, true)
 
 	use_help({ "mhartington/formatter.nvim" }, true)
+    use_help({"mfussenegger/nvim-jdtls"}, false)
 	-- Git diffs on the column
 	use({
 		"lewis6991/gitsigns.nvim",

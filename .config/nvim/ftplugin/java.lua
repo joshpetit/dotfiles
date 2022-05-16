@@ -1,8 +1,8 @@
 local m = require('mystuff/mapping_utils')
 
 vim.cmd([[
-":compiler! gradle
 :iabbrev sout System.out.println
+:TSEnable highlight
     ]])
 
 --m.nmap('<leader>ff', '<cmd>FormatCode google-java-format<CR>', {buffer = true})
@@ -14,3 +14,5 @@ m.nmap('<leader>t', '<cmd>Make test<CR>', {buffer = true})
 m.nmap('<leader>rr', '<cmd>Make run<CR>', {buffer = true})
 m.nmap('<leader>rf', '<cmd>!java -ea %<CR>', {buffer = true})
 m.nmap('<leader>e', '<cmd>split build.gradle<CR>', {buffer = true})
+
+Jcall(require, "mystuff/secretstuff")
