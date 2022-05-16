@@ -87,7 +87,13 @@
          :jump-to-captured t
          )
         ("n" "Note" entry (file "~/sync/org/refile.org")
-         "* %?")))
+         "* %?")
+        ("w" "Work" entry (file+headline "~/sync/org/work.org" "Work logs")
+         "** Work Log %t %?"
+         :clock-in t
+         :clock-keep t
+         :jump-to-captured t
+         )))
 )
 (after! evil-snipe
   (evil-snipe-mode -1))
