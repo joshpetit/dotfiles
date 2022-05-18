@@ -11,18 +11,32 @@ function get_full_path {
 
 files=$(ls -ap $(get_full_path)| grep -v -E ".git*|/" | grep -E "^\.")
 for dotfile in $files; do
-    link_args="$(get_full_path)/$dotfile $HOME"
+    path="$(get_full_path)/$dotfile"
+    rm -rf $HOME/$dotfile
+    link_args="$path $HOME"
     ln -s $link_args
 done
 
 xdg_configs=$(ls $(get_full_path)/.config)
 for dotfile in $xdg_configs; do
-    link_args="$(get_full_path)/.config/$dotfile $HOME/.config/"
+    path="$(get_full_path)/.config/$dotfile"
+    rm -rf $HOME/.config/$dotfile
+    link_args="$path $HOME/.config/"
     ln -s $link_args
 done
 
 xdg_data=$(ls $(get_full_path)/.local/share)
 for dotfile in $xdg_data; do
-    link_args="$(get_full_path)/.local/share/$dotfile $HOME/.local/share"
+    path="$(get_full_path)/.local/share/$dotfile"
+    rm -rf $HOME/.local/share/$dotfile
+    link_args="$path $HOME/.local/share"
     ln -s $link_args
 done
+
+if type feh &>/dev/null; then
+    fehbg
+fi
+
+if type feh &>/dev/null; then
+    fehbg
+fi
