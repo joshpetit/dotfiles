@@ -6,7 +6,7 @@ if ! [ -d $ZPLUG_HOME ]; then
 fi
 
 function get_full_path {
-    echo $(readlink -f $(dirname $0)/$1)
+    echo $(realpath $(dirname $0)/$1)
 }
 
 files=$(ls -ap $(get_full_path)| grep -v -E ".git*|/" | grep -E "^\.")
