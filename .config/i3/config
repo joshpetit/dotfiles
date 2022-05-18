@@ -37,7 +37,8 @@ exec --no-startup-id xbacklight -set 50
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
-exec --no-startup-id /home/joshu/.fehbg
+#exec --no-startup-id /home/joshu/.fehbg
+exec ~/.local/share/scripts/fehbg
 
 # Use pactl to adjust volume in PulseAudio.
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && notify-send "Volume:" $(awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master)) -h string:x-canonical-private-synchronous:volume-change
