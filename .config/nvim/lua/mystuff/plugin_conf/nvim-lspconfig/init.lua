@@ -77,14 +77,14 @@ require("flutter-tools").setup({
         --- OR you can specify a function to deactivate or change or control how the config is created
         settings = { showTodos = true, completeFunctionCalls = true },
     },
-    debugger = {
-        enabled = true,
-        run_via_dap = true,
-        register_configurations = function(_)
-            local dap = require("dap")
-            dap.configurations.dart = dap.configurations.dart
-        end,
-    },
+    -- debugger = {
+    --     enabled = true,
+    --     run_via_dap = true,
+    --     register_configurations = function(_)
+    --         local dap = require("dap")
+    --         dap.configurations.dart = dap.configurations.dart
+    --     end,
+    -- },
 })
 
 local luaLspConfig = {
