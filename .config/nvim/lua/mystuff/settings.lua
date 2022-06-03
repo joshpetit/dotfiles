@@ -6,8 +6,10 @@ vim.g.mapleader = " "
 vim.o.mouse = "a"
 vim.o.relativenumber = true
 vim.o.number = true
+
 vim.o.scrolloff = 8
 vim.o.tabstop = 4
+vim.opt_local.cindent = true
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
 vim.opt.termguicolors = true
