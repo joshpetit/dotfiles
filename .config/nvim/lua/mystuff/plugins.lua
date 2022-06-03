@@ -89,6 +89,9 @@ return require("packer").startup(function()
 		end,
 		disable = true,
 	})
+    use({'phaazon/hop.nvim', config= function()
+        require'hop'.setup()
+    end})
 	use({
 		"numToStr/Comment.nvim",
 		config = function()
