@@ -38,6 +38,7 @@ return require("packer").startup(function()
 		end
 	end
 	use("wbthomason/packer.nvim")
+    use("simrat39/symbols-outline.nvim")
 	use_help({
 		"kyazdani42/nvim-tree.lua",
 		requires = { "kyazdani42/nvim-web-devicons" },
