@@ -5,14 +5,14 @@ export PATH=$HOME/.local/share/scripts/:$PATH
 export PATH=$HOME/.yarn/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 export PATH=$HOME/go/bin:$PATH
-#export JAVA_HOME=/usr/lib/jvm/java-8-openjdk/
-export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk/
+#export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
 #export JAVA_HOME=/usr/lib/jvm/java-17-openjdk/
 export ZPLUG_HOME=$HOME/.local/share/zplug/
 export ZPLUG_FILE=$HOME/.local/share/zplug/init.zsh
 export CM_LAUNCHER=rofi
 
-export ANDROID_SDK_ROOT='/opt/android-sdk/platform-tools/source.properties'
+export ANDROID_SDK_ROOT='/opt/android-sdk/'
 export FLUTTER_ROOT='/opt/flutter/'
 export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools/
 export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin/

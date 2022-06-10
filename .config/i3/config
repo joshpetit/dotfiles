@@ -54,10 +54,11 @@ bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
+bindsym $mod+Shift+p exec autorandr --change && redshift -P  -O 4000
 
 # start dmenu (a program launcher)
 #bindsym $mod+d exec --no-startup-id dmenu_run
-bindsym $mod+d exec export PATH=/home/joshu/.local/bin/:$PATH && rofi -show run -theme dmenu -display-run "[-> "
+bindsym $mod+d exec rofi -show run -theme dmenu -display-run "[-> "
 bindsym $mod+q exec rofi -show drun -theme Material -display-run ">"
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
@@ -242,7 +243,7 @@ client.background       #FFFFFF
 # Audio
 for_window [title="^pulsemixer$"] floating enable
 #for_window [title="^pulsemixer$"] border pixel 0
-bindsym $mod + Shift + A exec --no-startup-id alacritty -e pulsemixer
+bindsym $mod + Shift + A exec --no-startup-id alacirtty -e pulsemixer
 
 # Video
 for_window [title=".*mpv$"] border pixel 2
@@ -292,7 +293,7 @@ bindsym $mod+Ctrl+a exec /home/joshu/.local/bin/scriptlauncher
 bindsym $mod+Shift+S [class="[^dropdownt|Emacs]"] scratchpad show 
 bindsym $mod+Shift+w [class="[dropdownt|Emacs]"]  scratchpad show,
 #, [class="dropdownt"] move scratchpad 
-bindsym $mod+u exec --no-startup-id tdrop -a -w 60% -h 60% -y 20% -x 20% -n 1 alacritty
+bindsym $mod+u exec --no-startup-id tdrop -a -w 60% -h 60% -y 20% -x 20% -n 1 alacirtty
 
 bindsym $mod+Ctrl+S  move scratchpad
 bindsym $mod+Ctrl+c exec copyq menu
@@ -300,10 +301,10 @@ bindsym $mod+Ctrl+e exec rofimoji
 bindsym $mod+Shift+n exec ~/.local/share/scripts/toggle_notifications
 
 bindsym $mod+Shift+d [class="dropdownt"] scratchpad show,
-exec --no-startup-id "alacritty --class dropdownt,dropdownt -e tmux"
+exec --no-startup-id "alacirtty --class dropdownt,dropdownt -e tmux"
 for_window [class="dropdownt"] move scratchpad
 
-#bindsym $mod+Shift+e exec "alacritty --class quickedit,quickedit -e nvim"
+#bindsym $mod+Shift+e exec "alacirtty --class quickedit,quickedit -e nvim"
 #for_window [class="quickedit"] floating enable, focus
 exec --no-startup-id emacs
 for_window [class="Emacs"] move scratchpad

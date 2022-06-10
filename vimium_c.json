@@ -1,0 +1,47 @@
+{
+	"name": "Vimium C",
+	"@time": "6/10/2022, 8:26:55 AM",
+	"time": 1654874815932,
+	"environment": {
+		"extension": "1.98.2",
+		"platform": "linux",
+		"firefox": 101
+	},
+	"ignoreCapsLock": 2,
+	"keyMappings": [
+		"#!no-check",
+		"map ac closeOtherTabs",
+		""
+	],
+	"searchEngines": [
+		"g|go|gg|google|Google: https://www.google.com/search?q=%s \\",
+		"  www.google.com re=/^(?:\\.[a-z]{2,4})?\\/search\\b.*?[#&?]q=([^#&]*)/i\\",
+		"  blank=https://www.google.com/ Google",
+		"d|dd|ddg|duckduckgo: https://duckduckgo.com/?q=%s DuckDuckGo",
+		"ya|yd|yandex: https://yandex.com/search/?text=%s Yandex",
+		"",
+		"g.m|gm|g.map|gmap: https://www.google.com/maps?q=%s \\",
+		"  blank=https://www.google.com/maps Google Maps",
+		"b.m|bm|map|b.map|bmap|百度地图: \\",
+		"  https://api.map.baidu.com/geocoder?output=html&address=%s&src=vimium-c",
+		"y|yt: https://www.youtube.com/results?search_query=%s \\",
+		"  blank=https://www.youtube.com/ YouTube",
+		"w|wiki: https://www.wikipedia.org/w/index.php?search=%s Wikipedia",
+		"",
+		"j|jd|jb|joy|joybuy: https://www.joybuy.com/search?keywords=%s \\",
+		"  blank=https://www.joybuy.com/ Joybuy",
+		"az|amazon: https://www.amazon.com/s?k=%s \\",
+		"  blank=https://www.amazon.com/ Amazon",
+		"",
+		"\\:i: vimium://sed/s/^//,lower\\ $S re= Lower case",
+		"v.m|math: vimium://math\\ $S re= Calculate",
+		"v.p: vimium://parse\\ $S re= Redo Search",
+		"gh|github: https://github.com/search?q=$s \\",
+		"  blank=https://github.com/ GitHub Repo",
+		"ge|gitee: https://search.gitee.com/?type=repository&q=$s \\",
+		"  blank=https://gitee.com/ Gitee 仓库",
+		"js\\:|Js: javascript:\\ $S; JavaScript",
+		""
+	],
+	"vimSync": true
+}

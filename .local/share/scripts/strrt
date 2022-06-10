@@ -40,18 +40,18 @@ function create_woto() {
 }
 
 function create_ms5() {
-	cd "/home/joshu/projects/petit.dev/milestone5/app/"
+	cd "/home/joshu/projects/ms5/app/"
 
 	session_name="ms5/app"
 	tmux new-session -d -s $session_name -n code
 	tmux send-keys -t $session_name:code "nvim -S Session.vim" ENTER
 
-	cd "/home/joshu/projects/petit.dev/milestone5/firebase/"
+	cd "/home/joshu/projects/ms5/firebase/"
 	session_name="ms5/firebase/rules"
 	tmux new-session -d -s $session_name -n code
 	tmux send-keys -t $session_name:code "nvim firestore.rules" ENTER
 
-	cd "/home/joshu/projects/petit.dev/milestone5/firebase/functions/"
+	cd "/home/joshu/projects/ms5/firebase/functions/"
 	session_name="ms5/firebase/functions"
 	tmux new-session -d -s $session_name -n code
 	tmux send-keys -t $session_name:code "nvim -S Session.vim" ENTER

@@ -170,7 +170,6 @@ return require("packer").startup(function()
 			})
 		end,
 	})
-	use({ "simrat39/symbols-outline.nvim" })
 	-- F11, focused mode!
 	use("Pocco81/TrueZen.nvim")
 	-- Make vim start faster!
