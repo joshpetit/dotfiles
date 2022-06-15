@@ -171,7 +171,7 @@ return require("packer").startup(function()
 		end,
 	})
 	-- F11, focused mode!
-	use("Pocco81/TrueZen.nvim")
+    use({"folke/zen-mode.nvim"})
 	-- Make vim start faster!
 	-- use {
 	--     'lewis6991/impatient.nvim',

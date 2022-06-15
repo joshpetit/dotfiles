@@ -30,7 +30,7 @@ exec --no-startup-id xrandr --dpi 93
 #exec --no-startup-id dockd --daemon
 exec --no-startup-id copyq
 #exec --no-startup-id nextcloud
-exec --no-startup-id syncthing
+#exec --no-startup-id syncthing
 exec --no-startup-id xbacklight -set 50
 #exec --no-startup-id calibre-server --port=4040 --enable-local-write
 
@@ -243,7 +243,7 @@ client.background       #FFFFFF
 # Audio
 for_window [title="^pulsemixer$"] floating enable
 #for_window [title="^pulsemixer$"] border pixel 0
-bindsym $mod + Shift + A exec --no-startup-id alacirtty -e pulsemixer
+bindsym $mod+Shift+a exec alacritty -e pulsemixer
 
 # Video
 for_window [title=".*mpv$"] border pixel 2
@@ -278,7 +278,7 @@ bindsym Alt_R+j exec xdotool key Down
 bindsym Alt_R+k exec xdotool key Up
 bindsym Alt_R+l exec xdotool key Right
 
-bindsym $mod+ Shift + KP_End exec /home/joshu/.screenlayout/normal.sh; restart
+bindsym $mod+Shift+KP_End exec /home/joshu/.screenlayout/normal.sh; restart
 bindsym $mod+Shift+KP_Down exec /home/joshu/.screenlayout/znormal.sh; restart
 bindsym $mod+Shift+KP_Left exec /home/joshu/.screenlayout/san_fran_monitor.sh; restart
 bindsym $mod+Shift+KP_Right exec /home/joshu/.screenlayout/san_fran_monitor_dual.sh; restart
@@ -293,7 +293,6 @@ bindsym $mod+Ctrl+a exec /home/joshu/.local/bin/scriptlauncher
 bindsym $mod+Shift+S [class="[^dropdownt|Emacs]"] scratchpad show 
 bindsym $mod+Shift+w [class="[dropdownt|Emacs]"]  scratchpad show,
 #, [class="dropdownt"] move scratchpad 
-bindsym $mod+u exec --no-startup-id tdrop -a -w 60% -h 60% -y 20% -x 20% -n 1 alacirtty
 
 bindsym $mod+Ctrl+S  move scratchpad
 bindsym $mod+Ctrl+c exec copyq menu
@@ -301,10 +300,10 @@ bindsym $mod+Ctrl+e exec rofimoji
 bindsym $mod+Shift+n exec ~/.local/share/scripts/toggle_notifications
 
 bindsym $mod+Shift+d [class="dropdownt"] scratchpad show,
-exec --no-startup-id "alacirtty --class dropdownt,dropdownt -e tmux"
+exec --no-startup-id "alacritty --class dropdownt,dropdownt -e tmux"
 for_window [class="dropdownt"] move scratchpad
 
-#bindsym $mod+Shift+e exec "alacirtty --class quickedit,quickedit -e nvim"
+#bindsym $mod+Shift+e exec "alacritty --class quickedit,quickedit -e nvim"
 #for_window [class="quickedit"] floating enable, focus
 exec --no-startup-id emacs
 for_window [class="Emacs"] move scratchpad

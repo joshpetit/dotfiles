@@ -60,6 +60,7 @@ local servers = {
     "tailwindcss",
     --"r_language_server",
     "gopls",
+    "bashls"
 }
 
 for _, lsp in ipairs(servers) do

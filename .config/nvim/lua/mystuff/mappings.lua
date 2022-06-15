@@ -104,7 +104,7 @@ m.nmap("<leader>giF", "<cmd>Git update-index --no-assume-unchanged %<CR>")
 
 m.nmap("<leader>ev", "<cmd>e ~/.config/nvim/init.lua<ENTER>")
 m.nmap("<leader>cls", "<cmd>SymbolsOutline<cr>")
-m.nmap("<F11>", "<cmd>TZAtaraxis<cr>")
+m.nmap("<F11>", [[<cmd>lua require("zen-mode").toggle({window = { width = .65, height = .75 } })<cr>]])
 -- m.nmap("<leader>nc", "<Plug>kommentary_jine_default")
 -- m.vmap("<leader>nc", "<Plug>kommentary_visual_default")
 
