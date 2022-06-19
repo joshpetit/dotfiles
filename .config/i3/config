@@ -30,7 +30,7 @@ exec --no-startup-id xrandr --dpi 93
 #exec --no-startup-id dockd --daemon
 exec --no-startup-id copyq
 #exec --no-startup-id nextcloud
-#exec --no-startup-id syncthing
+exec --no-startup-id syncthing
 exec --no-startup-id xbacklight -set 50
 #exec --no-startup-id calibre-server --port=4040 --enable-local-write
 
