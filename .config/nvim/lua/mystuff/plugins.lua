@@ -75,6 +75,16 @@ return require("packer").startup(function()
 		requires = { "nvim-lua/plenary.nvim", { "nvim-telescope/telescope-fzf-native.nvim", run = "make" } },
 	}, true)
 
+    use_help({
+        "nvim-neotest/neotest",
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "antoinemadec/FixCursorHold.nvim",
+            -- Adapters
+            'haydenmeade/neotest-jest',
+        }
+    }, true)
 	use_help({ "mhartington/formatter.nvim" }, true)
     use_help({"mfussenegger/nvim-jdtls"}, false)
 	-- Git diffs on the column
@@ -184,11 +194,6 @@ return require("packer").startup(function()
 	-- use {"jamestthompson3/nvim-remote-containers"}
 	use({ "vim-test/vim-test" })
 	use({ "tpope/vim-dispatch" })
-	use({
-		"rcarriga/vim-ultest",
-		requires = { "vim-test/vim-test" },
-		run = ":UpdateRemotePlugins",
-	})
 	use("tpope/vim-eunuch") -- SudoWrite!
 	--use 'junegunn/fzf.vim'
 	use("BurntSushi/ripgrep")
