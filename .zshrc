@@ -22,6 +22,7 @@ SAVEHIST=2500
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias yi='yarn install'
 alias git-line-stats="git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr"
 alias restartmouse='sudo modprobe -r psmouse && sudo modprobe psmouse'
 alias ssh="TERM=xterm-256color ssh"
@@ -47,6 +48,7 @@ alias dropdownt='alacritty --class dropdownt,dropdownt -e tmux & disown'
 alias fixresjunk='xrandr --output DP-3 --mode 1920x1080'
 alias setclip="xclip -selection c"
 alias getclip="xclip -selection c -o"
+alias pandoc-eisvogel="pandoc --template eisvogel.latex"
 
 alias fpg='flutter pub get'
 alias lnvm='source $NVM_INIT_FILE'

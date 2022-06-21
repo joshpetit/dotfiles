@@ -68,6 +68,8 @@ return require("packer").startup(function()
 			"dcampos/cmp-snippy",
 		},
 	})
+    use({'jxnblk/vim-mdx-js'})
+    use({'mzlogin/vim-markdown-toc'})
 	use_help({
 		"nvim-telescope/telescope.nvim",
 		requires = { "nvim-lua/plenary.nvim", { "nvim-telescope/telescope-fzf-native.nvim", run = "make" } },
