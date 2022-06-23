@@ -97,3 +97,4 @@
 )
 (setq-default fill-column 80)
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
+(setq select-enable-clipboard nil)
