@@ -6,13 +6,13 @@ for file in *.org; do
     mdfile="$filename.md"
     mdxfile="$filename.mdx"
     #Generates table of contents.
-    toc=$(cat $mdfile | grep -E "^#{1,5} " | sed -E 's/(#+) (.+)/\1~\2~\2/g' | awk -F "~" '{ gsub(/#/,"  ",$1); gsub(/[ ]/,"-",$3); print $1 "- [" $2 "](#" tolower($3) ")" }')
+    toc=$(cat $mdfile | grep -E "^#{1,5} " | sed -E 's/(#+) (.+)/\1~\2~\2/g' | awk -F "~" '{ gsub(/#/,"  ",$1); gsub(/[ ]/,"-",$3); print $1 "- [" $2 "](#" tolower($3) ")" }' | sed 's/(\(.*\):\(.*\))/(\1\2)/g')
     echo "---" > "$mdxfile"
     awk -v RS='(\r?\n){2,}' '{print; exit}' $file | sed 's/#+//g' >> $mdxfile
     echo "---" >> "$mdxfile"
     toc_clean="${toc//$'\n'/\\n}"
     cat "$filename.md" >> $mdxfile
-    sed -i "s/.*Hope You're Blessed!/$toc_clean/" $mdxfile
+    sed -i "s/.*Hope You are Blessed!/$toc_clean/" $mdxfile
     emacs $file -l ~/.emacs.d/init.el --batch -f org-latex-export-to-latex --kill
     pandoc --template eisvogel.latex -i "$filename.tex" -o "assets/$filename/$filename.pdf"
     rm "$filename.md" "$filename.tex"
