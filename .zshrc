@@ -49,6 +49,9 @@ alias fixresjunk='xrandr --output DP-3 --mode 1920x1080'
 alias setclip="xclip -selection c"
 alias getclip="xclip -selection c -o"
 alias pandoc-eisvogel="pandoc --template eisvogel.latex"
+alias b="cd .."
+alias bb="cd ../../"
+alias bbb="cd ../../../"
 
 alias fpg='flutter pub get'
 alias lnvm='source $NVM_INIT_FILE'
