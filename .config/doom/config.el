@@ -107,14 +107,14 @@
   "Export a man page link from Org files."
   "TODO: change to joshministers.com"
   "Docs here https://orgmode.org/manual/Adding-Hyperlink-Types.html"
-  (let ((url (format "http://man.he.net/?topic=%s&section=all" link))
+  (let ((url (format "http://joshministers.com/static/%s" link))
         (desc (or description link)))
     (pcase format
       (`html (format "<a target=\"_blank\" href=\"%s\">%s</a>" url desc))
       (`latex (format "\\href{%s}{%s}" url desc))
       (`texinfo (format "@uref{%s,%s}" url desc))
       (`ascii (format "%s (%s)" desc url))
-      (`md (format "[%s][/static/%s]" desc link))
+      (`md (format "[%s](/static/%s)" desc link))
       (t path))))
 
 (org-link-set-parameters "img-asset" :follow #'org-blog-asset-follow :export #'org-blog-img-asset-export)
@@ -125,10 +125,28 @@
         (desc (or description link)))
     (pcase format
       (`html (format "<img src=\"/static/%s\" alt=\"%s\">" link desc))
-      (`latex (format "\includegraphics[width=.9\linewidth]{link}" link desc))
+      (`latex (format "\includegraphics[width=.9\linewidth]{%s}" link desc))
       (`texinfo (format "@uref{%s,%s}" url desc))
       (`ascii (format "%s (%s)" desc url))
-      (`md (format "[%s][/static/%s]" desc link))
+      (`md (format "![%s](/static/%s)" desc link))
+      (t path))))
+
+(org-link-set-parameters "post" :follow #'org-blog-post-follow :export #'org-blog-post-export)
+
+(defun org-blog-post-follow (path)
+  (org-open-file
+   (format "./%s" path)))
+
+
+(defun org-blog-post-export (link description format _)
+  (let ((url (format "/blog/%s" link))
+        (desc (or description link)))
+    (pcase format
+      (`html (format "<a target=\"_blank\" href=\"%s\">%s</a>" url desc))
+      (`latex (format "\\href{%s}{%s}" url desc))
+      (`texinfo (format "@uref{%s,%s}" url desc))
+      (`ascii (format "%s (%s)" desc url))
+      (`md (format "[%s](/static/%s)" desc link))
       (t path))))
 
 )
