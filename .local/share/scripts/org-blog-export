@@ -15,7 +15,7 @@ for file in *.org; do
     sed -i "s/.*Hope You're Blessed!/$toc_clean/" $mdxfile
     emacs $file --batch -f org-latex-export-to-latex --kill
     pandoc --template eisvogel.latex -i "$filename.tex" -o "$filename.pdf"
-    rm "$filename.md $filename.tex*"
+    rm "$filename.md" "$filename.tex"
 done
 
 # I got the TOC one liner from here: https://medium.com/@acrodriguez/one-liner-to-generate-a-markdown-toc-f5292112fd14
