@@ -95,6 +95,8 @@
          :jump-to-captured t
          )))
 )
+(add-hook 'text-mode-hook #'auto-fill-mode)
 (setq-default fill-column 80)
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
 (setq select-enable-clipboard nil)
+(setq display-line-numbers-type 'relative)
