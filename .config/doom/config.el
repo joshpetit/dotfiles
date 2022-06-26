@@ -94,9 +94,47 @@
          :clock-keep t
          :jump-to-captured t
          )))
+
+
+
+(org-link-set-parameters "asset" :follow #'org-blog-asset-follow :export #'org-blog-asset-export)
+
+(defun org-blog-asset-follow (path)
+  (org-open-file
+   (format "./%s" path)))
+
+(defun org-blog-asset-export (link description format _)
+  "Export a man page link from Org files."
+  "TODO: change to joshministers.com"
+  "Docs here https://orgmode.org/manual/Adding-Hyperlink-Types.html"
+  (let ((url (format "http://man.he.net/?topic=%s&section=all" link))
+        (desc (or description link)))
+    (pcase format
+      (`html (format "<a target=\"_blank\" href=\"%s\">%s</a>" url desc))
+      (`latex (format "\\href{%s}{%s}" url desc))
+      (`texinfo (format "@uref{%s,%s}" url desc))
+      (`ascii (format "%s (%s)" desc url))
+      (`md (format "[%s][/static/%s]" desc link))
+      (t path))))
+
+(org-link-set-parameters "img-asset" :follow #'org-blog-asset-follow :export #'org-blog-img-asset-export)
+
+
+(defun org-blog-img-asset-export (link description format _)
+  (let ((url (format "http://man.he.net/?topic=%s&section=all" link))
+        (desc (or description link)))
+    (pcase format
+      (`html (format "<img src=\"/static/%s\" alt=\"%s\">" link desc))
+      (`latex (format "\includegraphics[width=.9\linewidth]{link}" link desc))
+      (`texinfo (format "@uref{%s,%s}" url desc))
+      (`ascii (format "%s (%s)" desc url))
+      (`md (format "[%s][/static/%s]" desc link))
+      (t path))))
+
 )
 (add-hook 'text-mode-hook #'auto-fill-mode)
 (setq-default fill-column 80)
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
 (setq select-enable-clipboard nil)
 (setq display-line-numbers-type 'relative)
+

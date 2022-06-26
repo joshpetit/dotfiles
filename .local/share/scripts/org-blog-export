@@ -1,6 +1,6 @@
 #!/bin/sh
 for file in *.org; do
-    emacs $file --batch -f org-md-export-to-markdown --kill
+    emacs $file -l ~/.emacs.d/init.el --batch -f org-md-export-to-markdown --kill
     filename=$(basename -- "$file")
     filename="${filename%.*}"
     mdfile="$filename.md"
@@ -13,9 +13,9 @@ for file in *.org; do
     toc_clean="${toc//$'\n'/\\n}"
     cat "$filename.md" >> $mdxfile
     sed -i "s/.*Hope You're Blessed!/$toc_clean/" $mdxfile
-    emacs $file --batch -f org-latex-export-to-latex --kill
-    pandoc --template eisvogel.latex -i "$filename.tex" -o "$filename.pdf"
-    rm "$filename.md" "$filename.tex"
+    emacs $file -l ~/.emacs.d/init.el --batch -f org-latex-export-to-latex --kill
+    pandoc --template eisvogel.latex -i "$filename.tex" -o "assets/$filename/$filename.pdf"
+    #rm "$filename.md" "$filename.tex"
 done
 
 # I got the TOC one liner from here: https://medium.com/@acrodriguez/one-liner-to-generate-a-markdown-toc-f5292112fd14
