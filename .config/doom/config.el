@@ -115,7 +115,7 @@
       (`texinfo (format "@uref{%s,%s}" url desc))
       (`ascii (format "%s (%s)" desc url))
       (`md (format "[%s](/static/%s)" desc link))
-      (t path))))
+      (_ path))))
 
 (org-link-set-parameters "img-asset" :follow #'org-blog-asset-follow :export #'org-blog-img-asset-export)
 
@@ -129,7 +129,7 @@
       (`texinfo (format "@uref{%s,%s}" url desc))
       (`ascii (format "%s (%s)" desc url))
       (`md (format "![%s](/static/%s)" desc link))
-      (t path))))
+      (_ path))))
 
 (org-link-set-parameters "post" :follow #'org-blog-post-follow :export #'org-blog-post-export)
 
@@ -147,7 +147,7 @@
       (`texinfo (format "@uref{%s,%s}" url desc))
       (`ascii (format "%s (%s)" desc url))
       (`md (format "[%s](/static/%s)" desc link))
-      (t path))))
+      (_ path))))
 
 (org-link-set-parameters "bible" :follow #'org-bible-follow :export #'org-bible-export)
 
@@ -179,7 +179,7 @@
       (`texinfo (format "@uref{%s,%s}" link desc))
       (`ascii (format "%s (%s)" desc link))
       (`md (format "**[%s](%s)**" desc link))
-      (t path))))
+      (_ path))))
 
 
 )
