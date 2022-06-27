@@ -149,6 +149,39 @@
       (`md (format "[%s](/static/%s)" desc link))
       (t path))))
 
+(org-link-set-parameters "bible" :follow #'org-bible-follow :export #'org-bible-export)
+
+(defun org-bible-follow (passage)
+(let* ((cooler-passage (replace-regexp-in-string "^\\(.+[0-9]\\)\\s-\\(.*\\)" "\\1,\\2" passage))
+        (split-passage (split-string cooler-passage ","))
+        (bible-version (or (nth 1 split-passage) "NIV"))
+        (reference (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
+        (url "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s")
+        )
+  (print reference)
+  (print bible-version)
+  (browse-url
+   (format url bible-version reference))))
+
+
+(defun org-bible-export (passage description format _)
+  (let* ((cooler-passage (replace-regexp-in-string "^\\(.+[0-9]\\)\\s-\\(.*\\)" "\\1,\\2" passage))
+        (split-passage (split-string cooler-passage ","))
+        (bible-version (or (nth 1 split-passage) "NIV"))
+        (reference (nth 0 split-passage))
+        (reference-clean (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
+        (link (format "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s" bible-version reference-clean))
+        (desc (format "%s (%s)" reference bible-version))
+        )
+    (pcase format
+      (`html (format "<a target=\"_blank\" href=\"%s\">%s</a>" link desc))
+      (`latex (format "\\textbf{\\href{%s}{%s}}" link desc))
+      (`texinfo (format "@uref{%s,%s}" link desc))
+      (`ascii (format "%s (%s)" desc link))
+      (`md (format "**[%s](%s)**" desc link))
+      (t path))))
+
+
 )
 (add-hook 'text-mode-hook #'auto-fill-mode)
 (setq-default fill-column 80)

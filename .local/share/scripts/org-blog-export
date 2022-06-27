@@ -16,6 +16,10 @@ for file in *.org; do
     emacs $file -l ~/.emacs.d/init.el --batch -f org-latex-export-to-latex --kill
     pandoc --template eisvogel.latex -i "$filename.tex" -o "assets/$filename/$filename.pdf"
     rm "$filename.md" "$filename.tex"
+    result=${PWD##*/}          # to assign to a variable
+    currentdir=${result:-/}        # to correct for the case where PWD=/
+    mkdir -p "../../data/blog/$currentdir"
+    cp "$mdxfile" "../../data/blog/$currentdir/"
 done
 
 # I got the TOC one liner from here: https://medium.com/@acrodriguez/one-liner-to-generate-a-markdown-toc-f5292112fd14

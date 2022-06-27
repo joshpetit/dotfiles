@@ -10,7 +10,7 @@ require("telescope").setup({
 			fuzzy = true,
 			override_generic_sorter = true, -- override the generic sorter
 			override_file_sorter = true, -- override the file sorter
-			case_mode = "ignore_case", -- or "ignore_case" or "respect_case"
+            case_mode = "respect_case", -- or "ignore_case" or "respect_case"
 		},
 	},
 })
