@@ -171,7 +171,7 @@
         (reference (nth 0 split-passage))
         (reference-clean (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
         (link (format "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s" bible-version reference-clean))
-        (desc (format "%s (%s)" reference bible-version))
+        (desc ( or description (format "%s (%s)" reference bible-version)))
         )
     (pcase format
       (`html (format "<a target=\"_blank\" href=\"%s\">%s</a>" link desc))
