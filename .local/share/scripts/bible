@@ -1,0 +1,101 @@
+#!/usr/bin/env python3
+
+import sys
+from bs4 import BeautifulSoup
+import argparse
+import requests
+from unidecode import unidecode
+import urllib.parse
+
+
+def parse_args():
+    default_version = "NIV"
+    parser = argparse.ArgumentParser(
+        description="Fetch Bible references from biblegateway.com"
+    )
+    parser.add_argument("reference", nargs="*", help="bible reference")
+    parser.add_argument(
+        "--version",
+        nargs="?",
+        help="translation (e.g. NIV, NLT)",
+        default=default_version,
+    )
+    parser.add_argument(
+        "--verse-numbers",
+        action="store_true",
+        default=False,
+        help="print verse numbers (hidden by default)",
+    )
+    parser.add_argument(
+        "--ascii",
+        action="store_true",
+        default=False,
+        help="translate Unicode to ASCII (useful on Windows)",
+    )
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit(1)
+    args = parser.parse_args()
+    return (
+        " ".join(args.reference),
+        args.version or default_version,
+        args.verse_numbers,
+        args.ascii,
+    )
+
+
+def get_soup(query, version):
+    query = urllib.parse.quote_plus(query)
+    r = requests.get(
+        "https://www.biblegateway.com/passage/?search=" + query + "&version=" + version
+    )
+    return BeautifulSoup(r.text, "html.parser")
+
+
+def clean(tag):
+    for t in tag.find_all("sup"):
+        if show_verse_numbers and "versenum" in t["class"]:
+            continue
+        t.decompose()
+    if not show_verse_numbers:
+        for t in tag.find_all(class_="chapternum"):
+            t.decompose()
+    for t in tag.find_all(class_="surface"):
+        t.decompose()
+
+
+def render(tag):
+    clean(tag)
+    text = ""
+    for t in tag.descendants:
+        if isinstance(t, str):
+            text += t
+        elif t.name == "br":
+            text += "\n"
+    return text
+
+
+def get_passages(soup):
+    passages = soup.find_all(class_="passage-table")
+    if passages is None:
+        return
+    text = ""
+    for p in passages:
+        text += get_passage(p) + "\n\n"
+    return text.replace('  ', ' ')
+
+
+def get_passage(soup):
+    root = soup.find(class_="result-text-style-normal")
+    if root is None:
+        return
+    return "\n\n".join(map(lambda t: render(t), root.select("p, div.poetry p")))
+
+
+query, version, show_verse_numbers, use_ascii = parse_args()
+soup = get_soup(query, version)
+passage = get_passages(soup).strip()
+if use_ascii:
+    passage = unidecode(passage)
+if passage is not None:
+    print(passage)
