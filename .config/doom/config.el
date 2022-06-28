@@ -162,7 +162,7 @@
 (browse-url (format url bible-version reference))
   (evil-set-register ?b
                      (shell-command-to-string (concat "bible " reference-normal " --version " bible-version " --verse-numbers")))
-   )
+   ))
 
 
 (defun org-bible-export (passage description format _)
