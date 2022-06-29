@@ -241,6 +241,7 @@ return require("packer").startup(function()
 			require("bufresize").setup()
 		end,
 	})
+    use('mustache/vim-mustache-handlebars')
 	use({ "aymericbeaumet/vim-symlink", requires = "moll/vim-bbye" })
 
 	if Packer_bootstrap then
