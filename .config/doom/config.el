@@ -152,17 +152,17 @@
 (org-link-set-parameters "bible" :follow #'org-bible-follow :export #'org-bible-export)
 
 (defun org-bible-follow (passage)
-(let* ((cooler-passage (replace-regexp-in-string "^\\(.+[0-9]\\)\\s-\\(.*\\)" "\\1,\\2" passage))
-        (split-passage (split-string cooler-passage ","))
-        (bible-version (or (nth 1 split-passage) "NIV"))
-        (reference-normal (nth 0 split-passage))
-        (reference (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
-        (url "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s")
-        )
-(browse-url (format url bible-version reference))
-  (evil-set-register ?b
-                     (shell-command-to-string (concat "bible " reference-normal " --version " bible-version " --verse-numbers")))
-   ))
+  (let* ((cooler-passage (replace-regexp-in-string "^\\(.+[0-9]\\)\\s-\\(.*\\)" "\\1,\\2" passage))
+         (split-passage (split-string cooler-passage ","))
+         (bible-version (or (nth 1 split-passage) "NASB"))
+         (reference-normal (nth 0 split-passage))
+         (reference (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
+         (url "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s")
+         )
+    (browse-url (format url bible-version reference))
+    (evil-set-register ?b
+                       (shell-command-to-string (concat "bible " reference-normal " --version " bible-version " --verse-numbers")))
+    ))
 
 
 (defun org-bible-export (passage description format _)
