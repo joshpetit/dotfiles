@@ -187,7 +187,7 @@ output as a string."
          (reference (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
          (url "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s")
          (choice (alist-get (completing-read "Choose: " choices) choices nil nil 'equal)))
-         (funcall (intern choice) bible-version reference-normal))))
+         (funcall (intern choice) bible-version reference-normal)))
 
 (defun goto-bible-reference (bible-version reference)
 (browse-url (format  "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s" bible-version reference)))
