@@ -76,6 +76,32 @@
 ;; they are implemented.
 ;;
 ;; ## Stuff I ADDED!
+
+(defun async-shell-command-to-string (command callback)
+  "Execute shell command COMMAND asynchronously in the
+  background.
+
+Return the temporary output buffer which command is writing to
+during execution.
+
+When the command is finished, call CALLBACK with the resulting
+output as a string."
+  (let
+      ((output-buffer (generate-new-buffer " *temp*"))
+       (callback-fun callback))
+    (set-process-sentinel
+     (start-process "Shell" output-buffer shell-file-name shell-command-switch command)
+     (lambda (process signal)
+       (when (memq (process-status process) '(exit signal))
+         (with-current-buffer output-buffer
+           (let ((output-string
+                  (buffer-substring-no-properties
+                   (point-min)
+                   (point-max))))
+             (funcall callback-fun (string-trim output-string))))
+         (kill-buffer output-buffer))))
+    output-buffer))
+
 (after! core-ui (menu-bar-mode 1))
 (after! org
 
@@ -151,29 +177,36 @@
 
 (org-link-set-parameters "bible" :follow #'org-bible-follow :export #'org-bible-export)
 
+
 (defun org-bible-follow (passage)
   (let* ((cooler-passage (replace-regexp-in-string "^\\(.+[0-9]\\)\\s-\\(.*\\)" "\\1,\\2" passage))
          (split-passage (split-string cooler-passage ","))
          (bible-version (or (nth 1 split-passage) "NASB"))
          (reference-normal (nth 0 split-passage))
+         (choices '(("open in browser" . "goto-bible-reference") ("copy scripture" . "copy-scripture")))
          (reference (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
          (url "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s")
-         )
-    (browse-url (format url bible-version reference))
-    (evil-set-register ?b
-                       (shell-command-to-string (concat "bible " reference-normal " --version " bible-version " --verse-numbers")))
-    ))
+         (choice (alist-get (completing-read "Choose: " choices) choices nil nil 'equal)))
+         (funcall (intern choice) bible-version reference-normal))))
 
+(defun goto-bible-reference (bible-version reference)
+(browse-url (format  "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s" bible-version reference)))
+
+(defun copy-scripture (bible-version reference-normal)
+(async-shell-command-to-string (concat "bible " reference-normal " --version " bible-version " --verse-numbers")
+                                   (lambda (str)
+                                   (evil-set-register ?\" str
+                                                      ))))
 
 (defun org-bible-export (passage description format _)
   (let* ((cooler-passage (replace-regexp-in-string "^\\(.+[0-9]\\)\\s-\\(.*\\)" "\\1,\\2" passage))
-        (split-passage (split-string cooler-passage ","))
-        (bible-version (or (nth 1 split-passage) "NIV"))
-        (reference (nth 0 split-passage))
-        (reference-clean (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
-        (link (format "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s" bible-version reference-clean))
-        (desc ( or description (format "%s (%s)" reference bible-version)))
-        )
+         (split-passage (split-string cooler-passage ","))
+         (bible-version (or (nth 1 split-passage) "NIV"))
+         (reference (nth 0 split-passage))
+         (reference-clean (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
+         (link (format "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s" bible-version reference-clean))
+         (desc ( or description (format "%s (%s)" reference bible-version)))
+         )
     (pcase format
       (`html (format "<a target=\"_blank\" href=\"%s\">%s</a>" link desc))
       (`latex (format "\\textbf{\\href{%s}{%s}}" link desc))
@@ -182,7 +215,67 @@
       (`md (format "**[%s](%s)**" desc link))
       (_ path))))
 
+;; Code by me
 
+(defun is-link-of-type (link prefix)
+  (when (string-match (rx (literal prefix)
+                          ":"
+                          (group (1+ anything))) link)
+    t))
+(defun get-link-type (link)
+  (when (string-match (rx (group (1+ (not ":")))
+                          ":"
+                          (1+ anything)) link)
+    (match-string 1 link)))
+(defun omit-link-type (link)
+  (when (string-match (rx (0+ (not ":"))
+                          ":"
+                          (group (1+ anything))) link)
+    (match-string 1 link)))
+
+(defun bible-protocol-open (passage)
+  (let* ((cooler-passage (replace-regexp-in-string "^\\(.+[0-9]\\)\\s-\\(.*\\)" "\\1,\\2" passage))
+         (split-passage (split-string cooler-passage ","))
+         (bible-version (or (nth 1 split-passage) "NASB"))
+         (reference-normal (nth 0 split-passage))
+         (reference (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
+         (url "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s")
+         )
+    (async-shell-command-to-string (concat "bible " reference-normal " --version " bible-version " --verse-numbers")
+                                   (lambda (str)
+                                   (evil-set-register ?\" str
+                                                      )))))
+
+(defvar +custom/org-find-file-at-mouse-called nil
+  "Indicates if the `org-open-at-point' was call through `org-find-file-at-mouse'")
+
+(defun org-find-file-at-mouse-a (fn &rest args)
+  (setq +custom/org-find-file-at-mouse-called t)
+  (prog1 (apply fn args)
+    (setq +custom/org-find-file-at-mouse-called nil)))
+
+(advice-add #'org-find-file-at-mouse :around #'org-find-file-at-mouse-a)
+
+(defun open-custom-link-h ()
+  (when +custom/org-find-file-at-mouse-called
+    (let* ((context
+            ;; Only consider supported types, even if they are not the
+            ;; closest one.
+            (org-element-lineage
+             (org-element-context)
+             '(link)
+             t))
+           (type (org-element-type context))
+           (raw-link (org-element-property :raw-link context)))
+      (when (eq type 'link)
+        (let* ((address (omit-link-type raw-link))
+               (link-protocol (get-link-type raw-link)))
+          (pcase link-protocol
+            ("bible" (bible-protocol-open address))
+            ("stop" (message "Lol cool"))
+            ))))))
+
+(add-hook! 'org-open-at-point-functions #'open-custom-link-h)
 )
 (add-hook 'text-mode-hook #'auto-fill-mode)
 (setq-default fill-column 80)
@@ -193,3 +286,7 @@
 
 (setq display-line-numbers-type 'relative)
 
+
+
+
+(setq confirm-kill-emacs nil)
