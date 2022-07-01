@@ -128,5 +128,14 @@ if [ -f ~/.zshextra ]; then
     source ~/.zshextra
 fi
 
+es() {
+    pushd ~/.local/share/scripts && nvim $1 && popd
+}
+_es() {
+    compadd $(ls ~/.local/share/scripts)
+}
+
+compdef _es es
+
 # Host specific configurations
 zplug load
