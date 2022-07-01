@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+pactl set-sink-volume @DEFAULT_SINK@ "${1:-+0}%" && notify-send "Volume:" $(pamixer --get-volume) -h string:x-canonical-private-synchronous:volume-change

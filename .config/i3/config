@@ -41,10 +41,13 @@ exec --no-startup-id nm-applet
 exec ~/.local/share/scripts/fehbg
 
 # Use pactl to adjust volume in PulseAudio.
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && notify-send "Volume:" $(awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master)) -h string:x-canonical-private-synchronous:volume-change
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && notify-send "Volume:" $(awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master)) -h string:x-canonical-private-synchronous:volume-change
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioRaiseVolume exec --no-startup-id vol +10
+bindsym XF86AudioLowerVolume exec --no-startup-id vol -10
+bindsym XF86AudioMute exec --no-startup-id vol 0
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym $mod + plus exec --no-startup-id vol +10
+bindsym $mod + minus exec --no-startup-id vol -10
+bindsym $mod + Shift + minus exec --no-startup-id vol "$(rofi -dmenu -p 'Volume: ')"
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod

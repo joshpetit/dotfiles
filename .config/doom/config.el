@@ -114,8 +114,10 @@ output as a string."
          )
         ("n" "Note" entry (file "~/sync/org/refile.org")
          "* %?")
-        ("w" "Work" entry (file+headline "~/sync/org/work.org" "Work logs")
-         "** Work Log %t %?"
+        ("t" "Work Task" entry (file+headline "~/sync/org/refile.org")
+                "* %?")
+        ("w" "Work" entry (file+headline "~/sync/org/work.org" "Working on Ms5 %<%Y-%m-%d>")
+         "*** %?"
          :clock-in t
          :clock-keep t
          :jump-to-captured t

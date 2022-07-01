@@ -61,7 +61,9 @@ local servers = {
     --"r_language_server",
     "gopls",
     "bashls",
-    "html"
+    "html",
+    "awk_ls",
+    "perlnavigator",
 }
 
 for _, lsp in ipairs(servers) do
