@@ -15,7 +15,7 @@ zstyle ':completion:*' menu select
 
 bindkey  '^[[Z' reverse-menu-complete
 setopt APPEND_HISTORY
-HISTFILE="$HOME/.local/zsh/histfile"
+HISTFILE="$HOME/.local/share/zsh/histfile"
 HISTSIZE=2500
 SAVEHIST=2500
 
