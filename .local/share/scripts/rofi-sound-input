@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # Outputs have spaces in them, so let's make \n the IFS
+
+# TODO combine with input so we can have oen script to do both
 IFS=$'\n'
 
 # Menu will have a quit option, though you could just escape
