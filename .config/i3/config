@@ -296,7 +296,7 @@ bindsym $mod+Shift+w [class="[dropdownt|Emacs]"]  scratchpad show,
 
 bindsym $mod+Ctrl+S  move scratchpad
 bindsym $mod+Ctrl+c exec copyq menu
-bindsym $mod+Ctrl+e exec rofimoji
+bindsym $mod+Ctrl+e exec rofimoji -a type copy
 bindsym $mod+Shift+n exec ~/.local/share/scripts/toggle_notifications
 
 bindsym $mod+Shift+d [class="dropdownt"] scratchpad show,
