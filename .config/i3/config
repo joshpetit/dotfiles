@@ -48,7 +48,8 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 bindsym $mod + plus exec --no-startup-id vol +10
 bindsym $mod + minus exec --no-startup-id vol -10
 bindsym $mod + Shift + minus exec --no-startup-id vol "$(rofi -dmenu -p 'Volume: ')"
-bindsym $mod + Shift + plus exec --no-startup-id rofi -show rofi-sound -modi "rofi-sound:rofi-sound-output"
+bindsym $mod + Shift + plus exec --no-startup-id rofi -show rofi-speaker -modi "rofi-speaker:rofi-sound-output"
+bindsym $mod + Ctrl + plus exec --no-startup-id rofi -show rofi-microphone -modi "rofi-microphone:rofi-sound-input"
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
