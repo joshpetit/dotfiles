@@ -7,6 +7,15 @@ kb-remove-to-eol: "Control+Shift+e";
 /*kb-mode-next: "Shift+Right,Control+Tab,Control+l";*/
 kb-mode-previous: "Shift+Left,Control+Shift+Tab,Control+h";
 kb-remove-char-back: "BackSpace";
+
+  background-color: @fg-alt;
+  display-run: " ";
+  display-drun: "  ";
+  display-window: "  ";
+  drun-display-format: "{icon} {name}";
+  font: "JetBrainsMono Nerd Font Medium 13";
+  modi: "window,run,drun";
+  show-icons: true;
 }
 * {
   bg: rgba(127, 135, 189, 0.2);
