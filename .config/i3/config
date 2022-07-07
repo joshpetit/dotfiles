@@ -25,6 +25,7 @@ font pango:InconsolataLGC Nerd Font 5
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
+exec --no-startup-id conky
 exec --no-startup-id setxkbmap -option caps:swapescape
 exec --no-startup-id xrandr --dpi 93
 #exec --no-startup-id dockd --daemon
@@ -292,6 +293,8 @@ for_window [title="^zoom$" class="[zoom]*"] floating enable
 bindsym $mod+Ctrl+a exec /home/joshu/.local/bin/scriptlauncher
 bindsym $mod+Shift+S [class="[^dropdownt|Emacs]"] scratchpad show 
 bindsym $mod+Shift+w [class="[dropdownt|Emacs]"]  scratchpad show,
+bindsym $mod+Shift+t exec "stalonetray --window-type normal -t --icon-size 100"
+#for_window [title="stalonetray"] move absolute position center, move absolute position center
 #, [class="dropdownt"] move scratchpad 
 
 bindsym $mod+Ctrl+S  move scratchpad
@@ -302,6 +305,9 @@ bindsym $mod+Shift+n exec ~/.local/share/scripts/toggle_notifications
 bindsym $mod+Shift+d [class="dropdownt"] scratchpad show,
 exec --no-startup-id "alacritty --class dropdownt,dropdownt -e tmux"
 for_window [class="dropdownt"] move scratchpad
+for_window [class="Conky"] floating enable
+for_window [class="Conky"] sticky enable
+bindsym $mod+c exec "~/.config/polybar/material/scripts/powermenu.sh"
 
 #bindsym $mod+Shift+e exec "alacritty --class quickedit,quickedit -e nvim"
 #for_window [class="quickedit"] floating enable, focus

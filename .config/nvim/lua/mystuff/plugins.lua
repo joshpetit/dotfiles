@@ -55,6 +55,7 @@ return require("packer").startup(function()
 		"akinsho/flutter-tools.nvim",
 		requires = { "nvim-lua/plenary.nvim" },
 	})
+    use({'smancill/conky-syntax.vim'})
 	-- tag = 'release' -- To use the latest release
 	use({
 		"hrsh7th/nvim-cmp",
