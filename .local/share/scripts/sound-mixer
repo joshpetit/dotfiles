@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+# Outputs have spaces in them, so let's make \n the IFS
+IFS=$'\n'
+
+VOLUME_DELTA=5
+
+if [ -z "$0" ]
+then
+    echo $0
+fi
+
+use_hot_keys="\x0use-hot-keys\x1ftrue\n"
+prompt="\x00prompt\x1fSelect Output\n"
+echo -en "$use_hot_keys$prompt"
+
+#echo $ROFI_RETV
+
+get_device_from_desc () {
+    echo $(pactl list sinks| grep -C2 "Description: $1"|grep Name|cut -d: -f2|xargs)
+}
+
+get_desc_from_device () {
+    echo $(pactl list sinks| grep -C2 $1 | grep -e "Description" | cut -d: -f2)
+}
+
+if [ "$ROFI_RETV" = 1 ]
+then
+    desc=$(echo "$1" | cut -d: -f1 | xargs)
+    device=$(get_device_from_desc $desc)
+    if pactl set-default-sink "$device"
+    then
+        # if it worked, alert the user
+        dunstify -t 2000 -r 2 -u low "Activated: $desc"
+    else
+        # didn't work, critically alert the user
+        dunstify -t 2000 -r 2 -u critical "Error activating $desc"
+    fi
+fi
+#echo $1
+
+if [ "$ROFI_RETV" = 10 ]
+then
+    desc=$(echo "$1" | cut -d: -f1 | xargs)
+    device=$(get_device_from_desc $desc)
+    pactl set-sink-volume "$device" +$VOLUME_DELTA%
+fi
+
+if [ "$ROFI_RETV" = 11 ]
+then
+    desc=$(echo "$1" | cut -d: -f1 | xargs)
+    device=$(get_device_from_desc $desc)
+    pactl set-sink-volume "$device" -$VOLUME_DELTA%
+fi
+
+
+    
+
+options="$(pactl list sinks | awk '
+BEGIN {
+    last_match = "";
+    FS=":"
+}
+
+/Description:/{
+    #res = match($0, /".*"/)
+    last_match=$2;
+}
+
+/^[^\s]*Volume:/ {
+    split($0,vols, /\/\s*/);
+    print last_match ": " "Left: " vols[2] "Right: " vols[4]
+}
+')"
+
+#echo $1
+default_sink=$(pactl get-default-sink)
+res=""
+for orig in $options
+do
+    orig=$(echo $orig |xargs)
+    desc=$(echo  $orig | cut -d: -f1 | xargs)
+    passed_in_desc=$(echo  $1 |  sed 's/^* //' | cut -d: -f1 | xargs)
+    def_sink=$(pactl get-default-sink |xargs)
+    value_sink=$(get_device_from_desc $desc)
+    if [ "$value_sink" = "$def_sink" ]
+    then
+        if [ "$desc" = "$passed_in_desc" ]
+        then
+            res="* $orig\n$res"
+        else
+            res="$res* $orig\n"
+        fi
+    elif [ "$desc" = "$passed_in_desc" ]
+    then
+        res="$orig\n$res"
+    else
+        res="$res$orig\n"
+    fi
+done
+
+echo -e "$res"

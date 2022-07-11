@@ -114,8 +114,8 @@ output as a string."
          )
         ("n" "Note" entry (file "~/sync/org/refile.org")
          "* %?")
-        ("t" "Work Task" entry (file+headline "~/sync/org/refile.org")
-                "* %?")
+        ("t" "MS5 Task" entry (file+headline "~/sync/org/programming/ms5.org" "MS5 Refile")
+                "** %?\nSCHEDULED: %t")
         ("w" "Work" entry (file+headline "~/sync/org/work.org" "Working on Ms5 %<%Y-%m-%d>")
          "*** %?"
          :clock-in t
