@@ -1,14 +1,14 @@
 configuration {
-kb-row-up: "Up,Control+k,Shift+Tab,Shift+ISO_Left_Tab";
-kb-row-down: "Down,Control+j";
-kb-accept-entry: "Control+m,Return,KP_Enter";
-terminal: "alacritty";
-kb-remove-to-eol: "Control+Shift+e";
-/*kb-mode-next: "Shift+Right,Control+Tab,Control+l";*/
-kb-mode-previous: "Shift+Left,Control+Shift+Tab,Control+h";
-kb-remove-char-back: "BackSpace";
+  kb-row-up: "Up,Control+k,Shift+Tab,Shift+ISO_Left_Tab";
+  kb-row-down: "Down,Control+j";
+  kb-accept-entry: "Control+m,Return,KP_Enter";
+  terminal: "alacritty";
+  kb-remove-to-eol: "Control+Shift+e";
+  /*kb-mode-next: "Shift+Right,Control+Tab,Control+l";*/
+  kb-mode-previous: "Shift+Left,Control+Shift+Tab,Control+h";
+  kb-remove-char-back: "BackSpace";
 
-  background-color: @fg-alt;
+  background-color: @base;
   display-run: " ";
   display-drun: "  ";
   display-window: "  ";
@@ -17,20 +17,19 @@ kb-remove-char-back: "BackSpace";
   modi: "window,run,drun";
   show-icons: true;
 }
-* {
-  bg: rgba(127, 135, 189, 0.2);
-  bg-alt: #232323;
 
-  fg: #FFFFFF;
+* {
+  base: #2C3E50;
+  base-alt: #5A6978;
+  fg: #ffffff;
   fg-alt: #8f8f8f;
-  fg-alt-alt: rgba(127, 135, 189, 0.5);
-  
+  tertiary: #34495E;
   background-color: @bg;
-  
-  border: 0;
-  margin: 0;
-  padding: 0;
-  spacing: 0;
+}
+mainbox {
+    background-color: @base;
+    padding: 0;
+    margin: 0;
 }
 
 element-icon {
@@ -47,41 +46,89 @@ element-text {
 element {
   padding: 20;
   orientation: horizontal;
-  text-color: @fg-alt;
+  text-color: @fg;
   position: east;
   vertical-align: 0;
+  background-color: @base;
 }
 
 element selected {
-  text-color: @fg;
-  background-color: @fg-alt-alt;
+    background-color: @tertiary;
+}
+
+element.selected.active {
+    background-color: @tertiary;
+}
+
+element.normal.active {
+    background-color: @tertiary;
+}
+
+element.normal.selected {
+    background-color: @tertiary;
+}
+
+element.normal.normal {
+    background-color: @base;
+    text-color: @fg;
+}
+
+element.alternate.normal {
+    background-color: @base;
+    text-color: @fg;
+}
+element.alternate.active {
+    background-color: @tertiary;
 }
 
 entry {
-  background-color: @bg-alt;
-  padding: 12;
+  background-color: @base-alt;
+  padding: 24 0 0 0;
   vertical-align: 0;
   text-color: @fg;
+  border-radius: 24 24 0 0;
+  horizontal-align: 0.50;
+  vertical-align: 0.50;
+  placeholder-color: @fg;
+  blink: false;
+  placeholder: "";
 }
 
 inputbar {
+  background-color: transparent;
   children: [entry];
 }
 
 listview {
-  background-color: @bg;
+  background-color: @base;
   columns: 1;
+  scrollbar: false;
   lines: 8;
+  /*border-radius: 0 0 24 24;*/
+  border-color: transparent;
+
 }
 
 prompt {
-  background-color: @bg-alt;
   enabled: true;
   font: "FontAwesome 12";
   padding: 12 0 0 12;
   text-color: @fg;
+  background-color: @base-alt;
+  horizontal-align: 0.50;
+  vertical-align: 0.50;
 }
 
 window {
   transparency: "real";
+  width: 600;
+  border-radius: 24;
+  padding: 0;
+  background-color: @base;
+  children: [mainbox];
+  border-color: transparent;
+}
+
+message {
+
 }
