@@ -2,4 +2,4 @@
 # TODO, make custom shortcuts 1-9 and 0 increment the volume to that specific
 # number, make alt+m mute/unmute and then make sure + and - are still usable
 # Likely say something like "muted" at the end if muted
-rofi -kb-custom-2 "minus,underscore" -kb-custom-1 "plus,equal" -show  rofi-sound-mixer -modi "rofi-sound-mixer:sound-mixer"
+rofi -theme-str 'window { width: 740; }' -kb-custom-2 "minus,underscore" -kb-custom-1 "plus,equal" -show  rofi-sound-mixer -modi "rofi-sound-mixer:sound-mixer"

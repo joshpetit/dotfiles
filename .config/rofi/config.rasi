@@ -4,7 +4,7 @@ configuration {
   kb-accept-entry: "Control+m,Return,KP_Enter";
   terminal: "alacritty";
   kb-remove-to-eol: "Control+Shift+e";
-  /*kb-mode-next: "Shift+Right,Control+Tab,Control+l";*/
+  kb-mode-next: "Shift+Right,Control+Tab";
   kb-mode-previous: "Shift+Left,Control+Shift+Tab,Control+h";
   kb-remove-char-back: "BackSpace";
 
@@ -13,7 +13,7 @@ configuration {
   display-drun: "  ";
   display-window: "  ";
   drun-display-format: "{icon} {name}";
-  font: "JetBrainsMono Nerd Font Medium 13";
+  font: "InconsolataGo Nerd Font Bold 17";
   modi: "window,run,drun";
   show-icons: true;
 }
@@ -24,12 +24,11 @@ configuration {
   fg: #ffffff;
   fg-alt: #8f8f8f;
   tertiary: #34495E;
-  background-color: @bg;
+  background-color: @base;
 }
 mainbox {
     background-color: @base;
     padding: 0;
-    margin: 0;
 }
 
 element-icon {
@@ -40,11 +39,11 @@ element-icon {
 }
 
 element-text {
-  vertical-align: 1;
+  vertical-align: 0.5;
 }
 
 element {
-  padding: 20;
+  padding: 23;
   orientation: horizontal;
   text-color: @fg;
   position: east;
@@ -52,39 +51,43 @@ element {
   background-color: @base;
 }
 
-element selected {
-    background-color: @tertiary;
-}
-
-element.selected.active {
-    background-color: @tertiary;
-}
-
-element.normal.active {
-    background-color: @tertiary;
-}
-
-element.normal.selected {
-    background-color: @tertiary;
-}
-
-element.normal.normal {
-    background-color: @base;
+#element normal.normal {
     text-color: @fg;
-}
-
-element.alternate.normal {
     background-color: @base;
-    text-color: @fg;
 }
-element.alternate.active {
+#element normal.urgent {
+    background-color: @base;
+}
+#element normal.active {
+    background-color: @base;
+}
+#element selected.normal {
+    text-color: @fg;
     background-color: @tertiary;
+}
+#element selected.urgent {
+    background-color: @base;
+}
+#element selected.active {
+    background-color: @base;
+}
+#element alternate.normal {
+    text-color: @fg;
+    background-color: @base;
+}
+#element alternate.urgent {
+    background-color: @base;
+}
+#element alternate.active {
+    background-color: @base;
 }
 
 entry {
+  font: "InconsolataGo Nerd Font Bold 28";
+  text-style: bold;
   background-color: @base-alt;
-  padding: 24 0 0 0;
-  vertical-align: 0;
+  padding: 16 0 16 0;
+  fint-size: 100;
   text-color: @fg;
   border-radius: 24 24 0 0;
   horizontal-align: 0.50;
@@ -111,7 +114,6 @@ listview {
 
 prompt {
   enabled: true;
-  font: "FontAwesome 12";
   padding: 12 0 0 12;
   text-color: @fg;
   background-color: @base-alt;
@@ -121,7 +123,7 @@ prompt {
 
 window {
   transparency: "real";
-  width: 600;
+  width: env(ROFIWIDTH, 600);
   border-radius: 24;
   padding: 0;
   background-color: @base;
@@ -129,6 +131,15 @@ window {
   border-color: transparent;
 }
 
-message {
-
+textbox {
+    background-color: @tertiary;
+    text-color: @fg;
+    font: "InconsolataGo Nerd Font Bold 11";
+    horizontal-align: 0.50;
 }
+
+message {
+    background-color: @tertiary;
+    text-color: @fg;
+}
+

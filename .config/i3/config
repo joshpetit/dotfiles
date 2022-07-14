@@ -298,7 +298,7 @@ bindsym $mod+Shift+t exec "stalonetray --window-type normal -t --icon-size 100"
 
 bindsym $mod+Ctrl+S  move scratchpad
 bindsym $mod+Ctrl+c exec copyq menu
-bindsym $mod+Ctrl+e exec rofimoji -a type copy
+bindsym $mod+Ctrl+e exec rofimoji -a type copy -s neutral
 bindsym $mod+Shift+n exec ~/.local/share/scripts/toggle_notifications
 
 bindsym $mod+Shift+d [class="dropdownt"] scratchpad show,

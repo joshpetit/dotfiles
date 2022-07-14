@@ -292,3 +292,4 @@ output as a string."
 
 
 (setq confirm-kill-emacs nil)
+(org-notifications-start)
