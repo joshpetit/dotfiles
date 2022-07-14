@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+rofi -modi 'json:~/.config/rofi/rofi-json-core ~/.config/rofi/things.json' -show 'json'
