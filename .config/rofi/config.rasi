@@ -48,6 +48,7 @@ element {
   text-color: @fg;
   position: east;
   vertical-align: 0;
+  horizontal-align: 0;
   background-color: @base;
 }
 
