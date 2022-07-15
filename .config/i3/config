@@ -237,9 +237,9 @@ for_window [class="breakout.Main"] floating enable
 
 # Colors
 # class                 border  bground text    indicator child_border
-client.focused          #7F87BD #7F87BD #FFFFFF #7F87BD   #7F87BD
-client.focused_inactive #333333 #5F676A #FFFFFF #484E50   #5F676A
-client.unfocused        #333333 #222222 #888888 #292D2E   #222222
+client.focused          #27AE60 #27AE60 #FFFFFF #27AE60   #27AE60
+client.focused_inactive #2C3E50 #2C3E50 #FFFFFF #2C3E50   #34495E
+client.unfocused        #2C3E50 #2C3E50 #888888 #2C3E50   #2C3E50
 client.urgent           #2F343A #3743BD #FFFFFF #3743BD   #3743BD
 client.placeholder      #000000 #0C0C0C #FFFFFF #000000   #0C0C0C
 

@@ -2,7 +2,7 @@ configuration {
   kb-row-up: "Up,Control+k,Shift+Tab,Shift+ISO_Left_Tab";
   kb-row-down: "Down,Control+j";
   kb-accept-entry: "Control+m,Return,KP_Enter";
-  terminal: "alacritty";
+  terminal: "lacritty";
   kb-remove-to-eol: "Control+Shift+e";
   kb-mode-next: "Shift+Right,Control+Tab";
   kb-mode-previous: "Shift+Left,Control+Shift+Tab,Control+h";
@@ -124,7 +124,8 @@ prompt {
 
 window {
   transparency: "real";
-  width: env(ROFIWIDTH, 600);
+  width: env(ROFIWIDTH, 700);
+  height: 816;
   border-radius: 24;
   padding: 0;
   background-color: @base;
