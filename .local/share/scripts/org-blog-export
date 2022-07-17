@@ -1,6 +1,6 @@
 #!/bin/sh
 for file in *.org; do
-    emacs $file -l ~/.emacs.d/init.el --batch -f org-md-export-to-markdown --kill
+    emacs $file  --batch -f org-md-export-to-markdown --kill
     filename=$(basename -- "$file")
     filename="${filename%.*}"
     mdfile="$filename.md"
