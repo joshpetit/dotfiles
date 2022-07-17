@@ -318,3 +318,4 @@ bindsym $mod+Shift+m exec ferdi
 # When I use the shortcut for ferdi, if a window already exists it creates this
 # big blank window, this kills that winodw
 for_window [title="^Ferdi$"] kill
+hide_edge_borders smart
