@@ -289,7 +289,6 @@ bindcode $mod+62+s restart
 
 # Stupid zoom notifications
 for_window [title="^zoom$" class="[zoom]*"] floating enable
-bindsym $mod+Ctrl+a exec /home/joshu/.local/bin/scriptlauncher
 bindsym $mod+Shift+S [class="[^dropdownt|Emacs]"] scratchpad show 
 bindsym $mod+Shift+w [class="[dropdownt|Emacs]"]  scratchpad show,
 bindsym $mod+Shift+t exec "stalonetray --window-type normal -t --icon-size 100"
@@ -320,4 +319,5 @@ bindsym $mod+Shift+m exec ferdi
 for_window [title="^Ferdi$"] kill
 hide_edge_borders smart
 
-bindsym $mod+Shift+a exec toggle-conky
+bindsym $mod+Ctrl+a exec toggle-conky
+bindsym $mod+Shift+a exec rofi-sound-mixer

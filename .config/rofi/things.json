@@ -1,14 +1,18 @@
 [
   {
+    "name": "Bluetooth",
+    "command": "rofi-bluetooth"
+  },
+  {
+    "name": "Sound Mxer",
+    "command": "rofi-sound-mixer"
+  },
+  {
     "name": "Copy Zoom Link",
     "command": "copytext 'https://duke.zoom.us/j/7576329220'"
   },
   {
     "name": "Copy Zerotier IP",
     "command": "copytext '10.147.17.100'"
-  },
-  {
-    "name": "bluetooth",
-    "command": "rofi-bluetooth"
   }
 ]

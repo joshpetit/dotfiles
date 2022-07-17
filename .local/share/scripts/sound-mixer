@@ -4,9 +4,9 @@ IFS=$'\n'
 
 VOLUME_DELTA=5
 
-if [ -z "$0" ]
+if [ "$1" = "quit" ]
 then
-    echo $0
+    exit 0
 fi
 
 use_hot_keys="\x0use-hot-keys\x1ftrue\n"
@@ -124,4 +124,4 @@ do
     fi
 done
 
-echo -e "$res"
+echo -e "$res\nquit"
