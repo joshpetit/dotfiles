@@ -275,8 +275,8 @@ bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
 
 # Polybar
-exec_always ~/.config/polybar/launch.sh --material
-bindsym $mod+b exec polybar-msg cmd toggle
+exec_always /home/joshu/.config/polybar/theos/launch.sh
+bindsym $mod+b exec polybar-msg cmd toggle && xdo raise -N Polybar
 
 bindsym Alt_R+h exec xdotool key left
 bindsym Alt_R+j exec xdotool key Down
