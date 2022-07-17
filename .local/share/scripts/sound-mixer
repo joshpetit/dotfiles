@@ -106,8 +106,8 @@ do
     # If this is the default sink then...
     if [ "$value_sink" = "$def_sink" ]
     then
-        # If this is the most recent selected sink put it first in the list
-        if [ "$desc" = "$passed_in_desc" ]
+        # If this is the most recent selected sink (or no sink has been selected yet) put it first in the list
+        if [ "$desc" = "$passed_in_desc" ] || [ "$passed_in_desc" = "" ]
         then
             res="* $orig\n$res"
         else
