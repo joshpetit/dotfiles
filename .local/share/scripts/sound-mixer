@@ -103,6 +103,10 @@ do
     passed_in_desc=$(echo  $1 |  sed 's/^* //' | cut -d: -f1 | xargs)
     def_sink=$(pactl get-default-sink |xargs)
     value_sink=$(get_device_from_desc $desc)
+    if [[ $orig =~ .*MUTED ]]
+    then
+        orig="$orig\0icon\x1f<span color=\"white\">ﱝ</span>"
+    fi
     # If this is the default sink then...
     if [ "$value_sink" = "$def_sink" ]
     then
