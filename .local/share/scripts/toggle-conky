@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+
+pgrep conky 
+if pgrep conky ; then
+    pkill conky
+else
+    conky -d
+    xdo raise -N Conky
+fi

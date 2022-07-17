@@ -38,19 +38,27 @@ then
 fi
 #echo $1
 
-if [ "$ROFI_RETV" = 10 ]
+if [ "$ROFI_RETV" = 28 ]
 then
     desc=$(echo "$1" | cut -d: -f1 | xargs)
     device=$(get_device_from_desc $desc)
     pactl set-sink-volume "$device" +$VOLUME_DELTA%
 fi
 
-if [ "$ROFI_RETV" = 11 ]
+if [ "$ROFI_RETV" = 27 ]
 then
     desc=$(echo "$1" | cut -d: -f1 | xargs)
     device=$(get_device_from_desc $desc)
     pactl set-sink-volume "$device" -$VOLUME_DELTA%
 fi
+
+if [ "$ROFI_RETV" = 26 ]
+then
+    desc=$(echo "$1" | cut -d: -f1 | xargs)
+    device=$(get_device_from_desc $desc)
+    pactl set-sink-mute "$device" toggle
+fi
+
 
 
     
@@ -59,6 +67,7 @@ options="$(pactl list sinks | awk '
 BEGIN {
     last_match = "";
     FS=":"
+    muted = 0;
 }
 
 /Description:/{
@@ -66,9 +75,21 @@ BEGIN {
     last_match=$2;
 }
 
+/^[^\s]*Mute:/ {
+    if ($2 ~ "yes") {
+        muted = 1;
+    } else {
+        muted = 0;
+    }
+}
+
 /^[^\s]*Volume:/ {
     split($0,vols, /\/\s*/);
-    print last_match ": " "Left: " vols[2] "Right: " vols[4]
+    thing = last_match ": " "Left: " vols[2] "Right: " vols[4]
+    if (muted) {
+        thing = thing " (MUTED)"
+    }
+    print thing
 }
 ')"
 
@@ -82,18 +103,23 @@ do
     passed_in_desc=$(echo  $1 |  sed 's/^* //' | cut -d: -f1 | xargs)
     def_sink=$(pactl get-default-sink |xargs)
     value_sink=$(get_device_from_desc $desc)
+    # If this is the default sink then...
     if [ "$value_sink" = "$def_sink" ]
     then
+        # If this is the most recent selected sink put it first in the list
         if [ "$desc" = "$passed_in_desc" ]
         then
             res="* $orig\n$res"
         else
+        # Or else just list it next
             res="$res* $orig\n"
         fi
+        # Or if it is the most recent passed in sink
     elif [ "$desc" = "$passed_in_desc" ]
     then
         res="$orig\n$res"
     else
+        # or else just place it next :)
         res="$res$orig\n"
     fi
 done

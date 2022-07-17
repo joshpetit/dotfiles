@@ -1,0 +1,15 @@
+(let ((org-agenda-span 'day)
+       (org-agenda-use-time-grid t)
+       (org-agenda-remove-tags t)
+       (org-agenda-window-setup 'nope))
+   (let* ((wins (current-window-configuration))
+ 	 org-agenda-sticky)
+     (save-excursion
+      (with-current-buffer
+	  (get-buffer-create org-agenda-buffer-name)
+	 (pop-to-buffer (current-buffer))
+	 (org-agenda nil "a")
+        (org-agenda-goto-today)
+        (let ((result (buffer-string)))
+	  (with-temp-file "~/agenda" (insert result)))))
+     (print)))

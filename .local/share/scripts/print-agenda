@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+emacsclient -e "$(cat ~/.local/share/scripts/print-agenda.el)"
+cat ~/agenda
