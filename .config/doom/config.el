@@ -133,7 +133,6 @@ output as a string."
 
 (defun org-blog-asset-export (link description format _)
   "Export a man page link from Org files."
-  "TODO: change to joshministers.com"
   "Docs here https://orgmode.org/manual/Adding-Hyperlink-Types.html"
   (let ((url (format "http://joshministers.com/static/%s" link))
         (desc (or description link)))

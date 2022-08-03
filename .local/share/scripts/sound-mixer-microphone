@@ -1,0 +1,131 @@
+#!/usr/bin/env bash
+# Outputs have spaces in them, so let's make \n the IFS
+IFS=$'\n'
+
+VOLUME_DELTA=5
+
+if [ "$1" = "quit" ]
+then
+    exit 0
+fi
+
+use_hot_keys="\x0use-hot-keys\x1ftrue\n"
+prompt="\x00prompt\x1fSelect Output\n"
+echo -en "$use_hot_keys$prompt"
+
+#echo $ROFI_RETV
+
+get_device_from_desc () {
+    echo $(pactl list sources| grep -C2 "Description: $1"|grep Name|cut -d: -f2|xargs)
+}
+
+get_desc_from_device () {
+    echo $(pactl list sources| grep -C2 $1 | grep -e "Description" | cut -d: -f2)
+}
+
+if [ "$ROFI_RETV" = 1 ]
+then
+    desc=$(echo "$1" | cut -d: -f1 | xargs)
+    device=$(get_device_from_desc $desc)
+    if pactl set-default-source "$device"
+    then
+        # if it worked, alert the user
+        dunstify -t 2000 -r 2 -u low "Activated: $desc"
+    else
+        # didn't work, critically alert the user
+        dunstify -t 2000 -r 2 -u critical "Error activating $desc"
+    fi
+fi
+#echo $1
+
+if [ "$ROFI_RETV" = 28 ]
+then
+    desc=$(echo "$1" | cut -d: -f1 | xargs)
+    device=$(get_device_from_desc $desc)
+    pactl set-source-volume "$device" +$VOLUME_DELTA%
+fi
+
+if [ "$ROFI_RETV" = 27 ]
+then
+    desc=$(echo "$1" | cut -d: -f1 | xargs)
+    device=$(get_device_from_desc $desc)
+    pactl set-source-volume "$device" -$VOLUME_DELTA%
+fi
+
+if [ "$ROFI_RETV" = 26 ]
+then
+    desc=$(echo "$1" | cut -d: -f1 | xargs)
+    device=$(get_device_from_desc $desc)
+    pactl set-source-mute "$device" toggle
+fi
+
+
+
+    
+
+options="$(pactl list sources | awk '
+BEGIN {
+    last_match = "";
+    FS=":"
+    muted = 0;
+}
+
+/Description:/{
+    #res = match($0, /".*"/)
+    last_match=$2;
+}
+
+/^[^\s]*Mute:/ {
+    if ($2 ~ "yes") {
+        muted = 1;
+    } else {
+        muted = 0;
+    }
+}
+
+/^[^\s]*Volume:/ {
+    split($0,vols, /\/\s*/);
+    thing = last_match ": " "Left: " vols[2] "Right: " vols[4]
+    if (muted) {
+        thing = thing " (MUTED)"
+    }
+    print thing
+}
+')"
+
+#echo $1
+default_source=$(pactl get-default-source)
+res=""
+for orig in $options
+do
+    orig=$(echo $orig |xargs)
+    desc=$(echo  $orig | cut -d: -f1 | xargs)
+    passed_in_desc=$(echo  $1 |  sed 's/^* //' | cut -d: -f1 | xargs)
+    def_source=$(pactl get-default-source |xargs)
+    value_source=$(get_device_from_desc $desc)
+    if [[ $orig =~ .*MUTED ]]
+    then
+        orig="$orig\0icon\x1f<span color=\"white\">ﱝ</span>"
+    fi
+    # If this is the default source then...
+    if [ "$value_source" = "$def_source" ]
+    then
+        # If this is the most recent selected source (or no source has been selected yet) put it first in the list
+        if [ "$desc" = "$passed_in_desc" ] || [ "$passed_in_desc" = "" ]
+        then
+            res="* $orig\n$res"
+        else
+        # Or else just list it next
+            res="$res* $orig\n"
+        fi
+        # Or if it is the most recent passed in source
+    elif [ "$desc" = "$passed_in_desc" ]
+    then
+        res="$orig\n$res"
+    else
+        # or else just place it next :)
+        res="$res$orig\n"
+    fi
+done
+
+echo -e "$res\nquit"

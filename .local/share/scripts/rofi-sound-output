@@ -1,2 +1,0 @@
-#!/usr/bin/env bash
-rofi -show rofi-speaker -modi "rofi-speaker:sound-output"

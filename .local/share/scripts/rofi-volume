@@ -1,8 +1,0 @@
-#!/usr/bin/env sh
-MUTE="ﱝ"
-VOLDOWN="ﱜ"
-VOLUP="ﱛ"
-options="$MUTE\n$VOLDOWN\n$VOLUP"
-enable_custom = "\0prompt\x1ftrue\n"
-selected=$(echo -en "$enable_custom$options" | rofi -dmenu -no-config)
-echo $selected
