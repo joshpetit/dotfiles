@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-echo "$1" | xclip -selection clipboard
+echo -n "$1" | xclip -selection clipboard

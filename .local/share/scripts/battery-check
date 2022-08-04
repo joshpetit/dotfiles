@@ -1,0 +1,16 @@
+#!/bin/env sh
+export DISPLAY=:0
+XDG_RUNTIME_DIR=/run/user/$(id -u)
+BATPATH=/sys/class/power_supply/BAT0
+BAT_FULL=$BATPATH/energy_full
+BAT_NOW=$BATPATH/energy_now
+bf=$(cat $BAT_FULL)
+bn=$(cat $BAT_NOW)
+perc=$(( 100 * $bn / $bf ))
+if [ $perc -lt 15 ]
+then
+    conky -c ~/.config/conky/low-battery.conf -d
+    xdo raise -N conky_battery
+    sleep 5
+    pkill conky
+fi
