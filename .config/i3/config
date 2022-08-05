@@ -321,3 +321,5 @@ hide_edge_borders smart
 
 bindsym $mod+Ctrl+a exec toggle-conky
 bindsym $mod+Shift+a exec rofi-sound-mixer
+bindsym $mod+n exec dunstctl close-all
+bindsym $mod+ctrl+n exec dunstctl history-pop
