@@ -1,0 +1,19 @@
+#!/bin/env sh
+
+emacs_run () {
+    echo $(emacsclient --eval "$1")
+}
+
+headline_time=$(emacs_run '(format "%s (%s)" org-clock-heading (org-minutes-to-clocksum-string (org-clock-get-clocked-time)))')
+
+headline_time=$(echo ${headline_time:1:-1})
+clocked_in=$(emacs_run '(org-clock-is-active)') 
+
+icon="祥 "
+
+if [ "$clocked_in" = "nil" ]
+then
+    icon=" "
+fi
+
+echo "$icon $headline_time"
