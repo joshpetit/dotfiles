@@ -1,7 +1,5 @@
 #!/bin/env sh
 source ~/.zshenv
-export DISPLAY=:0
-export XDG_RUNTIME_DIR=/run/user/$(id -u)
 get_time() {
     date -d "today + $1 minutes" +'%-H:%M'
 }
