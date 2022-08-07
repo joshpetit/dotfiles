@@ -5,7 +5,6 @@ current_time=$(date +'%H:%M')
 upcoming=$(date -d "$current_time 15 minutes" +'%H:%M')
 print-agenda > /dev/null 2>&1 
 
-upcoming="23:00"
 upcoming_event=$(cat ~/agenda | grep "$upcoming" | sed 's/-\+//' | sed 's/\.\+//' | awk '$1=$1')
 
 

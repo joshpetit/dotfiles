@@ -1,1 +1,2 @@
-*/5 * * * * XDG_RUNTIME_DIR=/run/user/$(id -u) ~/.local/share/scripts/battery-check 
+*/5 * * * * XDG_RUNTIME_DIR=/run/user/$(id -u) ~/.local/share/scripts/battery-check
+*/1 * * * * XDG_RUNTIME_DIR=/run/user/$(id -u) ~/.local/share/scripts/org-check-time
