@@ -1,0 +1,23 @@
+#!/bin/env sh
+export DISPLAY=:0
+XDG_RUNTIME_DIR=/run/user/$(id -u)
+current_time=$(date +'%H:%M')
+upcoming=$(date -d "$current_time 15 minutes" +'%H:%M')
+print-agenda > /dev/null 2>&1 
+
+upcoming="23:00"
+upcoming_event=$(cat ~/agenda | grep "$upcoming" | sed 's/-\+//' | sed 's/\.\+//' | awk '$1=$1')
+
+
+if [ "$upcoming_event" = "$upcoming" ]
+then
+    exit 0
+else
+    upcoming_event=$(echo "$upcoming_event" | awk '{$1=$1}{$1= ""; print $0}')
+    #echo "$upcoming_event"
+    CONKY_ENV="$upcoming_event" conky -c ~/.config/conky/print-env.conf -d
+    xdo raise -N conky_env
+    sleep 5
+    pkill conky
+fi
+
