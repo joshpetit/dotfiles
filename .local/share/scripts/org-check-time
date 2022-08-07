@@ -1,20 +1,23 @@
 #!/bin/env sh
-current_time=$(date +'%H:%M')
-upcoming=$(date -d "$current_time 15 minutes" +'%H:%M')
-# TODO make print-agneda not open up the agneda in org haha
+upcoming_time=$(date -d "today + 15 minutes" +'%H:%M')
+#upcoming_time="15:00"
 print-agenda > /dev/null 2>&1 
+awk_script='
+{
+    if ($2 ~ check_time) {
+        split($0,a,":")
+        print(check_time a[4])
+    }
+}'
 
-upcoming_event=$(cat ~/agenda | grep "$upcoming" | sed 's/-\+//' | sed 's/\.\+//' | awk '$1=$1')
+upcoming_events="$(cat ~/agenda | awk -v check_time=$upcoming_time "$awk_script") " 
 
-
-# uf it's just a placeholder time or no time found at all
-if [ "$upcoming_event" = "$upcoming" ] | [ "$upcoming_event" = "" ]
+# Variable is empty
+if [ -z "${upcoming_events// }" ]
 then
-    exit 0
+    exit 1
 else
-    upcoming_event=$(echo "$upcoming_event" | awk '{$1=$1}{$1= ""; print $0}')
-    #echo "$upcoming_event"
-    CONKY_ENV="$upcoming_event" conky -c ~/.config/conky/print-env.conf -d
+    CONKY_ENV="$upcoming_events" conky -c ~/.config/conky/print-env.conf -d
     xdo raise -N conky_env
     sleep 5
     pkill conky
