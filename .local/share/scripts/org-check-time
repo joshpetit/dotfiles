@@ -8,7 +8,8 @@ print-agenda > /dev/null 2>&1
 upcoming_event=$(cat ~/agenda | grep "$upcoming" | sed 's/-\+//' | sed 's/\.\+//' | awk '$1=$1')
 
 
-if [ "$upcoming_event" = "$upcoming" ]
+# uf it's just a placeholder time or no time found at all
+if [ "$upcoming_event" = "$upcoming" ] | [ "$upcoming_event" = "" ]
 then
     exit 0
 else
