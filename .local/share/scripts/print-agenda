@@ -1,6 +1,14 @@
 #!/usr/bin/env sh
 today=$(date +"%Y-%m-%d")
+if [[ $1 = "--new-instance" ]]
+then
+emacs -eval "(org-batch-store-agenda-views \
+    org-agenda-span (quote day) \
+    org-agenda-start-day \"$today\")" --kill > /dev/null
+
+else
 emacsclient -eval "(org-batch-store-agenda-views \
     org-agenda-span (quote day) \
     org-agenda-start-day \"$today\")" > /dev/null
+fi
 cat ~/agenda

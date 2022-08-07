@@ -8,7 +8,7 @@ five_minutes=$(get_time 5)
 now=$(get_time 0)
 
 upcoming_times="$fiften_minutes|$five_minutes|$now"
-print-agenda > /dev/null
+print-agenda --new-instance > /dev/null
 awk_script='
 {
     if ($2 ~ check_time) {
