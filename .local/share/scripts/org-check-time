@@ -1,10 +1,8 @@
 #!/bin/env sh
-export DISPLAY=:0
-XDG_RUNTIME_DIR=/run/user/$(id -u)
 current_time=$(date +'%H:%M')
 upcoming=$(date -d "$current_time 15 minutes" +'%H:%M')
 # TODO make print-agneda not open up the agneda in org haha
-#print-agenda > /dev/null 2>&1 
+print-agenda > /dev/null 2>&1 
 
 upcoming_event=$(cat ~/agenda | grep "$upcoming" | sed 's/-\+//' | sed 's/\.\+//' | awk '$1=$1')
 

@@ -277,6 +277,15 @@ output as a string."
             ))))))
 
 (add-hook! 'org-open-at-point-functions #'open-custom-link-h)
+
+(setq org-agenda-custom-commands
+      '(("X" agenda ""
+         ((ps-number-of-columns 2)
+          (ps-landscape-mode t)
+          (org-agenda-span (quote day))
+          (org-agenda-with-colors nil)
+          (org-agenda-remove-tags t))
+         ("agenda"))))
 )
 (add-hook 'text-mode-hook #'auto-fill-mode)
 (setq-default fill-column 80)

@@ -1,3 +1,6 @@
 #!/usr/bin/env sh
-emacsclient -e "$(cat ~/.local/share/scripts/print-agenda.el)"
+today=$(date +"%Y-%m-%d")
+emacsclient -eval "(org-batch-store-agenda-views \
+    org-agenda-span (quote day) \
+    org-agenda-start-day \"$today\")" > /dev/null
 cat ~/agenda

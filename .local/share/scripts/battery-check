@@ -1,6 +1,4 @@
 #!/bin/env sh
-export DISPLAY=:0
-XDG_RUNTIME_DIR=/run/user/$(id -u)
 BATPATH=/sys/class/power_supply/BAT0
 BAT_FULL=$BATPATH/energy_full
 BAT_NOW=$BATPATH/energy_now
