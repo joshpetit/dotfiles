@@ -20,7 +20,7 @@ then
     toggle_to="show"
 fi
 
-if [  "$org_active" = "nil" ] | [ $active_clock_exit_code = 1 ]
+if [  "$org_active" = "nil" ] || [ $active_clock_exit_code = 1 ]
 then
     polybar-msg -p "$org_bar" cmd hide
 else

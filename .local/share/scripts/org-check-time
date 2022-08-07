@@ -1,16 +1,26 @@
 #!/bin/env sh
-upcoming_time=$(date -d "today + 15 minutes" +'%H:%M')
-#upcoming_time="15:00"
-print-agenda > /dev/null 2>&1 
+source ~/.zshenv
+export DISPLAY=:0
+export XDG_RUNTIME_DIR=/run/user/$(id -u)
+get_time() {
+    date -d "today + $1 minutes" +'%-H:%M'
+}
+fiften_minutes=$(get_time 15)
+five_minutes=$(get_time 5)
+now=$(get_time 0)
+
+upcoming_times="$fiften_minutes|$five_minutes|$now"
+print-agenda > /dev/null
 awk_script='
 {
     if ($2 ~ check_time) {
+        split($0,time,/\.+|\s+/)
         split($0,a,":")
-        print(check_time a[4])
+        print(time[3] a[4])
     }
 }'
 
-upcoming_events="$(cat ~/agenda | awk -v check_time=$upcoming_time "$awk_script") " 
+upcoming_events="$(cat ~/agenda | awk -v check_time=$upcoming_times "$awk_script") " 
 
 # Variable is empty
 if [ -z "${upcoming_events// }" ]
