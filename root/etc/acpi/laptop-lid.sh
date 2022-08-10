@@ -1,6 +1,6 @@
 #!/bin/sh
-grep -q closed /proc/acpi/button/lid/LID/state
 source /home/joshu/.Xdbus
+grep -q closed /proc/acpi/button/lid/LID/state
 if [ $? == 0 ]
 then
     # close action
