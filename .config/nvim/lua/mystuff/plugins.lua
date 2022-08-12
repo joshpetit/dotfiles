@@ -242,6 +242,12 @@ return require("packer").startup(function()
 			require("bufresize").setup()
 		end,
 	})
+	use({
+		"axelvc/template-string.nvim",
+		config = function()
+			require("template-string").setup()
+		end,
+	})
     use('mustache/vim-mustache-handlebars')
 	use({ "aymericbeaumet/vim-symlink", requires = "moll/vim-bbye" })
 
