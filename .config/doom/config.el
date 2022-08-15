@@ -134,7 +134,8 @@ output as a string."
 (defun org-blog-asset-export (link description format _)
   "Export a man page link from Org files."
   "Docs here https://orgmode.org/manual/Adding-Hyperlink-Types.html"
-  (let ((url (format "http://joshministers.com/static/%s" link))
+  (let ((link (replace-regexp-in-string " " "%20" link))
+        (url (format "http://joshministers.com/static/%s" link))
         (desc (or description link)))
     (pcase format
       (`html (format "<a target=\"_blank\" href=\"%s\">%s</a>" url desc))
@@ -202,11 +203,11 @@ output as a string."
 (defun org-bible-export (passage description format _)
   (let* ((cooler-passage (replace-regexp-in-string "^\\(.+[0-9]\\)\\s-\\(.*\\)" "\\1,\\2" passage))
          (split-passage (split-string cooler-passage ","))
-         (bible-version (or (nth 1 split-passage) "NIV"))
+         (bible-version (or (nth 1 split-passage) "NKJV"))
          (reference (nth 0 split-passage))
          (reference-clean (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
          (link (format "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s" bible-version reference-clean))
-         (desc ( or description (format "%s (%s)" reference bible-version)))
+         (desc  (format "%s (%s)" reference bible-version))
          )
     (pcase format
       (`html (format "<a target=\"_blank\" href=\"%s\">%s</a>" link desc))
@@ -237,7 +238,7 @@ output as a string."
 (defun bible-protocol-open (passage)
   (let* ((cooler-passage (replace-regexp-in-string "^\\(.+[0-9]\\)\\s-\\(.*\\)" "\\1,\\2" passage))
          (split-passage (split-string cooler-passage ","))
-         (bible-version (or (nth 1 split-passage) "NASB"))
+         (bible-version (or (nth 1 split-passage) "NKJC"))
          (reference-normal (nth 0 split-passage))
          (reference (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
          (url "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s")
