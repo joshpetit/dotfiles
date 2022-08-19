@@ -277,8 +277,8 @@ bindsym $mod+Ctrl+plus exec xbacklight -inc 10 # increase screen brightness
 bindsym $mod+Ctrl+minus exec xbacklight -dec 10 # decrease screen brightness
 
 # Polybar
-exec_always /home/joshu/.config/polybar/theos/launch.sh
-bindsym $mod+b exec ~/.config/polybar/theos/toggle.sh
+exec_always --no-startup-id /home/joshu/.config/polybar/theos/launch.sh
+bindsym $mod+b exec --no-startup-id ~/.config/polybar/theos/toggle.sh
 bindsym $mod+Ctrl+b exec polybar-msg cmd show && xdo raise -N Polybar
 
 bindsym Alt_R+h exec xdotool key left

@@ -11,9 +11,9 @@ killall -q polybar
 #while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Launch the bar
-polybar --reload -q workspaces -c "$DIR"/config.ini 
-polybar --reload -q sysinfo -c "$DIR"/config.ini
-polybar --reload -q org-timer-bar -c "$DIR"/config.ini
+polybar --reload -q workspaces -c "$DIR"/config.ini  & disown
+polybar --reload -q sysinfo -c "$DIR"/config.ini & disown
+polybar --reload -q org-timer-bar -c "$DIR"/config.ini & disown
 
 xdo raise -N Polybar
 
