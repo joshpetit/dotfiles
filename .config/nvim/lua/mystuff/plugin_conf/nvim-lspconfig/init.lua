@@ -64,6 +64,7 @@ local servers = {
     "html",
     "awk_ls",
     "perlnavigator",
+    "pyright",
 }
 
 for _, lsp in ipairs(servers) do

@@ -19,6 +19,7 @@ HISTFILE="$HOME/.local/share/zsh/histfile"
 HISTSIZE=2500
 SAVEHIST=2500
 
+alias venv='python -m venv'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
