@@ -8,6 +8,8 @@ fi
 function get_full_path {
     echo $(realpath $(dirname $0)/$1)
 }
+mkdir ~/.local/share/zsh/
+touch ~/.local/share/zsh/histfile
 
 files=$(ls -ap $(get_full_path)| grep -v -E ".git*|/" | grep -E "^\.")
 for dotfile in $files; do
