@@ -67,6 +67,7 @@ alias connect_speaker='bluetoothctl power on && bluetoothctl connect 04:21:44:C4
 alias connect_headphones='bluetoothctl power on && bluetoothctl connect 74:45:CE:46:CD:31'
 alias disconnect_bt='bluetoothctl disconnect'
 alias firestoredeleteall='firebase firestore:delete --all-collections'
+alias getlistofofinstalledpackages='comm -23 <(pacman -Qqett | sort) <(pacman -Qqg base -g base-devel | sort | uniq)'
 # Go
 export GO111MODULE=auto
 #export CHROME_EXECUTABLE="/bin/google-chrome-stable"
