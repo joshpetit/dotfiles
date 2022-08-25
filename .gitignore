@@ -1,2 +1,3 @@
 .config/nvim/plugin/packer_compiled.lua
 /.config/obs-studio/logs/*
+node_modules
