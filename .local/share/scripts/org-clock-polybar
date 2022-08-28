@@ -1,7 +1,7 @@
 #!/bin/env sh
 
 emacs_run () {
-    echo $(emacsclient --eval "$1")
+    echo $(emacsclient --eval "$1" 2> ~/.org-clock-polybar-err)
 }
 
 clocked_in=$(emacs_run '(org-clock-is-active)') 
