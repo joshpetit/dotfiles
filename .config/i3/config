@@ -326,3 +326,4 @@ bindsym $mod+Ctrl+a exec toggle-conky
 bindsym $mod+Shift+a exec rofi-sound-mixer
 bindsym $mod+n exec dunstctl close-all && pkill conky
 bindsym $mod+ctrl+n exec dunstctl history-pop
+bindsym $mod+ctrl+l exec lockscreen
