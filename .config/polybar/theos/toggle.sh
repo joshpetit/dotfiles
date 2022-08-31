@@ -7,6 +7,7 @@ all_visible=$(xdotool search --onlyvisible --name polybar-sysinfo)
 org_bar=$(xdotool search --name polybar-org-timer getwindowpid)
 workspaces_bar=$(xdotool search --name polybar-workspaces getwindowpid)
 sysinfo_bar=$(xdotool search --name polybar-sysinfo getwindowpid)
+music_bar=$(xdotool search --name polybar-music-bar getwindowpid)
 
 polybar-msg -p "$workspaces_bar" cmd toggle
 polybar-msg -p "$sysinfo_bar" cmd toggle
@@ -27,6 +28,13 @@ else
     polybar-msg -p "$org_bar" cmd $toggle_to
 fi
 
+music_playing=$(playerctl metadata 2>&1)
+if [ "$music_playing" = "No players found" ]
+then
+    polybar-msg -p "$music_bar" cmd hide
+else
+    polybar-msg -p "$music_bar" cmd $toggle_to
+fi
 
 
 xdo raise -N Polybar
