@@ -3,9 +3,9 @@
 playing=$(playerctl status)
 if [ $playing = "Playing" ]
 then
-    icon=""
-else
     icon=""
+else
+    icon=""
 fi
 
 playerctl metadata -f "$icon  {{xesam:title}} ({{xesam:artist}})" 2>&1

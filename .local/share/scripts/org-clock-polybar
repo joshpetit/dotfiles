@@ -8,7 +8,7 @@ clocked_in=$(emacs_run '(org-clock-is-active)')
 icon="祥  "
 if [ "$clocked_in" = "nil" ]
 then
-    icon="  "
+    icon="  "
 fi
 
 headline_time=$(emacs_run '(format "(%s) %s"  (org-minutes-to-clocksum-string (org-clock-get-clocked-time)) org-clock-heading)')
