@@ -1,33 +1,29 @@
-#!/bin/env sh
-source ~/.zshenv
-get_time() {
-    date -d "today + $1 minutes" +'%-H:%M'
-}
-fiften_minutes=$(get_time 15)
-five_minutes=$(get_time 5)
-now=$(get_time 0)
+#!/bin/env python3
 
-upcoming_times="$fiften_minutes|$five_minutes|$now"
-print-agenda --new-instance > /dev/null
-awk_script='
-{
-    if ($2 ~ check_time) {
-        split($0,time,/\.+|\s+/)
-        split($0,a,":")
-        print(time[3] a[4])
-    }
-}'
+from datetime import datetime, timedelta
+import os
+import time as ttime
+import re
 
-upcoming_events="$(cat ~/agenda | awk -v check_time=$upcoming_times "$awk_script") " 
+def add_minutes_to_time(time: datetime, minutes):
+    return (time + timedelta(minutes=minutes)).strftime("%H:%M")
 
-# Variable is empty
-if [ -z "${upcoming_events// }" ]
-then
-    exit 1
-else
-    CONKY_ENV="$upcoming_events" conky -c ~/.config/conky/print-env.conf -d
-    xdo raise -N conky_env
-    sleep 5
-    pkill conky
-fi
+now = datetime.now()
 
+possible_times={ add_minutes_to_time(now, 5), add_minutes_to_time(now, 15), add_minutes_to_time(now, 0)}
+stream = os.popen("print-agenda --new-instance")
+output = stream.read()
+for line in output.splitlines():
+    res = re.split(r".*\d\d?:\d\d-?\d?\d?:?\d?\d?\.*\s*-*", line);
+    if len(res) > 1 and res[1] != "" and not res[1].startswith("now"):
+        item_description = res[1]
+        item_description = re.sub(" +", " ", item_description)
+        time = re.search(r"\d\d:\d\d", line)
+        event_time = ""
+        if time:
+            event_time = time.group()
+        if event_time != "" and event_time in possible_times:
+            os.system(f'CONKY_ENV="{event_time}  {item_description}" conky -c ~/.config/conky/print-env.conf -d')
+            os.system("xdo raise -N conky_env")
+            ttime.sleep(5)
+            os.system("pkill conky")
