@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@geekjuice/verse": "^2.2.0",
     "esbuild": "^0.14.54",
     "esbuild-runner": "^2.2.1",
     "kill-port": "^2.0.1",
