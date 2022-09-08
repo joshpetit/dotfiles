@@ -27,10 +27,12 @@ alias yi='yarn install'
 alias git-line-stats="git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr"
 alias restartmouse='sudo modprobe -r psmouse && sudo modprobe psmouse'
 alias ssh="TERM=xterm-256color ssh"
-
+alias ssh316vm='ssh vcm@vcm-28479.vm.duke.edu' 
 alias e=exit
 alias t=tmux
 alias tn='env TP=nested tmux'
+# Requires you to run flutter install to get APK to device
+alias flutter-build-small-apk='flutter build apk --split-per-abi'
 
 #autoload -z edit-command-line
 #bindkey "^X^E" edit-command-line

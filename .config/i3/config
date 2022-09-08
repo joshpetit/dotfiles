@@ -44,7 +44,7 @@ exec ~/.local/share/scripts/fehbg
 # Use pactl to adjust volume in PulseAudio.
 bindsym XF86AudioRaiseVolume exec --no-startup-id vol +10
 bindsym XF86AudioLowerVolume exec --no-startup-id vol -10
-bindsym XF86AudioMute exec --no-startup-id vol 0
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 bindsym $mod + plus exec --no-startup-id vol +5
 bindsym $mod + minus exec --no-startup-id vol -5
@@ -267,6 +267,7 @@ exec --no-startup-id picom -b
 # Media Keys
 bindsym XF86AudioPlay exec playerctl play
 bindsym XF86AudioPause exec playerctl pause
+bindsym $mod+ctrl+space exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
@@ -323,7 +324,7 @@ for_window [title="^Ferdi$"] kill
 hide_edge_borders smart
 
 bindsym $mod+Ctrl+a exec toggle-conky
-bindsym $mod+Shift+a exec rofi-sound-mixer
+bindsym $mod+Shift+a exec ~/projects/rofi-mixer/src/rofi-mixer
 bindsym $mod+n exec dunstctl close-all && pkill conky
 bindsym $mod+ctrl+n exec dunstctl history-pop
 bindsym $mod+ctrl+l exec lockscreen

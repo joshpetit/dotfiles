@@ -4,7 +4,8 @@ configuration {
   kb-accept-entry: "Control+m,Return,KP_Enter";
   terminal: "lacritty";
   kb-remove-to-eol: "Control+Shift+e";
-  kb-mode-next: "Shift+Right,Control+Tab";
+  kb-mode-next: "Shift+Right,Control+Tab,Control+l";
+  kb-mode-complete: "";
   kb-mode-previous: "Shift+Left,Control+Shift+Tab,Control+h";
   kb-remove-char-back: "BackSpace";
 

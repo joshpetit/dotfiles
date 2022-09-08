@@ -287,6 +287,11 @@ output as a string."
           (org-agenda-with-colors nil)
           (org-agenda-remove-tags t))
          ("agenda"))))
+
+(add-hook 'org-mode-hook (lambda ()
+                           (defadvice org-clock-in (after org-clock-in-after activate) (save-buffer))
+                           (defadvice org-clock-out (after org-clock-out-after activate) (save-buffer))))
+
 )
 (add-hook 'text-mode-hook #'auto-fill-mode)
 (setq-default fill-column 80)
