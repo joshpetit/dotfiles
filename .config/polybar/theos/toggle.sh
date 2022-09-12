@@ -32,7 +32,7 @@ else
 fi
 
 music_playing=$(playerctl metadata 2>&1)
-if [ "$music_playing" != "No players found" ] || [ $1 = "--show-all" ]
+if [[ "$music_playing" != "No player"* ]] || [ $1 = "--show-all" ]
 then
     polybar-msg -p "$music_bar" cmd $toggle_to
     xdotool search --name "polybar-music-bar" windowmove --relative 0 $((-75 * num_bottom_visible))

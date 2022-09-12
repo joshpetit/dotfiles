@@ -315,16 +315,16 @@ for_window [class="Conky"] sticky enable
 exec --no-startup-id emacs --daemon
 for_window [class="Emacs"] move scratchpad
 bindsym $mod+Shift+e [class="Emacs"] scratchpad show,
-bindsym $mod+Shift+f exec "firefox"
+bindsym $mod+Shift+f exec --no-startup-id "firefox"
 # Show hide messages app
-bindsym $mod+Shift+m exec ferdi
+bindsym $mod+Shift+m exec --no-startup-id ferdi
 # When I use the shortcut for ferdi, if a window already exists it creates this
 # big blank window, this kills that winodw
 for_window [title="^Ferdi$"] kill
 hide_edge_borders smart
 
-bindsym $mod+Ctrl+a exec toggle-conky
+bindsym $mod+Ctrl+a exec  toggle-conky
 bindsym $mod+Shift+a exec ~/projects/rofi-mixer/src/rofi-mixer
-bindsym $mod+n exec dunstctl close-all && pkill conky
-bindsym $mod+ctrl+n exec dunstctl history-pop
+bindsym $mod+n exec --no-startup-id dunstctl close-all && pkill conky
+bindsym $mod+ctrl+n exec --no-startup-id dunstctl history-pop
 bindsym $mod+ctrl+l exec lockscreen
