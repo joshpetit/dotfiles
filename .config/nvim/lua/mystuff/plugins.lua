@@ -56,6 +56,7 @@ return require("packer").startup(function()
 		requires = { "nvim-lua/plenary.nvim" },
 	})
     use({'smancill/conky-syntax.vim'})
+    use({'dhruvasagar/vim-table-mode'})
 	-- tag = 'release' -- To use the latest release
 	use({
 		"hrsh7th/nvim-cmp",
@@ -249,6 +250,7 @@ return require("packer").startup(function()
 		end,
 	})
     use('mustache/vim-mustache-handlebars')
+    use('ThePrimeagen/refactoring.nvim')
 	use({ "aymericbeaumet/vim-symlink", requires = "moll/vim-bbye" })
 
 	if Packer_bootstrap then

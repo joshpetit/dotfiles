@@ -31,7 +31,7 @@ return function(client, bufnr)
     buf_set_keymap("n", "<leader>cld", "<cmd>Telescope diagnostics<CR>", opts)
     -- LSP formatting unreliable
     -- buf_set_keymap('n', '<leader>ff', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-    buf_set_keymap("v", "<leader>ca", "<Cmd>lua vim.lsp.buf.range_code_action()<CR>", opts)
+    buf_set_keymap("v", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
     local ts_utils = require("nvim-lsp-ts-utils")
     ts_utils.setup({})
 

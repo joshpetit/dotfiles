@@ -10,6 +10,7 @@ require("nvim-tree").setup({
 	--update_focused_file = { enable = true, update_cwd = true },
 	disable_netrw = false,
 	hijack_netrw = false,
+    respect_buf_cwd = true,
 	view = {
 		relativenumber = true,
 		width = 40,

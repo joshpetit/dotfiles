@@ -211,10 +211,10 @@ bindsym $mod+r mode "resize"
 
 # My Stuff
 # For the eyes 👀
-exec redshift -P  -O 4000
+exec --no-startup-id redshift -P  -O 4000
 
 # Start up applications
-exec kdeconnect-cli
+exec --no-startup-id kdeconnect-cli
 
 # Flameshot
 exec --no-startup-id flameshot
@@ -313,6 +313,7 @@ for_window [class="Conky"] sticky enable
 #bindsym $mod+Shift+e exec "alacritty --class quickedit,quickedit -e nvim"
 #for_window [class="quickedit"] floating enable, focus
 exec --no-startup-id emacs --daemon
+exec --no-startup-id emacsclient
 for_window [class="Emacs"] move scratchpad
 bindsym $mod+Shift+e [class="Emacs"] scratchpad show,
 bindsym $mod+Shift+f exec --no-startup-id "firefox"

@@ -21,8 +21,6 @@ let g:vim_markdown_folding_disabled = 1
 ]])
 -- Formatters
 --
-vim.g.nvim_tree_respect_buf_cwd = 1
-
 vim.cmd([[
     let g:mkdp_filetypes = ['markdown', 'org']
     ]])
