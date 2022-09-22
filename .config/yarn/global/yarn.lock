@@ -644,6 +644,11 @@ core-util-is@~1.0.0:
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.3.tgz#a6042d3634c2b27e9328f837b965fac83808db85"
   integrity sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==
 
+create-next-app@^12.3.1:
+  version "12.3.1"
+  resolved "https://registry.yarnpkg.com/create-next-app/-/create-next-app-12.3.1.tgz#251c53600d8a7eb0362b2b2a6fcd5529eaca2e82"
+  integrity sha512-dDEO+hs++58j+OdzK9ZZi4P8OPggERiXJ+p0SQhbqHfOgVxb3g/5H++XpCM0zy0nOS+1TCGeWp7+k+DW8GRYkA==
+
 crypto-random-string@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/crypto-random-string/-/crypto-random-string-2.0.0.tgz#ef2a7a966ec11083388369baa02ebead229b30d5"
