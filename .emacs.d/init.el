@@ -48,7 +48,6 @@
  :bind (("M-x" . counsel-M-x))
  )
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-;(global-set-key (kbd "M-h") 'org-do-promote)
 
 
 (use-package evil
@@ -129,202 +128,195 @@
           (kill-buffer output-buffer))))
     output-buffer))
 
-        (org-babel-do-load-languages
-          'org-babel-load-languages (quote (
-                                            (sqlite . t)
-                                            (plantuml . t))))
+
+(setq org-confirm-babel-evaluate 0)
+(org-babel-do-load-languages
+  'org-babel-load-languages (quote (
+                                    (sqlite . t)
+                                    (plantuml . t))))
+(setq org-plantuml-jar-path
+      (expand-file-name "~/apps/plantuml.jar"))
+
+(setq org-capture-templates
+      '(("m" "MS5" entry (file+headline "~/sync/org/programming/ms5.org" "MS5 Timesheet")
+         "** Working on Ms5 %<%Y-%m-%d>\nSCHEDULED: %t"
+         :clock-in t
+         :clock-keep t
+         :jump-to-captured t
+         )
+        ("n" "Note" entry (file "~/sync/org/refile.org")
+         "* %?")
+        ("t" "MS5 Task" entry (file+headline "~/sync/org/programming/ms5.org" "MS5 Refile")
+         "** %?\nSCHEDULED: %t")
+        ("w" "Work" entry (file+headline "~/sync/org/work.org" "Working on Ms5 %<%Y-%m-%d>")
+         "*** %?"
+         :clock-in t
+         :clock-keep t
+         :jump-to-captured t
+         )))
 
 
-        (setq org-plantuml-jar-path
-              (expand-file-name "~/apps/plantuml.jar"))
+
+(org-link-set-parameters "asset" :follow #'org-blog-asset-follow :export #'org-blog-asset-export)
+
+(defun org-blog-asset-follow (path)
+  (org-open-file
+    (format "./%s" path)))
+
+(defun org-blog-asset-export (link description format _)
+  "Export a man page link from Org files."
+  "Docs here https://orgmode.org/manual/Adding-Hyperlink-Types.html"
+  (let ((link (replace-regexp-in-string " " "%20" link))
+        (url (format "http://joshministers.com/static/%s" link))
+        (desc (or description link)))
+    (pcase format
+           (`html (format "<a target=\"_blank\" href=\"%s\">%s</a>" url desc))
+           (`latex (format "\\href{%s}{%s}" url desc))
+           (`texinfo (format "@uref{%s,%s}" url desc))
+           (`ascii (format "%s (%s)" desc url))
+           (`md (format "[%s](/static/%s)" desc link))
+           (_ path))))
+
+(org-link-set-parameters "img-asset" :follow #'org-blog-asset-follow :export #'org-blog-img-asset-export)
 
 
-        (setq org-capture-templates
-              '(("m" "MS5" entry (file+headline "~/sync/org/programming/ms5.org" "MS5 Timesheet")
-                 "** Working on Ms5 %<%Y-%m-%d>\nSCHEDULED: %t"
-                 :clock-in t
-                 :clock-keep t
-                 :jump-to-captured t
-                 )
-                ("n" "Note" entry (file "~/sync/org/refile.org")
-                 "* %?")
-                ("t" "MS5 Task" entry (file+headline "~/sync/org/programming/ms5.org" "MS5 Refile")
-                 "** %?\nSCHEDULED: %t")
-                ("w" "Work" entry (file+headline "~/sync/org/work.org" "Working on Ms5 %<%Y-%m-%d>")
-                 "*** %?"
-                 :clock-in t
-                 :clock-keep t
-                 :jump-to-captured t
-                 )))
+(defun org-blog-img-asset-export (link description format _)
+  (let ((url (format "http://man.he.net/?topic=%s&section=all" link))
+        (desc (or description link)))
+    (pcase format
+           (`html (format "<img src=\"/static/%s\" alt=\"%s\">" link desc))
+           (`latex (format "\includegraphics[width=.9\linewidth]{%s}" link desc))
+           (`texinfo (format "@uref{%s,%s}" url desc))
+           (`ascii (format "%s (%s)" desc url))
+           (`md (format "![%s](/static/%s)" desc link))
+           (_ path))))
+
+(org-link-set-parameters "post" :follow #'org-blog-post-follow :export #'org-blog-post-export)
+
+(defun org-blog-post-follow (path)
+  (org-open-file
+    (format "./%s" path)))
 
 
+(defun org-blog-post-export (link description format _)
+  (let ((url (format "/blog/%s" link))
+        (desc (or description link)))
+    (pcase format
+           (`html (format "<a target=\"_blank\" href=\"%s\">%s</a>" url desc))
+           (`latex (format "\\href{%s}{%s}" url desc))
+           (`texinfo (format "@uref{%s,%s}" url desc))
+           (`ascii (format "%s (%s)" desc url))
+           (`md (format "[%s](/static/%s)" desc link))
+           (_ path))))
 
-        (org-link-set-parameters "asset" :follow #'org-blog-asset-follow :export #'org-blog-asset-export)
-
-        (defun org-blog-asset-follow (path)
-          (org-open-file
-            (format "./%s" path)))
-
-        (defun org-blog-asset-export (link description format _)
-          "Export a man page link from Org files."
-          "Docs here https://orgmode.org/manual/Adding-Hyperlink-Types.html"
-          (let ((link (replace-regexp-in-string " " "%20" link))
-                (url (format "http://joshministers.com/static/%s" link))
-                (desc (or description link)))
-            (pcase format
-                   (`html (format "<a target=\"_blank\" href=\"%s\">%s</a>" url desc))
-                   (`latex (format "\\href{%s}{%s}" url desc))
-                   (`texinfo (format "@uref{%s,%s}" url desc))
-                   (`ascii (format "%s (%s)" desc url))
-                   (`md (format "[%s](/static/%s)" desc link))
-                   (_ path))))
-
-        (org-link-set-parameters "img-asset" :follow #'org-blog-asset-follow :export #'org-blog-img-asset-export)
+(org-link-set-parameters "bible" :follow #'org-bible-follow :export #'org-bible-export)
 
 
-        (defun org-blog-img-asset-export (link description format _)
-          (let ((url (format "http://man.he.net/?topic=%s&section=all" link))
-                (desc (or description link)))
-            (pcase format
-                   (`html (format "<img src=\"/static/%s\" alt=\"%s\">" link desc))
-                   (`latex (format "\includegraphics[width=.9\linewidth]{%s}" link desc))
-                   (`texinfo (format "@uref{%s,%s}" url desc))
-                   (`ascii (format "%s (%s)" desc url))
-                   (`md (format "![%s](/static/%s)" desc link))
-                   (_ path))))
+(defun org-bible-follow (passage)
+  (let* ((cooler-passage (replace-regexp-in-string "^\\(.+[0-9]\\)\\s-\\(.*\\)" "\\1,\\2" passage))
+         (split-passage (split-string cooler-passage ","))
+         (bible-version (or (nth 1 split-passage) "NASB"))
+         (reference-normal (nth 0 split-passage))
+         (choices '(("open in browser" . "goto-bible-reference") ("copy scripture" . "copy-scripture")))
+         (reference (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
+         (url "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s")
+         (choice (alist-get (completing-read "Choose: " choices) choices nil nil 'equal)))
+    (funcall (intern choice) bible-version reference-normal)))
 
-        (org-link-set-parameters "post" :follow #'org-blog-post-follow :export #'org-blog-post-export)
+(defun goto-bible-reference (bible-version reference)
+  (browse-url (format  "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s" bible-version reference)))
 
-        (defun org-blog-post-follow (path)
-          (org-open-file
-            (format "./%s" path)))
+(defun copy-scripture (bible-version reference-normal)
+  (evil-set-register ?\"  ;"
+                     (shell-command-to-string (concat "bible " reference-normal " --version " bible-version " --verse-numbers")
+                                              )))
 
+(defun org-bible-export (passage description format _)
+  (let* ((cooler-passage (replace-regexp-in-string "^\\(.+[0-9]\\)\\s-\\(.*\\)" "\\1,\\2" passage))
+         (split-passage (split-string cooler-passage ","))
+         (bible-version (or (nth 1 split-passage) "NKJV"))
+         (reference (nth 0 split-passage))
+         (reference-clean (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
+         (link (format "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s" bible-version reference-clean))
+         (desc  (format "%s (%s)" reference bible-version))
+         )
+    (pcase format
+           (`html (format "<a target=\"_blank\" href=\"%s\">%s</a>" link desc))
+           (`latex (format "\\textbf{\\href{%s}{%s}}" link desc))
+           (`texinfo (format "@uref{%s,%s}" link desc))
+           (`ascii (format "%s (%s)" desc link))
+           (`md (format "**[%s](%s)**" desc link))
+           (_ path)))
 
-        (defun org-blog-post-export (link description format _)
-          (let ((url (format "/blog/%s" link))
-                (desc (or description link)))
-            (pcase format
-                   (`html (format "<a target=\"_blank\" href=\"%s\">%s</a>" url desc))
-                   (`latex (format "\\href{%s}{%s}" url desc))
-                   (`texinfo (format "@uref{%s,%s}" url desc))
-                   (`ascii (format "%s (%s)" desc url))
-                   (`md (format "[%s](/static/%s)" desc link))
-                   (_ path))))
+  (defun is-link-of-type (link prefix)
+    (when (string-match (rx (literal prefix)
+                            ":"
+                            (group (1+ anything))) link)
+      t))
 
-        (org-link-set-parameters "bible" :follow #'org-bible-follow :export #'org-bible-export)
+  (defun get-link-type (link)
+    (when (string-match (rx (group (1+ (not ":")))
+                            ":"
+                            (1+ anything)) link)
+      (match-string 1 link)))
+  (defun omit-link-type (link)
+    (when (string-match (rx (0+ (not ":"))
+                            ":"
+                            (group (1+ anything))) link)
+      (match-string 1 link)))
 
+  (defun bible-protocol-open (passage)
+    (let* ((cooler-passage (replace-regexp-in-string "^\\(.+[0-9]\\)\\s-\\(.*\\)" "\\1,\\2" passage))
+           (split-passage (split-string cooler-passage ","))
+           (bible-version (or (nth 1 split-passage) "NKJC"))
+           (reference-normal (nth 0 split-passage))
+           (reference (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
+           (url "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s")
+           )
+      (evil-set-register ?\"  ;"
+                         (shell-command-to-string (concat "bible " reference-normal " --version " bible-version " --verse-numbers")
+                                                  ))))
 
-        (defun org-bible-follow (passage)
-          (let* ((cooler-passage (replace-regexp-in-string "^\\(.+[0-9]\\)\\s-\\(.*\\)" "\\1,\\2" passage))
-                 (split-passage (split-string cooler-passage ","))
-                 (bible-version (or (nth 1 split-passage) "NASB"))
-                 (reference-normal (nth 0 split-passage))
-                 (choices '(("open in browser" . "goto-bible-reference") ("copy scripture" . "copy-scripture")))
-                 (reference (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
-                 (url "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s")
-                 (choice (alist-get (completing-read "Choose: " choices) choices nil nil 'equal)))
-            (funcall (intern choice) bible-version reference-normal)))
+  (defvar +custom/org-find-file-at-mouse-called nil
+    "Indicates if the `org-open-at-point' was call through `org-find-file-at-mouse'")
 
-        (defun goto-bible-reference (bible-version reference)
-          (browse-url (format  "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s" bible-version reference)))
+  (defun org-find-file-at-mouse-a (fn &rest args)
+    (setq +custom/org-find-file-at-mouse-called t)
+    (prog1 (apply fn args)
+      (setq +custom/org-find-file-at-mouse-called nil)))
 
-        (defun copy-scripture (bible-version reference-normal)
-          (async-shell-command-to-string (concat "bible " reference-normal " --version " bible-version " --verse-numbers")
-                                         (lambda (str)
-                                           (evil-set-register ?\" str
-                                                              ))))
+  (advice-add #'org-find-file-at-mouse :around #'org-find-file-at-mouse-a)
 
-        (defun org-bible-export (passage description format _)
-          (let* ((cooler-passage (replace-regexp-in-string "^\\(.+[0-9]\\)\\s-\\(.*\\)" "\\1,\\2" passage))
-                 (split-passage (split-string cooler-passage ","))
-                 (bible-version (or (nth 1 split-passage) "NKJV"))
-                 (reference (nth 0 split-passage))
-                 (reference-clean (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
-                 (link (format "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s" bible-version reference-clean))
-                 (desc  (format "%s (%s)" reference bible-version))
-                 )
-            (pcase format
-                   (`html (format "<a target=\"_blank\" href=\"%s\">%s</a>" link desc))
-                   (`latex (format "\\textbf{\\href{%s}{%s}}" link desc))
-                   (`texinfo (format "@uref{%s,%s}" link desc))
-                   (`ascii (format "%s (%s)" desc link))
-                   (`md (format "**[%s](%s)**" desc link))
-                   (_ path)))
+  (defun open-custom-link-h ()
+    (when +custom/org-find-file-at-mouse-called
+      (let* ((context
+               ;; Only consider supported types, even if they are not the
+               ;; closest one.
+               (org-element-lineage
+                 (org-element-context)
+                 '(link)
+                 t))
+             (type (org-element-type context))
+             (raw-link (org-element-property :raw-link context)))
+        (when (eq type 'link)
+          (let* ((address (omit-link-type raw-link))
+                 (link-protocol (get-link-type raw-link)))
+            (pcase link-protocol
+                   ("bible" (bible-protocol-open address))
+                   ("stop" (message "Lol cool"))
+                   ))))))
 
-        (defun is-link-of-type (link prefix)
-          (when (string-match (rx (literal prefix)
-                                  ":"
-                                  (group (1+ anything))) link)
-            t))
-        (defun get-link-type (link)
-          (when (string-match (rx (group (1+ (not ":")))
-                                  ":"
-                                  (1+ anything)) link)
-            (match-string 1 link)))
-        (defun omit-link-type (link)
-          (when (string-match (rx (0+ (not ":"))
-                                  ":"
-                                  (group (1+ anything))) link)
-            (match-string 1 link)))
+  (add-hook! 'org-open-at-point-functions #'open-custom-link-h)
 
-        (defun bible-protocol-open (passage)
-          (let* ((cooler-passage (replace-regexp-in-string "^\\(.+[0-9]\\)\\s-\\(.*\\)" "\\1,\\2" passage))
-                 (split-passage (split-string cooler-passage ","))
-                 (bible-version (or (nth 1 split-passage) "NKJC"))
-                 (reference-normal (nth 0 split-passage))
-                 (reference (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
-                 (url "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s")
-                 )
-            (async-shell-command-to-string (concat "bible " reference-normal " --version " bible-version " --verse-numbers")
-                                           (lambda (str)
-                                             (evil-set-register ?\" str
-                                                                )))))
-
-        (defvar +custom/org-find-file-at-mouse-called nil
-          "Indicates if the `org-open-at-point' was call through `org-find-file-at-mouse'")
-
-        (defun org-find-file-at-mouse-a (fn &rest args)
-          (setq +custom/org-find-file-at-mouse-called t)
-          (prog1 (apply fn args)
-            (setq +custom/org-find-file-at-mouse-called nil)))
-
-        (advice-add #'org-find-file-at-mouse :around #'org-find-file-at-mouse-a)
-
-        (defun open-custom-link-h ()
-          (when +custom/org-find-file-at-mouse-called
-            (let* ((context
-                     ;; Only consider supported types, even if they are not the
-                     ;; closest one.
-                     (org-element-lineage
-                       (org-element-context)
-                       '(link)
-                       t))
-                   (type (org-element-type context))
-                   (raw-link (org-element-property :raw-link context)))
-              (when (eq type 'link)
-                (let* ((address (omit-link-type raw-link))
-                       (link-protocol (get-link-type raw-link)))
-                  (pcase link-protocol
-                         ("bible" (bible-protocol-open address))
-                         ("stop" (message "Lol cool"))
-                         ))))))
-
-        (add-hook! 'org-open-at-point-functions #'open-custom-link-h)
-
-        (setq org-agenda-custom-commands
-              '(("X" agenda ""
-                 ((ps-number-of-columns 2)
-                  (ps-landscape-mode t)
-                  (org-agenda-span (quote day))
-                  (org-agenda-with-colors nil)
-                  (org-agenda-remove-tags t))
-                 ("agenda"))))
-
-        (add-hook 'org-mode-hook (lambda ()
-                                   (defadvice org-clock-in (after org-clock-in-after activate) (save-buffer))
-                                   (defadvice org-clock-out (after org-clock-out-after activate) (save-buffer))))
-
-        )
+  )
+(setq org-agenda-custom-commands
+        '(("X" agenda ""
+           ((ps-number-of-columns 2)
+            (ps-landscape-mode t)
+            (org-agenda-span (quote day))
+            (org-agenda-with-colors nil)
+            (org-agenda-remove-tags t))
+           ("agenda"))))
 
 (add-hook 'text-mode-hook #'auto-fill-mode)
 (setq-default fill-column 80)
@@ -358,3 +350,19 @@
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode t)
 (scroll-bar-mode 0) 
+
+(add-hook 'org-clock-in-hook #'save-buffer)
+(add-hook 'org-clock-out-hook #'save-buffer)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-files
+   '("/home/joshu/sync/org/programming/firebase.org" "/home/joshu/sync/org/programming/ms5.org" "/home/joshu/sync/org/programming/widgetbook.org" "/home/joshu/sync/org/bible.org" "/home/joshu/sync/org/books.org" "/home/joshu/sync/org/fa22.org" "/home/joshu/sync/org/kebre.org" "/home/joshu/sync/org/life.org" "/home/joshu/sync/org/ministers.org" "/home/joshu/sync/org/ministry.org" "/home/joshu/sync/org/music.org" "/home/joshu/sync/org/notes.org" "/home/joshu/sync/org/phone_refile.org" "/home/joshu/sync/org/prayers.org" "/home/joshu/sync/org/programming.org" "/home/joshu/sync/org/projects.org" "/home/joshu/sync/org/refile.org" "/home/joshu/sync/org/reflections.org" "/home/joshu/sync/org/religious.org" "/home/joshu/sync/org/retreat.org" "/home/joshu/sync/org/sabbath.org" "/home/joshu/sync/org/sermons.org" "/home/joshu/sync/org/sp22.org" "/home/joshu/sync/org/todo.org" "/home/joshu/sync/org/trianglesda.org" "/home/joshu/sync/org/vespers.org" "/home/joshu/sync/org/webnotes.org" "/home/joshu/sync/org/what-is-christianity.org" "/home/joshu/sync/org/work.org")))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
