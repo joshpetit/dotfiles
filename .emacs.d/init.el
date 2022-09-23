@@ -5,7 +5,7 @@
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
- (package-install 'use-package))
+  (package-install 'use-package))
 (require 'use-package)
 
 (set-face-attribute 'default nil :font "InconsolataGo Nerd Font" :height 115)
@@ -17,9 +17,9 @@
 (use-package prescient)
 (use-package ivy-prescient
 
- :config
- (ivy-prescient-mode 1)
- )
+             :config
+             (ivy-prescient-mode 1)
+             )
 (use-package company-prescient)
 (use-package selectrum-prescient)
 
@@ -32,32 +32,34 @@
              )
 
 (use-package ivy
- :diminish
- :bind (("C-s" . swiper)
-     :map ivy-minibuffer-map
-     ("TAB" . ivy-alt-done)
-     ("RET" . ivy-alt-done)
-     ("C-l" . ivy-alt-done)
-     ("C-j" . ivy-next-line)
-     ("C-k" . ivy-previous-line)
-     ("C-w" . ivy-backward-kill-word)
-     :map ivy-switch-buffer-map
-     ("C-k" . ivy-previous-line)
-     ("C-l" . ivy-one)
-     ("C-d" . ivy-switch-buffer-kill)
-     :map ivy-reverse-i-search-map
-     ("C-k" . ivy-previous-line)
-     ("C-d" . ivy-reverse-i-search-kill))
+             :diminish
+             :bind (("C-s" . swiper)
+                    :map ivy-minibuffer-map
+                    ("TAB" . ivy-alt-done)
+                    ("RET" . ivy-alt-done)
+                    ("C-l" . ivy-alt-done)
+                    ("C-j" . ivy-next-line)
+                    ("C-k" . ivy-previous-line)
+                    ("C-w" . ivy-backward-kill-word)
+                    :map ivy-switch-buffer-map
+                    ("C-k" . ivy-previous-line)
+                    ("C-l" . ivy-one)
+                    ("C-d" . ivy-switch-buffer-kill)
+                    :map ivy-reverse-i-search-map
+                    ("C-k" . ivy-previous-line)
+                    ("C-d" . ivy-reverse-i-search-kill))
 
              :config
              (setq ivy-initial-inputs-alist nil)
              (ivy-mode)
- )
+             )
 (use-package counsel
- :bind (("M-x" . counsel-M-x)
-        ("<leader>of" . (lambda () (interactive) (counsel-find-file "~/sync/org")))
-     )
- )
+             :bind (("M-x" . counsel-M-x)
+                    ("<leader>of" . (lambda () (interactive) (counsel-find-file "~/sync/org")))
+                    ("<leader>oH" . counsel-org-agenda-headlines)
+                    ("<leader>oh" . counsel-outline)
+                    )
+             )
 ;(global-set-key (kbd "C-x C-f") 'counsel-find-file)
 
 (use-package evil
@@ -85,8 +87,8 @@
              (evil-org-agenda-set-keys)
              (evil-org-set-key-theme '(navigation insert textobjects additional calendar)))
 (use-package ivy-rich
-           :init
-           (ivy-rich-mode 1))
+             :init
+             (ivy-rich-mode 1))
 
 ;; Enable Evil
 (require 'evil)
@@ -109,7 +111,10 @@
 (setq org-refile-use-outline-path 'file)
 
 
-(setq org-confirm-babel-evaluate 0)
+(defun my-org-confirm-babel-evaluate (lang body)
+   (string= lang "ditaa"))  ;if a ditaa langauge exists ask for it lol
+(setq org-confirm-babel-evaluate #'my-org-confirm-babel-evaluate)
+
 (org-babel-do-load-languages
   'org-babel-load-languages (quote (
                                     (sqlite . t)
@@ -226,77 +231,75 @@
            (`texinfo (format "@uref{%s,%s}" link desc))
            (`ascii (format "%s (%s)" desc link))
            (`md (format "**[%s](%s)**" desc link))
-           (_ path)))
+           (_ path))))
 
-  (defun is-link-of-type (link prefix)
-    (when (string-match (rx (literal prefix)
-                            ":"
-                            (group (1+ anything))) link)
-      t))
+(defun is-link-of-type (link prefix)
+  (when (string-match (rx (literal prefix)
+                          ":"
+                          (group (1+ anything))) link)
+    t))
 
-  (defun get-link-type (link)
-    (when (string-match (rx (group (1+ (not ":")))
-                            ":"
-                            (1+ anything)) link)
-      (match-string 1 link)))
-  (defun omit-link-type (link)
-    (when (string-match (rx (0+ (not ":"))
-                            ":"
-                            (group (1+ anything))) link)
-      (match-string 1 link)))
+(defun get-link-type (link)
+  (when (string-match (rx (group (1+ (not ":")))
+                          ":"
+                          (1+ anything)) link)
+    (match-string 1 link)))
+(defun omit-link-type (link)
+  (when (string-match (rx (0+ (not ":"))
+                          ":"
+                          (group (1+ anything))) link)
+    (match-string 1 link)))
 
-  (defun bible-protocol-open (passage)
-    (let* ((cooler-passage (replace-regexp-in-string "^\\(.+[0-9]\\)\\s-\\(.*\\)" "\\1,\\2" passage))
-           (split-passage (split-string cooler-passage ","))
-           (bible-version (or (nth 1 split-passage) "NKJC"))
-           (reference-normal (nth 0 split-passage))
-           (reference (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
-           (url "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s")
-           )
-      (evil-set-register ?\"  ;"
-                         (shell-command-to-string (concat "bible " reference-normal " --version " bible-version " --verse-numbers")
-                                                  ))))
+(defun bible-protocol-open (passage)
+  (let* ((cooler-passage (replace-regexp-in-string "^\\(.+[0-9]\\)\\s-\\(.*\\)" "\\1,\\2" passage))
+         (split-passage (split-string cooler-passage ","))
+         (bible-version (or (nth 1 split-passage) "NKJC"))
+         (reference-normal (nth 0 split-passage))
+         (reference (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
+         (url "https://www.biblegateway.com/bible?language=en&version=%s&passage=%s")
+         )
+    (evil-set-register ?\"  ;"
+                       (shell-command-to-string (concat "bible " reference-normal " --version " bible-version " --verse-numbers")
+                                                ))))
 
-  (defvar +custom/org-find-file-at-mouse-called nil
-    "Indicates if the `org-open-at-point' was call through `org-find-file-at-mouse'")
+(defvar +custom/org-find-file-at-mouse-called nil
+  "Indicates if the `org-open-at-point' was call through `org-find-file-at-mouse'")
 
-  (defun org-find-file-at-mouse-a (fn &rest args)
-    (setq +custom/org-find-file-at-mouse-called t)
-    (prog1 (apply fn args)
-      (setq +custom/org-find-file-at-mouse-called nil)))
+(defun org-find-file-at-mouse-a (fn &rest args)
+  (setq +custom/org-find-file-at-mouse-called t)
+  (prog1 (apply fn args)
+    (setq +custom/org-find-file-at-mouse-called nil)))
 
-  (advice-add #'org-find-file-at-mouse :around #'org-find-file-at-mouse-a)
+(advice-add #'org-find-file-at-mouse :around #'org-find-file-at-mouse-a)
 
-  (defun open-custom-link-h ()
-    (when +custom/org-find-file-at-mouse-called
-      (let* ((context
-               ;; Only consider supported types, even if they are not the
-               ;; closest one.
-               (org-element-lineage
-                 (org-element-context)
-                 '(link)
-                 t))
-             (type (org-element-type context))
-             (raw-link (org-element-property :raw-link context)))
-        (when (eq type 'link)
-          (let* ((address (omit-link-type raw-link))
-                 (link-protocol (get-link-type raw-link)))
-            (pcase link-protocol
-                   ("bible" (bible-protocol-open address))
-                   ("stop" (message "Lol cool"))
-                   ))))))
+(defun open-custom-link-h ()
+  (when +custom/org-find-file-at-mouse-called
+    (let* ((context
+             ;; Only consider supported types, even if they are not the
+             ;; closest one.
+             (org-element-lineage
+               (org-element-context)
+               '(link)
+               t))
+           (type (org-element-type context))
+           (raw-link (org-element-property :raw-link context)))
+      (when (eq type 'link)
+        (let* ((address (omit-link-type raw-link))
+               (link-protocol (get-link-type raw-link)))
+          (pcase link-protocol
+                 ("bible" (bible-protocol-open address))
+                 ("stop" (message "Lol cool"))
+                 ))))))
 
-  (add-hook! 'org-open-at-point-functions #'open-custom-link-h)
-
-  )
+;(add-hook 'org-open-at-point-functions #'open-custom-link-h)
 (setq org-agenda-custom-commands
-        '(("X" agenda ""
-           ((ps-number-of-columns 2)
-            (ps-landscape-mode t)
-            (org-agenda-span (quote day))
-            (org-agenda-with-colors nil)
-            (org-agenda-remove-tags t))
-           ("agenda"))))
+      '(("X" agenda ""
+         ((ps-number-of-columns 2)
+          (ps-landscape-mode t)
+          (org-agenda-span (quote day))
+          (org-agenda-with-colors nil)
+          (org-agenda-remove-tags t))
+         ("agenda"))))
 
 (add-hook 'text-mode-hook #'auto-fill-mode)
 (setq-default fill-column 80)
@@ -336,6 +339,6 @@
 (add-hook 'org-clock-out-hook #'save-buffer)
 (add-hook 'text-mode-hook 'visual-line-mode)
 (advice-add 'org-refile :after
-         (lambda (&rest _)
-                  (org-save-all-org-buffers)))
+            (lambda (&rest _)
+              (org-save-all-org-buffers)))
 

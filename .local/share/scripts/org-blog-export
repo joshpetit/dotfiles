@@ -2,7 +2,7 @@
 
 
 for file in "${1:=*.org}"; do
-    emacs "$file" -l ~/.emacs.d/init.el --batch -f org-md-export-to-markdown --kill
+    emacs "$file" --eval "(progn (org-md-export-to-markdown)(org-latex-export-to-latex))" -nw --kill
     filename=$(basename -- "$file")
     filename="${filename%.*}"
     mdfile="$filename.md"
@@ -15,7 +15,6 @@ for file in "${1:=*.org}"; do
     toc_clean="${toc//$'\n'/\\n}"
     cat "$filename.md" >> "$mdxfile"
     sed -i "s/.*Hope You are Blessed!/$toc_clean/" "$mdxfile"
-    emacs "$file" -l ~/.emacs.d/init.el --batch -f org-latex-export-to-latex --kill
     currentdir=${result:-/}        # to correct for the case where PWD=/
     if [ "$currentdir" = "posts" ] 
     then
