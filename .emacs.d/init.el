@@ -12,8 +12,16 @@
 
 (setq use-package-always-ensure t)
 
-(use-package zenburn-theme
-             )
+(use-package zenburn-theme)
+
+(use-package prescient)
+(use-package ivy-prescient
+
+ :config
+ (ivy-prescient-mode 1)
+ )
+(use-package company-prescient)
+(use-package selectrum-prescient)
 
 (use-package ivy-omni-org
              :config
@@ -42,16 +50,19 @@
      ("C-d" . ivy-reverse-i-search-kill))
 
              :config
+             (setq ivy-initial-inputs-alist nil)
              (ivy-mode)
  )
 (use-package counsel
- :bind (("M-x" . counsel-M-x))
+ :bind (("M-x" . counsel-M-x)
+        ("<leader>of" . (lambda () (interactive) (counsel-find-file "~/sync/org")))
+     )
  )
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
-
+;(global-set-key (kbd "C-x C-f") 'counsel-find-file)
 
 (use-package evil
              :init
+             (setq evil-want-C-i-jump nil)
              :config
              (evil-set-leader 'normal (kbd "SPC"))
              (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
@@ -60,9 +71,7 @@
              (define-key evil-normal-state-map (kbd "C-j") 'evil-window-bottom)
              (define-key evil-normal-state-map (kbd "<leader>w") 'save-buffer)
              (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
-             (define-key evil-normal-state-map (kbd "<leader>of") 'ivy-omni-org)
              (define-key evil-normal-state-map (kbd "TAB") 'outline-cycle)
-             (define-key evil-normal-state-map (kbd "<F11>") 'darkroom-mode)
              (define-key evil-normal-state-map (kbd "RET") 'org-open-at-point)
              (define-key evil-normal-state-map (kbd "K") 'describe-function)
              )
@@ -87,8 +96,6 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 (load-theme 'zenburn t)
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
 (setq org-agenda-files (directory-files-recursively "~/sync/org/" "\\.org$"))
 (setq org-directory "~/sync/org/")
 (setq org-export-backends '(ascii beamer html icalendar latex md odt))
@@ -100,7 +107,6 @@
 
 (setq org-outline-path-complete-in-steps nil)
 (setq org-refile-use-outline-path 'file)
-;(advice-add org-refile :after 'org-save-all-org-buffers)
 
 
 (setq org-confirm-babel-evaluate 0)
@@ -317,26 +323,19 @@
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-cb" 'org-iswitchb)
+(global-set-key (kbd "<f9>") 'darkroom-mode)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 (column-number-mode)
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode t)
 (scroll-bar-mode 0) 
+(tool-bar-mode 0) 
 
 (add-hook 'org-clock-in-hook #'save-buffer)
 (add-hook 'org-clock-out-hook #'save-buffer)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-agenda-files
-   '("/home/joshu/sync/org/programming/firebase.org" "/home/joshu/sync/org/programming/ms5.org" "/home/joshu/sync/org/programming/widgetbook.org" "/home/joshu/sync/org/bible.org" "/home/joshu/sync/org/books.org" "/home/joshu/sync/org/fa22.org" "/home/joshu/sync/org/kebre.org" "/home/joshu/sync/org/life.org" "/home/joshu/sync/org/ministers.org" "/home/joshu/sync/org/ministry.org" "/home/joshu/sync/org/music.org" "/home/joshu/sync/org/notes.org" "/home/joshu/sync/org/phone_refile.org" "/home/joshu/sync/org/prayers.org" "/home/joshu/sync/org/programming.org" "/home/joshu/sync/org/projects.org" "/home/joshu/sync/org/refile.org" "/home/joshu/sync/org/reflections.org" "/home/joshu/sync/org/religious.org" "/home/joshu/sync/org/retreat.org" "/home/joshu/sync/org/sabbath.org" "/home/joshu/sync/org/sermons.org" "/home/joshu/sync/org/sp22.org" "/home/joshu/sync/org/todo.org" "/home/joshu/sync/org/trianglesda.org" "/home/joshu/sync/org/vespers.org" "/home/joshu/sync/org/webnotes.org" "/home/joshu/sync/org/what-is-christianity.org" "/home/joshu/sync/org/work.org")))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(add-hook 'text-mode-hook 'visual-line-mode)
+(advice-add 'org-refile :after
+         (lambda (&rest _)
+                  (org-save-all-org-buffers)))
+
