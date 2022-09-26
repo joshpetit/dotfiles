@@ -77,7 +77,6 @@ return require("packer").startup(function()
 		requires = { "nvim-lua/plenary.nvim", { "nvim-telescope/telescope-fzf-native.nvim", run = "make" } },
 	}, true)
 
-    use_help({ "williamboman/mason.nvim" }, true);
 
     use_help({
         "nvim-neotest/neotest",
