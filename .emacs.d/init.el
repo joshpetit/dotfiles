@@ -20,16 +20,14 @@
              :config
              (ivy-prescient-mode 1)
              )
-(use-package company-prescient)
-(use-package selectrum-prescient)
+(use-package general)
 
 (use-package ivy-omni-org
              :config
              (setq ivy-omni-org-file-sources '(org-agenda-files))
              )
 
-(use-package darkroom
-             )
+(use-package darkroom)
 
 (use-package ivy
              :diminish
@@ -51,8 +49,10 @@
 
              :config
              (setq ivy-initial-inputs-alist nil)
+	     (setq case-fold-search t)
              (ivy-mode)
              )
+
 (use-package counsel
              :bind (("M-x" . counsel-M-x)
                     ("<leader>of" . (lambda () (interactive) (counsel-find-file "~/sync/org")))
@@ -60,18 +60,12 @@
                     ("<leader>oh" . counsel-outline)
                     )
              )
-;(global-set-key (kbd "C-x C-f") 'counsel-find-file)
 
 (use-package evil
              :init
              (setq evil-want-C-i-jump nil)
              :config
              (evil-set-leader 'normal (kbd "SPC"))
-             (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
-             (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
-             (define-key evil-normal-state-map (kbd "C-k") 'evil-window-top)
-             (define-key evil-normal-state-map (kbd "C-j") 'evil-window-bottom)
-             (define-key evil-normal-state-map (kbd "<leader>w") 'save-buffer)
              (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
              (define-key evil-normal-state-map (kbd "TAB") 'outline-cycle)
              (define-key evil-normal-state-map (kbd "RET") 'org-open-at-point)
@@ -113,7 +107,7 @@
 
 (defun my-org-confirm-babel-evaluate (lang body)
    (string= lang "ditaa"))  ;if a ditaa langauge exists ask for it lol
-(setq org-confirm-babel-evaluate #'my-org-confirm-babel-evaluate)
+(setq org-confirm-babel-evaluate nil)
 
 (org-babel-do-load-languages
   'org-babel-load-languages (quote (
@@ -321,13 +315,16 @@
 (global-set-key (kbd "C-c r") (lambda () (interactive) (load "~/.emacs.d/init.el")))
 (global-set-key "\C-ca" 'org-agenda)
 
-(setq backup-directory-alist `(("." . "~/.saves")))
+(setq backup-directory-alist `(("." . "~/.local/share/emacs/saves")))
 
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key (kbd "<f9>") 'darkroom-mode)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+(global-set-key (kbd "M-h") 'org-do-promote)
+(global-unset-key (kbd "M-l"))
+(global-set-key (kbd "M-l") 'org-do-demote)
 
 (column-number-mode)
 (setq display-line-numbers-type 'relative)
@@ -342,3 +339,27 @@
             (lambda (&rest _)
               (org-save-all-org-buffers)))
 
+(general-define-key
+ :keymaps 'org-mode-map
+ "M-h" 'org-do-promote
+ )
+
+;(global-set-key (kbd "SPC") 'jp/space-keymap)
+
+(general-define-key
+ "<leader>a" 'org-agenda
+ "C-l" 'evil-window-right
+ "C-h" 'evil-window-left
+ "C-k" 'evil-window-up
+ "C-j" 'evil-window-down
+ "<leader>w" 'save-buffer
+ "C-u" 'evil-scroll-up
+ ;"SPC oa" 'org-agenda
+ )
+
+(setq org-export-headline-levels 5)
+
+(defun jp/pandoc-export (src-block contents info)
+  (let ((res (org-export-with-backend 'latex src-block contents info)))))
+
+(setq make-backup-files nil)

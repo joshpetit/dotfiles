@@ -312,7 +312,7 @@ for_window [class="Conky"] sticky enable
 
 #bindsym $mod+Shift+e exec "alacritty --class quickedit,quickedit -e nvim"
 #for_window [class="quickedit"] floating enable, focus
-exec --no-startup-id emacs --daemon
+exec --no-startup-id emacs --daemon & disown
 exec --no-startup-id emacsclient
 for_window [class="Emacs"] move scratchpad
 bindsym $mod+Shift+e [class="Emacs"] scratchpad show,
