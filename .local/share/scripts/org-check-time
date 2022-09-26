@@ -11,7 +11,7 @@ def add_minutes_to_time(time: datetime, minutes):
 now = datetime.now()
 
 possible_times={ add_minutes_to_time(now, 5), add_minutes_to_time(now, 15), add_minutes_to_time(now, 0)}
-stream = os.popen("/home/joshu/.local/share/scripts/print-agenda --new-instance")
+stream = os.popen("/home/joshu/.local/share/scripts/print-agenda")
 output = stream.read()
 for line in output.splitlines():
     res = re.split(r".*\d\d?:\d\d-?\d?\d?:?\d?\d?\.*\s*-*", line);

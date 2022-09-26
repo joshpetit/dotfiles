@@ -4,6 +4,7 @@
     "create-next-app": "^12.3.1",
     "esbuild": "^0.14.54",
     "esbuild-runner": "^2.2.1",
+    "eslint": "^8.24.0",
     "kill-port": "^2.0.1",
     "vercel": "^25.1.0"
   }
