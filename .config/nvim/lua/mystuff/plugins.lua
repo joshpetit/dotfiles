@@ -58,7 +58,7 @@ return require("packer").startup(function()
     use({'smancill/conky-syntax.vim'})
     use({'dhruvasagar/vim-table-mode'})
 	-- tag = 'release' -- To use the latest release
-	use({
+	use_help({
 		"hrsh7th/nvim-cmp",
 		requires = {
 			"hrsh7th/cmp-nvim-lsp",
@@ -69,7 +69,7 @@ return require("packer").startup(function()
 			"dcampos/nvim-snippy",
 			"dcampos/cmp-snippy",
 		},
-	})
+	}, true)
     use({'jxnblk/vim-mdx-js'})
     use({'mzlogin/vim-markdown-toc'})
 	use_help({
