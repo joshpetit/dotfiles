@@ -2,7 +2,8 @@
 
 
 for file in "${1:=*.org}"; do
-    emacs "$file" --eval "(progn (org-md-export-to-markdown)(org-latex-export-to-latex))" -nw --kill
+    emacs "$file" -batch -load ~/.emacs.d/init.el \
+        --eval "(progn (org-md-export-to-markdown)(org-latex-export-to-latex))" -nw --kill
     filename=$(basename -- "$file")
     filename="${filename%.*}"
     mdfile="$filename.md"
