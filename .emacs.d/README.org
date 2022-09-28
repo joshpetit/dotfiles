@@ -1,0 +1,78 @@
+* Initialization
+Make sure stuff is where it needs to be
+#+begin_src elisp
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
+(package-initialize)
+
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+(require 'use-package)
+
+(set-face-attribute 'default nil :font "InconsolataGo Nerd Font" :height 115)
+
+(setq use-package-always-ensure t)
+#+end_src
+* Themeing
+#+begin_src elisp
+  (use-package zenburn-theme)
+  (set-face-attribute 'default nil :font "InconsolataGo Nerd Font" :height 115)
+  (use-package darkroom)
+
+  ; font sizes
+  (defadvice text-scale-increase (around all-buffers (arg) activate)
+    (dolist (buffer (buffer-list))
+      (with-current-buffer buffer
+	ad-do-it)))
+#+end_src
+* Ivy
+I use ivy to find junk
+#+begin_src elisp
+(use-package prescient)
+(use-package ivy-prescient
+
+             :config
+             (ivy-prescient-mode 1)
+             )
+(use-package general)
+
+(use-package ivy-omni-org
+             :config
+             (setq ivy-omni-org-file-sources '(org-agenda-files))
+             )
+
+(use-package ivy
+             :diminish
+             :bind (("C-s" . swiper)
+                    :map ivy-minibuffer-map
+                    ("TAB" . ivy-alt-done)
+                    ("RET" . ivy-alt-done)
+                    ("C-l" . ivy-alt-done)
+                    ("C-j" . ivy-next-line)
+                    ("C-k" . ivy-previous-line)
+                    ("C-w" . ivy-backward-kill-word)
+                    :map ivy-switch-buffer-map
+                    ("C-k" . ivy-previous-line)
+                    ("C-l" . ivy-one)
+                    ("C-d" . ivy-switch-buffer-kill)
+                    :map ivy-reverse-i-search-map
+                    ("C-k" . ivy-previous-line)
+                    ("C-d" . ivy-reverse-i-search-kill))
+
+             :config
+             (setq ivy-initial-inputs-alist nil)
+	     (setq case-fold-search t)
+             (ivy-mode)
+             )
+
+(use-package counsel
+             :bind (("M-x" . counsel-M-x)
+                    ("<leader>of" . (lambda () (interactive) (counsel-find-file "~/sync/org")))
+                    ("<leader>oH" . counsel-org-agenda-headlines)
+                    ("<leader>oh" . counsel-outline)
+                    )
+             )
+#+end_src
+* Refile
+Random Things I'm adding that don't have a place yet

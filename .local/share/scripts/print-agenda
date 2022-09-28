@@ -2,7 +2,7 @@
 today=$(date +"%Y-%m-%d")
 if [[ $1 = "--new-instance" ]]
 then
-emacs -eval "(org-batch-store-agenda-views \
+emacs -batch -l ~/.emacs.d/init.el -eval "(org-batch-store-agenda-views \
     org-agenda-span (quote day) \
     org-agenda-start-day \"$today\")" --kill > /dev/null
 
