@@ -89,6 +89,7 @@
              (require 'evil-org-agenda)
              (evil-org-agenda-set-keys)
              (evil-org-set-key-theme '(navigation insert textobjects additional calendar)))
+
 (use-package ivy-rich
              :init
              (ivy-rich-mode 1))
@@ -132,10 +133,11 @@
          :clock-keep t
          :jump-to-captured t
          )
+	("t" "To clocked in" entry
+		    (clock)
+		    "*** %?")
         ("n" "Note" entry (file "~/sync/org/refile.org")
          "* %?")
-        ("t" "MS5 Task" entry (file+headline "~/sync/org/programming/ms5.org" "MS5 Refile")
-         "** %?\nSCHEDULED: %t")
         ("w" "Work" entry (file+headline "~/sync/org/work.org" "Working on Ms5 %<%Y-%m-%d>")
          "*** %?"
          :clock-in t
@@ -203,7 +205,7 @@
 (defun org-bible-follow (passage)
   (let* ((cooler-passage (replace-regexp-in-string "^\\(.+[0-9]\\)\\s-\\(.*\\)" "\\1,\\2" passage))
          (split-passage (split-string cooler-passage ","))
-         (bible-version (or (nth 1 split-passage) "NASB"))
+         (bible-version (or (nth 1 split-passage) "NKJV"))
          (reference-normal (nth 0 split-passage))
          (choices '(("open in browser" . "goto-bible-reference") ("copy scripture" . "copy-scripture")))
          (reference (replace-regexp-in-string " " "\+" (nth 0 split-passage)))
@@ -333,6 +335,7 @@
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (global-set-key (kbd "M-h") 'org-do-promote)
 (global-unset-key (kbd "M-l"))
+(global-unset-key (kbd "C-j"))
 (global-set-key (kbd "M-l") 'org-do-demote)
 
 (column-number-mode)
@@ -364,6 +367,7 @@
  "<leader>w" 'save-buffer
  "C-u" 'evil-scroll-up
  "C-c ec" (lambda () (interactive) (counsel-find-file "~/.emacs.d/"))
+ "<leader>os" (lambda () (interactive) (counsel-rg nil "~/sync/org"))
  "C-c ei" (lambda () (interactive) (find-file "~/.emacs.d/init.el"))
  ;"SPC oa" 'org-agenda
  )
@@ -403,15 +407,15 @@
 	`((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
   (setq no-littering-etc-directory "~/.local/share/emacs/no-litter/")
   )
+
+(setq calendar-week-start-day 0)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(org-agenda-files
-   '("/home/joshu/sync/org/programming/firebase.org" "/home/joshu/sync/org/programming/ms5.org" "/home/joshu/sync/org/programming/widgetbook.org" "/home/joshu/sync/org/bible.org" "/home/joshu/sync/org/books.org" "/home/joshu/sync/org/fa22.org" "/home/joshu/sync/org/kebre.org" "/home/joshu/sync/org/life.org" "/home/joshu/sync/org/ministers.org" "/home/joshu/sync/org/ministry.org" "/home/joshu/sync/org/music.org" "/home/joshu/sync/org/notes.org" "/home/joshu/sync/org/phone_refile.org" "/home/joshu/sync/org/prayers.org" "/home/joshu/sync/org/programming.org" "/home/joshu/sync/org/projects.org" "/home/joshu/sync/org/refile.org" "/home/joshu/sync/org/reflections.org" "/home/joshu/sync/org/religious.org" "/home/joshu/sync/org/retreat.org" "/home/joshu/sync/org/sabbath.org" "/home/joshu/sync/org/sermons.org" "/home/joshu/sync/org/sp22.org" "/home/joshu/sync/org/todo.org" "/home/joshu/sync/org/trianglesda.org" "/home/joshu/sync/org/vespers.org" "/home/joshu/sync/org/webnotes.org" "/home/joshu/sync/org/what-is-christianity.org" "/home/joshu/sync/org/work.org"))
- '(package-selected-packages
-   '(no-littering web-mode zenburn-theme use-package undo-tree selectrum-prescient org-contrib nimbus-theme ivy-rich ivy-prescient ivy-omni-org general evil-org evil-collection doom-modeline darkroom counsel company-prescient)))
+   '("/home/joshu/sync/org/programming/firebase.org" "/home/joshu/sync/org/programming/ms5.org" "/home/joshu/sync/org/programming/widgetbook.org" "/home/joshu/sync/org/bible.org" "/home/joshu/sync/org/books.org" "/home/joshu/sync/org/fa22.org" "/home/joshu/sync/org/kebre.org" "/home/joshu/sync/org/life.org" "/home/joshu/sync/org/ministers.org" "/home/joshu/sync/org/ministry.org" "/home/joshu/sync/org/music.org" "/home/joshu/sync/org/notes.org" "/home/joshu/sync/org/phone_refile.org" "/home/joshu/sync/org/prayers.org" "/home/joshu/sync/org/programming.org" "/home/joshu/sync/org/projects.org" "/home/joshu/sync/org/refile.org" "/home/joshu/sync/org/reflections.org" "/home/joshu/sync/org/religious.org" "/home/joshu/sync/org/retreat.org" "/home/joshu/sync/org/sabbath.org" "/home/joshu/sync/org/sermons.org" "/home/joshu/sync/org/sp22.org" "/home/joshu/sync/org/sp23.org" "/home/joshu/sync/org/todo.org" "/home/joshu/sync/org/trianglesda.org" "/home/joshu/sync/org/vespers.org" "/home/joshu/sync/org/webnotes.org" "/home/joshu/sync/org/what-is-christianity.org" "/home/joshu/sync/org/work.org")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

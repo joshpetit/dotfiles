@@ -1,3 +1,5 @@
+* Refile
+Random Things I'm adding that don't have a place yet
 * Initialization
 Make sure stuff is where it needs to be
 #+begin_src elisp
@@ -13,6 +15,16 @@ Make sure stuff is where it needs to be
 (set-face-attribute 'default nil :font "InconsolataGo Nerd Font" :height 115)
 
 (setq use-package-always-ensure t)
+#+end_src
+* Random Settings
+#+begin_src elisp
+  (setq-default fill-column 80)
+  (setq select-enable-clipboard nil)
+  (setq confirm-kill-emacs nil)
+  (setq inhibit-splash-screen t)
+
+  ;; Enable transient mark mode
+  (transient-mark-mode 1)
 #+end_src
 * Themeing
 #+begin_src elisp
@@ -74,5 +86,24 @@ I use ivy to find junk
                     )
              )
 #+end_src
-* Refile
-Random Things I'm adding that don't have a place yet
+* Org
+** Link Handlers
+#+begin_src elisp
+#+end_src
+** Agenda Commands
+#+begin_src elisp
+(setq org-agenda-custom-commands
+      '(("X" agenda ""
+         ((ps-number-of-columns 2)
+          (ps-landscape-mode t)
+          (org-agenda-span (quote day))
+          (org-agenda-with-colors nil)
+          (org-agenda-remove-tags t))
+         ("agenda"))))
+#+end_src
+
+Require that join'
+#+begin_src elisp
+(require 'org)
+#+end_src
+* Key maps

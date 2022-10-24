@@ -1,6 +1,6 @@
 local lspconfig = require("lspconfig")
 
-local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 local on_attach = require('mystuff/on_attach_conf')
 
@@ -70,7 +70,7 @@ local luaLspConfig = {
 }
 
 --local luadev = require("lua-dev").setup({lspconfig=luaLspConfig})
-local luadev = require("lua-dev").setup({
+local luadev = require("neodev").setup({
     lspconfig = {
         on_attach = on_attach,
         capabilities = capabilities,
