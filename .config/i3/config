@@ -59,7 +59,7 @@ bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
-bindsym $mod+Shift+p exec autorandr --change && redshift -P  -O 4000
+bindsym $mod+Shift+p exec autorandr --change && redshift -P  -O 4000 && setxkbmap -option caps:swapescape
 
 # start dmenu (a program launcher)
 #bindsym $mod+d exec --no-startup-id dmenu_run
@@ -324,7 +324,7 @@ bindsym $mod+Shift+m exec --no-startup-id ferdi
 for_window [title="^Ferdi$"] kill
 hide_edge_borders smart
 
-bindsym $mod+Ctrl+a exec  toggle-conky
+bindsym $mod+Ctrl+a exec --no-startup-id toggle-conky
 bindsym $mod+Shift+a exec ~/projects/rofi-mixer/src/rofi-mixer
 bindsym $mod+n exec --no-startup-id dunstctl close-all && pkill conky
 bindsym $mod+ctrl+n exec --no-startup-id dunstctl history-pop

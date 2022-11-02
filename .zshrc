@@ -19,6 +19,8 @@ HISTFILE="$HOME/.local/share/zsh/histfile"
 HISTSIZE=2500
 SAVEHIST=2500
 
+alias ts-node-individual='ts-node-esm --project tsconfig.mocks.json'
+alias ytdlmp3='yt-dlp -x --audio-format mp3 '
 alias connectwifi='nmcli device wifi connect'
 alias venv='python -m venv'
 alias ll='ls -alF'
