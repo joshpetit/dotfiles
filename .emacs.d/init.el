@@ -412,7 +412,7 @@
   )
 
 (setq calendar-week-start-day 0)
-(setq org-deadline-warning-days 7)
+(setq org-deadline-warning-days 14)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

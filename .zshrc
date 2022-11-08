@@ -19,6 +19,8 @@ HISTFILE="$HOME/.local/share/zsh/histfile"
 HISTSIZE=2500
 SAVEHIST=2500
 
+alias umountcamera='sudo umount /mnt/cam/'
+alias mountcamera='sudo mount /dev/mmcblk0p1  /mnt/cam/ -o rw,users,umask=0'
 alias ts-node-individual='ts-node-esm --project tsconfig.mocks.json'
 alias ytdlmp3='yt-dlp -x --audio-format mp3 '
 alias connectwifi='nmcli device wifi connect'

@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+
+if [[ ! -d ./Proxy ]]; then
+    mkdir -p Proxy
+fi
+
+while [[ ${#@} -gt 0 ]]; do
+    video="${1}"
+    shift
+    startTimecode="$(ffprobe -show_streams -of json "${video}"  \
+        | jq -r '.streams[] | select(.tags.timecode).tags.timecode')"
+    ffmpeg \
+        -loglevel fatal \
+        -i "${video}" \
+        -c:v cfhd \
+        -c:a copy \
+        -c:d copy \
+        -timecode ${startTimecode} \
+        -copy_unknown \
+        -s 1920x1080 \
+        "Proxy/${video}"
+done
