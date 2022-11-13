@@ -18,7 +18,7 @@ setopt APPEND_HISTORY
 HISTFILE="$HOME/.local/share/zsh/histfile"
 HISTSIZE=2500
 SAVEHIST=2500
-
+alias dcu='sudo docker-compose up && docker-compose rm -fsv'
 alias umountcamera='sudo umount /mnt/cam/'
 alias mountcamera='sudo mount /dev/mmcblk0p1  /mnt/cam/ -o rw,users,umask=0'
 alias ts-node-individual='ts-node-esm --project tsconfig.mocks.json'

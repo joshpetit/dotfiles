@@ -38,7 +38,12 @@ return require("packer").startup(function()
         end
     end
     use("wbthomason/packer.nvim")
-    use("simrat39/symbols-outline.nvim")
+    use({
+        "simrat39/symbols-outline.nvim",
+        config = function()
+            require("symbols-outline").setup()
+        end,
+    })
     use_help({
         "kyazdani42/nvim-tree.lua",
         requires = { "kyazdani42/nvim-web-devicons" },
@@ -55,8 +60,8 @@ return require("packer").startup(function()
         "akinsho/flutter-tools.nvim",
         requires = { "nvim-lua/plenary.nvim" },
     })
-    use({ "smancill/conky-syntax.vim" })
-    use({ "dhruvasagar/vim-table-mode" })
+    use({ "smancill/conky-syntax.vim", disable = true })
+    use({ "dhruvasagar/vim-table-mode", disable = true })
     -- tag = 'release' -- To use the latest release
     use_help({
         "hrsh7th/nvim-cmp",
@@ -70,13 +75,10 @@ return require("packer").startup(function()
             "dcampos/cmp-snippy",
         },
     }, true)
-    use({ "jxnblk/vim-mdx-js" })
-    use({ "mzlogin/vim-markdown-toc" })
     use_help({
         "nvim-telescope/telescope.nvim",
         requires = { "nvim-lua/plenary.nvim", { "nvim-telescope/telescope-fzf-native.nvim", run = "make" } },
     }, true)
-
     use({
         "shumphrey/fugitive-gitlab.vim",
         config = {
@@ -96,14 +98,13 @@ return require("packer").startup(function()
             "haydenmeade/neotest-jest",
         },
     }, true)
-    use_help({ "mhartington/formatter.nvim" }, true)
-    use_help({ "mfussenegger/nvim-jdtls" }, false)
+    use_help({ "mfussenegger/nvim-jdtls", disable = true }, false)
     -- Git diffs on the column
     use({
         "lewis6991/gitsigns.nvim",
         requires = { "nvim-lua/plenary.nvim" },
         config = function()
-            require("gitsigns").setup({})
+            require("gitsigns").setup()
         end,
     })
     use({
@@ -116,7 +117,7 @@ return require("packer").startup(function()
             "nvim-telescope/telescope.nvim",
             "kyazdani42/nvim-web-devicons",
         },
-        disable = false,
+        disable = true,
     })
     use({
         "phaazon/hop.nvim",
@@ -127,7 +128,7 @@ return require("packer").startup(function()
     use({
         "numToStr/Comment.nvim",
         config = function()
-            require("Comment").setup({})
+            require("Comment").setup()
         end,
     })
     use_help({
@@ -138,10 +139,11 @@ return require("packer").startup(function()
     }, true)
 
     use({
-        "norcalli/nvim-colorizer.lua",
+        "NvChad/nvim-colorizer.lua",
         config = function()
             require("colorizer").setup()
         end,
+        disable = true,
     })
     use({
         "windwp/nvim-ts-autotag",
@@ -154,12 +156,15 @@ return require("packer").startup(function()
         "folke/trouble.nvim",
         requires = "kyazdani42/nvim-web-devicons",
         config = function()
-            require("trouble").setup({})
+            require("trouble").setup()
         end,
     })
-    use({ "jose-elias-alvarez/nvim-lsp-ts-utils" })
+    use_help({
+        "jose-elias-alvarez/typescript.nvim",
+    }, true)
     use({ "tpope/vim-fugitive" })
     use_help({ "dcampos/nvim-snippy" }, true)
+    use_help({ "honza/vim-snippets" }, false)
     use_help({ "mfussenegger/nvim-dap" }, true)
     use_help({
         "williamboman/nvim-lsp-installer",
@@ -186,7 +191,12 @@ return require("packer").startup(function()
     -- 		require("mystuff/settings")["orgmode"]()
     -- 	end,
     -- })
-    use({ "iamcco/markdown-preview.nvim" })
+    use({
+        "iamcco/markdown-preview.nvim",
+        run = function()
+            vim.fn["mkdp#util#install"]()
+        end,
+    })
     -- use {'axvr/zepl.vim'}
     use({ "kraftwerk28/gtranslate.nvim", requires = { "nvim-lua/plenary.nvim" } })
     use({ "delphinus/vim-firestore" })
@@ -211,7 +221,6 @@ return require("packer").startup(function()
     -- use {"vuki656/package-info.nvim", requires = "MunifTanjim/nui.nvim"}
     use({ "lervag/vimtex" })
     -- use {"jamestthompson3/nvim-remote-containers"}
-    use({ "vim-test/vim-test" })
     use({ "tpope/vim-dispatch" })
     use("tpope/vim-eunuch") -- SudoWrite!
     --use 'junegunn/fzf.vim'
@@ -229,6 +238,7 @@ return require("packer").startup(function()
     "let R_csv_app = 'localc'
     ]]       )
         end,
+        disable = true,
     })
     use("tpope/vim-rhubarb")
     use("nvim-treesitter/playground")
