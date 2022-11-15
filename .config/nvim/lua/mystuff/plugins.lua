@@ -77,7 +77,11 @@ return require("packer").startup(function()
     }, true)
     use_help({
         "nvim-telescope/telescope.nvim",
-        requires = { "nvim-lua/plenary.nvim", { "nvim-telescope/telescope-fzf-native.nvim", run = "make" } },
+        requires = {
+            "nvim-lua/plenary.nvim",
+            { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+            { "BurntSushi/ripgrep" },
+        },
     }, true)
     use({
         "shumphrey/fugitive-gitlab.vim",
@@ -198,9 +202,14 @@ return require("packer").startup(function()
         end,
     })
     -- use {'axvr/zepl.vim'}
-    use({ "kraftwerk28/gtranslate.nvim", requires = { "nvim-lua/plenary.nvim" } })
+    use({
+        "kraftwerk28/gtranslate.nvim",
+        requires = { "nvim-lua/plenary.nvim" },
+        disable = true,
+    })
     use({ "delphinus/vim-firestore" })
     use({ "stevearc/dressing.nvim" })
+    use({ "nvim-telescope/telescope-ui-select.nvim" })
     -- Gets a little annoying
     use({
         "ray-x/lsp_signature.nvim",
@@ -221,25 +230,12 @@ return require("packer").startup(function()
     -- use {"vuki656/package-info.nvim", requires = "MunifTanjim/nui.nvim"}
     use({ "lervag/vimtex" })
     -- use {"jamestthompson3/nvim-remote-containers"}
-    use({ "tpope/vim-dispatch" })
     use("tpope/vim-eunuch") -- SudoWrite!
     --use 'junegunn/fzf.vim'
-    use("BurntSushi/ripgrep")
     -- \rf=Start R
     -- \pp to send paragraph
     -- \rm to remove previous output
     -- \kr to produce rmarkdown as html and open in browser
-    use({
-        "jalvesaq/nvim-r",
-        config = function()
-            vim.cmd([[
-    let R_openhtml = 1
-    let R_assign = 0
-    "let R_csv_app = 'localc'
-    ]]       )
-        end,
-        disable = true,
-    })
     use("tpope/vim-rhubarb")
     use("nvim-treesitter/playground")
     use_help({
@@ -263,12 +259,12 @@ return require("packer").startup(function()
     use("tpope/vim-abolish")
     use("jbyuki/nabla.nvim")
     use({ "ThePrimeagen/harpoon" })
-    use({
-        "kwkarlwang/bufresize.nvim",
-        config = function()
-            require("bufresize").setup()
-        end,
-    })
+    -- use({
+    --     "kwkarlwang/bufresize.nvim",
+    --     config = function()
+    --         require("bufresize").setup()
+    --     end,
+    -- })
     use({
         "axelvc/template-string.nvim",
         config = function()

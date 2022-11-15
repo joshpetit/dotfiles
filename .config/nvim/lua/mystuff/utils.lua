@@ -1,6 +1,8 @@
 -- Call a function and if it errors out print the error it will continue with
 -- the script though. use just like pcall, first argument the function and than
 -- res tof arguments are the arguments to that function
+M = {}
+
 function Jcall(func, ...)
     local res, err = pcall(func, ...)
     if not res then
@@ -18,6 +20,18 @@ function FileExists(file)
         end
     end
     return ok, err
+end
+
+function RunAndOutput(input)
+    local cmd = vim.api.nvim_exec(input, true)
+    local output = {}
+    for line in cmd:gmatch("[^\n]+") do
+        table.insert(output, line)
+    end
+    local buf = vim.api.nvim_create_buf(true, true)
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, output)
+    vim.cmd([[split]])
+    vim.api.nvim_win_set_buf(0, buf)
 end
 
 function SplitString(inputstr, sep)
@@ -69,3 +83,4 @@ function GetLastIndex(list)
     end
     return last
 end
+return M

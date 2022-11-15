@@ -1,7 +1,10 @@
-local m = require('mystuff/mapping_utils')
-m.nmap('<leader>rf', '<cmd>!ts-node -T %<cr>', {buffer = true})
-m.nmap('<leader>da', '<cmd>lua require("mystuff/debug").node()<cr>',
-       {buffer = true})
+local m = require("mystuff/mapping_utils")
+m.nmap("<leader>da", '<cmd>lua require("mystuff/debug").node()<cr>', { buffer = true })
+
+vim.keymap.set("n", "<leader>rf", function()
+    RunAndOutput("!ts-node -T %")
+
+end)
 -- m.nmap('t', '<cmd>call GoToTestFile(expand(' % '))<ENTER>', {buffer = true})
 
 -- fu! GoToTestFile(file)

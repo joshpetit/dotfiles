@@ -1,33 +1,47 @@
+local actions = require("telescope.actions")
 require("telescope").setup({
     defaults = {
-        file_ignore_patterns = { "^.git/", "node_modules"},
+        file_ignore_patterns = { "^.git/", "node_modules" },
+        mappings = {
+            i = {
+                ["<C-Down>"] = actions.cycle_history_next,
+                ["<C-Up>"] = actions.cycle_history_prev,
+                ["<C-j>"] = actions.move_selection_next,
+                ["<C-k>"] = actions.move_selection_previous,
+                ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+                ["<Tab>"] = actions.toggle_selection + actions.move_selection_better,
+                ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_worse,
+                ["<C-d>"] = function()
+                    local entry = require("telescope.actions.state").get_selected_entry()
+                    AsyncRun("dragon-drop", entry.value)
+                end,
+            },
+            n = {
+                ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+            },
+        },
     },
-	mappings = {
-		i = {
-			["<C-Down>"] = require("telescope.actions").cycle_history_next,
-			["<C-Up>"] = require("telescope.actions").cycle_history_prev,
-		},
-	},
-	extensions = {
-		fzf = {
-			fuzzy = true,
-			override_generic_sorter = true, -- override the generic sorter
-			override_file_sorter = true, -- override the file sorter
-            case_mode = "respect_case", -- or "ignore_case" or "respect_case"
-		},
-	},
+    extensions = {
+        fzf = {
+            fuzzy = true,
+            override_generic_sorter = true, -- override the generic sorter
+            override_file_sorter = true, -- override the file sorter
+            case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+        },
+    },
 })
 
 require("telescope").load_extension("fzf")
+require("telescope").load_extension("ui-select")
 
-require('mystuff/utils')
+require("mystuff/utils")
 local exports = {}
 
 function exports.reload()
     -- Telescope will give us something like ju/colors.lua,
     -- so this function convert the selected entry to
     local function get_module_name(s)
-        local module_name;
+        local module_name
 
         module_name = s:gsub("%.lua", "")
         module_name = module_name:gsub("%/", ".")
@@ -49,20 +63,18 @@ function exports.reload()
             -- Adds a new map to ctrl+e.
             map("i", "<c-e>", function(_)
                 -- these two a very self-explanatory
-                local entry =
-                    require("telescope.actions.state").get_selected_entry()
+                local entry = require("telescope.actions.state").get_selected_entry()
                 local name = get_module_name(entry.value)
 
                 -- call the helper method to reload the module
                 -- and give some feedback
                 R(name)
             end)
-
-        end
+        end,
     }
 
     -- call the builtin method to list files
-    require('telescope.builtin').find_files(opts)
+    require("telescope.builtin").find_files(opts)
 end
 
 function exports.cooler()
@@ -79,25 +91,20 @@ function exports.cooler()
 
         attach_mappings = function(_, map)
             map("n", "D", function(_)
-                local entry =
-                    require("telescope.actions.state").get_selected_entry()
+                local entry = require("telescope.actions.state").get_selected_entry()
                 AsyncRun("dragon-drag-and-drop", entry.value)
-
             end)
             map("i", "<c-o>", function(_)
-                local entry =
-                    require("telescope.actions.state").get_selected_entry()
+                local entry = require("telescope.actions.state").get_selected_entry()
                 AsyncRun("xdg-open", entry.value)
-
             end)
             map("i", "<C-Up>", require("telescope.actions").cycle_history_prev)
             map("i", "<C-Down>", require("telescope.actions").cycle_history_next)
             return true
-        end
+        end,
     }
 
-    require('telescope.builtin').find_files(opts)
+    require("telescope.builtin").find_files(opts)
 end
 
-
-return exports;
+return exports

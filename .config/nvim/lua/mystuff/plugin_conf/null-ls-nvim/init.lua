@@ -4,7 +4,7 @@ null_ls.setup({
 	debug = true,
 	default_timeout = 5000,
 	sources = {
-		require("null-ls").builtins.formatting.stylua,
+		null_ls.builtins.formatting.stylua,
 		null_ls.builtins.formatting.prettier.with({
 			extra_filetypes = { "toml" },
 		}),

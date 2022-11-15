@@ -18,6 +18,8 @@ return function(client, bufnr)
 	-- 		end,
 	-- 	})
 	-- end
+
+    client.server_capabilities.documentFormattingProvider = false
 	local function buf_set_keymap(...)
 		vim.api.nvim_buf_set_keymap(bufnr, ...)
 	end

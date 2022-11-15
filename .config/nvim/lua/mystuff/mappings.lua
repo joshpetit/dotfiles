@@ -18,6 +18,9 @@ vim.keymap.set("n", "<leader>ggf", function()
     vim.fn.search(file, 'W')
     print(file)
 end)
+vim.keymap.set("n", "<leader>qf", function()
+    vim.cmd([[copen]])
+end)
 
 vim.keymap.set("n", "<leader>es", function()
 	local ft = vim.bo.filetype
