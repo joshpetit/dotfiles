@@ -2,6 +2,7 @@
   "dependencies": {
     "@geekjuice/verse": "^2.2.0",
     "create-next-app": "^12.3.1",
+    "create-react-app": "^5.0.1",
     "create-solid": "^0.2.5",
     "esbuild": "^0.14.54",
     "esbuild-runner": "^2.2.1",

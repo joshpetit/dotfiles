@@ -58,7 +58,7 @@ local luaLspConfig = {
                 globals = { "vim" },
             },
             workspace = {
-                -- Make the server aware of Neovim runtime files
+                checkThirdParty = false,
                 library = {
                     [vim.fn.expand("$VIMRUNTIME/lua")] = true,
                     [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,

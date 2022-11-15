@@ -3,10 +3,39 @@ local dap = require("dap")
 dap.adapters.node2 = {
 	type = "executable",
 	command = "node",
-	args = { os.getenv("HOME") .. "/aur/vscode-node-debug2/out/src/nodeDebug.js" },
+	args = { os.getenv("HOME") .. "/apps/vscode-node-debug2/out/src/nodeDebug.js" },
+}
+
+dap.adapters.firefox = {
+	type = "executable",
+	command = "node",
+	args = { os.getenv("HOME") .. "/apps/vscode-firefox-debug/dist/adapter.bundle.js" },
 }
 
 dap.configurations.typescript = {
+	{
+		name = "Debug with Firefox",
+		type = "firefox",
+		request = "launch",
+		reAttach = true,
+		url = "http://localhost:3000",
+		webRoot = "${workspaceFolder}",
+		--firefoxExecutable = "/usr/bin/firefox",
+	},
+	{
+		name = "Debug with Firefox - Attach",
+		type = "firefox",
+		request = "attach",
+		reAttach = true,
+		url = "http://localhost:3000",
+		webRoot = "${workspaceFolder}",
+		-- pathMappings = {
+		-- 	{
+		-- 		url = "http://127.0.0.1:3000/_next/",
+		-- 		path = "${webRoot}/.next/",
+		-- 	},
+		-- },
+	},
 	{
 		name = "Run",
 		type = "node2",
@@ -34,16 +63,9 @@ dap.configurations.typescript = {
 		outDir = "${workspaceRoot}/lib",
 		outFiles = { "${workspaceRoot}/lib/**/*.js" },
 	},
-	{
-		name = "IDEK!",
-		type = "node2",
-		request = "attach",
-		cwd = vim.fn.getcwd(),
-		sourceMaps = true,
-		protocol = "inspector",
-		skipFiles = { "<node_internals>/**/*.js" },
-	},
 }
+dap.configurations.typescriptreact = dap.configurations.typescript
+dap.configurations.javascript = dap.configurations.typescript
 
 dap.adapters.dart = {
 	type = "executable",
