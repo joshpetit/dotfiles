@@ -1,4 +1,5 @@
 local dap = require("dap")
+dap.set_log_level("TRACE")
 
 dap.adapters.node2 = {
 	type = "executable",
@@ -20,21 +21,17 @@ dap.configurations.typescript = {
 		reAttach = true,
 		url = "http://localhost:3000",
 		webRoot = "${workspaceFolder}",
-		--firefoxExecutable = "/usr/bin/firefox",
+		firefoxExecutable = "/usr/bin/firefox",
+		firefoxArgs = { "-start-debugger-server 6000" },
 	},
 	{
-		name = "Debug with Firefox - Attach",
-		type = "firefox",
-		request = "attach",
-		reAttach = true,
-		url = "http://localhost:3000",
-		webRoot = "${workspaceFolder}",
-		-- pathMappings = {
-		-- 	{
-		-- 		url = "http://127.0.0.1:3000/_next/",
-		-- 		path = "${webRoot}/.next/",
-		-- 	},
-		-- },
+        name = "Debug with Firefox - Attach",
+        type = "firefox",
+        request = "attach",
+        reAttach = true,
+        host = "127.0.0.1",
+        url = "http://localhost:3000",
+        webRoot = "${workspaceFolder}",
 	},
 	{
 		name = "Run",
@@ -48,13 +45,6 @@ dap.configurations.typescript = {
 		outFiles = { "${workspaceFolder}/lib/**/*.js" },
 	},
 	{
-		name = "Attach to process",
-		type = "node2",
-		request = "attach",
-		sourceMaps = true,
-		processId = require("dap.utils").pick_process,
-	},
-	{
 		name = "Attach to 9229",
 		type = "node2",
 		request = "attach",
@@ -63,42 +53,55 @@ dap.configurations.typescript = {
 		outDir = "${workspaceRoot}/lib",
 		outFiles = { "${workspaceRoot}/lib/**/*.js" },
 	},
+	{
+		name = "Attach to process",
+		type = "node2",
+		request = "attach",
+		sourceMaps = true,
+		processId = require("dap.utils").pick_process,
+	},
 }
 dap.configurations.typescriptreact = dap.configurations.typescript
 dap.configurations.javascript = dap.configurations.typescript
 
+-- dap.adapters.dart = {
+-- 	type = "executable",
+-- 	command = "node",
+-- 	args = { "/home/joshu/apps/Dart-Code/out/dist/debug.js", "flutter" },
+-- 	--args = { "/home/joshu/apps/Dart-Code/out/dist/debug.js" },
+-- }
+
+dap.adapters.flutter = {
+	type = "executable",
+	command = "flutter",
+	args = { "debug-adapter" },
+}
+
 dap.adapters.dart = {
 	type = "executable",
-	command = "node",
-	--args = { "/home/joshu/aur/Dart-Code/out/dist/debug.js", "flutter" },
-	args = { "/home/joshu/aur/Dart-Code/out/dist/debug.js" },
+	command = "dart",
+	args = { "debug_adapter" },
 }
 
 dap.configurations.dart = {
 	{
-		type = "dart",
+		type = "flutter",
 		request = "launch",
-		name = "Launch flutter",
-		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
-		flutterSdkPath = "/opt/flutter",
+		name = "Launch flutter (lib/main)",
 		program = "${workspaceFolder}/lib/main.dart",
 		cwd = "${workspaceFolder}",
 	},
 	{
-		type = "dart",
+		type = "flutter",
 		request = "launch",
-		name = "Test flutter",
-		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
-		flutterSdkPath = "/opt/flutter",
+		name = "Run flutter File",
 		program = "${file}",
 		cwd = "${workspaceFolder}",
 	},
 	{
 		type = "dart",
 		request = "launch",
-		name = "Launch flutter Linux",
-		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
-		flutterSdkPath = "/opt/flutter",
+		name = "Launch flutter Linux (lib/main)",
 		program = "${workspaceFolder}/lib/main.dart",
 		deviceId = "linux",
 		cwd = "${workspaceFolder}",
@@ -106,33 +109,9 @@ dap.configurations.dart = {
 	{
 		type = "dart",
 		request = "launch",
-		name = "Launch Current File",
-		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
-		flutterSdkPath = "/opt/flutter",
+		name = "Run Dart File",
 		program = "${file}",
 		deviceId = "linux",
 		cwd = "${workspaceFolder}",
-	},
-	{
-		type = "dart",
-		request = "launch",
-		name = "Widgetbook Current File",
-		flutterMode = "debug",
-		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
-		flutterSdkPath = "/opt/flutter",
-		program = "${file}",
-		deviceId = "linux",
-		cwd = "${workspaceFolder}/examples/widgetbook_example/",
-	},
-	{
-		type = "dart",
-		request = "attach",
-		name = "Attach Widgetbook Current File",
-		flutterMode = "debug",
-		dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/",
-		flutterSdkPath = "/opt/flutter",
-		program = "${file}",
-		deviceId = "linux",
-		cwd = "${workspaceFolder}/examples/knobs_example/",
 	},
 }
