@@ -56,10 +56,10 @@ return require("packer").startup(function()
 		end,
 	})
 	-- use {'~/projects/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim'}
-	use({
+	use_help({
 		"akinsho/flutter-tools.nvim",
 		requires = { "nvim-lua/plenary.nvim" },
-	})
+	}, true)
 	use({ "smancill/conky-syntax.vim", disable = true })
 	use({ "dhruvasagar/vim-table-mode", disable = true })
 	-- tag = 'release' -- To use the latest release
@@ -261,7 +261,7 @@ return require("packer").startup(function()
 	use({
 		"theHamsta/nvim-dap-virtual-text",
 		config = function()
-			require("nvim-dap-virtual-text").setup()
+			require("nvim-dap-virtual-text").setup({})
 		end,
 	})
 	use({ "mechatroner/rainbow_csv", disable = true })
@@ -288,7 +288,14 @@ return require("packer").startup(function()
 	})
 	use("mustache/vim-mustache-handlebars")
 	use("ThePrimeagen/refactoring.nvim")
+	use("chrisbra/NrrwRgn")
 	use({ "aymericbeaumet/vim-symlink", requires = "moll/vim-bbye" })
+	use({
+		"smjonas/inc-rename.nvim",
+		config = function()
+			require("inc_rename").setup()
+		end,
+	})
 
 	if Packer_bootstrap then
 		require("packer").sync()

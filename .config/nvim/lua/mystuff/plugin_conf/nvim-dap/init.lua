@@ -77,10 +77,22 @@ dap.adapters.flutter = {
 	args = { "debug-adapter" },
 }
 
+dap.adapters.fluttertest = {
+	type = "executable",
+	command = "flutter",
+	args = { "debug-adapter", "--test" },
+}
+
 dap.adapters.dart = {
 	type = "executable",
 	command = "dart",
 	args = { "debug_adapter" },
+}
+
+dap.adapters.darttest = {
+	type = "executable",
+	command = "dart",
+	args = { "debug_adapter", "--test" },
 }
 
 dap.configurations.dart = {
@@ -92,7 +104,7 @@ dap.configurations.dart = {
 		cwd = "${workspaceFolder}",
 	},
 	{
-		type = "flutter",
+		type = "fluttertest",
 		request = "launch",
 		name = "Run flutter File",
 		program = "${file}",

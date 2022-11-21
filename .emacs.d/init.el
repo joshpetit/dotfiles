@@ -362,6 +362,9 @@
 
 (general-define-key
  "<leader>a" 'org-agenda
+ "<leader>n" 'org-narrow-to-subtree
+ "<leader>N" 'widen
+ "<leader>oR" 'org-refile-goto-last-stored
  "C-l" 'evil-window-right
  "C-h" 'evil-window-left
  "C-k" 'evil-window-up

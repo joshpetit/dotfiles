@@ -18,6 +18,8 @@ setopt APPEND_HISTORY
 HISTFILE="$HOME/.local/share/zsh/histfile"
 HISTSIZE=2500
 SAVEHIST=2500
+alias cw='wc -w <<<'
+alias dockersucks='sudo docker kill $(sudo docker ps -q)'
 alias dcu='sudo docker-compose up && sudo docker kill $(sudo docker ps -q)'
 alias umountcamera='sudo umount /mnt/cam/'
 alias mountcamera='sudo mount /dev/mmcblk0p1  /mnt/cam/ -o rw,users,umask=0'
