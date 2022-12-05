@@ -56,8 +56,8 @@
 (use-package counsel
              :bind (("M-x" . counsel-M-x)
                     ("<leader>of" . (lambda () (interactive) (counsel-find-file "~/sync/org")))
-                    ("<leader>oH" . counsel-org-agenda-headlines)
-                    ("<leader>oh" . counsel-outline)
+		    ("<leader>oF" . (lambda () (interactive) (counsel-find-file)))
+                    ("<leader>oh" . counsel-org-goto-all)
                     )
              )
 
@@ -220,8 +220,9 @@
 
 (defun copy-scripture (bible-version reference-normal)
   (evil-set-register ?\"  ;"
-                     (shell-command-to-string (concat "bible " reference-normal " --version " bible-version " --verse-numbers")
-                                              )))
+		     ;; Replace the 0XA0 space with 0X20 space
+                     (replace-regexp-in-string " " " " (shell-command-to-string (concat "bible " reference-normal " --version " bible-version " --verse-numbers")
+                                              ))))
 
 (defun org-bible-export (passage description format _)
   (let* ((cooler-passage (replace-regexp-in-string "^\\(.+[0-9]\\)\\s-\\(.*\\)" "\\1,\\2" passage))
@@ -278,6 +279,25 @@
     (setq +custom/org-find-file-at-mouse-called nil)))
 
 (advice-add #'org-find-file-at-mouse :around #'org-find-file-at-mouse-a)
+
+(defun my-add-filename-to-counsel-outline-candidates (candidates)
+  "Add the filename at the beginning for CANDIDATES from `counsel-outline-candidates'."
+  (mapcar
+   (lambda (candidate)
+     (let* ((marker (cdr candidate))
+            (filename (buffer-file-name (marker-buffer marker)))
+            (filename-abbreviated (when filename (concat (abbreviate-file-name filename) " ")))
+            ;; Use this if you want the buffer name. It's a bit shorter.
+            ;; (buffername (buffer-name (marker-buffer (cdr candidate))))
+            )
+       (cons (concat filename-abbreviated (car candidate)) marker)))
+   candidates))
+
+(advice-add 'counsel-outline-candidates :filter-return #'my-add-filename-to-counsel-outline-candidates)
+(advice-add 'counsel-outline-candidates :filter-return #'my-add-filename-to-counsel-outline-candidates)
+
+(setq org-goto-interface 'outline-path-completion)
+(setq org-outline-path-complete-in-steps nil)
 
 (defun open-custom-link-h ()
   (when +custom/org-find-file-at-mouse-called

@@ -18,9 +18,11 @@ setopt APPEND_HISTORY
 HISTFILE="$HOME/.local/share/zsh/histfile"
 HISTSIZE=2500
 SAVEHIST=2500
+alias firebaseupdateindexes='firebase firestore:indexes > firestore.indexes.json'
 alias cw='wc -w <<<'
 alias dockersucks='sudo docker kill $(sudo docker ps -q)'
-alias dcu='sudo docker-compose up && sudo docker kill $(sudo docker ps -q)'
+#alias dcu='sudo docker-compose up && sudo docker kill $(sudo docker ps -q)'
+alias dcu='sudo docker-compose up'
 alias umountcamera='sudo umount /mnt/cam/'
 alias mountcamera='sudo mount /dev/mmcblk0p1  /mnt/cam/ -o rw,users,umask=0'
 alias ts-node-individual='ts-node-esm --project tsconfig.mocks.json'
@@ -40,6 +42,7 @@ alias t=tmux
 alias tn='env TP=nested tmux'
 # Requires you to run flutter install to get APK to device
 alias flutter-build-small-apk='flutter build apk --split-per-abi'
+alias countlinesofcode="find . -name '*.dart' | xargs wc -l"
 
 #autoload -z edit-command-line
 #bindkey "^X^E" edit-command-line

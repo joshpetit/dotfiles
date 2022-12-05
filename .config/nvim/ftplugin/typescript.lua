@@ -2,7 +2,7 @@ local m = require("mystuff/mapping_utils")
 m.nmap("<leader>da", '<cmd>lua require("mystuff/debug").node()<cr>', { buffer = true })
 
 vim.keymap.set("n", "<leader>rf", function()
-    RunAndOutput("!ts-node -T %")
+    RunAndOutput("!tsx %")
 
 end)
 -- m.nmap('t', '<cmd>call GoToTestFile(expand(' % '))<ENTER>', {buffer = true})

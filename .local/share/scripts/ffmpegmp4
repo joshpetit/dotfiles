@@ -1,0 +1,2 @@
+#!/bin/env sh
+ffmpeg -i $1 -vcodec h264 -acodec aac $2

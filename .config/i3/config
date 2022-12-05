@@ -41,6 +41,7 @@ exec --no-startup-id nm-applet
 #exec --no-startup-id /home/joshu/.fehbg
 exec ~/.local/share/scripts/fehbg
 
+bindsym XF86Calculator exec --no-startup-id qalculate-gtk
 # Use pactl to adjust volume in PulseAudio.
 bindsym XF86AudioRaiseVolume exec --no-startup-id vol +10
 bindsym XF86AudioLowerVolume exec --no-startup-id vol -10
@@ -312,8 +313,7 @@ for_window [class="Conky"] sticky enable
 
 #bindsym $mod+Shift+e exec "alacritty --class quickedit,quickedit -e nvim"
 #for_window [class="quickedit"] floating enable, focus
-exec --no-startup-id emacs --daemon & disown
-exec --no-startup-id emacsclient
+exec --no-startup-id emacs --daemon
 for_window [class="Emacs"] move scratchpad
 bindsym $mod+Shift+e [class="Emacs"] scratchpad show,
 bindsym $mod+Shift+f exec --no-startup-id "firefox"
@@ -329,3 +329,4 @@ bindsym $mod+Shift+a exec ~/projects/rofi-mixer/src/rofi-mixer
 bindsym $mod+n exec --no-startup-id dunstctl close-all && pkill conky
 bindsym $mod+ctrl+n exec --no-startup-id dunstctl history-pop
 bindsym $mod+ctrl+l exec lockscreen
+exec --no-startup-id emacsclient
