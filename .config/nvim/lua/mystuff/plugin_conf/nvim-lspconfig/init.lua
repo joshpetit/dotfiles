@@ -9,6 +9,7 @@ local servers = {
 	--"jsonls",
 	"jdtls",
 	"vuels",
+	"cssls",
 	"gopls",
 	"bashls",
 	"html",
