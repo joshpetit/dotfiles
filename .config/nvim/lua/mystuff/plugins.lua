@@ -145,7 +145,9 @@ return require("packer").startup(function()
 	use({
 		"NvChad/nvim-colorizer.lua",
 		config = function()
-			require("colorizer").setup({})
+			require("colorizer").setup({
+				css = true,
+			})
 		end,
 		disable = false,
 	})
@@ -294,6 +296,12 @@ return require("packer").startup(function()
 		"smjonas/inc-rename.nvim",
 		config = function()
 			require("inc_rename").setup()
+		end,
+	})
+	use({
+		"ziontee113/color-picker.nvim",
+		config = function()
+			require("color-picker")
 		end,
 	})
 

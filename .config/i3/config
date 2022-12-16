@@ -276,6 +276,8 @@ bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
 bindsym $mod+Ctrl+plus exec xbacklight -inc 10 # increase screen brightness
+bindsym $mod+Ctrl+shift+plus exec xbacklight -set 99
+bindsym $mod+Ctrl+shift+minus exec xbacklight -set 0
 bindsym $mod+Ctrl+minus exec xbacklight -dec 10 # decrease screen brightness
 
 # Polybar

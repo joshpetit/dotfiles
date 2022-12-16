@@ -11,7 +11,7 @@ filename="${filename%.*}"
 mdfile="$filename.md"
 mdxfile="$filename.mdx"
 #Generates table of contents.
-toc=$(cat "$mdfile" | grep -E "^#{1,5} " | sed -E 's/(#+) (.+)/\1~\2~\2/g' | awk -F "~" '{ gsub(/#/,"  ",$1); gsub(/[ ]/,"-",$3); print $1 "- [" $2 "](#" tolower($3) ")" }' | sed 's/(\(.*\):\(.*\))/(\1\2)/g')
+toc=$(cat "$mdfile" | grep -E "^#{1,5} " | sed -E 's/(#+) (.+)/\1~\2~\2/g' | awk -F "~" '{ gsub(/#/,"  ",$1); gsub(/[ ]/,"-",$3); print $1 "- [" $2 "](#" tolower($3) ")" }' | sed "s/(\(.*\):\(.*\))/(\1\2)/g" | sed "s/(\(.*\)'\(.*\))/(\1\2)/g")
 echo "---" > "$mdxfile"
 awk -v RS='(\r?\n){2,}' '{print; exit}' "$file" | sed 's/#+//g' >> "$mdxfile"
 echo "---" >> "$mdxfile"

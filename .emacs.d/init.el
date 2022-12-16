@@ -11,6 +11,7 @@
 (set-face-attribute 'default nil :font "InconsolataGo Nerd Font" :height 115)
 
 (setq use-package-always-ensure t)
+(savehist-mode 1)
 
 (use-package zenburn-theme)
 
@@ -55,9 +56,9 @@
 
 (use-package counsel
              :bind (("M-x" . counsel-M-x)
-                    ("<leader>of" . (lambda () (interactive) (counsel-find-file "~/sync/org")))
-		    ("<leader>oF" . (lambda () (interactive) (counsel-find-file)))
-                    ("<leader>oh" . counsel-org-goto-all)
+                    ("<leader>og" . (lambda () (interactive) (counsel-find-file "~/sync/org")))
+		    ("<leader>oG" . (lambda () (interactive) (counsel-find-file)))
+                    ("<leader>of" . counsel-org-goto-all)
                     )
              )
 

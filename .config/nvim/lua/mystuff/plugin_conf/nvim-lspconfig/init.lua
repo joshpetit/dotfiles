@@ -8,6 +8,7 @@ local servers = {
 	"tailwindcss",
 	--"jsonls",
 	"jdtls",
+	"svelte",
 	"vuels",
 	"cssls",
 	"gopls",
