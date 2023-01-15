@@ -223,7 +223,7 @@ return require("packer").startup(function()
 	use({
 		"kraftwerk28/gtranslate.nvim",
 		requires = { "nvim-lua/plenary.nvim" },
-		disable = true,
+		disable = false,
 	})
 	use({ "delphinus/vim-firestore" })
 	use({ "stevearc/dressing.nvim" })

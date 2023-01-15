@@ -15,3 +15,5 @@ nmap("<leader>da", '<cmd>lua require("mystuff/debug").dart()<cr>')
 vim.keymap.set("n", "<leader>rF", function()
     vim.cmd([[new|0read !dart #:r]])
 end)
+
+--vim.api.nvim_buf_create_user_command(0, 'SSY', 'FlutterRun --flavor staging --debug -t lib/main-staging.dart')

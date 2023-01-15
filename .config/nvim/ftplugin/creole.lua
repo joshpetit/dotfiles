@@ -7,12 +7,14 @@ vim.opt_local.complete:append('k');
 vim.opt_local.iskeyword:append('-');
 
 map.nmap('<leader>gts',
-         '<cmd>!xdg-open https://sakai.duke.edu/portal/site/0c65619d-b84a-4791-8764-9bb710cfe30b/tool/9134bcb5-9fc4-48dc-8dd1-e77db1870021 & disown<CR>')
+         '<cmd>!xdg-open https://sakai.duke.edu/portal/site/f13ba5c0-825f-40f4-9716-65cfd2b41634 & disown<CR>')
 
 map.nmap('<leader>gtz',
-         '<cmd>!xdg-open https://duke.zoom.us/j/95035654091 & disown<CR>')
+         '<cmd>!xdg-open https://duke.zoom.us/j/93281526233 & disown<CR>')
 map.nmap('<leader>gta',
-         '<cmd>!zathura --fork "~/creole/books/Ann Pale Kreyol.pdf"<CR>')
+         '<cmd>!zathura --fork "~/creole/APK.pdf"<CR>')
+map.nmap('<leader>gto',
+         '<cmd>!zathura --fork "~/creole/ODP.pdf"<CR>')
 map.nmap('<leader>gtt',
          '<cmd>!xdg-open "https://translate.google.com/?sl=en&tl=ht&op=translate" & disown<CR>')
 
@@ -20,3 +22,5 @@ map.nmap('<leader>ttc', '<cmd>Translate ht<cr>', {buffer = true})
 map.vmap('<leader>ttc', '<Esc>:Translate ht<cr>gv', {buffer = true})
 map.nmap('<leader>tte', '<cmd>Translate en<cr>', {buffer = true})
 map.vmap('<leader>tte', '<Esc>:Translate en<cr>gv', {buffer = true})
+map.imap('<c-e>', 'è', {buffer = true})
+map.imap('<c-o>', 'ò', {buffer = true})
