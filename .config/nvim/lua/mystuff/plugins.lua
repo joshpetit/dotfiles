@@ -15,6 +15,16 @@ if fn.empty(fn.glob(install_path)) > 0 then
 	})
 end
 return require("packer").startup(function()
+	local fileExists = function(file)
+		local ok, err, code = os.rename(file, file)
+		if not ok then
+			if code == 13 then
+				-- Permission denied, but it exists
+				return true
+			end
+		end
+		return ok, err
+	end
 	local use_help = function(params, create_config)
 		local plugin = params[1]
 		use(params)
@@ -23,12 +33,12 @@ return require("packer").startup(function()
 			local plugin_name = split[GetLastIndex(split)]
 			plugin_name = plugin_name:gsub("%.", "-")
 			local plugin_dir = PLUGIN_CONF_PATH .. plugin_name .. "/"
-			local dir_exists = FileExists(plugin_dir)
+			local dir_exists = fileExists(plugin_dir)
 			if not dir_exists then
 				os.execute("mkdir -p " .. plugin_dir)
 			end
 			local init_file = plugin_dir .. "init.lua"
-			local init_exist = FileExists(init_file)
+			local init_exist = fileExists(init_file)
 			if not init_exist then
 				os.execute("touch " .. init_file)
 			end
@@ -44,11 +54,11 @@ return require("packer").startup(function()
 		end,
 	})
 	use_help({
-        "j-hui/fidget.nvim",
-        config = function()
-            require("fidget.nvim").setup()
-        end,
-    })
+		"j-hui/fidget.nvim",
+		config = function()
+			require("fidget.nvim").setup()
+		end,
+	})
 	use_help({
 		"kyazdani42/nvim-tree.lua",
 		requires = { "kyazdani42/nvim-web-devicons" },
