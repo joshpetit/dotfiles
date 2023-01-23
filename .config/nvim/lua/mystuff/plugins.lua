@@ -17,9 +17,7 @@ end
 return require("packer").startup(function()
 	local use_help = function(params, create_config)
 		local plugin = params[1]
-		local requires = params.requires
-		local config = params.config
-		use({ plugin, requires = requires, config = config, disable = params.disable })
+		use(params)
 		if create_config then
 			local split = SplitString(plugin, "/")
 			local plugin_name = split[GetLastIndex(split)]
@@ -37,6 +35,7 @@ return require("packer").startup(function()
 			Jcall(require, "mystuff/plugin_conf/" .. plugin_name)
 		end
 	end
+
 	use("wbthomason/packer.nvim")
 	use({
 		"simrat39/symbols-outline.nvim",
@@ -44,6 +43,12 @@ return require("packer").startup(function()
 			require("symbols-outline").setup()
 		end,
 	})
+	use_help({
+        "j-hui/fidget.nvim",
+        config = function()
+            require("fidget.nvim").setup()
+        end,
+    })
 	use_help({
 		"kyazdani42/nvim-tree.lua",
 		requires = { "kyazdani42/nvim-web-devicons" },
