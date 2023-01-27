@@ -1,3 +1,3 @@
 vim.cmd([[
-autocmd BufNewFile,BufRead *.creole set filetype=creole.markdown
+autocmd BufNewFile,BufRead *.creole set filetype=creole.org
 ]])

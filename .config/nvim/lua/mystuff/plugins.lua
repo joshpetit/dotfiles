@@ -90,6 +90,10 @@ return require("packer").startup(function()
 			"dcampos/cmp-snippy",
 		},
 	}, true)
+
+
+
+
 	use_help({
 		"nvim-telescope/telescope.nvim",
 		requires = {
@@ -98,6 +102,10 @@ return require("packer").startup(function()
 			{ "BurntSushi/ripgrep" },
 		},
 	}, true)
+
+
+
+
 	use({
 		"shumphrey/fugitive-gitlab.vim",
 		config = {
