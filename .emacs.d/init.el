@@ -56,8 +56,8 @@
 
 (use-package counsel
              :bind (("M-x" . counsel-M-x)
-                    ("<leader>og" . (lambda () (interactive) (counsel-find-file "~/sync/org")))
-		    ("<leader>oG" . (lambda () (interactive) (counsel-find-file)))
+                    ("<leader>od" . (lambda () (interactive) (counsel-find-file "~/sync/org")))
+		    ("<leader>oD" . (lambda () (interactive) (counsel-find-file)))
                     ("<leader>of" . counsel-org-goto-all)
                     )
              )
