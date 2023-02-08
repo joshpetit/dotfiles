@@ -1,0 +1,19 @@
+#!/bin/env sh
+
+emacs_run () {
+    echo $(emacsclient --eval "$1" 2> ~/.org-clock-polybar-err)
+}
+
+timer_started=$(emacs_run 'org-timer-start-time') 
+paused_time=$(emacs_run 'org-timer-pause-time') 
+icon="祥  "
+if [ "$timer_started" = "nil" ] || [ "$paused_time" != "nil" ]
+then
+    icon="  "
+fi
+
+headline_time=$(emacs_run '(org-timer-value-string)' | sed 's/"//g')
+#ok=$(emacs_run '(format "%s" org-timer-countdown-timer-title)' | grep -o '".*"' |  sed 's/"//g')
+#echo $ok
+
+echo "$icon$headline_time"

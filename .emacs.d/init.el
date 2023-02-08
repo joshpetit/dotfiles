@@ -437,6 +437,15 @@
 
 (setq calendar-week-start-day 0)
 (setq org-deadline-warning-days 14)
+
+;(defun org-summary-todo (n-done n-not-done)
+;  "Switch entry to DONE when all subentries are done, to TODO otherwise."
+;  (let (org-log-done org-log-states)   ; turn off logging
+;    (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
+;
+;(add-hook 'org-after-todo-statistics-hook #'org-summary-todo)
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
