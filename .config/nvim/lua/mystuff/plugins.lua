@@ -54,12 +54,6 @@ return require("packer").startup(function()
 		end,
 	})
 	use_help({
-		"j-hui/fidget.nvim",
-		config = function()
-			require("fidget.nvim").setup()
-		end,
-	})
-	use_help({
 		"kyazdani42/nvim-tree.lua",
 		requires = { "kyazdani42/nvim-web-devicons" },
 		disable = false,
@@ -102,9 +96,6 @@ return require("packer").startup(function()
 			{ "BurntSushi/ripgrep" },
 		},
 	}, true)
-
-
-
 
 	use({
 		"shumphrey/fugitive-gitlab.vim",
@@ -264,10 +255,10 @@ return require("packer").startup(function()
 	-- F11, focused mode!
 	use({ "folke/zen-mode.nvim" })
 	-- Make vim start faster!
-	-- use {
-	--     'lewis6991/impatient.nvim',
-	--     config = function() require('impatient') end
-	-- }
+	use {
+	    'lewis6991/impatient.nvim',
+	    config = function() require('impatient') end
+	}
 	-- use {"vuki656/package-info.nvim", requires = "MunifTanjim/nui.nvim"}
 	use({ "lervag/vimtex" })
 	-- use {"jamestthompson3/nvim-remote-containers"}
@@ -327,6 +318,7 @@ return require("packer").startup(function()
 			require("color-picker")
 		end,
 	})
+    use("dstein64/vim-startuptime")
 
 	if Packer_bootstrap then
 		require("packer").sync()

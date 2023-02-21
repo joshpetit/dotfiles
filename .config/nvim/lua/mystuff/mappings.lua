@@ -31,6 +31,8 @@ vim.keymap.set("n", "<c-w>bo", ":%bdelete|edit #|normal `<cr>")
 vim.keymap.set("n", "<leader>tf", [[:lua require("neotest").run.run(vim.fn.expand("%"))<cr>]])
 vim.keymap.set("n", "<leader>ts", [[:lua require("neotest").summary.open()<cr>]])
 vim.keymap.set("n", "<leader>ct", [[:Trouble<cr>]])
+vim.keymap.set("n", "<leader>cpl", [[:let @+ = expand('%') . ':' . line('.')<cr>]])
+vim.keymap.set("n", "<leader>cpp", [[:let @+ = expand('%')<cr>]])
 
 m.nmap("<S-q>", "<cmd>NvimTreeToggle<cr>")
 --m.nmap("<S-q>", "<cmd>NvimTreeFindFileToggle<cr>")

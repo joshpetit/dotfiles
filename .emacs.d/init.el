@@ -13,6 +13,34 @@
 (setq use-package-always-ensure t)
 (savehist-mode 1)
 
+(defun diary-sunset ()
+  (let ((dss (diary-sunrise-sunset))
+        start end)
+    (with-temp-buffer
+      (insert dss)
+      (goto-char (point-min))
+      (while (re-search-forward " ([^)]*)" nil t)
+        (replace-match "" nil nil))
+      (goto-char (point-min))
+      (search-forward ", ")
+      (setq start (match-end 0))
+      (search-forward " at")
+      (setq end (match-beginning 0))
+      (goto-char start)
+      (capitalize-word 1)
+      (buffer-substring start end))))
+
+(defun diary-sunrise ()
+  (let ((dss (diary-sunrise-sunset)))
+    (with-temp-buffer
+      (insert dss)
+      (goto-char (point-min))
+      (while (re-search-forward " ([^)]*)" nil t)
+        (replace-match "" nil nil))
+      (goto-char (point-min))
+      (search-forward ",")
+      (buffer-substring (point-min) (match-beginning 0)))))
+
 (use-package zenburn-theme)
 
 (use-package prescient)
@@ -438,13 +466,20 @@
 (setq calendar-week-start-day 0)
 (setq org-deadline-warning-days 14)
 
-;(defun org-summary-todo (n-done n-not-done)
-;  "Switch entry to DONE when all subentries are done, to TODO otherwise."
-;  (let (org-log-done org-log-states)   ; turn off logging
-;    (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
-;
-;(add-hook 'org-after-todo-statistics-hook #'org-summary-todo)
+(defun org-summary-todo (n-done n-not-done)
+  "Switch entry to DONE when all subentries are done, to TODO otherwise."
+  (let (org-log-done org-log-states)   ; turn off logging
+    (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
 
+(add-hook 'org-after-todo-statistics-hook #'org-summary-todo)
+
+(setq calendar-latitude 35.99)
+(setq calendar-longitude -78.89)
+(setq calendar-location-name "Durham, NC")
+
+(setq org-agenda-include-diary t)
+(setq org-agenda-diary-file "~/sync/org/diary")
+(setq diary-file "~/sync/org/diary")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

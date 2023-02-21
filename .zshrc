@@ -18,6 +18,7 @@ setopt APPEND_HISTORY
 HISTFILE="$HOME/.local/share/zsh/histfile"
 HISTSIZE=2500
 SAVEHIST=2500
+alias removebackground='rembg'
 alias firebaseupdateindexes='firebase firestore:indexes > firestore.indexes.json'
 alias cw='wc -w <<<'
 alias dockersucks='sudo docker kill $(sudo docker ps -q)'
