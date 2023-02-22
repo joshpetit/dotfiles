@@ -85,9 +85,6 @@ return require("packer").startup(function()
 		},
 	}, true)
 
-
-
-
 	use_help({
 		"nvim-telescope/telescope.nvim",
 		requires = {
@@ -153,6 +150,9 @@ return require("packer").startup(function()
 		"rcarriga/nvim-notify",
 		config = function()
 			vim.notify = require("notify")
+			require("notify").setup({
+				background_colour = "#000000",
+			})
 		end,
 	}, true)
 
@@ -255,10 +255,12 @@ return require("packer").startup(function()
 	-- F11, focused mode!
 	use({ "folke/zen-mode.nvim" })
 	-- Make vim start faster!
-	use {
-	    'lewis6991/impatient.nvim',
-	    config = function() require('impatient') end
-	}
+	use({
+		"lewis6991/impatient.nvim",
+		config = function()
+			require("impatient")
+		end,
+	})
 	-- use {"vuki656/package-info.nvim", requires = "MunifTanjim/nui.nvim"}
 	use({ "lervag/vimtex" })
 	-- use {"jamestthompson3/nvim-remote-containers"}
@@ -318,7 +320,7 @@ return require("packer").startup(function()
 			require("color-picker")
 		end,
 	})
-    use("dstein64/vim-startuptime")
+	use("dstein64/vim-startuptime")
 
 	if Packer_bootstrap then
 		require("packer").sync()
