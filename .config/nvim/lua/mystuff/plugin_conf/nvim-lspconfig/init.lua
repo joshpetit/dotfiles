@@ -45,10 +45,10 @@ local luaLspConfig = {
 			},
 			workspace = {
 				checkThirdParty = false,
-				library = {
-					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-					[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-				},
+				library = vim.api.nvim_get_runtime_file("", true),
+			},
+			telemetry = {
+				enable = false,
 			},
 		},
 	},
@@ -63,4 +63,4 @@ local luadev = require("neodev").setup({
 })
 
 -- require'lspconfig'.sumneko_lua.setup(luaLspConfig)
-require("lspconfig").sumneko_lua.setup(luaLspConfig)
+require("lspconfig").lua_ls.setup(luaLspConfig)

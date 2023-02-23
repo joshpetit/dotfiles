@@ -28,7 +28,7 @@ return require("packer").startup(function()
 	local use_help = function(params, create_config)
 		local plugin = params[1]
 		use(params)
-		if create_config then
+		if create_config and not params.disable then
 			local split = SplitString(plugin, "/")
 			local plugin_name = split[GetLastIndex(split)]
 			plugin_name = plugin_name:gsub("%.", "-")
@@ -113,7 +113,6 @@ return require("packer").startup(function()
 			"haydenmeade/neotest-jest",
 		},
 	}, true)
-	use_help({ "mfussenegger/nvim-jdtls", disable = true }, false)
 	-- Git diffs on the column
 	use({
 		"lewis6991/gitsigns.nvim",
@@ -149,10 +148,10 @@ return require("packer").startup(function()
 	use_help({
 		"rcarriga/nvim-notify",
 		config = function()
-			vim.notify = require("notify")
 			require("notify").setup({
 				background_colour = "#000000",
 			})
+			vim.notify = require("notify")
 		end,
 	}, true)
 
@@ -220,6 +219,7 @@ return require("packer").startup(function()
 	use_help({ "nvim-treesitter/nvim-treesitter" }, true)
 	use_help({
 		"nvim-orgmode/orgmode",
+        disable = true
 	}, true)
 	-- use({
 	-- 	"~/projects/orgmode",
