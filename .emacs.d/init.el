@@ -90,6 +90,9 @@
                     )
              )
 
+(setq org-agenda-sticky t)
+(setq org-log-done nil)
+
 (use-package undo-tree
   :ensure t
   :after evil

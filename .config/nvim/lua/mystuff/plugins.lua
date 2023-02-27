@@ -255,21 +255,14 @@ return require("packer").startup(function()
 	-- F11, focused mode!
 	use({ "folke/zen-mode.nvim" })
 	-- Make vim start faster!
-	use({
-		"lewis6991/impatient.nvim",
-		config = function()
-			require("impatient")
-		end,
-	})
-	-- use {"vuki656/package-info.nvim", requires = "MunifTanjim/nui.nvim"}
+	-- use({
+	-- 	"lewis6991/impatient.nvim",
+	-- 	config = function()
+	-- 		require("impatient")
+	-- 	end,
+	-- })
 	use({ "lervag/vimtex" })
-	-- use {"jamestthompson3/nvim-remote-containers"}
 	use("tpope/vim-eunuch") -- SudoWrite!
-	--use 'junegunn/fzf.vim'
-	-- \rf=Start R
-	-- \pp to send paragraph
-	-- \rm to remove previous output
-	-- \kr to produce rmarkdown as html and open in browser
 	use("tpope/vim-rhubarb")
 	use("nvim-treesitter/playground")
 	use_help({
@@ -321,6 +314,7 @@ return require("packer").startup(function()
 		end,
 	})
 	use("dstein64/vim-startuptime")
+    use "cedarbaum/fugitive-azure-devops.vim"
 
 	if Packer_bootstrap then
 		require("packer").sync()
