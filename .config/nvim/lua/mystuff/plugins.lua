@@ -46,6 +46,13 @@ return require("packer").startup(function()
 		end
 	end
 
+	use_help({
+		"nvim-neorg/neorg",
+		config = function() end,
+		run = ":Neorg sync-parsers",
+		requires = "nvim-lua/plenary.nvim",
+	}, true)
+
 	use("wbthomason/packer.nvim")
 	use({
 		"simrat39/symbols-outline.nvim",

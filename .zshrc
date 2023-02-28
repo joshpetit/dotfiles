@@ -13,7 +13,8 @@ zstyle :compinstall filename "$HOME/.zshrc"
 zstyle ':completion:*' rehash true
 zstyle ':completion:*' menu select
 
-bindkey  '^[[Z' reverse-menu-complete
+zmodload zsh/complist
+bindkey -M menuselect '^[[Z' reverse-menu-complete
 setopt APPEND_HISTORY
 HISTFILE="$HOME/.local/share/zsh/histfile"
 HISTSIZE=2500
