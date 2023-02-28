@@ -84,6 +84,9 @@ return require("packer").startup(function()
 			"dcampos/cmp-snippy",
 		},
 	}, true)
+	use_help({
+		"echasnovski/mini.nvim",
+	}, true)
 
 	use_help({
 		"nvim-telescope/telescope.nvim",
@@ -139,12 +142,7 @@ return require("packer").startup(function()
 			require("hop").setup()
 		end,
 	})
-	use({
-		"numToStr/Comment.nvim",
-		config = function()
-			require("Comment").setup()
-		end,
-	})
+
 	use_help({
 		"rcarriga/nvim-notify",
 		config = function()
@@ -219,7 +217,7 @@ return require("packer").startup(function()
 	use_help({ "nvim-treesitter/nvim-treesitter" }, true)
 	use_help({
 		"nvim-orgmode/orgmode",
-        disable = true
+		disable = true,
 	}, true)
 	-- use({
 	-- 	"~/projects/orgmode",
@@ -314,7 +312,7 @@ return require("packer").startup(function()
 		end,
 	})
 	use("dstein64/vim-startuptime")
-    use "cedarbaum/fugitive-azure-devops.vim"
+	use("cedarbaum/fugitive-azure-devops.vim")
 
 	if Packer_bootstrap then
 		require("packer").sync()
