@@ -44,7 +44,6 @@ m.nmap("<leader>hs", [[:lua require("harpoon.ui").toggle_quick_menu()<cr>]])
 m.nmap("<leader>a", [[:HopWord<cr>]])
 
 m.nmap("<leader>pp", ":lua require('nabla').popup()<CR>")
-m.vmap("<leader>pp", ":lua require('nabla').popup()<CR>")
 m.nmap("K", "<Cmd>lua vim.lsp.buf.hover()<CR>")
 m.nmap("<leader>w", "<Cmd>w<CR>")
 m.nmap("<leader><s-w>", "<Cmd>SudoWrite!<CR>")
