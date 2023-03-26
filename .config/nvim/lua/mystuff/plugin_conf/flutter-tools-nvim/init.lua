@@ -8,8 +8,10 @@ require("flutter-tools").setup({
         --- OR you can specify a function to deactivate or change or control how the config is created
         settings = { showTodos = true, completeFunctionCalls = true },
     },
-    -- debugger = {
-    --     enabled = true,
-    --     run_via_dap = true,
-    -- },
+    debugger = {
+        enabled = true,
+        run_via_dap = true,
+        register_configuration = function()
+        end,
+    },
 })

@@ -37,8 +37,8 @@ snippet stless
 
 	class ${1:widget} extends StatelessWidget {
 		const ${1}({
-			Key? key,
-		}) : super(key: key);
+			super.key,
+		});
 
 		@override
 		Widget build(BuildContext context) {
@@ -52,8 +52,8 @@ snippet stful
 
 	class ${1:widget} extends StatefulWidget {
 		const ${1}({
-			Key? key,
-		}) : super(key: key);
+			super.key,
+		});
 
 		@override
 		_${1}State createState() => _${1}State();
@@ -123,3 +123,5 @@ snippet test
     test('$1', () {
       expect($2, $3);
     });
+snippet msd
+	Map<String, dynamic> json

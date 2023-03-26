@@ -121,6 +121,7 @@ return require("packer").startup(function()
 			"antoinemadec/FixCursorHold.nvim",
 			-- Adapters
 			"haydenmeade/neotest-jest",
+			"sidlatau/neotest-dart",
 		},
 	}, true)
 	-- Git diffs on the column
@@ -245,7 +246,20 @@ return require("packer").startup(function()
 		disable = false,
 	})
 	use({ "delphinus/vim-firestore" })
-	use({ "stevearc/dressing.nvim" })
+	use({
+		"stevearc/dressing.nvim",
+		config = function()
+			require("dressing").setup({
+				input = {
+					override = function(conf)
+						conf.col = -1
+						conf.row = 0
+						return conf
+					end,
+				},
+			})
+		end,
+	})
 	use({ "nvim-telescope/telescope-ui-select.nvim" })
 	-- Gets a little annoying
 	use({
@@ -309,7 +323,9 @@ return require("packer").startup(function()
 	use({
 		"smjonas/inc-rename.nvim",
 		config = function()
-			require("inc_rename").setup()
+			require("inc_rename").setup({
+				input_buffer_type = "dressing",
+			})
 		end,
 	})
 	use({

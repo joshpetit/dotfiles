@@ -4,6 +4,7 @@ end
 
 nmap("<leader>ra", "<cmd>FlutterRun<cr>")
 nmap("<leader>rs", "<cmd>FlutterRun --flavor staging --debug -t lib/main-staging.dart<cr>")
+nmap("<leader>rp", "<cmd>FlutterRun --flavor prod --debug -t lib/main-prod.dart<cr>")
 nmap("<leader>fcp", "<cmd>FlutterCopyProfilerUrl<cr>")
 nmap("<leader>rf", "<cmd>FlutterRun -t %<cr>")
 nmap("<leader>rr", "<cmd>FlutterReload<cr>")

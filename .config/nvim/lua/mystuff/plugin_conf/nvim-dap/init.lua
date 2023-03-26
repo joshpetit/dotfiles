@@ -13,6 +13,7 @@ dap.adapters.firefox = {
 	args = { os.getenv("HOME") .. "/apps/vscode-firefox-debug/dist/adapter.bundle.js" },
 }
 
+-- Exception filters are "All" and "Uncaught"
 dap.configurations.typescript = {
 	{
 		name = "Debug with Firefox",
@@ -25,13 +26,13 @@ dap.configurations.typescript = {
 		firefoxArgs = { "-start-debugger-server 6000" },
 	},
 	{
-        name = "Debug with Firefox - Attach",
-        type = "firefox",
-        request = "attach",
-        reAttach = true,
-        host = "127.0.0.1",
-        url = "http://localhost:3000",
-        webRoot = "${workspaceFolder}",
+		name = "Debug with Firefox - Attach",
+		type = "firefox",
+		request = "attach",
+		reAttach = true,
+		host = "127.0.0.1",
+		url = "http://localhost:3000",
+		webRoot = "${workspaceFolder}",
 	},
 	{
 		name = "Run",
@@ -96,6 +97,16 @@ dap.adapters.darttest = {
 }
 
 dap.configurations.dart = {
+	{
+		type = "flutter",
+		request = "launch",
+		name = "Launch SSY Staging",
+		program = "${workspaceFolder}/lib/main-staging.dart",
+		cwd = "${workspaceFolder}",
+		args = {
+			"--flavor=staging",
+		},
+	},
 	{
 		type = "flutter",
 		request = "launch",

@@ -91,7 +91,17 @@
              )
 
 (setq org-agenda-sticky t)
+(setq org-image-actual-width 200)
 (setq org-log-done nil)
+
+(with-eval-after-load 'org-agenda
+  (defun my/org-has-children ()
+    (if (save-excursion (org-goto-first-child)) "▶" " ")
+  )
+  (add-to-list 'org-agenda-prefix-format '(
+     agenda  . "%i%-3:(my/org-has-children) %-12:c%?-12t% s "
+  ))
+)
 
 (use-package undo-tree
   :ensure t
@@ -133,7 +143,7 @@
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
-(load-theme 'zenburn t)
+;(load-theme 'zenburn t)
 (setq org-agenda-files (directory-files-recursively "~/sync/org/" "\\.org$"))
 (require 'org-habit)
 (add-to-list 'org-modules 'org-habit)
@@ -484,18 +494,63 @@
 (setq org-agenda-diary-file "~/sync/org/diary")
 (setq diary-file "~/sync/org/diary")
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-agenda-files
-   '("/home/joshu/sync/org/programming/firebase.org" "/home/joshu/sync/org/programming/ms5.org" "/home/joshu/sync/org/programming/widgetbook.org" "/home/joshu/sync/org/bible.org" "/home/joshu/sync/org/books.org" "/home/joshu/sync/org/fa22.org" "/home/joshu/sync/org/kebre.org" "/home/joshu/sync/org/life.org" "/home/joshu/sync/org/ministers.org" "/home/joshu/sync/org/ministry.org" "/home/joshu/sync/org/music.org" "/home/joshu/sync/org/notes.org" "/home/joshu/sync/org/phone_refile.org" "/home/joshu/sync/org/prayers.org" "/home/joshu/sync/org/programming.org" "/home/joshu/sync/org/refile.org" "/home/joshu/sync/org/reflections.org" "/home/joshu/sync/org/religious.org" "/home/joshu/sync/org/retreat.org" "/home/joshu/sync/org/sabbath.org" "/home/joshu/sync/org/sermons.org" "/home/joshu/sync/org/sp22.org" "/home/joshu/sync/org/sp23.org" "/home/joshu/sync/org/todo.org" "/home/joshu/sync/org/trianglesda.org" "/home/joshu/sync/org/vespers.org" "/home/joshu/sync/org/webnotes.org" "/home/joshu/sync/org/work.org"))
- '(package-selected-packages
-   '(org-habit org-yt zenburn-theme web-mode use-package undo-tree selectrum-prescient org-contrib no-littering nimbus-theme ivy-rich ivy-prescient ivy-omni-org general evil-org evil-collection doom-modeline darkroom counsel company-prescient)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(setq org-todo-keywords
+      '((sequence "TODO" "|" "DONE" "CANCELLED")
+	(sequence "TASK" "|" "COMPLETED" "CANCELLED")
+	(sequence "IDEA" "|" "DONE" "CANCELLED")
+	)
+      )
+
+(use-package doom-themes
+  :ensure t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-one t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
+
+(defun diary-last-day-of-month (date)
+"Return `t` if DATE is the last day of the month."
+  (let* ((day (calendar-extract-day date))
+         (month (calendar-extract-month date))
+         (year (calendar-extract-year date))
+         (last-day-of-month
+            (calendar-last-day-of-month month year)))
+    (= day last-day-of-month)))
+
+;; https://blog.tecosaur.com/tmio/2021-04-26-Welcome.html#inline-display-remote
+;; on 2022-09-04 this only works for tramp remote links and not for http / https
+(setq org-display-remote-inline-images 'cache)
+
+;; we look to doom emacs for an example how to get remote images also working
+;; for normal http / https links
+;; 1. image data handler
+(defun org-http-image-data-fn (protocol link _description)
+  "Interpret LINK as an URL to an image file."
+  (when (and (image-type-from-file-name link)
+             (not (eq org-display-remote-inline-images 'skip)))
+    (if-let (buf (url-retrieve-synchronously (concat protocol ":" link)))
+        (with-current-buffer buf
+          (goto-char (point-min))
+          (re-search-forward "\r?\n\r?\n" nil t)
+          (buffer-substring-no-properties (point) (point-max)))
+      (message "Download of image \"%s\" failed" link)
+      nil)))
+
+;; 2. add this as link parameter for http and https
+(org-link-set-parameters "http"  :image-data-fun #'org-http-image-data-fn)
+(org-link-set-parameters "https" :image-data-fun #'org-http-image-data-fn)
+
+;; 3. pull in org-yt which will advise ~org-display-inline-images~ how to do the extra handling
+(use-package quelpa-use-package)
+
+(use-package org-yt
+  :quelpa (org-yt :fetcher github :repo "TobiasZawada/org-yt"))
+(require 'org-yt)
