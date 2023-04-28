@@ -42,10 +42,8 @@
       (buffer-substring (point-min) (match-beginning 0)))))
 
 (use-package zenburn-theme)
-
 (use-package prescient)
 (use-package ivy-prescient
-
              :config
              (ivy-prescient-mode 1)
              )
@@ -455,17 +453,17 @@
     (with-current-buffer buffer
       ad-do-it)))
 
-(use-package web-mode
-  :mode (("\\.tsx" . web-mode)
-	 ("\\.jsx" . web-mode)
-	 ("\\.vue" . web-mode)
-	 ("\\.org" . web-mode)
-	 )
-  :config
-  (require 'web-mode)
-  )
+; (use-package web-mode
+;   :mode (("\\.tsx" . web-mode)
+; 	 ("\\.jsx" . web-mode)
+; 	 ("\\.vue" . web-mode)
+; 	 ("\\.org" . web-mode)
+; 	 )
+;   :config
+;   (require 'web-mode)
+;   )
 
-(setq org-display-remote-inline-images t)
+;(setq org-display-remote-inline-images t)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
 (use-package  no-littering
@@ -477,6 +475,7 @@
   )
 
 (setq calendar-week-start-day 0)
+(setq org-agenda-start-on-weekday 0)
 (setq org-deadline-warning-days 14)
 
 (defun org-summary-todo (n-done n-not-done)
@@ -527,30 +526,43 @@
 
 ;; https://blog.tecosaur.com/tmio/2021-04-26-Welcome.html#inline-display-remote
 ;; on 2022-09-04 this only works for tramp remote links and not for http / https
-(setq org-display-remote-inline-images 'cache)
+;(setq org-display-remote-inline-images 'cache)
 
 ;; we look to doom emacs for an example how to get remote images also working
 ;; for normal http / https links
 ;; 1. image data handler
-(defun org-http-image-data-fn (protocol link _description)
-  "Interpret LINK as an URL to an image file."
-  (when (and (image-type-from-file-name link)
-             (not (eq org-display-remote-inline-images 'skip)))
-    (if-let (buf (url-retrieve-synchronously (concat protocol ":" link)))
-        (with-current-buffer buf
-          (goto-char (point-min))
-          (re-search-forward "\r?\n\r?\n" nil t)
-          (buffer-substring-no-properties (point) (point-max)))
-      (message "Download of image \"%s\" failed" link)
-      nil)))
+;(defun org-http-image-data-fn (protocol link _description)
+;  "Interpret LINK as an URL to an image file."
+;  (when (and (image-type-from-file-name link)
+;             (not (eq org-display-remote-inline-images 'skip)))
+;    (if-let (buf (url-retrieve-synchronously (concat protocol ":" link)))
+;        (with-current-buffer buf
+;          (goto-char (point-min))
+;          (re-search-forward "\r?\n\r?\n" nil t)
+;          (buffer-substring-no-properties (point) (point-max)))
+;      (message "Download of image \"%s\" failed" link)
+;      nil)))
 
 ;; 2. add this as link parameter for http and https
-(org-link-set-parameters "http"  :image-data-fun #'org-http-image-data-fn)
-(org-link-set-parameters "https" :image-data-fun #'org-http-image-data-fn)
+;(org-link-set-parameters "http"  :image-data-fun #'org-http-image-data-fn)
+;(org-link-set-parameters "https" :image-data-fun #'org-http-image-data-fn)
 
 ;; 3. pull in org-yt which will advise ~org-display-inline-images~ how to do the extra handling
-(use-package quelpa-use-package)
+;(use-package quelpa-use-package)
 
-(use-package org-yt
-  :quelpa (org-yt :fetcher github :repo "TobiasZawada/org-yt"))
-(require 'org-yt)
+;(use-package org-yt
+  ;:quelpa (org-yt :fetcher github :repo "TobiasZawada/org-yt"))
+;(require 'org-yt)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-files
+   '("/home/joshu/sync/org/archive/fa22.org" "/home/joshu/sync/org/archive/sp22.org" "/home/joshu/sync/org/programming/ms5.org" "/home/joshu/sync/org/programming/widgetbook.org" "/home/joshu/sync/org/anew.org" "/home/joshu/sync/org/bible.org" "/home/joshu/sync/org/books.org" "/home/joshu/sync/org/fa22.org" "/home/joshu/sync/org/life.org" "/home/joshu/sync/org/ministers.org" "/home/joshu/sync/org/ministry.org" "/home/joshu/sync/org/music.org" "/home/joshu/sync/org/notes.org" "/home/joshu/sync/org/petit.dev.org" "/home/joshu/sync/org/phone_refile.org" "/home/joshu/sync/org/prayers.org" "/home/joshu/sync/org/programming.org" "/home/joshu/sync/org/refile.org" "/home/joshu/sync/org/reflections.org" "/home/joshu/sync/org/religious.org" "/home/joshu/sync/org/retreat.org" "/home/joshu/sync/org/sabbath.org" "/home/joshu/sync/org/sermons.org" "/home/joshu/sync/org/sp22.org" "/home/joshu/sync/org/sp23.org" "/home/joshu/sync/org/ssy.org" "/home/joshu/sync/org/trianglesda.org" "/home/joshu/sync/org/work.org")))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

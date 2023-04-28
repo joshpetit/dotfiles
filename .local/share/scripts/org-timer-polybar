@@ -4,8 +4,9 @@ emacs_run () {
     echo $(emacsclient --eval "$1" 2> ~/.org-clock-polybar-err)
 }
 
-timer_started=$(emacs_run 'org-timer-start-time') 
-paused_time=$(emacs_run 'org-timer-pause-time') 
+# This causes some error so... none for now.
+#timer_started=$(emacs_run 'org-timer-start-time') 
+#paused_time=$(emacs_run 'org-timer-pause-time') 
 icon="祥  "
 if [ "$timer_started" = "nil" ] || [ "$paused_time" != "nil" ]
 then

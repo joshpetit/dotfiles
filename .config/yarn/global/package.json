@@ -10,6 +10,7 @@
     "eslint": "^8.24.0",
     "faker-cli": "^2.0.0",
     "firebase-tools": "^11.16.0",
+    "gatsby": "^5.8.1",
     "kill-port": "^2.0.1",
     "tsx": "^3.12.1",
     "vercel": "^25.1.0"

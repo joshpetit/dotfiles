@@ -77,7 +77,7 @@ return require("packer").startup(function()
 		requires = { "nvim-lua/plenary.nvim" },
 	}, true)
 	use({ "smancill/conky-syntax.vim", disable = true })
-	use({ "dhruvasagar/vim-table-mode", disable = true })
+	use({ "dhruvasagar/vim-table-mode", disable = false })
 	-- tag = 'release' -- To use the latest release
 	use_help({
 		"hrsh7th/nvim-cmp",
