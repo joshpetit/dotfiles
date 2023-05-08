@@ -51,6 +51,7 @@ return require("packer").startup(function()
 		config = function() end,
 		run = ":Neorg sync-parsers",
 		requires = "nvim-lua/plenary.nvim",
+        disable = true
 	}, true)
 
 	use("wbthomason/packer.nvim")
@@ -103,6 +104,10 @@ return require("packer").startup(function()
 			{ "BurntSushi/ripgrep" },
 		},
 	}, true)
+
+	use({
+		"nvim-lua/plenary.nvim",
+	})
 
 	use({
 		"shumphrey/fugitive-gitlab.vim",

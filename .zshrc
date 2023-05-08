@@ -157,3 +157,5 @@ compdef _es es
 
 # Host specific configurations
 zplug load
+
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
