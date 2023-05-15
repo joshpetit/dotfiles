@@ -140,7 +140,7 @@ m.nmap("<leader>dtc", "<cmd>lua require'dap'.run_to_cursor()<CR>")
 m.nmap("<leader>du", [[<cmd>lua require("dapui").toggle({ reset = true})<CR>]])
 m.nmap("<leader>dq", "<cmd>lua require'dap'.terminate(); require'dapui'.close()<cr>")
 m.nmap("<leader>nc", "<cmd>lua require('notify').dismiss()<cr>")
---m.nmap("<leader>nc", "<cmd>lua require('notify').dismiss({pending = true})<cr>")
+m.nmap("<leader>nC", "<cmd>lua require('notify').dismiss({ silent = true, pending = true})<cr>")
 m.nmap("<leader>cQ", "<cmd>LspStop<cr>")
 m.nmap("<leader>cS", "<cmd>LspStart<cr>")
 

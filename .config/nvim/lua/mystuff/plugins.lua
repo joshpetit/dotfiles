@@ -89,6 +89,7 @@ return require("packer").startup(function()
 			"neovim/nvim-lspconfig",
 			"dcampos/nvim-snippy",
 			"dcampos/cmp-snippy",
+			"saadparwaiz1/cmp_luasnip",
 		},
 	}, true)
 	use_help({
@@ -336,6 +337,12 @@ return require("packer").startup(function()
 	})
 	use("dstein64/vim-startuptime")
 	use("cedarbaum/fugitive-azure-devops.vim")
+	use_help({
+		"L3MON4D3/LuaSnip",
+		-- install jsregexp (optional!:).
+		run = "make install_jsregexp",
+		requires = { "rafamadriz/friendly-snippets" },
+	}, true)
 
 	if Packer_bootstrap then
 		require("packer").sync()
