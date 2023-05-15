@@ -158,8 +158,5 @@ compdef _es es
 # Host specific configurations
 zplug load
 
-## [Completion] 
-## Completion scripts setup. Remove the following line to uninstall
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 [[ -f /home/joshu/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/joshu/.config/.dart-cli-completion/zsh-config.zsh || true
-## [/Completion]
-
