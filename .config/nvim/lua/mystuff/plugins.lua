@@ -51,7 +51,7 @@ return require("packer").startup(function()
 		config = function() end,
 		run = ":Neorg sync-parsers",
 		requires = "nvim-lua/plenary.nvim",
-        disable = true
+		disable = true,
 	}, true)
 
 	use("wbthomason/packer.nvim")
@@ -347,6 +347,14 @@ return require("packer").startup(function()
 		-- install jsregexp (optional!:).
 		run = "make install_jsregexp",
 		requires = { "rafamadriz/friendly-snippets" },
+	}, true)
+
+	use_help({
+		"xbase-lab/xbase",
+		run = "make install", -- or "make install && make free_space" (not recommended, longer build time)
+		requires = {
+			"neovim/nvim-lspconfig",
+		},
 	}, true)
 
 	if Packer_bootstrap then
