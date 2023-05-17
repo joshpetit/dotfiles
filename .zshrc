@@ -1,4 +1,7 @@
 source ~/.zshenv
+include () {
+    [[ -f "$1" ]] && source "$1"
+}
 # In case some buttons done work while doing ssh
 stty sane
 if [ -f ~/.zshextra ]; then
@@ -160,6 +163,6 @@ zplug load
 
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 [[ -f /home/joshu/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/joshu/.config/.dart-cli-completion/zsh-config.zsh || true
-source ~/.amazoninit
-source /Users/joshiep/.brazil_completion/zsh_completion
+include ~/.amazoninit
+include /Users/joshiep/.brazil_completion/zsh_completion
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
