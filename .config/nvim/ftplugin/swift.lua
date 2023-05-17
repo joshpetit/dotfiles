@@ -1,4 +1,5 @@
 local ts_utils = require("nvim-treesitter.ts_utils")
+local null_ls = require("null-ls")
 
 local find_next_call_expression = function(node)
 	node = node:parent()
@@ -73,3 +74,41 @@ end)
 vim.keymap.set("n", "<leader><leader>af", function()
 	add_modifier("font", ".")
 end)
+
+if not null_ls.is_registered("swift-actions") then
+	require("null-ls").register({
+		name = "swift-actions",
+		method = { require("null-ls").methods.CODE_ACTION },
+		filetypes = { "swift" },
+		generator = {
+			fn = function()
+				return {
+					{
+						title = "Add padding",
+						action = function()
+							add_modifier("padding", ".top", 4)
+						end,
+					},
+				}
+			end,
+		},
+	})
+
+	require("null-ls").register({
+		name = "swift-actions",
+		method = { require("null-ls").methods.CODE_ACTION },
+		filetypes = { "swift" },
+		generator = {
+			fn = function()
+				return {
+					{
+						title = "Add font",
+						action = function()
+                            add_modifier("font", ".headline")
+						end,
+					},
+				}
+			end,
+		},
+	})
+end
