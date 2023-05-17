@@ -57,12 +57,15 @@ vim.keymap.set("n", "<leader><leader>w", wrap_in_vstack)
 vim.keymap.set("n", "<leader><leader>apt", function()
 	add_modifier("padding", ".top", 4)
 end)
+
 vim.keymap.set("n", "<leader><leader>apb", function()
 	add_modifier("padding", ".bottom", 4)
 end)
+
 vim.keymap.set("n", "<leader><leader>apl", function()
 	add_modifier("padding", ".left", 4)
 end)
+
 vim.keymap.set("n", "<leader><leader>apr", function()
 	add_modifier("padding", ".right", 4)
 end)
