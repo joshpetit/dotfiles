@@ -10,12 +10,32 @@ null_ls.setup({
 		}),
 		null_ls.builtins.formatting.google_java_format,
 		null_ls.builtins.formatting.dart_format,
-        null_ls.builtins.formatting.yamlfmt,
+		null_ls.builtins.formatting.yamlfmt,
 		null_ls.builtins.code_actions.eslint,
 		null_ls.builtins.formatting.black,
 		null_ls.builtins.code_actions.gitsigns,
 		null_ls.builtins.code_actions.refactoring,
-        null_ls.builtins.formatting.sqlformat,
-        require("typescript.extensions.null-ls.code-actions"),
+		null_ls.builtins.formatting.sqlformat,
+		require("typescript.extensions.null-ls.code-actions"),
 	},
 })
+
+if not null_ls.is_registered("my-actions") then
+	require("null-ls").register({
+		name = "my-actions",
+		method = { require("null-ls").methods.CODE_ACTION },
+		filetypes = { "dart" },
+		generator = {
+			fn = function()
+				return {
+					{
+						title = "Add toString",
+						action = function()
+							require("mystuff.plugin_conf.null-ls-nvim.dart").create_to_string()
+						end,
+					},
+				}
+			end,
+		},
+	})
+end
