@@ -52,6 +52,7 @@ struct LandmarkDetail: View {
                     Spacer()
                     Text(landmark.state)
                         .font(.subheadline)
+                    .padding(.left, 12)
                 }
             }
             .padding()
