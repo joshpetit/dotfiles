@@ -62,10 +62,12 @@ M.create_from_json = function()
 	local class_name = vim.treesitter.get_node_text(root, bufnr)
 
 	local constructor_definition = string.format("%s.fromJson(Map<String, dynamic> json)", class_name)
-    local variables = get_class_variables(root)
 	local changes = { constructor_definition, " : this(" }
+    local variables = get_class_variables(root)
 
-    vim.pretty_print(variables)
+    for index, node in pairs(variables) do
+        print(vim.treesitter.get_node_text(node, bufnr))
+    end
 	table.insert(changes, ");")
 end
 
