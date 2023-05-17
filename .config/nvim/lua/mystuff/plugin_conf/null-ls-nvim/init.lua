@@ -38,4 +38,22 @@ if not null_ls.is_registered("my-actions") then
 			end,
 		},
 	})
+
+	require("null-ls").register({
+		name = "my-actions",
+		method = { require("null-ls").methods.CODE_ACTION },
+		filetypes = { "dart" },
+		generator = {
+			fn = function()
+				return {
+					{
+						title = "Add fromJson",
+						action = function()
+							require("mystuff.plugin_conf.null-ls-nvim.dart").create_from_json()
+						end,
+					},
+				}
+			end,
+		},
+	})
 end
