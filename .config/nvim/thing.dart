@@ -2,6 +2,7 @@ class DataClass {
   final String first;
   final String second;
   final Other third;
+  final List<Other> newList;
 
   DataClass({
     required this.first,
@@ -15,5 +16,13 @@ class DataClass {
           first: json('first'),
           second: json('second'),
           third: json('third'),
+        );
+
+  DataClass.fromJson(Map<String, dynamic> json)
+      : this(
+          first: json('first'),
+          second: json('second'),
+          third: json('third'),
+          newList: json('newList'),
         );
 }
