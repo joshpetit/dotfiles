@@ -33,7 +33,7 @@ local get_class_variables = function(class_node)
 			table.insert(variables, node)
 		end
 	end
-    return variables
+	return variables
 end
 
 M.create_to_string = function()
@@ -59,16 +59,24 @@ M.create_from_json = function()
 	local bufnr = vim.api.nvim_get_current_buf()
 	local root = get_parent_class_node()
 	local root_range = { root:range() }
-	local class_name = vim.treesitter.get_node_text(root, bufnr)
+	local class_name = vim.treesitter.get_node_text(root:child(1), bufnr)
+	local constructor_definition = string.format("  %s.fromJson(Map<String, dynamic> json)", class_name)
+	local indentation = string.rep(" ", 6)
+	local changes = { "", constructor_definition, indentation .. ": this(" }
+	local variables = get_class_variables(root)
 
-	local constructor_definition = string.format("%s.fromJson(Map<String, dynamic> json)", class_name)
-	local changes = { constructor_definition, " : this(" }
-    local variables = get_class_variables(root)
+	local var_indentation = string.rep(" ", 10)
+	for index, node in pairs(variables) do
+		local variable = vim.treesitter.get_node_text(node, bufnr)
+		local bananas = string.format(var_indentation .. "%s: json('%s'),", variable, variable)
+		table.insert(changes, bananas)
+	end
+	table.insert(changes, string.rep(" ", 8) .. ");")
+	-- vim.pretty_print(changes)
+	vim.api.nvim_buf_set_lines(bufnr, root_range[3], root_range[3], false, changes)
 
-    for index, node in pairs(variables) do
-        print(vim.treesitter.get_node_text(node, bufnr))
-    end
-	table.insert(changes, ");")
+	local winr = vim.api.nvim_get_current_win()
+	vim.api.nvim_win_set_cursor(winr, { root_range[3] + 2, root_range[4] + 1 })
 end
 
 return M

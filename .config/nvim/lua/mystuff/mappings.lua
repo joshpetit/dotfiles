@@ -11,6 +11,8 @@ vim.keymap.set("n", "<leader>et", function()
 	require("mystuff/test_path")[ft]()
 end)
 
+vim.keymap.set("n", "<leader>TT", ":TSPlaygroundToggle<CR>")
+
 vim.keymap.set("n", "<leader>ggf", function()
 	---@diagnostic disable-next-line: missing-parameter
 	local file = vim.fn.expand("%")
