@@ -43,6 +43,7 @@ local add_modifier = function(modifier, arg1, arg2)
 	local call_expression = get_entire_call_expression()
 	local range = { call_expression:range() }
 	local indentation = string.rep(" ", range[2])
+	local padding_location
 	if arg2 ~= nil then
 		padding_location = string.format(".%s(%s, %s)", modifier, arg1, arg2)
 	else
@@ -51,6 +52,43 @@ local add_modifier = function(modifier, arg1, arg2)
 	vim.api.nvim_buf_set_lines(bufnr, range[3] + 1, range[3] + 1, false, { indentation .. padding_location })
 	local winr = vim.api.nvim_get_current_win()
 	vim.api.nvim_win_set_cursor(winr, { range[3] + 2, padding_location:len() + range[2] - 2 })
+end
+
+local get_bufnr = function()
+	return vim.api.nvim_get_current_buf()
+end
+
+local get_enclosing_struct = function(node)
+	node = node:parent()
+	while node ~= nil and node:type() ~= "class_declaration" do
+		node = node:parent()
+	end
+	return node
+end
+
+local extract_component = function()
+	local call_expression = get_entire_call_expression()
+	local enclosing_struct = get_enclosing_struct(call_expression)
+	local range = { enclosing_struct:range() }
+	local call_expression_changes = vim.split(vim.treesitter.get_node_text(call_expression, get_bufnr()), "\n")
+	local new_struct_name = vim.fn.input("View name: ")
+	local changes = { "", string.format("struct %s: View {", new_struct_name), "  var body: some View {" }
+
+	for _, change in pairs(call_expression_changes) do
+		table.insert(changes, change)
+	end
+	table.insert(changes, "   }")
+	table.insert(changes, "}")
+	vim.api.nvim_buf_set_lines(get_bufnr(), range[3] + 1, range[3] + 1, false, changes)
+	local old_func_range = { call_expression:range() }
+	local indentation = string.rep(" ", old_func_range[2])
+	vim.api.nvim_buf_set_lines(
+		get_bufnr(),
+		old_func_range[1],
+		old_func_range[3] + 1,
+		false,
+		{ indentation .. new_struct_name .. "()" }
+	)
 end
 
 vim.keymap.set("n", "<leader><leader>w", wrap_in_vstack)
@@ -73,6 +111,10 @@ end)
 
 vim.keymap.set("n", "<leader><leader>af", function()
 	add_modifier("font", ".")
+end)
+
+vim.keymap.set("n", "<leader><leader>ec", function()
+	extract_component()
 end)
 
 if not null_ls.is_registered("swift-actions") then
@@ -104,7 +146,7 @@ if not null_ls.is_registered("swift-actions") then
 					{
 						title = "Add font",
 						action = function()
-                            add_modifier("font", ".headline")
+							add_modifier("font", ".headline")
 						end,
 					},
 				}
