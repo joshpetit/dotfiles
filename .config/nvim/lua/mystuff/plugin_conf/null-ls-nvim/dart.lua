@@ -3,7 +3,25 @@ local ts_utils = require("nvim-treesitter.ts_utils")
 
 -- I could make this a map and set the handler function to create the fromJson thing
 -- I can set all of these to the same.
-local default_convertible_raw = { "List", "String", "int", "double" }
+
+local parse_json_primitive_field = function(opt)
+	local type = opt.type
+	local field_name = opt.field_name
+	return string.format("json['%s']", field_name)
+end
+
+local default_convertible_raw = {
+	List = parse_json_primitive_field,
+	String = parse_json_primitive_field,
+	int = parse_json_primitive_field,
+	double = parse_json_primitive_field,
+}
+
+local parse_json_object_field = function(opt)
+	local type = opt.type
+	local field_name = opt.field_name
+	return string.format("%s.fromJson(json['%s'])", type, field_name)
+end
 
 local class_variables_query = vim.treesitter.parse_query(
 	"dart",
@@ -75,7 +93,9 @@ M.create_from_json = function()
 	for index, node in pairs(variables) do
 		local type = get_type_of_variable(node)
 		local variable = vim.treesitter.get_node_text(node, bufnr)
-		local bananas = string.format(var_indentation .. "%s: json('%s'),", variable, variable)
+        local valueParser = default_convertible_raw[type] or parse_json_object_field
+        local value = valueParser({type = type, field_name = variable})
+		local bananas = string.format(var_indentation .. "%s: %s,", variable, value)
 		table.insert(changes, bananas)
 	end
 	table.insert(changes, string.rep(" ", 8) .. ");")
