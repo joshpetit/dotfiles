@@ -1,6 +1,12 @@
 local ts_utils = require("nvim-treesitter.ts_utils")
 local null_ls = require("null-ls")
 
+local get_current_node = ts_utils.get_node_at_cursor
+
+local get_node_text = function(node)
+	return vim.treesitter.get_node_text(node, vim.api.nvim_get_current_buf())
+end
+
 local find_next_call_expression = function(node)
 	node = node:parent()
 	while node ~= nil and node:type() ~= "call_expression" do
@@ -91,6 +97,20 @@ local extract_component = function()
 	)
 end
 
+-- Extracts a variable to the struct's fields
+local extract_variable_to_struct = function()
+	local node = get_current_node()
+	local value_argument_node = node
+	while value_argument_node ~= nil and value_argument_node:field("value")[1] == nil do
+		value_argument_node = value_argument_node:parent()
+	end
+	local value_node = value_argument_node:field("value")[1]
+	local value_node_range = { value_node:range() }
+	local line_of_value =
+		vim.api.nvim_buf_get_lines(get_bufnr(), value_node_range[1], value_node_range[1] + 1, false)[1]
+	vim.pretty_print(line_of_value)
+end
+
 vim.keymap.set("n", "<leader><leader>w", wrap_in_vstack)
 
 vim.keymap.set("n", "<leader><leader>apt", function()
@@ -115,6 +135,10 @@ end)
 
 vim.keymap.set("n", "<leader><leader>ec", function()
 	extract_component()
+end)
+
+vim.keymap.set("n", "<leader><leader>ev", function()
+	extract_variable_to_struct()
 end)
 
 if not null_ls.is_registered("swift-actions") then
