@@ -357,6 +357,9 @@ return require("packer").startup(function()
 		},
 	}, true)
 
+	use({ "SmiteshP/nvim-navic", requires = "neovim/nvim-lspconfig"
+ })
+
 	if Packer_bootstrap then
 		require("packer").sync()
 	end

@@ -1,3 +1,5 @@
+local navic = require("nvim-navic")
+
 local lsp_formatting = function(bufnr)
 	vim.lsp.buf.format({
 		filter = function(client)
@@ -18,6 +20,11 @@ return function(client, bufnr)
 	-- 		end,
 	-- 	})
 	-- end
+
+	if client.server_capabilities.documentSymbolProvider then
+		navic.attach(client, bufnr)
+		-- vim.o.statusline = "%{%v:lua.require'nvim-navic'.get_location()%}"
+	end
 
 	client.server_capabilities.documentFormattingProvider = false
 	local function buf_set_keymap(...)

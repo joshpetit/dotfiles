@@ -5,6 +5,15 @@ require("nvim-treesitter.configs").setup({
 	highlight = {
 		enable = true,
 	},
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = '<leader>k',
+            node_incremental = '<leader>k',
+            scope_incremental = '<leader>K',
+            node_decremental = '<leader>j',
+        }
+    }
 })
 
 local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
