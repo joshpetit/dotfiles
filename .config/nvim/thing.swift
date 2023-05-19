@@ -14,6 +14,7 @@ struct LandmarkDetail: View {
   var landmarkIndex: Int {
     userData.landmarks.firstIndex(where: { $0.id == landmark.id })!
   }
+  //Stuff
 
   var body: some View {
     VStack {
