@@ -103,14 +103,20 @@ end
 
 -- Extracts a variable to the struct's fields
 local extract_variable_to_struct = function()
-	local node = get_current_node()
-	local value_argument_node = node
+	local value_argument_node = get_current_node()
 	while value_argument_node ~= nil and value_argument_node:field("value")[1] == nil do
 		value_argument_node = value_argument_node:parent()
 	end
 	local value_node = value_argument_node:field("value")[1]
 	local value_node_range = { value_node:range() }
+	local var_type = ""
 	local var_name = vim.fn.input("Variable name: ")
+
+	if value_node:field("text")[1] ~= nil then
+		var_type = "String"
+	elseif value_node:type() == "integer_literal" or value_node:field("target")[1] == "integer_literal" then
+		var_type = "Int"
+	end
 
 	vim.api.nvim_buf_set_text(
 		get_bufnr(),
@@ -135,7 +141,7 @@ local extract_variable_to_struct = function()
 	end
 	local last_property_range = { props[#props]:range() }
 	local line_after_last_property = last_property_range[3] + 1
-	local var_declaration = "  var " .. var_name .. ": "
+	local var_declaration = string.format("  var %s: %s", var_name, var_type)
 	vim.api.nvim_buf_set_lines(
 		get_bufnr(),
 		line_after_last_property,
@@ -172,7 +178,8 @@ vim.keymap.set("n", "<leader><leader>ec", function()
 	extract_component()
 end)
 
-vim.keymap.set("n", "<leader><leader>ev", function()
+-- Extract to field
+vim.keymap.set("n", "<leader><leader>etf", function()
 	extract_variable_to_struct()
 end)
 
