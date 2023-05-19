@@ -1,22 +1,28 @@
-class Post {
-  final String imageURL;
-  final String title;
-  final DateTime datePosted;
-  final int numUpvotes;
+class DataClass {
+  final String first;
+  final String second;
+  final Other third;
+  final List<Other> newList;
 
-  Post({
-    required this.imageURL,
-    required this.title,
-    required this.datePosted,
-    required this.numUpvotes,
+  DataClass({
+    required this.first,
+    required this.second,
+    required this.third,
   });
 
-  Post.fromJson(Map<String, dynamic> json)
+
+  DataClass.fromJson(Map<String, dynamic> json)
       : this(
-          title: json['image']['imageTitle'],
-          imageURL: json['image']['imagePath'],
-          numUpvotes: json['numUpvotes'],
-          datePosted:
-              DateTime.parse(json['datePosted'] ?? "2023-05-07T00:00:00.000"),
+          first: json('first'),
+          second: json('second'),
+          third: json('third'),
+        );
+
+  DataClass.fromJson(Map<String, dynamic> json)
+      : this(
+          first: json('first'),
+          second: json('second'),
+          third: json('third'),
+          newList: json('newList'),
         );
 }

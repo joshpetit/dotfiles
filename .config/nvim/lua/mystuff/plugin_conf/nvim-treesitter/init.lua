@@ -35,3 +35,11 @@ parser_config.puml = {
 	},
 	filetype = "swift",
 }
+
+local treesitter_mode_on = function()
+	vim.keymap.set("n", "<leader>sx", ":source ~/.config/nvim/thing.lua<CR>")
+	vim.keymap.set("n", "<leader>ts", ":TSPlaygroundToggle<CR>")
+    vim.notify("Treesitter mode on!")
+end
+
+vim.keymap.set("n", "<leader>1", treesitter_mode_on)

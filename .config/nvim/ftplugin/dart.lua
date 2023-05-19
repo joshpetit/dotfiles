@@ -1,3 +1,5 @@
+local stuff = require("mystuff/plugin_conf/null-ls-nvim/dart")
+
 local nmap = function(keys, command)
 	vim.api.nvim_set_keymap("n", keys, command, { noremap = true, silent = true })
 end
@@ -18,5 +20,7 @@ vim.keymap.set("n", "<leader>rF", function()
     -- vim.cmd([[new|0read !dart #:r]])
     vim.cmd([[!dart %]])
 end)
+
+vim.keymap.set("n", "<leader><leader>af", stuff.create_from_json)
 
 --vim.api.nvim_buf_create_user_command(0, 'SSY', 'FlutterRun --flavor staging --debug -t lib/main-staging.dart')
