@@ -139,18 +139,6 @@ return require("packer").startup(function()
 		end,
 	})
 	use({
-		"pwntester/octo.nvim",
-		config = function()
-			require("octo").setup()
-		end,
-		requires = {
-			"nvim-lua/plenary.nvim",
-			"nvim-telescope/telescope.nvim",
-			"kyazdani42/nvim-web-devicons",
-		},
-		disable = true,
-	})
-	use({
 		"phaazon/hop.nvim",
 		config = function()
 			require("hop").setup()
