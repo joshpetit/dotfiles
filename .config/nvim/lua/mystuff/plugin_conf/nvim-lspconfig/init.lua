@@ -57,12 +57,20 @@ local luaLspConfig = {
 }
 
 --local luadev = require("lua-dev").setup({lspconfig=luaLspConfig})
-local luadev = require("neodev").setup({
-	lspconfig = {
-		on_attach = on_attach,
-		capabilities = capabilities,
+require("neodev").setup()
+
+-- require'lspconfig'.sumneko_lua.setup(luaLspConfig)
+
+lspconfig.lua_ls.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+	flags = { debounce_text_changes = 150 },
+	settings = {
+		Lua = {
+			completion = {
+				callSnippet = "Replace",
+			},
+		},
 	},
 })
 
--- require'lspconfig'.sumneko_lua.setup(luaLspConfig)
-require("lspconfig").lua_ls.setup(luaLspConfig)

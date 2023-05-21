@@ -6,6 +6,7 @@ vim.g.mapleader = " "
 vim.o.mouse = "a"
 vim.o.relativenumber = true
 vim.o.number = true
+-- vim.opt.statuscolumn = "%l %r"
 
 vim.o.scrolloff = 8
 vim.o.tabstop = 4

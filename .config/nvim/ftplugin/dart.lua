@@ -1,7 +1,7 @@
-local stuff = require("mystuff/plugin_conf/null-ls-nvim/dart")
+local stuff = require("my_px.dart")
 
 local nmap = function(keys, command)
-	vim.api.nvim_set_keymap("n", keys, command, { noremap = true, silent = true })
+	vim.keymap.set("n", keys, command)
 end
 
 nmap("<leader>ra", "<cmd>FlutterRun<cr>")
@@ -17,10 +17,11 @@ nmap("<leader>dL", "<cmd>b __FLUTTER_DEV_LOG__<cr>")
 nmap("<leader>da", '<cmd>lua require("mystuff/debug").dart()<cr>')
 
 vim.keymap.set("n", "<leader>rF", function()
-    -- vim.cmd([[new|0read !dart #:r]])
-    vim.cmd([[!dart %]])
+	-- vim.cmd([[new|0read !dart #:r]])
+	vim.cmd([[!dart %]])
 end)
 
 vim.keymap.set("n", "<leader><leader>af", stuff.create_from_json)
+vim.keymap.set("n", "<leader>lc", ":FlutterLogClear<CR>")
 
 --vim.api.nvim_buf_create_user_command(0, 'SSY', 'FlutterRun --flavor staging --debug -t lib/main-staging.dart')

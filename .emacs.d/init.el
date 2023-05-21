@@ -485,9 +485,12 @@
 
 (add-hook 'org-after-todo-statistics-hook #'org-summary-todo)
 
-(setq calendar-latitude 35.99)
-(setq calendar-longitude -78.89)
-(setq calendar-location-name "Durham, NC")
+;(setq calendar-latitude 35.99)
+;(setq calendar-longitude -78.89)
+;(setq calendar-location-name "Durham, NC")
+(setq calendar-latitude 37.8715)
+(setq calendar-longitude -122.2730)
+(setq calendar-location-name "Berkeley, CA")
 
 (setq org-agenda-include-diary t)
 (setq org-agenda-diary-file "~/sync/org/diary")
@@ -524,43 +527,3 @@
             (calendar-last-day-of-month month year)))
     (= day last-day-of-month)))
 
-;; https://blog.tecosaur.com/tmio/2021-04-26-Welcome.html#inline-display-remote
-;; on 2022-09-04 this only works for tramp remote links and not for http / https
-;(setq org-display-remote-inline-images 'cache)
-
-;; we look to doom emacs for an example how to get remote images also working
-;; for normal http / https links
-;; 1. image data handler
-;(defun org-http-image-data-fn (protocol link _description)
-;  "Interpret LINK as an URL to an image file."
-;  (when (and (image-type-from-file-name link)
-;             (not (eq org-display-remote-inline-images 'skip)))
-;    (if-let (buf (url-retrieve-synchronously (concat protocol ":" link)))
-;        (with-current-buffer buf
-;          (goto-char (point-min))
-;          (re-search-forward "\r?\n\r?\n" nil t)
-;          (buffer-substring-no-properties (point) (point-max)))
-;      (message "Download of image \"%s\" failed" link)
-;      nil)))
-
-;; 2. add this as link parameter for http and https
-;(org-link-set-parameters "http"  :image-data-fun #'org-http-image-data-fn)
-;(org-link-set-parameters "https" :image-data-fun #'org-http-image-data-fn)
-
-;; 3. pull in org-yt which will advise ~org-display-inline-images~ how to do the extra handling
-;(use-package quelpa-use-package)
-
-;(use-package org-yt
-  ;:quelpa (org-yt :fetcher github :repo "TobiasZawada/org-yt"))
-;(require 'org-yt)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

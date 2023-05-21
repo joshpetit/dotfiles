@@ -15,46 +15,59 @@ null_ls.setup({
 		null_ls.builtins.formatting.black,
 		null_ls.builtins.code_actions.gitsigns,
 		null_ls.builtins.code_actions.refactoring,
-        null_ls.builtins.formatting.sqlformat,
-        null_ls.builtins.formatting["swift-format"],
-        require("typescript.extensions.null-ls.code-actions"),
+		null_ls.builtins.formatting.sqlformat,
+		--null_ls.builtins.formatting["swift-format"],
+		require("typescript.extensions.null-ls.code-actions"),
 	},
 })
 
-if not null_ls.is_registered("my-actions") then
-	require("null-ls").register({
-		name = "my-actions",
-		method = { require("null-ls").methods.CODE_ACTION },
-		filetypes = { "dart" },
-		generator = {
-			fn = function()
-				return {
-					{
-						title = "Add toString",
-						action = function()
-							require("mystuff.plugin_conf.null-ls-nvim.dart").create_to_string()
-						end,
-					},
-				}
-			end,
-		},
-	})
+null_ls.deregister("swift-actions")
+null_ls.register({
+	name = "swift-actions",
+	filetypes = { "swift" },
+	generator = {
+		fn = function()
+			local swift_actions = require("my_px.swift")
+			return {
+				{
+					title = "Add padding",
+					action = function()
+						swift_actions.add_modifier("padding", ".top", 4)
+					end,
+				},
+				{
+					title = "Add font",
+					action = function()
+						swift_actions.add_modifier("font", ".headline")
+					end,
+				},
+			}
+		end,
+	},
+})
 
-	require("null-ls").register({
-		name = "my-actions",
-		method = { require("null-ls").methods.CODE_ACTION },
-		filetypes = { "dart" },
-		generator = {
-			fn = function()
-				return {
-					{
-						title = "Add fromJson",
-						action = function()
-							require("mystuff.plugin_conf.null-ls-nvim.dart").create_from_json()
-						end,
-					},
-				}
-			end,
-		},
-	})
-end
+null_ls.deregister("dart-actions")
+null_ls.register({
+	name = "dart-actions",
+	method = { require("null-ls").methods.CODE_ACTION },
+	filetypes = { "dart" },
+	generator = {
+		fn = function()
+			local dart_actions = require("my_px.dart")
+			return {
+				{
+					title = "Add toString",
+					action = function()
+						dart_actions.create_to_string()
+					end,
+				},
+				{
+					title = "Add fromJson",
+					action = function()
+						dart_actions.create_from_json()
+					end,
+				},
+			}
+		end,
+	},
+})
