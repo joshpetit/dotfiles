@@ -2,7 +2,7 @@ local ts_utils = require("nvim-treesitter.ts_utils")
 
 local get_current_node = ts_utils.get_node_at_cursor
 
-local property_declaration_query = vim.treesitter.parse_query("swift", "(property_declaration) @prop")
+local property_declaration_query = vim.treesitter.query.parse("swift", "(property_declaration) @prop")
 
 local get_node_text = function(node)
 	return vim.treesitter.get_node_text(node, vim.api.nvim_get_current_buf())
