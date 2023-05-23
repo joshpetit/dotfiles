@@ -7,6 +7,7 @@ local on_attach = require("mystuff/on_attach_conf")
 local servers = {
 	"tailwindcss",
 	"sourcekit",
+    "svelte",
 	"kotlin_language_server",
 	--"jsonls",
 	"jdtls",

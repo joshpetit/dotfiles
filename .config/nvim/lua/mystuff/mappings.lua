@@ -15,7 +15,11 @@ nmap("<leader>et", function()
 end)
 
 nmap("<leader>TT", function()
-	vim.treesitter.show_tree()
+	if vim.treesitter.show_tree == nil then
+		vim.treesitter.inspect_tree()
+	else
+		vim.treesitter.show_tree()
+	end
 end)
 
 nmap("<leader>ggf", function()
@@ -25,9 +29,20 @@ nmap("<leader>ggf", function()
 	vim.fn.search(file, "W")
 	print(file)
 end)
-nmap("<leader>qf", function()
+
+local toggle_quick_fix = function()
+	local buffers = vim.api.nvim_list_bufs()
+	for _, buf in pairs(buffers) do
+		local cbuf = vim.bo[buf]
+		if cbuf.filetype == "qf" and cbuf.buflisted then
+			vim.cmd(":cclose")
+			return
+		end
+	end
 	vim.cmd([[copen]])
-end)
+end
+
+nmap("<leader>qf", toggle_quick_fix)
 
 nmap("<leader>es", function()
 	local ft = vim.bo.filetype
