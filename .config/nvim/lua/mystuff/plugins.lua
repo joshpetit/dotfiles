@@ -93,9 +93,9 @@ return require("packer").startup(function()
 			"saadparwaiz1/cmp_luasnip",
 		},
 	}, true)
-	use_help({
-		"echasnovski/mini.nvim",
-	}, true)
+-- use_help({
+-- 	"echasnovski/mini.nvim",
+-- }, true)
 
 	use_help({
 		"nvim-telescope/telescope.nvim",
@@ -345,8 +345,14 @@ return require("packer").startup(function()
 		},
 	}, true)
 
-	use({ "SmiteshP/nvim-navic", requires = "neovim/nvim-lspconfig"
- })
+	use({ "SmiteshP/nvim-navic", requires = "neovim/nvim-lspconfig" })
+
+	use({
+		"numToStr/Comment.nvim",
+		config = function()
+			require("Comment").setup()
+		end,
+	})
 
 	if Packer_bootstrap then
 		require("packer").sync()
