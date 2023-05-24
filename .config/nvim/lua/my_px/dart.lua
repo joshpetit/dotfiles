@@ -24,7 +24,7 @@ local parse_json_object_field = function(opt)
 	return string.format("%s.fromJson(json['%s'])", type, field_name)
 end
 
-local class_variables_query = vim.treesitter.parse_query(
+local class_variables_query = vim.treesitter.query.parse(
 	"dart",
 	[[
 (declaration

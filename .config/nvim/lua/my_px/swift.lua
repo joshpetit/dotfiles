@@ -1,14 +1,7 @@
 local ts_utils = require("nvim-treesitter.ts_utils")
+local h = require("my_px.helpers")
+local property_declaration_query = vim.treesitter.query.parse("swift", "(property_declaration) @prop")
 
-local get_current_node = ts_utils.get_node_at_cursor
-
-local property_declaration_query = vim.treesitter.parse_query("swift", "(property_declaration) @prop")
-
-local get_node_text = function(node)
-	return vim.treesitter.get_node_text(node, vim.api.nvim_get_current_buf())
-end
-
-local get_winr = vim.api.nvim_get_current_win
 
 local find_next_call_expression = function(node)
 	node = node:parent()
@@ -102,7 +95,7 @@ end
 
 -- Extracts a variable to the struct's fields
 M.extract_variable_to_struct = function()
-	local value_argument_node = get_current_node()
+	local value_argument_node = h.get_current_node()
 	while value_argument_node ~= nil and value_argument_node:field("value")[1] == nil do
 		value_argument_node = value_argument_node:parent()
 	end
@@ -130,7 +123,7 @@ M.extract_variable_to_struct = function()
 	local captures = property_declaration_query:iter_captures(class_declaration, get_bufnr(), 0, -1)
 	local props = {}
 	local is_not_body_field = function(node)
-		return get_node_text(node) ~= "body"
+		return h.get_node_text(node) ~= "body"
 	end
 	for _, prop in captures do
 		local name_field = prop:field("name")
@@ -148,7 +141,7 @@ M.extract_variable_to_struct = function()
 		false,
 		{ var_declaration }
 	)
-	vim.api.nvim_win_set_cursor(get_winr(), { line_after_last_property + 1, var_declaration:len() })
+	vim.api.nvim_win_set_cursor(h.get_winr(), { line_after_last_property + 1, var_declaration:len() })
 end
 
 return M
