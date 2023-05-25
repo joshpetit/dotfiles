@@ -231,6 +231,7 @@ for_window [class="^flameshot$"] border pixel 0
 for_window [class="gnome-calculator"] floating enable
 for_window [title="Calculator"] floating enable
 for_window [title="^R Graphics:"] floating enable
+for_window [title="^Picture-in-Picture$"] sticky enable
 
 
 # CS 308, delete later

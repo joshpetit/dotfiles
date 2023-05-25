@@ -6,13 +6,14 @@ null_ls.setup({
 	sources = {
 		null_ls.builtins.formatting.stylua,
 		null_ls.builtins.formatting.prettier.with({
-			extra_filetypes = { "toml" },
+			extra_filetypes = { "toml", "svelte" },
 		}),
 		null_ls.builtins.formatting.google_java_format,
 		null_ls.builtins.formatting.dart_format,
 		null_ls.builtins.formatting.yamlfmt,
 		null_ls.builtins.code_actions.eslint,
 		null_ls.builtins.formatting.black,
+		null_ls.builtins.formatting.gofmt,
 		null_ls.builtins.code_actions.gitsigns,
 		null_ls.builtins.code_actions.refactoring,
 		null_ls.builtins.formatting.sqlformat,

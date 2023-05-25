@@ -7,7 +7,7 @@ local on_attach = require("mystuff/on_attach_conf")
 local servers = {
 	"tailwindcss",
 	"sourcekit",
-    "svelte",
+	"svelte",
 	"kotlin_language_server",
 	--"jsonls",
 	"jdtls",
@@ -71,7 +71,10 @@ lspconfig.lua_ls.setup({
 			completion = {
 				callSnippet = "Replace",
 			},
+			workspace = {
+				checkThirdParty = false,
+				library = vim.api.nvim_get_runtime_file("", true),
+			},
 		},
 	},
 })
-
