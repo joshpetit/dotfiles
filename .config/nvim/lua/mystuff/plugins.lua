@@ -93,9 +93,9 @@ return require("packer").startup(function()
 			"saadparwaiz1/cmp_luasnip",
 		},
 	}, true)
--- use_help({
--- 	"echasnovski/mini.nvim",
--- }, true)
+	use_help({
+		"echasnovski/mini.nvim",
+	}, true)
 
 	use_help({
 		"nvim-telescope/telescope.nvim",
