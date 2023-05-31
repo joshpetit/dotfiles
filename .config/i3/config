@@ -333,3 +333,4 @@ bindsym $mod+n exec --no-startup-id dunstctl close-all && pkill conky
 bindsym $mod+ctrl+n exec --no-startup-id dunstctl history-pop
 bindsym $mod+ctrl+l exec lockscreen
 exec --no-startup-id emacsclient
+bindsym $mod+Shift+b exec --no-startup-id toggle-stalone

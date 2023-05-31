@@ -89,7 +89,7 @@
              )
 
 (setq org-agenda-sticky t)
-(setq org-image-actual-width 200)
+;; (setq org-image-actual-width 200)
 (setq org-log-done nil)
 
 (with-eval-after-load 'org-agenda
@@ -157,16 +157,16 @@
 (setq org-refile-use-outline-path 'file)
 
 
-(defun my-org-confirm-babel-evaluate (lang body)
-   (string= lang "ditaa"))  ;if a ditaa langauge exists ask for it lol
-(setq org-confirm-babel-evaluate nil)
+;; (defun my-org-confirm-babel-evaluate (lang body)
+;;    (string= lang "ditaa"))  ;if a ditaa langauge exists ask for it lol
+;; (setq org-confirm-babel-evaluate nil)
 
-(org-babel-do-load-languages
-  'org-babel-load-languages (quote (
-                                    (sqlite . t)
-                                    (plantuml . t))))
-(setq org-plantuml-jar-path
-      (expand-file-name "~/apps/plantuml.jar"))
+;; (org-babel-do-load-languages
+;;   'org-babel-load-languages (quote (
+;;                                     (sqlite . t)
+;;                                     (plantuml . t))))
+;; (setq org-plantuml-jar-path
+;;       (expand-file-name "~/apps/plantuml.jar"))
 
 (setq org-capture-templates
       '(("m" "MS5" entry (file+headline "~/sync/org/programming/ms5.org" "MS5 Timesheet")
@@ -493,8 +493,6 @@
 (setq calendar-location-name "Berkeley, CA")
 
 (setq org-agenda-include-diary t)
-(setq org-agenda-diary-file "~/sync/org/diary")
-(setq diary-file "~/sync/org/diary")
 
 (setq org-todo-keywords
       '((sequence "TODO" "|" "DONE" "CANCELLED")

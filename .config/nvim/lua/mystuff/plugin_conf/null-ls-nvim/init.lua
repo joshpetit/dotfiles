@@ -15,6 +15,7 @@ null_ls.setup({
 		null_ls.builtins.formatting.black,
 		null_ls.builtins.formatting.gofmt,
 		null_ls.builtins.code_actions.gitsigns,
+		null_ls.builtins.formatting.latexindent,
 		null_ls.builtins.code_actions.refactoring,
 		null_ls.builtins.formatting.sqlformat,
 		--null_ls.builtins.formatting["swift-format"],
@@ -55,20 +56,11 @@ null_ls.register({
 	generator = {
 		fn = function()
 			local dart_actions = require("my_px.dart")
-			return {
-				{
-					title = "Add toString",
-					action = function()
-						dart_actions.create_to_string()
-					end,
-				},
-				{
-					title = "Add fromJson",
-					action = function()
-						dart_actions.create_from_json()
-					end,
-				},
-			}
+			local capable_actions = {}
+			for _, action_generator in pairs(dart_actions) do
+				table.insert(capable_actions, action_generator())
+			end
+			return capable_actions
 		end,
 	},
 })

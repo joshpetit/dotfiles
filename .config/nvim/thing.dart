@@ -10,7 +10,6 @@ class DataClass {
     required this.third,
   });
 
-
   DataClass.fromJson(Map<String, dynamic> json)
       : this(
           first: json('first'),
@@ -25,4 +24,13 @@ class DataClass {
           third: json('third'),
           newList: json('newList'),
         );
+
+  Map<String, dynamic> toJson() => {
+
+  };
+
+
+  void doThing() {
+    print("WHAT");
+  }
 }
