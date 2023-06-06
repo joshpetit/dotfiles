@@ -161,8 +161,19 @@ compdef _es es
 # Host specific configurations
 zplug load
 
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 [[ -f /home/joshu/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/joshu/.config/.dart-cli-completion/zsh-config.zsh || true
 include ~/.amazoninit
 include /Users/joshiep/.brazil_completion/zsh_completion
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+ma() {
+    echo "alias $1=\"${@:2}\"" >> ~/.aliases
+}
+map() {
+    echo "alias $1=\"${@:2}\"" >> ~/.aliases-private
+}
+
+source ~/.aliases
+if [ -f ~/.aliases-private ]; then
+source ~/.aliases-private
+fi

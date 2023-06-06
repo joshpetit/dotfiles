@@ -27,5 +27,5 @@ ctrl + shift - 4 : yabai -m window --space 4
 ctrl + shift - 5 : yabai -m window --space 5
 ctrl + shift - 6 : yabai -m window --space 6
 
-ctrl - f : yabai -m window --toggle float
+ctrl + shift + ctrl - f : yabai -m window --toggle float
 #
