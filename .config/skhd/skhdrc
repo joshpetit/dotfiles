@@ -1,5 +1,5 @@
 cmd + ctrl - c : copyq menu
-cmd + shift - r : skhd --reload
+cmd + shift - r : skhd --reload && yabai --restart-service
 cmd + shift - f : open /Applications/Firefox.app
 cmd + shift - e : open /Applications/Emacs.app/
 cmd + shift - d : open /Applications/iTerm.app/
@@ -15,6 +15,10 @@ cmd - k : yabai -m window --focus north
 cmd - j : yabai -m window --focus south
 cmd - h : yabai -m window --focus west
 cmd - l : yabai -m window --focus east
+cmd + shift - k : yabai -m window --swap north
+cmd + shift - j : yabai -m window --swap south
+cmd + shift - h : yabai -m window --swap west
+cmd + shift - l : yabai -m window --swap east
 
 ctrl + shift - 1 : yabai -m window --space 1
 ctrl + shift - 2 : yabai -m window --space 2
