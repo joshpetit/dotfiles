@@ -1,0 +1,27 @@
+cmd + ctrl - c : copyq menu
+cmd + shift - r : skhd --reload
+cmd + shift - f : open /Applications/Firefox.app
+cmd + shift - e : open /Applications/Emacs.app/
+cmd + shift - d : open /Applications/iTerm.app/
+cmd + shift - x : open /Applications/Xcode.app/
+
+
+ctrl - e : yabai -m space --layout bsp
+ctrl - s : yabai -m space --layout stack
+
+ctrl + alt - left : yabai -m window --focus west
+ctrl + alt - right : yabai -m window --focus east
+cmd - k : yabai -m window --focus north
+cmd - j : yabai -m window --focus south
+cmd - h : yabai -m window --focus west
+cmd - l : yabai -m window --focus east
+
+ctrl + shift - 1 : yabai -m window --space 1
+ctrl + shift - 2 : yabai -m window --space 2
+ctrl + shift - 3 : yabai -m window --space 3
+ctrl + shift - 4 : yabai -m window --space 4
+ctrl + shift - 5 : yabai -m window --space 5
+ctrl + shift - 6 : yabai -m window --space 6
+
+ctrl - f : yabai -m window --toggle float
+#
