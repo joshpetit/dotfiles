@@ -22,6 +22,7 @@ setopt APPEND_HISTORY
 HISTFILE="$HOME/.local/share/zsh/histfile"
 HISTSIZE=2500
 SAVEHIST=2500
+zstyle ':completion:*' completer _expand_alias _complete _ignored
 alias removebackground='rembg'
 alias firebaseupdateindexes='firebase firestore:indexes > firestore.indexes.json'
 alias cw='wc -w <<<'
@@ -164,16 +165,17 @@ zplug load
 [[ -f /home/joshu/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/joshu/.config/.dart-cli-completion/zsh-config.zsh || true
 include ~/.amazoninit
 include /Users/joshiep/.brazil_completion/zsh_completion
+
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 ma() {
     echo "alias $1=\"${@:2}\"" >> ~/.aliases
+    source ~/.aliases
 }
 map() {
     echo "alias $1=\"${@:2}\"" >> ~/.aliases-private
+    source ~/.aliases-private
 }
 
-source ~/.aliases
-if [ -f ~/.aliases-private ]; then
-source ~/.aliases-private
-fi
+include ~/.aliases
+include ~/.aliases-private
