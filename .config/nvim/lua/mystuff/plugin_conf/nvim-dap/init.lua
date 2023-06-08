@@ -1,11 +1,6 @@
 local dap = require("dap")
 dap.set_log_level("TRACE")
 
-dap.adapters.node2 = {
-	type = "executable",
-	command = "node",
-	args = { os.getenv("HOME") .. "/apps/vscode-node-debug2/out/src/nodeDebug.js" },
-}
 
 dap.adapters.firefox = {
 	type = "executable",
@@ -16,8 +11,44 @@ dap.adapters.firefox = {
 -- Exception filters are "All" and "Uncaught"
 dap.configurations.typescript = {
 	{
-		name = "Debug with Firefox",
+		type = "pwa-node",
+		request = "launch",
+		name = "Launch file - PWA",
+		program = "${file}",
+		cwd = "${workspaceFolder}",
+	},
+	{
+		type = "pwa-node",
+		request = "attach",
+		name = "Attach - PWA",
+		processId = require("dap.utils").pick_process,
+		cwd = "${workspaceFolder}",
+	},
+	{
+		type = "pwa-node",
+		request = "attach",
+		name = "Attach to 9229- PWA",
+		processId = 9229,
+		cwd = "${workspaceFolder}",
+	},
+	{
+		type = "pwa-node",
+		request = "launch",
+		name = "Debug Jest Tests - PWA",
+		-- trace = true, -- include debugger info
+		runtimeExecutable = "node",
+		runtimeArgs = {
+			"./node_modules/jest/bin/jest.js",
+			"--runInBand",
+		},
+		rootPath = "${workspaceFolder}",
+		cwd = "${workspaceFolder}",
+		console = "integratedTerminal",
+		internalConsoleOptions = "neverOpen",
+	},
+	{
 		type = "firefox",
+		name = "Debug with Firefox",
 		request = "launch",
 		reAttach = true,
 		url = "http://localhost:3000",
@@ -34,35 +65,7 @@ dap.configurations.typescript = {
 		url = "http://localhost:3000",
 		webRoot = "${workspaceFolder}",
 	},
-	{
-		name = "Run",
-		type = "node2",
-		request = "launch",
-		program = "${file}",
-		cwd = vim.fn.getcwd(),
-		sourceMaps = true,
-		protocol = "inspector",
-		console = "integratedTerminal",
-		outFiles = { "${workspaceFolder}/lib/**/*.js" },
-	},
-	{
-		name = "Attach to 9229",
-		type = "node2",
-		request = "attach",
-		port = 9229,
-		sourceMaps = true,
-		outDir = "${workspaceRoot}/lib",
-		outFiles = { "${workspaceRoot}/lib/**/*.js" },
-	},
-	{
-		name = "Attach to process",
-		type = "node2",
-		request = "attach",
-		sourceMaps = true,
-		processId = require("dap.utils").pick_process,
-	},
 }
-dap.configurations.typescriptreact = dap.configurations.typescript
 dap.configurations.javascript = dap.configurations.typescript
 
 -- dap.adapters.dart = {

@@ -58,7 +58,9 @@ local luaLspConfig = {
 }
 
 --local luadev = require("lua-dev").setup({lspconfig=luaLspConfig})
-require("neodev").setup()
+require("neodev").setup({
+	library = { plugins = { "nvim-dap-ui" }, types = true },
+})
 
 -- require'lspconfig'.sumneko_lua.setup(luaLspConfig)
 

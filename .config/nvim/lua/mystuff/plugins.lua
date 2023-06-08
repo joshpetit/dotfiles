@@ -185,22 +185,6 @@ return require("packer").startup(function()
 	use_help({ "dcampos/nvim-snippy" }, true)
 	use_help({ "honza/vim-snippets" }, false)
 	use_help({ "mfussenegger/nvim-dap" }, true)
-	use({
-		"rcarriga/cmp-dap",
-		config = function()
-			require("cmp").setup({
-				enabled = function()
-					return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
-				end,
-			})
-
-			require("cmp").setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
-				sources = {
-					{ name = "dap" },
-				},
-			})
-		end,
-	})
 	use_help({
 		"williamboman/nvim-lsp-installer",
 		requires = { "neovim/nvim-lspconfig" },
@@ -209,13 +193,16 @@ return require("packer").startup(function()
 		"neovim/nvim-lspconfig",
 		requires = { "folke/neodev.nvim" },
 	}, true)
+	use_help({ "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }, true)
 	use({
-		"rcarriga/nvim-dap-ui",
-		requires = { "mfussenegger/nvim-dap" },
-		config = function()
-			require("dapui").setup()
-		end,
+		"microsoft/vscode-js-debug",
+		opt = true,
+		run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
 	})
+	use_help({
+		"rcarriga/nvim-dap-ui",
+		requires = { "mfussenegger/nvim-dap", "rcarriga/cmp-dap" },
+	}, true)
 	use_help({ "nvim-treesitter/nvim-treesitter" }, true)
 	use_help({
 		"nvim-orgmode/orgmode",
@@ -338,7 +325,7 @@ return require("packer").startup(function()
 	}, true)
 
 	use_help({
-		"xbase-lab/xbase",
+		"~/projects/xbase/",
 		run = "make install", -- or "make install && make free_space" (not recommended, longer build time)
 		requires = {
 			"neovim/nvim-lspconfig",

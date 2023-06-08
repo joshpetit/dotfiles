@@ -15,10 +15,10 @@ nmap("<leader>et", function()
 end)
 
 nmap("<leader>TT", function()
-	if vim.treesitter.show_tree == nil then
+	if vim.treesitter.inspect_tree == nil then
 		vim.treesitter.inspect_tree()
 	else
-		vim.treesitter.show_tree()
+		vim.treesitter.inspect_tree()
 	end
 end)
 
