@@ -30,6 +30,34 @@ nmap("<leader>ggf", function()
 	print(file)
 end)
 
+
+-- may be useful in future: vim.fn.empty(vim.fn.win_findbuf(buf))
+local dap_open_window = function(buffer_name)
+	local buffers = vim.api.nvim_list_bufs()
+	for _, buf in pairs(buffers) do
+		local cbuf = vim.bo[buf]
+        vim.print(cbuf.filetype)
+		if cbuf.filetype == buffer_name then
+            local winVal = vim.fn.bufwinnr(buf)
+			if not (winVal == -1) then
+                vim.cmd("execute bufwinnr(" .. buf .. " ) 'wincmd w'")
+			else
+				vim.cmd("vsplit #" .. buf)
+			end
+		end
+	end
+end
+
+nmap("<leader>dvb", function()
+	dap_open_window("dapui_breakpoints")
+end)
+nmap("<leader>dvs", function()
+	dap_open_window("dapui_scopes")
+end)
+nmap("<leader>dvr", function()
+	dap_open_window("dap-repl")
+end)
+
 local toggle_quick_fix = function()
 	local buffers = vim.api.nvim_list_bufs()
 	for _, buf in pairs(buffers) do
