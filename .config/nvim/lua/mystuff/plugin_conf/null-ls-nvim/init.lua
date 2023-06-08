@@ -18,7 +18,7 @@ null_ls.setup({
 		null_ls.builtins.formatting.latexindent,
 		null_ls.builtins.code_actions.refactoring,
 		null_ls.builtins.formatting.sqlformat,
-		--null_ls.builtins.formatting["swift-format"],
+		null_ls.builtins.formatting["swift_format"],
 		require("typescript.extensions.null-ls.code-actions"),
 	},
 })

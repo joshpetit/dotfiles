@@ -13,9 +13,9 @@ require("xbase").setup({
 	--- run `xcrun simctl list` to get a full list of available simulator
 	--- If the list is empty then all simulator available  will be included
 	simctl = {
-              log_level = vim.log.levels.DEBUG,
+		log_level = vim.log.levels.DEBUG,
 		iOS = {
-			 "iPhone 14 Pro", --- only use this devices
+			"iPhone 14 Pro", --- only use this devices
 		},
 		watchOS = {}, -- all available devices
 		tvOS = {}, -- all available devices
@@ -35,5 +35,17 @@ require("xbase").setup({
 		all_picker = "<leader>xf", --- set to 0 to disable
 		--- vertical toggle log buffer
 		toggle_vsplit_log_buffer = "<leader>xl",
+	},
+	code_actions = {
+		enable = true,
+		use_builtin_actions = true,
+		custom_actions = {
+			{
+				title = "Cool Actions",
+				action = function()
+					print("WOWW")
+				end,
+			},
+		},
 	},
 }) -- see default configuration bellow
