@@ -27,3 +27,26 @@ vim.keymap.set("n", "<leader>fcl", ":FlutterLogClear<CR>")
 vim.keymap.set("n", "<leader>flc", ":FlutterLogClear<CR>")
 
 --vim.api.nvim_buf_create_user_command(0, 'SSY', 'FlutterRun --flavor staging --debug -t lib/main-staging.dart')
+
+-- local get_session = function()
+-- 	return require("dap").session()
+-- end
+--
+-- local send_command = function(command)
+-- 	get_session():request(command)
+-- end
+--
+-- nmap("<leader>rr", function()
+-- 	send_command("hotReload")
+-- end)
+-- nmap("<leader>rR", function()
+-- 	send_command("hotRestart")
+-- end)
+-- vim.api.nvim_create_autocmd("BufWritePost", {
+--     pattern = "dart",
+--     callback = function()
+--         vim.schedule(function()
+--             send_command("hotReload")
+--         end)
+--     end
+-- })

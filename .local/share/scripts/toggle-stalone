@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+pgrep stalonetray 
+if pgrep stalonetray ; then
+    pkill stalonetray
+else
+    stalonetray 
+fi

@@ -2,7 +2,7 @@ local cmp = require("cmp")
 
 cmp.setup({
 	enabled = function()
-		return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
+		return vim.api.nvim_get_option_value("buftype", { buf = 0 }) ~= "prompt" or require("cmp_dap").is_dap_buffer()
 	end,
 	snippet = {
 		-- REQUIRED - you must specify a snippet engine
@@ -17,6 +17,7 @@ cmp.setup({
 		["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
 		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
 		["<C-l>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+		["<CR>"] = cmp.mapping(cmp.mapping.confirm({ select = true })),
 		["<C-j>"] = cmp.mapping(function()
 			if cmp.visible() then
 				cmp.select_next_item()
@@ -32,7 +33,6 @@ cmp.setup({
 			i = cmp.mapping.abort(),
 			c = cmp.mapping.close(),
 		}),
-		["<CR>"] = cmp.mapping.confirm({ select = true }),
 	},
 	completion = { autocomplete = false },
 	sources = cmp.config.sources({
