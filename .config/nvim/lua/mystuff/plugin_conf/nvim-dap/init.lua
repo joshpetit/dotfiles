@@ -1,7 +1,6 @@
 local dap = require("dap")
 dap.set_log_level("TRACE")
 
-
 dap.adapters.firefox = {
 	type = "executable",
 	command = "node",
@@ -68,13 +67,6 @@ dap.configurations.typescript = {
 }
 dap.configurations.javascript = dap.configurations.typescript
 
--- dap.adapters.dart = {
--- 	type = "executable",
--- 	command = "node",
--- 	args = { "/home/joshu/apps/Dart-Code/out/dist/debug.js", "flutter" },
--- 	--args = { "/home/joshu/apps/Dart-Code/out/dist/debug.js" },
--- }
-
 dap.adapters.flutter = {
 	type = "executable",
 	command = "flutter",
@@ -91,6 +83,13 @@ dap.adapters.dart = {
 	type = "executable",
 	command = "dart",
 	args = { "debug_adapter" },
+}
+
+dap.adapters.dartcode = {
+	type = "executable",
+	command = "node",
+	args = { "/Users/joshiep/apps/Dart-Code/out/dist/debug.js", "flutter" },
+	--args = { "/home/joshu/apps/Dart-Code/out/dist/debug.js" },
 }
 
 dap.adapters.darttest = {
@@ -118,6 +117,16 @@ dap.configurations.dart = {
 		cwd = "${workspaceFolder}",
 	},
 	{
+		type = "dartcode",
+		request = "launch",
+		dartSdkPath = os.getenv("HOME") .. "/flutter/bin/cache/dart-sdk/",
+		flutterSdkPath = os.getenv("HOME") .. "/flutter",
+		name = "Launch flutter (lib/main) - Dart-Code",
+		program = "${workspaceFolder}/lib/main.dart",
+		cwd = "${workspaceFolder}",
+        args = { "-d", "macos"}
+	},
+	{
 		type = "fluttertest",
 		request = "launch",
 		name = "Run flutter File",
@@ -129,7 +138,7 @@ dap.configurations.dart = {
 		request = "launch",
 		name = "Launch flutter Linux (lib/main)",
 		program = "${workspaceFolder}/lib/main.dart",
-		deviceId = "linux",
+        args = { "-d", "macos"},
 		cwd = "${workspaceFolder}",
 	},
 	{
