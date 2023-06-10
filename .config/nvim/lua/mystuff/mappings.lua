@@ -177,6 +177,7 @@ nmap("<F11>", [[<cmd>lua require("zen-mode").toggle({window = { width = .65, hei
 nmap("<leader>sv", "<cmd>lua ReloadConfig()<cr>")
 vim.cmd("command! ReloadConfig lua ReloadConfig()")
 nmap("<leader>db", '<cmd>lua require("dap").toggle_breakpoint()<cr>')
+nmap("<leader>dB", '<cmd>lua require("dap").toggle_breakpoint(nil, nil, vim.fn.input("Log Message: "))<cr>')
 nmap("<leader>dj", "<cmd>lua require'dap'.step_over()<cr>")
 nmap("<leader>dl", "<cmd>lua require'dap'.step_into()<cr>")
 nmap("<leader>dk", "<cmd>lua require'dap'.step_out()<cr>")
