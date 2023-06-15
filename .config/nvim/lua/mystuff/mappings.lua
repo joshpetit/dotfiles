@@ -87,7 +87,7 @@ m.nmap("<leader>tt", "<cmd>TestSuite<cr>")
 nmap("<leader>tt", [[:lua require("neotest").run.run({suite = true})<cr>]])
 nmap("<leader>fif", [[:lua require("telescope.builtin").current_buffer_fuzzy_find()<cr>]])
 nmap("<leader>fr", [[:Telescope resume<cr>]])
-nmap("<leader><ctr>q", [[:Telescope quickfixhistory]])
+nmap("<leader><c-q>", [[:Telescope quickfixhistory<cr>]])
 nmap("<leader>tf", [[:lua require("neotest").run.run(vim.fn.expand("%"))<cr>]])
 nmap("<leader>ts", [[:lua require("neotest").summary.toggle()<cr>]])
 

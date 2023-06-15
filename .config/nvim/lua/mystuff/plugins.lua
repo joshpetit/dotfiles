@@ -325,7 +325,7 @@ return require("packer").startup(function()
 	}, true)
 
 	use_help({
-		"~/projects/xbase/",
+		"kkharji/xbase",
 		run = "make install", -- or "make install && make free_space" (not recommended, longer build time)
 		requires = {
 			"neovim/nvim-lspconfig",
