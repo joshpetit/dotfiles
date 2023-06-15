@@ -340,6 +340,7 @@ return require("packer").startup(function()
 			require("Comment").setup()
 		end,
 	})
+    use "wsdjeg/vim-fetch"
 
 	if Packer_bootstrap then
 		require("packer").sync()
