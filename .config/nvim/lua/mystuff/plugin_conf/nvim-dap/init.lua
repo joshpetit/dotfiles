@@ -124,7 +124,7 @@ dap.configurations.dart = {
 		name = "Launch flutter (lib/main) - Dart-Code",
 		program = "${workspaceFolder}/lib/main.dart",
 		cwd = "${workspaceFolder}",
-        args = { "-d", "macos"}
+		args = { "-d", "macos" },
 	},
 	{
 		type = "fluttertest",
@@ -138,7 +138,7 @@ dap.configurations.dart = {
 		request = "launch",
 		name = "Launch flutter Linux (lib/main)",
 		program = "${workspaceFolder}/lib/main.dart",
-        args = { "-d", "macos"},
+		args = { "-d", "macos" },
 		cwd = "${workspaceFolder}",
 	},
 	{
@@ -150,3 +150,7 @@ dap.configurations.dart = {
 		cwd = "${workspaceFolder}",
 	},
 }
+
+dap.listeners.after["event_output"]["joshpetit"] = function(session, body)
+	vim.print("WE MADE IT!")
+end
