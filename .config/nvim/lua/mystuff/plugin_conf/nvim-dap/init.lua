@@ -102,16 +102,6 @@ dap.configurations.dart = {
 	{
 		type = "flutter",
 		request = "launch",
-		name = "Launch SSY Staging",
-		program = "${workspaceFolder}/lib/main-staging.dart",
-		cwd = "${workspaceFolder}",
-		args = {
-			"--flavor=staging",
-		},
-	},
-	{
-		type = "flutter",
-		request = "launch",
 		name = "Launch flutter (lib/main)",
 		program = "${workspaceFolder}/lib/main.dart",
 		cwd = "${workspaceFolder}",
@@ -148,6 +138,26 @@ dap.configurations.dart = {
 		program = "${file}",
 		deviceId = "linux",
 		cwd = "${workspaceFolder}",
+	},
+	{
+		type = "flutter",
+		request = "launch",
+		name = "Launch SSY Staging",
+		program = "${workspaceFolder}/lib/main-staging.dart",
+		cwd = "${workspaceFolder}",
+		args = {
+			"--flavor=staging",
+		},
+	},
+	{
+		type = "flutter",
+		request = "launch",
+		name = "Launch SSY Prod",
+		program = "${workspaceFolder}/lib/main-prod.dart",
+		cwd = "${workspaceFolder}",
+		args = {
+			"--flavor=prod",
+		},
 	},
 }
 

@@ -325,7 +325,7 @@ return require("packer").startup(function()
 	}, true)
 
 	use_help({
-		"~/projects/xbase/",
+		"kkharji/xbase",
 		run = "make install", -- or "make install && make free_space" (not recommended, longer build time)
 		requires = {
 			"neovim/nvim-lspconfig",
@@ -340,6 +340,7 @@ return require("packer").startup(function()
 			require("Comment").setup()
 		end,
 	})
+    use "wsdjeg/vim-fetch"
 
 	if Packer_bootstrap then
 		require("packer").sync()
