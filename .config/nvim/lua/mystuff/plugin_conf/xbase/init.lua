@@ -36,16 +36,16 @@ require("xbase").setup({
 		--- vertical toggle log buffer
 		toggle_vsplit_log_buffer = "<leader>xl",
 	},
-	code_actions = {
-		enable = true,
-		use_builtin_actions = true,
-		custom_actions = {
-			{
-				title = "Cool Actions",
-				action = function()
-					print("WOWW")
-				end,
-			},
-		},
-	},
+	-- code_actions = {
+	-- 	enable = true,
+	-- 	use_builtin_actions = true,
+	-- 	custom_actions = {
+	-- 		{
+	-- 			title = "Cool Actions",
+	-- 			action = function()
+	-- 				print("WOWW")
+	-- 			end,
+	-- 		},
+	-- 	},
+	-- },
 }) -- see default configuration bellow

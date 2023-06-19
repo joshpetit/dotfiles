@@ -119,7 +119,14 @@ dap.configurations.dart = {
 	{
 		type = "fluttertest",
 		request = "launch",
-		name = "Run flutter File",
+		name = "Run flutter test File",
+		program = "${file}",
+		cwd = "${workspaceFolder}",
+	},
+	{
+		type = "darttest",
+		request = "launch",
+		name = "Run dart test File",
 		program = "${file}",
 		cwd = "${workspaceFolder}",
 	},
