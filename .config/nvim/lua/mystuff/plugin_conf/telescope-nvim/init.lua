@@ -1,4 +1,5 @@
 local actions = require("telescope.actions")
+local action_utils = require("telescope.actions.utils")
 require("telescope").setup({
 	defaults = {
 		file_ignore_patterns = { "^.git/", "node_modules" },
@@ -11,6 +12,20 @@ require("telescope").setup({
 				["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
 				["<Tab>"] = actions.toggle_selection + actions.move_selection_better,
 				["<S-Tab>"] = actions.toggle_selection + actions.move_selection_worse,
+				["<c-a>"] = actions.select_all,
+				["<c-f>"] = function(prompt_bufnr)
+                    -- I literally just reinvented the quickfix list
+					local active_files = {}
+					action_utils.map_selections(prompt_bufnr, function(entry, _)
+						table.insert(active_files, entry[1])
+					end)
+					actions.close(prompt_bufnr)
+					vim.cmd("vnew")
+					local win = vim.api.nvim_get_current_win()
+					local buf = vim.api.nvim_create_buf(true, true)
+					vim.api.nvim_win_set_buf(win, buf)
+					vim.api.nvim_buf_set_lines(0, 0, 0, false, active_files)
+				end,
 				["<C-d>"] = function()
 					local entry = require("telescope.actions.state").get_selected_entry()
 					AsyncRun("dragon-drop", entry.value)
