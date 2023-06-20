@@ -1,34 +1,51 @@
 local actions = require("telescope.actions")
 require("telescope").setup({
-    defaults = {
-        file_ignore_patterns = { "^.git/", "node_modules" },
-        mappings = {
-            i = {
-                ["<C-Down>"] = actions.cycle_history_next,
-                ["<C-Up>"] = actions.cycle_history_prev,
-                ["<C-j>"] = actions.move_selection_next,
-                ["<C-k>"] = actions.move_selection_previous,
-                ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-                ["<Tab>"] = actions.toggle_selection + actions.move_selection_better,
-                ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_worse,
-                ["<C-d>"] = function()
-                    local entry = require("telescope.actions.state").get_selected_entry()
-                    AsyncRun("dragon-drop", entry.value)
-                end,
-            },
-            n = {
-                ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-            },
-        },
-    },
-    extensions = {
-        fzf = {
-            fuzzy = true,
-            override_generic_sorter = true, -- override the generic sorter
-            override_file_sorter = true, -- override the file sorter
-            case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-        },
-    },
+	defaults = {
+		file_ignore_patterns = { "^.git/", "node_modules" },
+		mappings = {
+			i = {
+				["<C-Down>"] = actions.cycle_history_next,
+				["<C-Up>"] = actions.cycle_history_prev,
+				["<C-j>"] = actions.move_selection_next,
+				["<C-k>"] = actions.move_selection_previous,
+				["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+				["<Tab>"] = actions.toggle_selection + actions.move_selection_better,
+				["<S-Tab>"] = actions.toggle_selection + actions.move_selection_worse,
+				["<C-d>"] = function()
+					local entry = require("telescope.actions.state").get_selected_entry()
+					AsyncRun("dragon-drop", entry.value)
+				end,
+			},
+			n = {
+				["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+			},
+		},
+	},
+	pickers = {
+		buffers = {
+			mappings = {
+				i = {
+					["<c-d>"] = actions.delete_buffer,
+					["<c-o>"] = function(prompt_bufnr)
+						actions.select_all(prompt_bufnr)
+						actions.toggle_selection(prompt_bufnr)
+						actions.delete_buffer(prompt_bufnr)
+					end,
+				},
+				n = {
+					["<c-d>"] = actions.delete_buffer,
+				},
+			},
+		},
+	},
+	extensions = {
+		fzf = {
+			fuzzy = true,
+			override_generic_sorter = true, -- override the generic sorter
+			override_file_sorter = true, -- override the file sorter
+			case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+		},
+	},
 })
 
 require("telescope").load_extension("fzf")
@@ -38,73 +55,73 @@ require("mystuff/utils")
 local exports = {}
 
 function exports.reload()
-    -- Telescope will give us something like ju/colors.lua,
-    -- so this function convert the selected entry to
-    local function get_module_name(s)
-        local module_name
+	-- Telescope will give us something like ju/colors.lua,
+	-- so this function convert the selected entry to
+	local function get_module_name(s)
+		local module_name
 
-        module_name = s:gsub("%.lua", "")
-        module_name = module_name:gsub("%/", ".")
-        module_name = module_name:gsub("%.init", "")
+		module_name = s:gsub("%.lua", "")
+		module_name = module_name:gsub("%/", ".")
+		module_name = module_name:gsub("%.init", "")
 
-        return module_name
-    end
+		return module_name
+	end
 
-    local prompt_title = "~ neovim modules ~"
+	local prompt_title = "~ neovim modules ~"
 
-    -- sets the path to the lua folder
-    local path = "~/.config/nvim/lua/mystuff"
+	-- sets the path to the lua folder
+	local path = "~/.config/nvim/lua/mystuff"
 
-    local opts = {
-        prompt_title = prompt_title,
-        cwd = path,
+	local opts = {
+		prompt_title = prompt_title,
+		cwd = path,
 
-        attach_mappings = function(_, map)
-            -- Adds a new map to ctrl+e.
-            map("i", "<c-e>", function(_)
-                -- these two a very self-explanatory
-                local entry = require("telescope.actions.state").get_selected_entry()
-                local name = get_module_name(entry.value)
+		attach_mappings = function(_, map)
+			-- Adds a new map to ctrl+e.
+			map("i", "<c-e>", function(_)
+				-- these two a very self-explanatory
+				local entry = require("telescope.actions.state").get_selected_entry()
+				local name = get_module_name(entry.value)
 
-                -- call the helper method to reload the module
-                -- and give some feedback
-                R(name)
-            end)
-        end,
-    }
+				-- call the helper method to reload the module
+				-- and give some feedback
+				R(name)
+			end)
+		end,
+	}
 
-    -- call the builtin method to list files
-    require("telescope.builtin").find_files(opts)
+	-- call the builtin method to list files
+	require("telescope.builtin").find_files(opts)
 end
 
 function exports.cooler()
-    -- Telescope will give us something like ju/colors.lua,
-    -- so this function convert the selected entry to
-    local prompt_title = "Cool Files"
+	-- Telescope will give us something like ju/colors.lua,
+	-- so this function convert the selected entry to
+	local prompt_title = "Cool Files"
 
-    -- sets the path to the lua folder
-    local path = "."
+	-- sets the path to the lua folder
+	local path = "."
 
-    local opts = {
-        prompt_title = prompt_title,
-        cwd = path,
+	local opts = {
+		prompt_title = prompt_title,
+		cwd = path,
 
-        attach_mappings = function(_, map)
-            map("n", "D", function(_)
-                local entry = require("telescope.actions.state").get_selected_entry()
-                AsyncRun("dragon-drag-and-drop", entry.value)
-            end)
-            map("i", "<c-o>", function(_)
-                local entry = require("telescope.actions.state").get_selected_entry()
-                AsyncRun("xdg-open", entry.value)
-            end)
-            map("i", "<C-Up>", require("telescope.actions").cycle_history_prev)
-            map("i", "<C-Down>", require("telescope.actions").cycle_history_next)
-            return true
-        end,
-    }
+		attach_mappings = function(_, map)
+			map("n", "D", function(_)
+				local entry = require("telescope.actions.state").get_selected_entry()
+				AsyncRun("dragon-drag-and-drop", entry.value)
+			end)
+			map("i", "<c-o>", function(_)
+				local entry = require("telescope.actions.state").get_selected_entry()
+				AsyncRun("xdg-open", entry.value)
+			end)
+			map("i", "<C-Up>", require("telescope.actions").cycle_history_prev)
+			map("i", "<C-Down>", require("telescope.actions").cycle_history_next)
+			return true
+		end,
+	}
 
-    require("telescope.builtin").find_files(opts)
+	require("telescope.builtin").find_files(opts)
 end
 
 return exports
