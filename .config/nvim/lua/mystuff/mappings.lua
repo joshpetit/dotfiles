@@ -30,23 +30,53 @@ nmap("<leader>ggf", function()
 	print(file)
 end)
 
-
 -- may be useful in future: vim.fn.empty(vim.fn.win_findbuf(buf))
 local dap_open_window = function(buffer_name)
 	local buffers = vim.api.nvim_list_bufs()
 	for _, buf in pairs(buffers) do
 		local cbuf = vim.bo[buf]
-        vim.print(cbuf.filetype)
+		vim.print(cbuf.filetype)
 		if cbuf.filetype == buffer_name then
-            local winVal = vim.fn.bufwinnr(buf)
+			local winVal = vim.fn.bufwinnr(buf)
 			if not (winVal == -1) then
-                vim.cmd("execute bufwinnr(" .. buf .. " ) 'wincmd w'")
+				vim.cmd("execute bufwinnr(" .. buf .. " ) 'wincmd w'")
 			else
 				vim.cmd("vsplit #" .. buf)
 			end
 		end
 	end
 end
+
+local view_last_files_versions = function()
+	local relativePath = vim.fn.expand("%")
+	local fileName = vim.fn.expand("%:t")
+	local res = vim.fn.execute([[! git --no-pager log --decorate=short --max-count=10 --format="\%H" ]] .. relativePath, "silent")
+	local qf_entries = {}
+
+	for commit in res:gmatch("[^\r\n]+") do
+		if commit:find("!git") == nil then
+			local previewPath = "/tmp/gitshowpreviews/" .. commit
+			vim.fn.execute("!mkdir /tmp/gitshowpreviews", "silent")
+			vim.fn.execute("!mkdir " .. previewPath, "silent")
+			local text = vim.fn.execute("!git rev-list --max-count=1 --no-commit-header --format=\\%B " .. commit)
+			for potentialText in text:gmatch("[^\r\n]+") do
+				if commit:find("!git") == nil then
+					text = potentialText
+				end
+			end
+			previewPath = previewPath .. "/" .. fileName
+			local command = string.format("!git show %s:./%s > %s", commit, relativePath, previewPath)
+			--vim.print(command)
+			vim.fn.execute(command)
+			table.insert(qf_entries, { bufnr = 0, filename = previewPath, text = text })
+		end
+	end
+
+	vim.fn.setqflist(qf_entries, " ")
+    vim.cmd(":copen")
+end
+
+nmap("<leader>gvf", view_last_files_versions)
 
 nmap("<leader>dvb", function()
 	dap_open_window("dapui_breakpoints")
@@ -115,7 +145,7 @@ m.nmap("K", "<Cmd>lua vim.lsp.buf.hover()<CR>")
 nmap("<leader>w", "<Cmd>w<CR>")
 nmap("<leader><s-w>", "<Cmd>SudoWrite!<CR>")
 nmap("<leader><c-f>", '<cmd>Telescope grep_string search=""<cr>')
-nmap("<leader>K", '<cmd>Telescope keymaps<cr>')
+nmap("<leader>K", "<cmd>Telescope keymaps<cr>")
 nmap("<leader>fb", "<cmd>Telescope buffers<cr>")
 nmap("<leader><leader><c-f>", "<cmd>Telescope live_grep<cr>")
 nmap("<leader>fb", "<cmd>Telescope buffers<cr>")
@@ -176,7 +206,9 @@ nmap("<F11>", [[<cmd>lua require("zen-mode").toggle({window = { width = .65, hei
 -- m.vmap("<leader>nc", "<Plug>kommentary_visual_default")
 
 nmap("<leader>sv", "<cmd>lua ReloadConfig()<cr>")
-vim.cmd("command! ReloadConfig lua ReloadConfig()")
+nmap("<leader>sv", "<cmd>lua ReloadConfig()<cr>")
+vim.cmd("command! Amazon lua require('mystuff/amazon_hide').find()")
+vim.cmd("command! Amazon2 lua require('mystuff/amazon_hide').find2()")
 nmap("<leader>db", '<cmd>lua require("dap").toggle_breakpoint()<cr>')
 nmap("<leader>dB", '<cmd>lua require("dap").toggle_breakpoint(nil, nil, vim.fn.input("Log Message: "))<cr>')
 nmap("<leader>dj", "<cmd>lua require'dap'.step_over()<cr>")
