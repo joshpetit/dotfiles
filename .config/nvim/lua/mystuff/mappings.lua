@@ -58,48 +58,36 @@ end
 local view_last_files_versions = function(flogs)
 	local relativePath = vim.fn.expand("%")
 	local fileName = vim.fn.expand("%:t")
-	local res = vim.fn.execute(
-		[[! git --no-pager log --decorate=short --max-count=10 --format="\%H" ]] .. relativePath,
-		"silent"
-	)
-	local qf_entries = {}
-	if flogs ~= nil then
-		for _, branch in pairs(flogs) do
-			if branch:find("!git") == nil then
-				local previewPath = "/tmp/gitshowpreviews/" .. branch
-				vim.fn.execute("!mkdir /tmp/gitshowpreviews", "silent")
-				vim.fn.execute("!mkdir " .. previewPath, "silent")
-				local text = vim.fn.execute("!git rev-list --max-count=1 --no-commit-header --format=\\%B " .. branch)
-				for potentialText in text:gmatch("[^\r\n]+") do
-					if branch:find("!git") == nil then
-						text = potentialText
-					end
-				end
-				previewPath = previewPath .. "/" .. fileName
-				local command = string.format("!git show %s:./%s > %s", branch, relativePath, previewPath)
-				--vim.print(command)
-				vim.fn.execute(command)
-				table.insert(qf_entries, { bufnr = 0, filename = previewPath, text = text })
-			end
-		end
+	local commits
+	if flogs == nil then
+		local res = vim.fn.execute(
+			[[! git --no-pager log --decorate=short --max-count=10 --format="\%H" ]] .. relativePath,
+			"silent"
+		)
+		commits = vim.split(res, "\n", { trimempty = true })
 	else
-		for commit in res:gmatch("[^\r\n]+") do
-			if commit:find("!git") == nil then
-				local previewPath = "/tmp/gitshowpreviews/" .. commit
-				vim.fn.execute("!mkdir /tmp/gitshowpreviews", "silent")
-				vim.fn.execute("!mkdir " .. previewPath, "silent")
-				local text = vim.fn.execute("!git rev-list --max-count=1 --no-commit-header --format=\\%B " .. commit)
-				for potentialText in text:gmatch("[^\r\n]+") do
-					if commit:find("!git") == nil then
-						text = potentialText
-					end
+		commits = flogs
+		table.insert(commits, 0, 0)
+		table.insert(commits, 0, 0)
+	end
+	local qf_entries = {}
+	vim.print(commits)
+	for index, commit in pairs(commits) do
+		if index > 2 then
+			local previewPath = "/tmp/gitshowpreviews/" .. commit
+			vim.fn.execute("!mkdir /tmp/gitshowpreviews", "silent")
+			vim.fn.execute("!mkdir " .. previewPath, "silent")
+			local text = vim.fn.execute("!git rev-list --max-count=1 --no-commit-header --format=\\%B " .. commit)
+			for potentialText in text:gmatch("[^\r\n]+") do
+				if commit:find("!git") == nil then
+					text = potentialText
 				end
-				previewPath = previewPath .. "/" .. fileName
-				local command = string.format("!git show %s:./%s > %s", commit, relativePath, previewPath)
-				--vim.print(command)
-				vim.fn.execute(command)
-				table.insert(qf_entries, { bufnr = 0, filename = previewPath, text = text })
 			end
+			previewPath = previewPath .. "/" .. fileName
+			local command = string.format("!git show %s:./%s > %s", commit, relativePath, previewPath)
+			--vim.print(command)
+			vim.fn.execute(command)
+			table.insert(qf_entries, { bufnr = 0, filename = previewPath, text = text })
 		end
 	end
 
