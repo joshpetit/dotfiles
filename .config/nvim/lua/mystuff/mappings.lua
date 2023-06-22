@@ -1,3 +1,11 @@
+local pickers = require("telescope.pickers")
+local finders = require("telescope.finders")
+local conf = require("telescope.config").values
+local action_utils = require("telescope.actions.utils")
+
+local actions = require("telescope.actions")
+local action_state = require("telescope.actions.state")
+
 local m = require("mystuff/mapping_utils")
 
 local nmap = function(keys, command)
@@ -47,37 +55,93 @@ local dap_open_window = function(buffer_name)
 	end
 end
 
-local view_last_files_versions = function()
+local view_last_files_versions = function(flogs)
 	local relativePath = vim.fn.expand("%")
 	local fileName = vim.fn.expand("%:t")
-	local res = vim.fn.execute([[! git --no-pager log --decorate=short --max-count=10 --format="\%H" ]] .. relativePath, "silent")
+	local res = vim.fn.execute(
+		[[! git --no-pager log --decorate=short --max-count=10 --format="\%H" ]] .. relativePath,
+		"silent"
+	)
 	local qf_entries = {}
-
-	for commit in res:gmatch("[^\r\n]+") do
-		if commit:find("!git") == nil then
-			local previewPath = "/tmp/gitshowpreviews/" .. commit
-			vim.fn.execute("!mkdir /tmp/gitshowpreviews", "silent")
-			vim.fn.execute("!mkdir " .. previewPath, "silent")
-			local text = vim.fn.execute("!git rev-list --max-count=1 --no-commit-header --format=\\%B " .. commit)
-			for potentialText in text:gmatch("[^\r\n]+") do
-				if commit:find("!git") == nil then
-					text = potentialText
+	if flogs ~= nil then
+		for _, branch in pairs(flogs) do
+			if branch:find("!git") == nil then
+				local previewPath = "/tmp/gitshowpreviews/" .. branch
+				vim.fn.execute("!mkdir /tmp/gitshowpreviews", "silent")
+				vim.fn.execute("!mkdir " .. previewPath, "silent")
+				local text = vim.fn.execute("!git rev-list --max-count=1 --no-commit-header --format=\\%B " .. branch)
+				for potentialText in text:gmatch("[^\r\n]+") do
+					if branch:find("!git") == nil then
+						text = potentialText
+					end
 				end
+				previewPath = previewPath .. "/" .. fileName
+				local command = string.format("!git show %s:./%s > %s", branch, relativePath, previewPath)
+				--vim.print(command)
+				vim.fn.execute(command)
+				table.insert(qf_entries, { bufnr = 0, filename = previewPath, text = text })
 			end
-			previewPath = previewPath .. "/" .. fileName
-			local command = string.format("!git show %s:./%s > %s", commit, relativePath, previewPath)
-			--vim.print(command)
-			vim.fn.execute(command)
-			table.insert(qf_entries, { bufnr = 0, filename = previewPath, text = text })
+		end
+	else
+		for commit in res:gmatch("[^\r\n]+") do
+			if commit:find("!git") == nil then
+				local previewPath = "/tmp/gitshowpreviews/" .. commit
+				vim.fn.execute("!mkdir /tmp/gitshowpreviews", "silent")
+				vim.fn.execute("!mkdir " .. previewPath, "silent")
+				local text = vim.fn.execute("!git rev-list --max-count=1 --no-commit-header --format=\\%B " .. commit)
+				for potentialText in text:gmatch("[^\r\n]+") do
+					if commit:find("!git") == nil then
+						text = potentialText
+					end
+				end
+				previewPath = previewPath .. "/" .. fileName
+				local command = string.format("!git show %s:./%s > %s", commit, relativePath, previewPath)
+				--vim.print(command)
+				vim.fn.execute(command)
+				table.insert(qf_entries, { bufnr = 0, filename = previewPath, text = text })
+			end
 		end
 	end
 
 	vim.fn.setqflist(qf_entries, " ")
-    vim.cmd(":copen")
+	vim.cmd(":copen")
 end
 
-nmap("<leader>gvf", view_last_files_versions)
+local select_by_branch = function(opts)
+	opts = opts or {}
+	local git_command = { "git", "for-each-ref", "--format=%(refname:short)", "refs/heads/" }
+	pickers
+		.new(opts, {
+			prompt_title = "colors",
+			finder = finders.new_oneshot_job(git_command, opts),
+			sorter = conf.generic_sorter(opts),
+			attach_mappings = function(prompt_bufnr, map)
+				actions.select_default:replace(function()
+					local selection = action_state.get_selected_entry()
+					local branches_to_do_things_with = { selection[1] }
+					action_utils.map_selections(prompt_bufnr, function(entry, _)
+						if entry[1] ~= selection then
+							table.insert(branches_to_do_things_with, entry[1])
+						end
+					end)
+					vim.print(branches_to_do_things_with)
+					actions.close(prompt_bufnr)
+					view_last_files_versions(branches_to_do_things_with)
+				end)
+				return true
+			end,
+		})
+		:find()
+end
 
+-- to execute the function
+
+vim.keymap.set("n", "<leader>ld", ":luafile %<cr>")
+vim.keymap.set("n", "<leader>gvF", function()
+	select_by_branch(require("telescope.themes").get_dropdown({}))
+end)
+
+nmap("<leader>gvf", view_last_files_versions)
 nmap("<leader>dvb", function()
 	dap_open_window("dapui_breakpoints")
 end)
