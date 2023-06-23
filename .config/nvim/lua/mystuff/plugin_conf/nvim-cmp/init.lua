@@ -8,9 +8,9 @@ cmp.setup({
 		-- REQUIRED - you must specify a snippet engine
 		expand = function(args)
 			-- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-			require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
+			-- require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
 			-- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-			-- require("snippy").expand_snippet(args.body) -- For `snippy` users.
+			require("snippy").expand_snippet(args.body) -- For `snippy` users.
 		end,
 	},
 	mapping = {
@@ -37,11 +37,12 @@ cmp.setup({
 	completion = { autocomplete = false },
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" }, -- { name = 'vsnip' }, -- For vsnip users.
-		{ name = "luasnip" }, -- For luasnip users.
-		-- { name = 'ultisnips' }, -- For ultisnips users.
-		-- { name = "snippy" }, -- For snippy users.
-		{ name = "orgmode" },
-	}, { { name = "buffer" } }),
+		{ name = "snippy" }, -- For snippy users.
+		-- { name = 'luasnip' }, -- For luasnip users.
+		{ name = "neorg" },
+	}, {
+		{ name = "buffer" },
+	}),
 })
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
@@ -52,5 +53,11 @@ cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
 		{ name = "dap" },
 	},
 })
+-- require("cmp").setup.buffer({
+-- 	sources = {
+-- 		{ name = "buffer" },
+-- 		{ name = "neorg" },
+-- 	},
+-- })
 
 -- Look into adding https://github.com/rcarriga/cmp-dap

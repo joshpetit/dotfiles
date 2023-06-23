@@ -50,8 +50,12 @@ return require("packer").startup(function()
 		"nvim-neorg/neorg",
 		config = function() end,
 		run = ":Neorg sync-parsers",
-		requires = "nvim-lua/plenary.nvim",
-		disable = true,
+		requires = {
+			"hrsh7th/nvim-cmp",
+			"nvim-lua/plenary.nvim",
+			"nvim-neorg/neorg-telescope",
+		},
+		disable = false,
 	}, true)
 
 	use("wbthomason/packer.nvim")
@@ -340,7 +344,7 @@ return require("packer").startup(function()
 			require("Comment").setup()
 		end,
 	})
-    use "wsdjeg/vim-fetch"
+	use("wsdjeg/vim-fetch")
 
 	if Packer_bootstrap then
 		require("packer").sync()
