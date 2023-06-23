@@ -14,7 +14,7 @@ require("telescope").setup({
 				["<S-Tab>"] = actions.toggle_selection + actions.move_selection_worse,
 				["<c-a>"] = actions.select_all,
 				["<c-f>"] = function(prompt_bufnr)
-                    -- I literally just reinvented the quickfix list
+					-- I literally just reinvented the quickfix list
 					local active_files = {}
 					action_utils.map_selections(prompt_bufnr, function(entry, _)
 						table.insert(active_files, entry[1])
@@ -26,7 +26,7 @@ require("telescope").setup({
 					vim.api.nvim_win_set_buf(win, buf)
 					vim.api.nvim_buf_set_lines(0, 0, 0, false, active_files)
 				end,
-				["<C-d>"] = function()
+				["<C-D>"] = function()
 					local entry = require("telescope.actions.state").get_selected_entry()
 					AsyncRun("dragon-drop", entry.value)
 				end,

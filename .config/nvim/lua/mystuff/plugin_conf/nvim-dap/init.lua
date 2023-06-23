@@ -167,7 +167,3 @@ dap.configurations.dart = {
 		},
 	},
 }
-
-dap.listeners.after["event_output"]["joshpetit"] = function(session, body)
-	vim.print("WE MADE IT!")
-end
