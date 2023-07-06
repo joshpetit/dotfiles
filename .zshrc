@@ -163,7 +163,6 @@ compdef _es es
 zplug load
 
 [[ -f /home/joshu/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/joshu/.config/.dart-cli-completion/zsh-config.zsh || true
-include ~/.amazoninit
 include /Users/joshiep/.brazil_completion/zsh_completion
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
@@ -179,3 +178,4 @@ map() {
 
 include ~/.aliases
 include ~/.aliases-private
+include ~/.amazoninit

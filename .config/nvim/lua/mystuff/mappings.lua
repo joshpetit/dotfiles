@@ -179,10 +179,14 @@ nmap("<leader>td", [[:lua require("neotest").run.run_last({ strategy = "dap" })<
 nmap("<leader>tD", [[:lua require("neotest").run.run({vim.fn.expand("%"), strategy = "dap"})<cr>]])
 
 nmap("<leader>ct", [[:Trouble<cr>]])
+-- Copy relative path with line number
 nmap("<leader>cpl", [[:let @+ = fnamemodify(expand("%"), ":~:.") . ':' . line('.')<cr>]])
+-- Copy relative path
 nmap("<leader>cpp", [[:let @+ = fnamemodify(expand("%"), ":~:.")<cr>]])
+-- Copy file name
 nmap("<leader>cpf", [[:let @+ = expand('%:t')<cr>]])
-
+-- Copy full path
+nmap("<leader>cpP", [[:let @+ = expand('%:p')<cr>]])
 nmap("<S-q>", "<cmd>NvimTreeToggle<cr>")
 --m.nmap("<S-q>", "<cmd>NvimTreeFindFileToggle<cr>")
 nmap("<leader>nf", "<cmd>NvimTreeFindFileToggle<cr>")
