@@ -154,6 +154,7 @@ dap.configurations.dart = {
 		cwd = "${workspaceFolder}",
 		args = {
 			"--flavor=staging",
+			"--observatory-port=9200",
 		},
 	},
 	{

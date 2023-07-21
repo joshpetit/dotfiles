@@ -155,6 +155,10 @@ local toggle_quick_fix = function()
 	vim.cmd([[copen]])
 end
 
+-- Neorg
+nmap("<leader>np", ":Neorg workspaces programming_notes")
+nmap("<leader>ns", ":Neorg workspaces stuff")
+
 nmap("<leader>qf", toggle_quick_fix)
 
 nmap("<leader>es", function()
@@ -190,7 +194,13 @@ nmap("<leader>nf", "<cmd>NvimTreeFindFileToggle<cr>")
 -- Harpoon
 nmap("<leader>ha", [[:lua require("harpoon.mark").add_file()<cr>]])
 nmap("<leader>hs", [[:lua require("harpoon.ui").toggle_quick_menu()<cr>]])
-nmap("<leader>a", [[:HopWord<cr>]])
+--
+--nmap("<leader>a", [[:HopWord<cr>]])
+--m.vmap("<leader>a", [[:HopWord<cr>]])
+local hop = require("hop")
+vim.keymap.set("", "<leader>a", function()
+	hop.hint_words()
+end, { remap = true })
 
 nmap("<leader>pp", ":lua require('nabla').popup()<CR>")
 m.nmap("K", "<Cmd>lua vim.lsp.buf.hover()<CR>")
@@ -262,6 +272,9 @@ nmap("<leader>sv", "<cmd>lua ReloadConfig()<cr>")
 vim.cmd("command! Amazon lua require('mystuff/amazon_hide').find()")
 vim.cmd("command! Amazon2 lua require('mystuff/amazon_hide').find2()")
 nmap("<leader>db", '<cmd>lua require("dap").toggle_breakpoint()<cr>')
+vim.keymap.set("n", "<Leader>dL", function()
+	require("dap").run_last()
+end)
 nmap("<leader>dB", '<cmd>lua require("dap").toggle_breakpoint(nil, nil, vim.fn.input("Log Message: "))<cr>')
 nmap("<leader>dj", "<cmd>lua require'dap'.step_over()<cr>")
 nmap("<leader>dl", "<cmd>lua require'dap'.step_into()<cr>")

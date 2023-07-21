@@ -344,6 +344,7 @@ return require("packer").startup(function()
 			require("Comment").setup()
 		end,
 	})
+    -- go directly to a file and line
 	use("wsdjeg/vim-fetch")
 
 	if Packer_bootstrap then

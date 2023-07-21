@@ -1,6 +1,7 @@
 require("neorg").setup({
 	load = {
 		["core.defaults"] = {}, -- Loads default behaviour
+		["core.tempus"] = {},
 		["core.concealer"] = {}, -- Adds pretty icons to your documents
 		["core.integrations.nvim-cmp"] = {},
 		["core.completion"] = {
@@ -14,7 +15,8 @@ require("neorg").setup({
 		["core.dirman"] = { -- Manages Neorg workspaces
 			config = {
 				workspaces = {
-					stuff = "~/sync/norg/",
+					stuff = "~/sync/norg/stuff/",
+					programming_notes = "~/sync/norg/programming/"
 				},
 				default_workspace = "stuff",
 			},
