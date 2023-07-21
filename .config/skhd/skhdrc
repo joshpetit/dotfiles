@@ -7,7 +7,7 @@ cmd + shift - x : open /Applications/Xcode.app/
 
 
 ctrl - e : yabai -m space --layout bsp
-ctrl - s : yabai -m space --layout stack
+ctrl + shift - s : yabai -m space --layout stack
 
 ctrl + alt - left : yabai -m window --focus west
 ctrl + alt - right : yabai -m window --focus east
