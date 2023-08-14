@@ -85,13 +85,6 @@ dap.adapters.dart = {
 	args = { "debug_adapter" },
 }
 
-dap.adapters.dartcode = {
-	type = "executable",
-	command = "node",
-	args = { "/Users/joshiep/apps/Dart-Code/out/dist/debug.js", "flutter" },
-	--args = { "/home/joshu/apps/Dart-Code/out/dist/debug.js" },
-}
-
 dap.adapters.darttest = {
 	type = "executable",
 	command = "dart",
@@ -107,14 +100,41 @@ dap.configurations.dart = {
 		cwd = "${workspaceFolder}",
 	},
 	{
-		type = "dartcode",
+		type = "dart",
 		request = "launch",
-		dartSdkPath = os.getenv("HOME") .. "/flutter/bin/cache/dart-sdk/",
-		flutterSdkPath = os.getenv("HOME") .. "/flutter",
-		name = "Launch flutter (lib/main) - Dart-Code",
+		name = "Linux, lib/main",
 		program = "${workspaceFolder}/lib/main.dart",
+		args = { "-d", "Linux" },
 		cwd = "${workspaceFolder}",
+	},
+	{
+		type = "dart",
+		request = "launch",
+		name = "Macos, lib/main",
+		program = "${workspaceFolder}/lib/main.dart",
 		args = { "-d", "macos" },
+		cwd = "${workspaceFolder}",
+	},
+	{
+		type = "flutter",
+		request = "launch",
+		name = "Launch SSY Staging",
+		program = "${workspaceFolder}/lib/main-staging.dart",
+		cwd = "${workspaceFolder}",
+		args = {
+			"--flavor=staging",
+			"--observatory-port=9200",
+		},
+	},
+	{
+		type = "flutter",
+		request = "launch",
+		name = "SSY Prod",
+		program = "${workspaceFolder}/lib/main-prod.dart",
+		cwd = "${workspaceFolder}",
+		args = {
+			"--flavor=prod",
+		},
 	},
 	{
 		type = "fluttertest",
@@ -133,38 +153,9 @@ dap.configurations.dart = {
 	{
 		type = "dart",
 		request = "launch",
-		name = "Launch flutter Linux (lib/main)",
-		program = "${workspaceFolder}/lib/main.dart",
-		args = { "-d", "macos" },
-		cwd = "${workspaceFolder}",
-	},
-	{
-		type = "dart",
-		request = "launch",
 		name = "Run Dart File",
 		program = "${file}",
 		deviceId = "linux",
 		cwd = "${workspaceFolder}",
-	},
-	{
-		type = "flutter",
-		request = "launch",
-		name = "Launch SSY Staging",
-		program = "${workspaceFolder}/lib/main-staging.dart",
-		cwd = "${workspaceFolder}",
-		args = {
-			"--flavor=staging",
-			"--observatory-port=9200",
-		},
-	},
-	{
-		type = "flutter",
-		request = "launch",
-		name = "Launch SSY Prod",
-		program = "${workspaceFolder}/lib/main-prod.dart",
-		cwd = "${workspaceFolder}",
-		args = {
-			"--flavor=prod",
-		},
 	},
 }
