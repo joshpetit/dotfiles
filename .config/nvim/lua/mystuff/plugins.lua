@@ -55,7 +55,7 @@ return require("packer").startup(function()
 			"nvim-lua/plenary.nvim",
 			"nvim-neorg/neorg-telescope",
 		},
-		disable = false,
+		disable = true,
 	}, true)
 
 	use("wbthomason/packer.nvim")
@@ -334,6 +334,7 @@ return require("packer").startup(function()
 		requires = {
 			"neovim/nvim-lspconfig",
 		},
+		disable = true,
 	}, true)
 
 	use({ "SmiteshP/nvim-navic", requires = "neovim/nvim-lspconfig" })
@@ -344,8 +345,15 @@ return require("packer").startup(function()
 			require("Comment").setup()
 		end,
 	})
-    -- go directly to a file and line
+	-- go directly to a file and line
 	use("wsdjeg/vim-fetch")
+
+	use({
+		"tzachar/highlight-undo.nvim",
+		config = function()
+            require('highlight-undo').setup()
+		end,
+	})
 
 	if Packer_bootstrap then
 		require("packer").sync()

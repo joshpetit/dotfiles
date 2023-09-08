@@ -11,7 +11,7 @@ then
         echo "CLOSED LAPTOP WITH NO MONITORS"
         systemctl suspend
     fi
-    if [ "$current" == "swift-normal" ]
+    if [ "$current" == "default" ]
     then
         echo "OPEND LAPTOP WITH MONITORS"
         #su -c 'DISPLAY=:0.0 autorandr --load monitors-only' joshu

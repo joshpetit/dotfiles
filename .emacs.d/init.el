@@ -121,6 +121,12 @@
              (define-key evil-normal-state-map (kbd "<leader>oa") 'org-agenda)
              )
 
+(use-package evil-collection
+  :init
+  (evil-collection-init)
+  )
+
+
 (use-package evil-org
              :after org
              :hook (org-mode . (lambda () evil-org-mode))
@@ -128,6 +134,7 @@
              (require 'evil-org)
              (require 'evil-org-agenda)
              (evil-org-agenda-set-keys)
+             (setq evil-want-keybinding nil)
              (evil-org-set-key-theme '(navigation insert textobjects additional calendar)))
 
 (use-package ivy-rich

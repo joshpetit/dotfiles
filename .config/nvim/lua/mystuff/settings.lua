@@ -50,4 +50,8 @@ vim.cmd([[
 au TextYankPost * silent! lua vim.highlight.on_yank {on_visual=false}
 ]])
 
+vim.cmd([[
+let g:vimtex_view_method = 'zathura'
+]])
+
 return M
