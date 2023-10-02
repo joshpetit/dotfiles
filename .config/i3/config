@@ -334,3 +334,4 @@ bindsym $mod+ctrl+n exec --no-startup-id dunstctl history-pop
 bindsym $mod+ctrl+l exec lockscreen
 exec --no-startup-id emacsclient
 bindsym $mod+Shift+b exec --no-startup-id toggle-stalone
+bindsym $mod+Shift+v exec --no-startup-id rofi -show calc -modi calc -no-show-match -no-sort -kb-mode-previous "" -kb-mode-next "" -kb-move-word-back "Control+h" -kb-move-word-forward "Control+l" 

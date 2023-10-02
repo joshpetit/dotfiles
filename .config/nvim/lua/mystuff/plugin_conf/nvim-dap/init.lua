@@ -144,6 +144,16 @@ dap.configurations.dart = {
 		cwd = "${workspaceFolder}",
 	},
 	{
+		type = "fluttertest",
+		request = "launch",
+		name = "Flutter Integration Test Staging",
+		program = "${file}",
+		cwd = "${workspaceFolder}",
+		args = {
+			"--flavor=staging",
+		},
+	},
+	{
 		type = "darttest",
 		request = "launch",
 		name = "Run dart test File",

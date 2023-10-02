@@ -15,4 +15,4 @@ m.nmap('<leader>rr', '<cmd>Make run<CR>', {buffer = true})
 m.nmap('<leader>rf', '<cmd>!java -ea %<CR>', {buffer = true})
 m.nmap('<leader>e', '<cmd>split build.gradle<CR>', {buffer = true})
 
-Jcall(require, "mystuff/secretstuff")
+-- Jcall(require, "mystuff/secretstuff")
