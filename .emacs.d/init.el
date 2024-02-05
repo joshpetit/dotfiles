@@ -54,6 +54,15 @@
              (setq ivy-omni-org-file-sources '(org-agenda-files))
              )
 
+(setq org-agenda-custom-commands
+      '(("c" . "My Custom Agendas")
+        ("cu" "Unscheduled TODO"
+         ((todo ""
+                ((org-agenda-overriding-header "\nUnscheduled TODO")
+                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp)))))
+         nil
+         nil)))
+
 (use-package darkroom)
 
 
@@ -493,12 +502,12 @@
 
 (add-hook 'org-after-todo-statistics-hook #'org-summary-todo)
 
-;(setq calendar-latitude 35.99)
-;(setq calendar-longitude -78.89)
-;(setq calendar-location-name "Durham, NC")
-(setq calendar-latitude 37.8715)
-(setq calendar-longitude -122.2730)
-(setq calendar-location-name "Berkeley, CA")
+(setq calendar-latitude 35.99)
+(setq calendar-longitude -78.89)
+(setq calendar-location-name "Durham, NC")
+;; (setq calendar-latitude 37.8715)
+;; (setq calendar-longitude -122.2730)
+;; (setq calendar-location-name "Berkeley, CA")
 
 (setq org-agenda-include-diary t)
 
@@ -538,6 +547,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-agenda-files
+   '("~/sync/org/lani.org" "/home/joshu/sync/org/archive/fa22.org" "/home/joshu/sync/org/archive/sp22.org" "/home/joshu/sync/org/programming/ms5.org" "/home/joshu/sync/org/programming/widgetbook.org" "/home/joshu/sync/org/anew.org" "/home/joshu/sync/org/bible.org" "/home/joshu/sync/org/bibleram.org" "/home/joshu/sync/org/books.org" "/home/joshu/sync/org/fa22.org" "/home/joshu/sync/org/fa23.org" "/home/joshu/sync/org/job_search.org" "/home/joshu/sync/org/life.org" "/home/joshu/sync/org/ministers.org" "/home/joshu/sync/org/ministry.org" "/home/joshu/sync/org/music.org" "/home/joshu/sync/org/music_trainer.org" "/home/joshu/sync/org/notes.org" "/home/joshu/sync/org/petit.dev.org" "/home/joshu/sync/org/phone_refile.org" "/home/joshu/sync/org/prayers.org" "/home/joshu/sync/org/programming.org" "/home/joshu/sync/org/refile.org" "/home/joshu/sync/org/reflections.org" "/home/joshu/sync/org/religious.org" "/home/joshu/sync/org/retreat.org" "/home/joshu/sync/org/roth_ira.org" "/home/joshu/sync/org/sabbath.org" "/home/joshu/sync/org/sermons.org" "/home/joshu/sync/org/sp22.org" "/home/joshu/sync/org/sp23.org" "/home/joshu/sync/org/sp24.org" "/home/joshu/sync/org/ssy.org" "/home/joshu/sync/org/trianglesda.org" "/home/joshu/sync/org/work.org" "/home/joshu/sync/org/youtube.org"))
  '(package-selected-packages
    '(websocket org-hyperscheduler zenburn-theme web-mode undo-tree spacemacs-theme selectrum-prescient quelpa-use-package poet-theme org-yt org-gcal org-contrib no-littering nimbus-theme ivy-rich ivy-prescient ivy-omni-org general evil-org evil-collection doom-themes doom-modeline darkroom counsel company-prescient calfw-org calfw)))
 (custom-set-faces
@@ -546,3 +557,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'narrow-to-region 'disabled nil)

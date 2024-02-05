@@ -5,6 +5,10 @@ pgrep conky
 if pgrep conky ; then
     pkill conky
 else
-    conky -d
-    xdo raise -N Conky
+    if [[ $* == *--raise* ]] then
+      conky -d
+      xdo raise -N Conky
+    else
+      conky -d --xinerama-head=4
+    fi
 fi

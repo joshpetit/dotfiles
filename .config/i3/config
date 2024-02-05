@@ -327,7 +327,8 @@ bindsym $mod+Shift+m exec --no-startup-id ferdi
 for_window [title="^Ferdi$"] kill
 hide_edge_borders smart
 
-bindsym $mod+Ctrl+a exec --no-startup-id toggle-conky
+bindsym $mod+Ctrl+a exec --no-startup-id toggle-conky --raise
+bindsym $mod+Ctrl+q exec --no-startup-id toggle-conky 
 bindsym $mod+Shift+a exec ~/projects/rofi-mixer/src/rofi-mixer
 bindsym $mod+n exec --no-startup-id dunstctl close-all && pkill conky
 bindsym $mod+ctrl+n exec --no-startup-id dunstctl history-pop

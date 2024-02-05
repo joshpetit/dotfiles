@@ -354,13 +354,6 @@ return require("packer").startup(function()
             require('highlight-undo').setup()
 		end,
 	})
-    use {
-      "nvim-telescope/telescope-frecency.nvim",
-      config = function()
-        require("telescope").load_extension "frecency"
-      end,
-      requires = { "kkharji/sqlite.lua" },
-    }
 
 	if Packer_bootstrap then
 		require("packer").sync()
