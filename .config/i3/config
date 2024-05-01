@@ -220,6 +220,7 @@ exec --no-startup-id kdeconnect-cli
 # Flameshot
 exec --no-startup-id flameshot
 bindsym Print exec flameshot gui
+bindsym Shift+Print exec normcap
 
 # KDEConnect
 bindsym $mod+Shift+Insert exec xclip -selection clipboard -t image/png -o > /tmp/clipboard.png && kdeconnect-handler /tmp/clipboard.png

@@ -7,6 +7,7 @@ stty sane
 if [ -f ~/.zshextra ]; then
     source ~/.zshextra
 fi
+fpath+=~/.zfunc
 autoload -U +X bashcompinit && bashcompinit
 # No Stupid beeps
 unsetopt BEEP

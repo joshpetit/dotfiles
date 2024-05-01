@@ -7,6 +7,7 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 (require 'use-package)
+(global-auto-revert-mode t)
 
 (set-face-attribute 'default nil :font "InconsolataGo Nerd Font" :height 115)
 

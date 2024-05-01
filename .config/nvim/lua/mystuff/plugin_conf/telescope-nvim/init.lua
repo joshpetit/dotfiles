@@ -28,7 +28,7 @@ require("telescope").setup({
 				end,
 				["<C-D>"] = function()
 					local entry = require("telescope.actions.state").get_selected_entry()
-					AsyncRun("dragon-drop", entry.value)
+					AsyncRun("dragon-drop", "\"" .. entry.value .. "\"")
 				end,
 			},
 			n = {

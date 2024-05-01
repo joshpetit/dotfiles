@@ -235,6 +235,9 @@ return require("packer").startup(function()
 		"stevearc/dressing.nvim",
 		config = function()
 			require("dressing").setup({
+                select = {
+                    --backend = {"builtin"}
+                },
 				input = {
 					override = function(conf)
 						conf.col = -1
@@ -354,6 +357,7 @@ return require("packer").startup(function()
             require('highlight-undo').setup()
 		end,
 	})
+    use("github/copilot.vim")
 
 	if Packer_bootstrap then
 		require("packer").sync()

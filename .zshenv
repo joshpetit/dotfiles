@@ -15,6 +15,7 @@ export CM_LAUNCHER=rofi
 
 export ANDROID_SDK_ROOT='/opt/android-sdk/'
 export FLUTTER_ROOT='/opt/flutter/'
+export PATH=$PATH:$JAVA_HOME/bin/
 export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools/
 export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin/
 export PATH=$PATH:$ANDROID_ROOT/emulator
