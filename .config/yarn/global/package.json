@@ -15,6 +15,6 @@
     "kill-port": "^2.0.1",
     "prettier-plugin-latex": "^1.2.4",
     "tsx": "^3.12.1",
-    "vercel": "^25.1.0"
+    "vercel": "^34.2.0"
   }
 }

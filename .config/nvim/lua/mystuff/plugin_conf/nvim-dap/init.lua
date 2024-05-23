@@ -66,6 +66,7 @@ dap.configurations.typescript = {
 	},
 }
 dap.configurations.javascript = dap.configurations.typescript
+dap.configurations.typescriptreact= dap.configurations.typescript
 
 dap.adapters.flutter = {
 	type = "executable",

@@ -127,6 +127,7 @@ return require("packer").startup(function()
 		"nvim-neotest/neotest",
 		requires = {
 			"nvim-lua/plenary.nvim",
+            "nvim-neotest/nvim-nio",
 			"nvim-treesitter/nvim-treesitter",
 			"antoinemadec/FixCursorHold.nvim",
 			-- Adapters
@@ -172,7 +173,7 @@ return require("packer").startup(function()
 		"windwp/nvim-ts-autotag",
 		requires = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
-			require("nvim-ts-autotag").setup({})
+			require("nvim-ts-autotag").setup()
 		end,
 	})
 	use({
@@ -218,12 +219,12 @@ return require("packer").startup(function()
 	-- 		require("mystuff/settings")["orgmode"]()
 	-- 	end,
 	-- })
-	use({
-		"iamcco/markdown-preview.nvim",
-		run = function()
-			vim.fn["mkdp#util#install"]()
-		end,
-	})
+	-- use({
+	-- 	"iamcco/markdown-preview.nvim",
+	-- 	run = function()
+	-- 		vim.fn["mkdp#util#install"]()
+	-- 	end,
+	-- })
 	-- use {'axvr/zepl.vim'}
 	use({
 		"kraftwerk28/gtranslate.nvim",
