@@ -1,0 +1,33 @@
+[colors.bright]
+black = "#555753"
+blue = "#27AE60"
+cyan = "#2ECC71"
+green = "#8ae234"
+magenta = "#ad7fa8"
+red = "#ef2929"
+white = "#eeeeec"
+yellow = "#fce94f"
+
+[colors.normal]
+black = "#2e3436"
+blue = "#27AE60"
+cyan = "#8FCC91"
+green = "#d0ddff"
+magenta = "#75507b"
+red = "#cc0000"
+white = "#d3d7cf"
+yellow = "#c4a000"
+
+[colors.primary]
+background = "#2C3E50"
+foreground = "#dedede"
+
+[font]
+family = "InconsolataGo Nerd Font"
+size = 9
+style = "Medium"
+
+[[keyboard.bindings]]
+action = "SpawnNewInstance"
+key = "Return"
+mods = "Control|Shift"
