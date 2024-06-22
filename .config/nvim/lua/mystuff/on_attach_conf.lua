@@ -10,6 +10,27 @@ local lsp_formatting = function(bufnr)
 	})
 end
 
+
+function bemol()
+ local bemol_dir = vim.fs.find({ '.bemol' }, { upward = true, type = 'directory'})[1]
+ local ws_folders_lsp = {}
+ if bemol_dir then
+  local file = io.open(bemol_dir .. '/ws_root_folders', 'r')
+  if file then
+
+   for line in file:lines() do
+    table.insert(ws_folders_lsp, line)
+   end
+   file:close()
+  end
+ end
+
+ for _, line in ipairs(ws_folders_lsp) do
+  vim.lsp.buf.add_workspace_folder(line)
+ end
+
+end
+
 return function(client, bufnr)
 	-- if client.supports_method("textDocument/formatting") then
 	-- 	vim.api.nvim_clear_autocmds({  buffer = bufnr })
@@ -64,4 +85,7 @@ return function(client, bufnr)
 	-- LSP formatting unreliable
 	-- buf_set_keymap('n', '<leader>ff', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 	buf_set_keymap("v", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+
+    -- bemol()
 end
+

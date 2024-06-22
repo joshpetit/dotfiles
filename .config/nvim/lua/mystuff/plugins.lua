@@ -127,7 +127,7 @@ return require("packer").startup(function()
 		"nvim-neotest/neotest",
 		requires = {
 			"nvim-lua/plenary.nvim",
-            "nvim-neotest/nvim-nio",
+			"nvim-neotest/nvim-nio",
 			"nvim-treesitter/nvim-treesitter",
 			"antoinemadec/FixCursorHold.nvim",
 			-- Adapters
@@ -194,6 +194,27 @@ return require("packer").startup(function()
 		"williamboman/nvim-lsp-installer",
 		requires = { "neovim/nvim-lspconfig" },
 	}, true)
+
+	-- use_help({
+	-- 	"williamboman/mason.nvim",
+	-- }, true)
+
+	use_help({
+        "mfussenegger/nvim-jdtls"
+		-- "nvim-java/nvim-java",
+		-- requires = {
+		-- 	"nvim-java/lua-async-await",
+		-- 	"nvim-java/nvim-java-refactor",
+		-- 	"nvim-java/nvim-java-core",
+		-- 	"nvim-java/nvim-java-test",
+		-- 	"nvim-java/nvim-java-dap",
+		-- 	"MunifTanjim/nui.nvim",
+		-- 	"neovim/nvim-lspconfig",
+		-- 	"mfussenegger/nvim-dap",
+		-- 	"williamboman/mason.nvim",
+		-- },
+	}, true)
+
 	use_help({
 		"neovim/nvim-lspconfig",
 		requires = { "folke/neodev.nvim" },
@@ -236,9 +257,9 @@ return require("packer").startup(function()
 		"stevearc/dressing.nvim",
 		config = function()
 			require("dressing").setup({
-                select = {
-                    --backend = {"builtin"}
-                },
+				select = {
+					--backend = {"builtin"}
+				},
 				input = {
 					override = function(conf)
 						conf.col = -1
@@ -325,6 +346,7 @@ return require("packer").startup(function()
 	})
 	use("dstein64/vim-startuptime")
 	use("cedarbaum/fugitive-azure-devops.vim")
+
 	use_help({
 		"L3MON4D3/LuaSnip",
 		-- install jsregexp (optional!:).
@@ -355,10 +377,10 @@ return require("packer").startup(function()
 	use({
 		"tzachar/highlight-undo.nvim",
 		config = function()
-            require('highlight-undo').setup()
+			require("highlight-undo").setup()
 		end,
 	})
-    use("github/copilot.vim")
+	use("github/copilot.vim")
 
 	if Packer_bootstrap then
 		require("packer").sync()

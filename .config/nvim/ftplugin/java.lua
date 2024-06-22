@@ -1,18 +1,33 @@
-local m = require('mystuff/mapping_utils')
+local jdtls = require("jdtls")
+local on_attach = require("mystuff/on_attach_conf")
 
-vim.cmd([[
-:iabbrev sout System.out.println
-:TSEnable highlight
-    ]])
+local root_dir = require("jdtls.setup").find_root({ "packageInfo" }, "Config")
+local home = os.getenv("HOME")
+local eclipse_workspace = home .. "/.local/share/eclipse/" .. vim.fn.fnamemodify(root_dir, ":p:h:t")
 
---m.nmap('<leader>ff', '<cmd>FormatCode google-java-format<CR>', {buffer = true})
-m.nmap('<leader>dd', '<cmd>CocCommand java.debug.vimspector.start<CR>',
-       {buffer = true})
-m.nmap('<leader>cc', '<cmd>Make compileJava<CR>', {buffer = true})
-m.nmap('<leader>ct', '<cmd>Make testClasses<CR>', {buffer = true})
-m.nmap('<leader>t', '<cmd>Make test<CR>', {buffer = true})
-m.nmap('<leader>rr', '<cmd>Make run<CR>', {buffer = true})
-m.nmap('<leader>rf', '<cmd>!java -ea %<CR>', {buffer = true})
-m.nmap('<leader>e', '<cmd>split build.gradle<CR>', {buffer = true})
+local ws_folders_jdtls = {}
+if root_dir then
+ local file = io.open(root_dir .. "/.bemol/ws_root_folders")
+ if file then
+  for line in file:lines() do
+   table.insert(ws_folders_jdtls, "file://" .. line)
+  end
+  file:close()
+ end
+end
 
--- Jcall(require, "mystuff/secretstuff")
+local config = {
+ on_attach = on_attach,
+ cmd = {
+  "jdtls", -- need to be on your PATH
+  "--jvm-arg=-javaagent:" .. home .. "/apps/lombok.jar", -- need for lombok magic
+  "-data",
+  eclipse_workspace,
+ },
+ root_dir = root_dir,
+ init_options = {
+  workspaceFolders = ws_folders_jdtls,
+ },
+}
+
+jdtls.start_or_attach(config)
