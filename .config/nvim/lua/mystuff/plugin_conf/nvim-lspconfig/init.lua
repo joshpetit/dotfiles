@@ -10,7 +10,7 @@ local servers = {
 	"svelte",
 	"kotlin_language_server",
 	--"jsonls",
-	"jdtls",
+	-- "jdtls",
 	"svelte",
 	"vuels",
 	"cssls",
