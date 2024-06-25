@@ -11,6 +11,10 @@ local m = require("mystuff/mapping_utils")
 local nmap = function(keys, command)
 	vim.keymap.set("n", keys, command)
 end
+local vmap = function(keys, command)
+	vim.keymap.set("", keys, command)
+end
+
 
 nmap("<leader>ef", function()
 	local ft = vim.bo.filetype
@@ -276,6 +280,8 @@ nmap("<leader>sv", "<cmd>lua ReloadConfig()<cr>")
 vim.cmd("command! Amazon lua require('mystuff/amazon_hide').find()")
 vim.cmd("command! Amazon2 lua require('mystuff/amazon_hide').find2()")
 nmap("<leader>db", '<cmd>lua require("dap").toggle_breakpoint()<cr>')
+nmap("<leader>grf", '<cmd>GBrowse<CR>')
+vmap("<leader>grf", "<cmd>'<,'>GBrowse<CR>")
 vim.keymap.set("n", "<Leader>dL", function()
 	require("dap").run_last()
 end)
