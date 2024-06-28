@@ -2,6 +2,10 @@ local actions = require("telescope.actions")
 local action_utils = require("telescope.actions.utils")
 require("telescope").setup({
 	defaults = {
+        path_display = function(opts, path)
+          local tail = require("telescope.utils").path_tail(path)
+          return string.format("%s (%s)", tail, path), { { { 1, #tail }, "Constant" } }
+        end,
 		file_ignore_patterns = { "^.git/", "node_modules" },
 		mappings = {
 			i = {
