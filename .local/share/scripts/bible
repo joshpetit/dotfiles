@@ -4,7 +4,6 @@ import sys
 from bs4 import BeautifulSoup
 import argparse
 import requests
-from unidecode import unidecode
 import urllib.parse
 
 
@@ -95,7 +94,5 @@ def get_passage(soup):
 query, version, show_verse_numbers, use_ascii = parse_args()
 soup = get_soup(query, version)
 passage = get_passages(soup).strip()
-if use_ascii:
-    passage = unidecode(passage)
 if passage is not None:
     print(passage)

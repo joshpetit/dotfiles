@@ -23,9 +23,10 @@ background = "#2C3E50"
 foreground = "#dedede"
 
 [font]
-family = "InconsolataGo Nerd Font"
 size = 9
-style = "Medium"
+
+[font.normal]
+# family = "InconsolataGo Nerd Font"
 
 [[keyboard.bindings]]
 action = "SpawnNewInstance"

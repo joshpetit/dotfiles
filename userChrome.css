@@ -73,3 +73,10 @@ linux_gtk_window_control_patch.css
   display: none !important;
 }
 #navigator-toolbox[inFullscreen]:hover #toolbar-menubar > .titlebar-buttonbox-container{ display: flex !important; }
+
+#TabsToolbar:-moz-lwtheme{ background-color: var(--lwt-accent-color); }
+#titlebar{
+  will-change: unset !important;
+  transition: none !important;
+  opacity: 1 !important;
+}
