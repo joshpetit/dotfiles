@@ -1,0 +1,2 @@
+#!/bin/sh
+ choose-json $HOME/things.json | choose | xargs -I {} choose-json $HOME/things.json "{}"
