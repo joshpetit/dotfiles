@@ -69,6 +69,9 @@ function _G.ReloadConfig()
         if name:match("^mystuff") then
             package.loaded[name] = nil
         end
+        if name:match("^my_px") then
+            package.loaded[name] = nil
+        end
     end
     dofile(vim.env.MYVIMRC)
     if hls_status == 0 then

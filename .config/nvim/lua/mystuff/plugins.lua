@@ -46,18 +46,6 @@ return require("packer").startup(function()
 		end
 	end
 
-	use_help({
-		"nvim-neorg/neorg",
-		config = function() end,
-		run = ":Neorg sync-parsers",
-		requires = {
-			"hrsh7th/nvim-cmp",
-			"nvim-lua/plenary.nvim",
-			"nvim-neorg/neorg-telescope",
-		},
-		disable = true,
-	}, true)
-
 	use("wbthomason/packer.nvim")
 	use({
 		"simrat39/symbols-outline.nvim",
@@ -82,7 +70,7 @@ return require("packer").startup(function()
 		requires = { "nvim-lua/plenary.nvim" },
 	}, true)
 	use({ "smancill/conky-syntax.vim", disable = true })
-	use({ "dhruvasagar/vim-table-mode", disable = false })
+	-- use({ "dhruvasagar/vim-table-mode", disable = false })
 	-- tag = 'release' -- To use the latest release
 	use_help({
 		"hrsh7th/nvim-cmp",
@@ -112,15 +100,6 @@ return require("packer").startup(function()
 
 	use({
 		"nvim-lua/plenary.nvim",
-	})
-
-	use({
-		"shumphrey/fugitive-gitlab.vim",
-		config = {
-			vim.cmd([[
-        let g:fugitive_gitlab_domains = ['https://gitlab.oit.duke.edu/']
-        ]]),
-		},
 	})
 
 	use_help({
@@ -189,30 +168,17 @@ return require("packer").startup(function()
 	use({ "tpope/vim-fugitive" })
 	use_help({ "dcampos/nvim-snippy" }, true)
 	use_help({ "honza/vim-snippets" }, false)
+
 	use_help({ "mfussenegger/nvim-dap" }, true)
+	use_help({
+		"mfussenegger/nvim-jdtls",
+		requires = {
+			"mfussenegger/nvim-dap",
+		},
+	}, true)
 	use_help({
 		"williamboman/nvim-lsp-installer",
 		requires = { "neovim/nvim-lspconfig" },
-	}, true)
-
-	-- use_help({
-	-- 	"williamboman/mason.nvim",
-	-- }, true)
-
-	use_help({
-        "mfussenegger/nvim-jdtls"
-		-- "nvim-java/nvim-java",
-		-- requires = {
-		-- 	"nvim-java/lua-async-await",
-		-- 	"nvim-java/nvim-java-refactor",
-		-- 	"nvim-java/nvim-java-core",
-		-- 	"nvim-java/nvim-java-test",
-		-- 	"nvim-java/nvim-java-dap",
-		-- 	"MunifTanjim/nui.nvim",
-		-- 	"neovim/nvim-lspconfig",
-		-- 	"mfussenegger/nvim-dap",
-		-- 	"williamboman/mason.nvim",
-		-- },
 	}, true)
 
 	use_help({
@@ -230,29 +196,6 @@ return require("packer").startup(function()
 		requires = { "mfussenegger/nvim-dap", "rcarriga/cmp-dap" },
 	}, true)
 	use_help({ "nvim-treesitter/nvim-treesitter" }, true)
-	use_help({
-		"nvim-orgmode/orgmode",
-		disable = true,
-	}, true)
-	-- use({
-	-- 	"~/projects/orgmode",
-	-- 	config = function()
-	-- 		require("mystuff/settings")["orgmode"]()
-	-- 	end,
-	-- })
-	-- use({
-	-- 	"iamcco/markdown-preview.nvim",
-	-- 	run = function()
-	-- 		vim.fn["mkdp#util#install"]()
-	-- 	end,
-	-- })
-	-- use {'axvr/zepl.vim'}
-	use({
-		"kraftwerk28/gtranslate.nvim",
-		requires = { "nvim-lua/plenary.nvim" },
-		disable = false,
-	})
-	use({ "delphinus/vim-firestore" })
 	use({
 		"stevearc/dressing.nvim",
 		config = function()
@@ -281,19 +224,9 @@ return require("packer").startup(function()
 			})
 		end,
 	})
-	-- F11, focused mode!
-	use({ "folke/zen-mode.nvim" })
-	-- Make vim start faster!
-	-- use({
-	-- 	"lewis6991/impatient.nvim",
-	-- 	config = function()
-	-- 		require("impatient")
-	-- 	end,
-	-- })
 	use({ "lervag/vimtex" })
 	use("tpope/vim-eunuch") -- SudoWrite!
 	use("tpope/vim-rhubarb")
-	use("nvim-treesitter/playground")
 	use_help({
 		"jose-elias-alvarez/null-ls.nvim",
 		requires = { "nvim-lua/plenary.nvim" },
@@ -304,29 +237,14 @@ return require("packer").startup(function()
 			require("nvim-dap-virtual-text").setup({})
 		end,
 	})
-	use({ "mechatroner/rainbow_csv", disable = true })
 	use("chrisbra/csv.vim")
-	use({
-		"weirongxu/plantuml-previewer.vim",
-		requires = { "tyru/open-browser.vim", "aklt/plantuml-syntax" },
-	})
-	use("ferrine/md-img-paste.vim")
 	use("tpope/vim-abolish")
-	use("jbyuki/nabla.nvim")
-	use({ "ThePrimeagen/harpoon" })
-	-- use({
-	--     "kwkarlwang/bufresize.nvim",
-	--     config = function()
-	--         require("bufresize").setup()
-	--     end,
-	-- })
 	use({
 		"axelvc/template-string.nvim",
 		config = function()
 			require("template-string").setup()
 		end,
 	})
-	use("mustache/vim-mustache-handlebars")
 	use("ThePrimeagen/refactoring.nvim")
 	use("chrisbra/NrrwRgn")
 	use({ "aymericbeaumet/vim-symlink", requires = "moll/vim-bbye" })
@@ -338,29 +256,11 @@ return require("packer").startup(function()
 			})
 		end,
 	})
-	use({
-		"ziontee113/color-picker.nvim",
-		config = function()
-			require("color-picker")
-		end,
-	})
-	use("dstein64/vim-startuptime")
-	use("cedarbaum/fugitive-azure-devops.vim")
-
 	use_help({
 		"L3MON4D3/LuaSnip",
 		-- install jsregexp (optional!:).
 		run = "make install_jsregexp",
 		requires = { "rafamadriz/friendly-snippets" },
-	}, true)
-
-	use_help({
-		"kkharji/xbase",
-		run = "make install", -- or "make install && make free_space" (not recommended, longer build time)
-		requires = {
-			"neovim/nvim-lspconfig",
-		},
-		disable = true,
 	}, true)
 
 	use({ "SmiteshP/nvim-navic", requires = "neovim/nvim-lspconfig" })
@@ -371,8 +271,12 @@ return require("packer").startup(function()
 			require("Comment").setup()
 		end,
 	})
-	-- go directly to a file and line
-	use("wsdjeg/vim-fetch")
+	use_help({
+		"natecraddock/workspaces.nvim",
+	}, true)
+	use({
+		"natecraddock/sessions.nvim",
+	})
 
 	use({
 		"tzachar/highlight-undo.nvim",
@@ -381,7 +285,8 @@ return require("packer").startup(function()
 		end,
 	})
 	use("github/copilot.vim")
-
+	use("joshpetit/work")
+	use_help({ "nilsboy/vim-rest-console" }, true)
 	if Packer_bootstrap then
 		require("packer").sync()
 	end

@@ -66,7 +66,7 @@ dap.configurations.typescript = {
 	},
 }
 dap.configurations.javascript = dap.configurations.typescript
-dap.configurations.typescriptreact= dap.configurations.typescript
+dap.configurations.typescriptreact = dap.configurations.typescript
 
 dap.adapters.flutter = {
 	type = "executable",
@@ -168,5 +168,17 @@ dap.configurations.dart = {
 		program = "${file}",
 		deviceId = "linux",
 		cwd = "${workspaceFolder}",
+	},
+}
+
+
+
+dap.configurations.java = {
+	{
+		hostName = "localhost",
+		name = "Java Debug (5005)",
+		port = 5005,
+		request = "attach",
+		type = "java",
 	},
 }

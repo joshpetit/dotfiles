@@ -43,6 +43,10 @@ return function(client, bufnr)
 	-- end
 
 	if client.server_capabilities.documentSymbolProvider then
+        vim.cmd([[
+        set statusline+=%{%v:lua.require'nvim-navic'.get_location()%}
+        ]])
+        -- vim.o.statusline = "%{%v:lua.require'nvim-navic'.get_location()%}"
 		navic.attach(client, bufnr)
 		-- vim.o.statusline = "%{%v:lua.require'nvim-navic'.get_location()%}"
 	end

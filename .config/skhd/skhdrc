@@ -1,4 +1,4 @@
-cmd + ctrl - c : copyq menu
+#cmd + ctrl - c : copyq menu
 cmd + shift - r : skhd --reload && yabai --restart-service
 cmd + shift - f : open /Applications/Firefox.app
 cmd + shift - e : open /Applications/Emacs.app/

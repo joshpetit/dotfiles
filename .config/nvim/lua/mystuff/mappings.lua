@@ -15,7 +15,6 @@ local vmap = function(keys, command)
 	vim.keymap.set("", keys, command)
 end
 
-
 nmap("<leader>ef", function()
 	local ft = vim.bo.filetype
 	vim.cmd("split ~/.config/nvim/ftplugin/" .. ft .. ".lua")
@@ -24,6 +23,11 @@ end)
 nmap("<leader>et", function()
 	local ft = vim.bo.filetype
 	require("mystuff/test_path")[ft]()
+end)
+
+nmap("<leader>eT", function()
+	local ft = vim.bo.filetype
+	require("mystuff/test_path")[ft .. "_return"]()
 end)
 
 nmap("<leader>TT", function()
@@ -199,10 +203,6 @@ nmap("<S-q>", "<cmd>NvimTreeToggle<cr>")
 --m.nmap("<S-q>", "<cmd>NvimTreeFindFileToggle<cr>")
 nmap("<leader>nf", "<cmd>NvimTreeFindFileToggle<cr>")
 
--- Harpoon
-nmap("<leader>ha", [[:lua require("harpoon.mark").add_file()<cr>]])
-nmap("<leader>hs", [[:lua require("harpoon.ui").toggle_quick_menu()<cr>]])
---
 --nmap("<leader>a", [[:HopWord<cr>]])
 --m.vmap("<leader>a", [[:HopWord<cr>]])
 local hop = require("hop")
@@ -210,13 +210,14 @@ vim.keymap.set("", "<leader>a", function()
 	hop.hint_words()
 end, { remap = true })
 
-nmap("<leader>pp", ":lua require('nabla').popup()<CR>")
 m.nmap("K", "<Cmd>lua vim.lsp.buf.hover()<CR>")
 nmap("<leader>w", "<Cmd>w<CR>")
 nmap("<leader><s-w>", "<Cmd>SudoWrite!<CR>")
 nmap("<leader><c-f>", '<cmd>Telescope grep_string search=""<cr>')
 nmap("<leader>K", "<cmd>Telescope keymaps<cr>")
 nmap("<leader>fb", "<cmd>Telescope buffers<cr>")
+nmap("<leader>ow", "<cmd>Telescope workspaces<cr>")
+nmap("<leader>ot", "<cmd>split | terminal<cr>")
 nmap("<leader><leader><c-f>", "<cmd>Telescope live_grep<cr>")
 nmap("<leader>fb", "<cmd>Telescope buffers<cr>")
 nmap("<leader>fh", "<cmd>Telescope help_tags<cr>")
@@ -232,10 +233,6 @@ nmap("di$", "T$dt$")
 nmap("ci$", "T$ct$")
 nmap("<leader>hn", "<cmd>:setlocal nonumber norelativenumber<CR>")
 nmap("<leader>hN", "<cmd>:setlocal number relativenumber<CR>")
--- nmap("-", "<C-W><")
--- nmap("_", "<C-W>>")
--- nmap("=", "<C-W>-")
--- nmap("+", "<C-W>+")
 
 vim.cmd([[
 noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
@@ -277,11 +274,7 @@ nmap("<F11>", [[<cmd>lua require("zen-mode").toggle({window = { width = .65, hei
 
 nmap("<leader>sv", "<cmd>lua ReloadConfig()<cr>")
 nmap("<leader>sv", "<cmd>lua ReloadConfig()<cr>")
-vim.cmd("command! Amazon lua require('mystuff/amazon_hide').find()")
-vim.cmd("command! Amazon2 lua require('mystuff/amazon_hide').find2()")
 nmap("<leader>db", '<cmd>lua require("dap").toggle_breakpoint()<cr>')
-nmap("<leader>grf", '<cmd>GBrowse<CR>')
-vmap("<leader>grf", "<cmd>'<,'>GBrowse<CR>")
 vim.keymap.set("n", "<Leader>dL", function()
 	require("dap").run_last()
 end)
@@ -300,4 +293,11 @@ nmap("<leader>dq", "<cmd>lua require'dap'.terminate(); require'dapui'.close()<cr
 nmap("<leader>nc", "<cmd>lua require('notify').dismiss()<cr>")
 nmap("<leader>nC", "<cmd>lua require('notify').dismiss({ silent = true, pending = true})<cr>")
 nmap("<leader>ps", "<cmd>PackerSync<cr>")
---m.imap('<c-e>', "<esc><leader><cr>")
+vim.keymap.set("t", "<C-a>", "<C-\\><C-n>", { silent = true })
+vim.keymap.set("t", "<c-r>", function()
+	local next_char_code = vim.fn.getchar()
+	local next_char = vim.fn.nr2char(next_char_code)
+	return '<C-\\><C-N>"' .. next_char .. "pi"
+end, { expr = true })
+
+vim.keymap.set("n", "<leader>lf", function() end)

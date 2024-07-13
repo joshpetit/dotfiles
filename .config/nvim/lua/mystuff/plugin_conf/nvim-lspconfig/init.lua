@@ -5,7 +5,7 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 local on_attach = require("mystuff/on_attach_conf")
 
 local servers = {
-	"tailwindcss",
+	-- "tailwindcss",
 	"sourcekit",
 	"svelte",
 	"kotlin_language_server",
