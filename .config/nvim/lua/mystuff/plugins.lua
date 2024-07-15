@@ -287,6 +287,7 @@ return require("packer").startup(function()
 	use("github/copilot.vim")
 	use("joshpetit/work")
 	use_help({ "nilsboy/vim-rest-console" }, true)
+	use_help({ "epwalsh/obsidian.nvim" }, true)
 	if Packer_bootstrap then
 		require("packer").sync()
 	end

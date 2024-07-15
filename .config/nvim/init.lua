@@ -6,4 +6,7 @@ vim.opt.termguicolors = true
 Jcall(require, "mystuff/plugins")
 Jcall(require, "mystuff/settings")
 Jcall(require, "mystuff/mappings")
-Jcall(require, "work")
+
+if IsModuleAvailable('work') then
+    Jcall(require, "work")
+end
