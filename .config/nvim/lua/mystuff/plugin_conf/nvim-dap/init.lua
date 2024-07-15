@@ -17,6 +17,15 @@ dap.configurations.typescript = {
 		cwd = "${workspaceFolder}",
 	},
 	{
+		name = "Next.js: debug server-side",
+		type = "pwa-node",
+		request = "launch",
+		cwd = "${workspaceFolder}",
+		runtimeExecutable = "npm",
+		runtimeArgs = { "run-script", "dev" },
+		sourceMaps = true,
+	},
+	{
 		type = "pwa-node",
 		request = "attach",
 		name = "Attach - PWA",
@@ -125,6 +134,18 @@ dap.configurations.dart = {
 		args = {
 			"--flavor=staging",
 			"--observatory-port=9200",
+		},
+	},
+	{
+		type = "flutter",
+		request = "launch",
+		name = "Launch SSY Staging - Release mode",
+		program = "${workspaceFolder}/lib/main-staging.dart",
+		cwd = "${workspaceFolder}",
+		args = {
+			"--flavor=staging",
+			"--observatory-port=9200",
+			"--release",
 		},
 	},
 	{

@@ -542,6 +542,17 @@
          (last-day-of-month
             (calendar-last-day-of-month month year)))
     (= day last-day-of-month)))
+(defun paste-from-x-clipboard()
+  (interactive)
+  (shell-command
+   (cond
+    (t "xclip -o -selection clipboard"))
+   1))
+
+(defun my/paste-in-minibuffer ()
+  (local-set-key (kbd "M-y") 'paste-from-x-clipboard))
+
+(add-hook 'minibuffer-setup-hook 'my/paste-in-minibuffer)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
