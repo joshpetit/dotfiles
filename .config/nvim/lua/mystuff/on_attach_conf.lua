@@ -42,14 +42,10 @@ return function(client, bufnr)
 	-- 	})
 	-- end
 
-	if client.server_capabilities.documentSymbolProvider then
-        vim.cmd([[
-        set statusline+=%{%v:lua.require'nvim-navic'.get_location()%}
-        ]])
-        -- vim.o.statusline = "%{%v:lua.require'nvim-navic'.get_location()%}"
-		navic.attach(client, bufnr)
-		-- vim.o.statusline = "%{%v:lua.require'nvim-navic'.get_location()%}"
-	end
+	-- if client.server_capabilities.documentSymbolProvider then
+ --        vim.o.statusline = "%{%v:lua.require'nvim-navic'.get_location()%}"
+	-- 	navic.attach(client, bufnr)
+	-- end
 
 	client.server_capabilities.documentFormattingProvider = false
 	local function buf_set_keymap(...)
