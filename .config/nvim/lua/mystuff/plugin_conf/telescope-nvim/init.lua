@@ -1,11 +1,16 @@
 local actions = require("telescope.actions")
+local finders = require("telescope.finders")
+local conf = require("telescope.config").values
+local pickers = require("telescope.pickers")
 local action_utils = require("telescope.actions.utils")
+local action_state = require("telescope.actions.state")
+
 require("telescope").setup({
 	defaults = {
-        path_display = function(opts, path)
-          local tail = require("telescope.utils").path_tail(path)
-          return string.format("%s (%s)", tail, path), { { { 1, #tail }, "Constant" } }
-        end,
+		path_display = function(opts, path)
+			local tail = require("telescope.utils").path_tail(path)
+			return string.format("%s (%s)", tail, path), { { { 1, #tail }, "Constant" } }
+		end,
 		file_ignore_patterns = { "^.git/", "node_modules" },
 		mappings = {
 			i = {
@@ -32,7 +37,7 @@ require("telescope").setup({
 				end,
 				["<C-D>"] = function()
 					local entry = require("telescope.actions.state").get_selected_entry()
-					AsyncRun("dragon-drop", "\"" .. entry.value .. "\"")
+					AsyncRun("dragon-drop", '"' .. entry.value .. '"')
 				end,
 			},
 			n = {
@@ -41,9 +46,9 @@ require("telescope").setup({
 		},
 	},
 	pickers = {
-        find_files = {
-            find_command = {"rg", "--ignore", "-L", "--hidden", "--files"}
-        },
+		find_files = {
+			find_command = { "rg", "--ignore", "-L", "--hidden", "--files" },
+		},
 		buffers = {
 			mappings = {
 				i = {
@@ -145,6 +150,63 @@ function exports.cooler()
 	}
 
 	require("telescope.builtin").find_files(opts)
+end
+
+exports.search_by_workspace = function(opts)
+	opts = opts or {}
+	local workspaces = require("workspaces")
+	local workspaces_list = workspaces.get()
+	local width = 10
+	for _, workspace in ipairs(workspaces_list) do
+		if #workspace.name > width then
+			width = #workspace.name + 2
+		end
+	end
+	local entry_display = require("telescope.pickers.entry_display")
+	local displayer = entry_display.create({
+		separator = " ",
+		items = {
+			{ width = width },
+			{},
+		},
+	})
+	pickers
+		.new(opts, {
+			prompt_title = "colors",
+			finder = finders.new_table({
+				results = workspaces_list,
+				entry_maker = function(entry)
+					return {
+						value = entry,
+						display = function(the_entry)
+							return displayer({
+								{ the_entry.ordinal },
+								{ the_entry.value.path, "String" },
+							})
+						end,
+						ordinal = entry.name,
+					}
+				end,
+			}),
+			sorter = conf.generic_sorter(opts),
+			attach_mappings = function(prompt_bufnr, map)
+				actions.select_default:replace(function()
+					actions.close(prompt_bufnr)
+
+					local selected = action_state.get_selected_entry()
+					if not selected then
+						return
+					end
+
+					local workspace = selected.value
+					if workspace and workspace ~= "" then
+						require("telescope.builtin").find_files({ hidden = true, search_dirs = { workspace.path } })
+					end
+				end)
+				return true
+			end,
+		})
+		:find()
 end
 
 return exports
