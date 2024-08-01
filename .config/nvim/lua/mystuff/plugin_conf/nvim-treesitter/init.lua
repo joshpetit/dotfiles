@@ -1,7 +1,27 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
+	lazy = false,
 	opts = {
 		sync_install = false,
+		ensure_installed = {
+			"bash",
+			"c",
+			"css",
+			"dockerfile",
+			"graphql",
+			"html",
+			"java",
+			"javascript",
+			"json",
+			"lua",
+			"python",
+			"toml",
+			"tsx",
+			"typescript",
+			"markdown",
+			"markdown_inline",
+			"yaml",
+		},
 		highlight = {
 			enable = true,
 		},
@@ -14,27 +34,6 @@ return {
 				node_decremental = "<leader>j",
 			},
 		},
+		additional_vim_regex_highlighting = false,
 	},
-    lazy = false,
-	config = function()
-		local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-
-		parser_config.puml = {
-			install_info = {
-				url = "https://github.com/ahlinc/tree-sitter-plantuml",
-				revision = "demo",
-				files = { "src/scanner.cc" },
-			},
-			filetype = "puml",
-		}
-
-		parser_config.swift = {
-			install_info = {
-				url = "https://github.com/tree-sitter/tree-sitter-swift",
-				revision = "main",
-				files = { "src/scanner.c" },
-			},
-			filetype = "swift",
-		}
-	end,
 }
