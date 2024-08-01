@@ -1,7 +1,6 @@
 -- TODO create pcall wrapper to do error handling and let other things be
 -- sourced
 require("mystuff/utils")
-vim.g.maplocalleader = "<C-S>"
 require("config.lazy")
 Jcall(require, "mystuff/mappings")
 

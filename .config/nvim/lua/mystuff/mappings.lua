@@ -215,7 +215,7 @@ nmap("<leader><c-f>", '<cmd>Telescope grep_string search=""<cr>')
 nmap("<leader>K", "<cmd>Telescope keymaps<cr>")
 nmap("<leader>fb", "<cmd>Telescope buffers<cr>")
 nmap("<leader>po", "<cmd>Telescope workspaces<cr>")
-nmap("<leader>pl", require("mystuff.plugin_conf.workspaces-nvim").open_last_workspace)
+nmap("<leader>pl", Open_last_workspace)
 nmap("<leader>ot", "<cmd>split | terminal<cr>")
 nmap("<leader><leader><c-f>", "<cmd>Telescope live_grep<cr>")
 nmap("<leader>fb", "<cmd>Telescope buffers<cr>")
@@ -272,7 +272,6 @@ nmap("<F11>", [[<cmd>lua require("zen-mode").toggle({window = { width = .65, hei
 -- m.vmap("<leader>nc", "<Plug>kommentary_visual_default")
 
 nmap("<leader>sv", "<cmd>lua ReloadConfig()<cr>")
-nmap("<leader>sv", "<cmd>lua ReloadConfig()<cr>")
 nmap("<leader>db", '<cmd>lua require("dap").toggle_breakpoint()<cr>')
 vim.keymap.set("n", "<Leader>dL", function()
 	require("dap").run_last()
@@ -291,7 +290,6 @@ nmap("<leader>du", [[<cmd>lua require("dapui").toggle({ reset = true})<CR>]])
 nmap("<leader>dq", "<cmd>lua require'dap'.terminate(); require'dapui'.close()<cr>")
 nmap("<leader>nc", "<cmd>lua require('notify').dismiss()<cr>")
 nmap("<leader>nC", "<cmd>lua require('notify').dismiss({ silent = true, pending = true})<cr>")
-nmap("<leader>ps", "<cmd>PackerSync<cr>")
 nmap("<leader>or", "<cmd>100vsplit ~/sync/org/refile.org<cr>")
 nmap("<leader>of", function()
 	require("telescope.builtin").find_files({ search_dirs = { "~/sync/org" } })
@@ -315,7 +313,7 @@ vim.keymap.set("n", "<leader>lf", function()
 	end)
 end)
 
-nmap("<leader>ps", require("mystuff/plugin_conf/telescope-nvim").search_by_workspace)
+nmap("<leader>ps", require("mystuff/plugin_conf/telescope-nvim/functions").search_by_workspace)
 
 local opts = { noremap = true, silent = false }
 -- Create a new note after asking for its title.

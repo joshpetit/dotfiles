@@ -1,9 +1,11 @@
 -- TODO: Fix
-open_last_workspace = function()
+local last_workspace = ""
+local current_workspace = ""
+
+Open_last_workspace = function()
 	print("Opening: " .. last_workspace)
 	require("workspaces").open(last_workspace)
 end
-
 return {
 	"natecraddock/workspaces.nvim",
 
