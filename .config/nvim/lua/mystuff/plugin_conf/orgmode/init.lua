@@ -1,9 +1,11 @@
-require("orgmode").setup_ts_grammar()
 require("orgmode").setup({
     org_agenda_files = { "~/sync/org/**/*" },
     org_default_notes_file = "~/sync/org/refile.org",
     org_deadline_warning_days = 5,
     org_agenda_start_on_weekday = 7,
+    org_todo_keywords = {'TODO(t)', 'REVIEW(r)', '|', 'DONE(d)'},
+    -- Float doesn't open the items in different buffer correctly.
+    -- win_split_mode  = 'float',
     org_highlight_latex_and_related = "native",
     highlight = {
         additional_vim_regex_highlighting = {'org'},
@@ -16,12 +18,6 @@ require("orgmode").setup({
     },
     notifications = { enabled = true },
     org_agenda_templates = {
-        m = {
-            description = "Working on Ms5",
-            template = "** Working on Ms5 %<%Y-%m-%d>\nSCHEDULED: %t\n:LOGBOOK:\nCLOCK: %U\n:END:",
-            target = "~/sync/org/programming/ms5.org",
-            headline = "MS5 Timesheet",
-        },
         i = {
             description = "Thoughts",
             template = "** %?",
@@ -31,12 +27,6 @@ require("orgmode").setup({
         n = {
             description = "Random note",
             template = "* %?",
-        },
-        t = {
-            description = "MS5 Task",
-            target = "~/sync/org/programming/ms5.org",
-            headline = "MS5 Refile",
-            template = "** %?\nSCHEDULED: %t",
         },
     },
 })

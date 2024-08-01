@@ -5,7 +5,12 @@
 --     vim.fn.search([[^\* ]], 'bW')
 -- end)
 --
--- o.set_buf_option('textwidth', 80)
+-- vim.bo.textwidth = 80
+vim.wo.conceallevel = 2
+-- vim.keymap.set("i", "<C-Enter>", function() require('orgmode').org_insert_heading_respect_content() end)
+-- vim.keymap.set("i", "", function() print('hi') end)
+-- vim.keymap.set("i", "<C-CR>", function() require('orgmode.api').insert_link() end)
+
 --
 -- m.nmap('<leader>gtz', [[<cmd>lua require'mystuff/org'.goToZoom()<CR>]],
 --        {buffer = true})

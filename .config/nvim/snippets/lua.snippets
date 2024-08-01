@@ -1,4 +1,7 @@
 snippet lol i
 	local m = require("mystuff/mapping_utils")
 	m.nmap("<leader>$1", "<cmd>$2<cr>")
-
+snippet use i
+	use("$1")
+snippet useh i
+	use_help({ "$1" }, true)

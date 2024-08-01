@@ -163,10 +163,6 @@ local toggle_quick_fix = function()
 	vim.cmd([[copen]])
 end
 
--- Neorg
-nmap("<leader>np", ":Neorg workspaces programming_notes")
-nmap("<leader>ns", ":Neorg workspaces stuff")
-
 nmap("<leader>qf", toggle_quick_fix)
 
 nmap("<leader>es", function()
@@ -200,6 +196,8 @@ nmap("<leader>cpf", [[:let @+ = expand('%:t')<cr>]])
 -- Copy full path
 nmap("<leader>cpP", [[:let @+ = expand('%:p')<cr>]])
 nmap("<S-q>", "<cmd>NvimTreeToggle<cr>")
+nmap("<leader>css", "<cmd>AerialToggle<cr>")
+vim.keymap.set("n", "<leader>cls", "<cmd>Telescope aerial<cr>")
 --m.nmap("<S-q>", "<cmd>NvimTreeFindFileToggle<cr>")
 nmap("<leader>nf", "<cmd>NvimTreeFindFileToggle<cr>")
 
@@ -294,6 +292,10 @@ nmap("<leader>dq", "<cmd>lua require'dap'.terminate(); require'dapui'.close()<cr
 nmap("<leader>nc", "<cmd>lua require('notify').dismiss()<cr>")
 nmap("<leader>nC", "<cmd>lua require('notify').dismiss({ silent = true, pending = true})<cr>")
 nmap("<leader>ps", "<cmd>PackerSync<cr>")
+nmap("<leader>or", "<cmd>100vsplit ~/sync/org/refile.org<cr>")
+nmap("<leader>of", function()
+	require("telescope.builtin").find_files({ search_dirs = { "~/sync/org" } })
+end)
 vim.keymap.set("t", "<C-a>", "<C-\\><C-n>", { silent = true })
 vim.keymap.set("t", "<c-r>", function()
 	local next_char_code = vim.fn.getchar()
@@ -301,6 +303,52 @@ vim.keymap.set("t", "<c-r>", function()
 	return '<C-\\><C-N>"' .. next_char .. "pi"
 end, { expr = true })
 
-vim.keymap.set("n", "<leader>lf", function() end)
+function Yeet(args, what)
+	print(args)
+	print(what)
+	return "hi"
+end
+
+vim.keymap.set("n", "<leader>lf", function()
+	vim.ui.input({ prompt = "hi", completion = "custom,v:lua.Yeet" }, function(input)
+		print(input)
+	end)
+end)
 
 nmap("<leader>ps", require("mystuff/plugin_conf/telescope-nvim").search_by_workspace)
+
+local opts = { noremap = true, silent = false }
+-- Create a new note after asking for its title.
+vim.api.nvim_set_keymap("n", "<leader>zn", "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", opts)
+vim.api.nvim_set_keymap("v", "<leader>zn", "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", opts)
+nmap("<leader>nor", "<cmd>100vsplit ~/sync/wiki/refile.md<cr>")
+nmap("<leader>noR", "<cmd>10split ~/sync/wiki/refile.md<cr>")
+nmap("<leader>ns", function()
+	require("telescope.builtin").grep_string({ hidden = true, search = "", search_dirs = { "~/sync/wiki" } })
+end)
+
+nmap("<leader>nn", function()
+	local title = vim.fn.input("Title: ")
+	os.execute([[touch ~/sync/wiki/"]] .. title .. [[.md"]])
+    vim.cmd([[:e ~/sync/wiki/]] .. title .. ".md")
+end)
+
+-- vim.api.nvim_set_keymap("n", "<leader>zo", "<Cmd>ZkNotes { sort = { 'modified' } }<CR>", opts)
+-- Open notes associated with the selected tags.
+nmap("<leader>nof", function()
+	require("telescope.builtin").find_files({ search_dirs = { "~/sync/wiki/" } })
+end)
+vim.api.nvim_set_keymap("n", "<leader>zt", "<Cmd>ZkTags<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>zb", "<Cmd>ZkBacklinks<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>zl", "<Cmd>ZkLinks<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>zil", "<Cmd>ZkInsertLink<CR>", opts)
+
+-- Search for the notes matching a given query.
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>zf",
+	"<Cmd>ZkNotes { sort = { 'modified' }, match = { vim.fn.input('Search: ') } }<CR>",
+	opts
+)
+-- Search for the notes matching the current visual selection.
+vim.api.nvim_set_keymap("v", "<leader>zf", ":'<,'>ZkMatch<CR>", opts)

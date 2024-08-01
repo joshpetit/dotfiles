@@ -176,10 +176,10 @@ return require("packer").startup(function()
 			"mfussenegger/nvim-dap",
 		},
 	}, true)
-	use_help({
-		"williamboman/nvim-lsp-installer",
-		requires = { "neovim/nvim-lspconfig" },
-	}, true)
+	-- use_help({
+	-- 	"williamboman/nvim-lsp-installer",
+	-- 	requires = { "neovim/nvim-lspconfig" },
+	-- }, true)
 
 	use_help({
 		"neovim/nvim-lspconfig",
@@ -288,6 +288,24 @@ return require("packer").startup(function()
 	use("joshpetit/work")
 	use_help({ "nilsboy/vim-rest-console" }, true)
 	use_help({ "epwalsh/obsidian.nvim" }, true)
+	use_help({ "nvim-orgmode/orgmode" }, true)
+	use({
+		"stevearc/aerial.nvim",
+		config = function()
+			require("aerial").setup({
+				disable_max_size = 10000000000000,
+				disable_max_lines = 1000000000000,
+				backends = { "lsp", "treesitter", "markdown", "asciidoc", "man" },
+				filter_kind = false,
+			})
+		end,
+	})
+	use_help({ "zk-org/zk-nvim" }, true)
+	use_help({
+		"williamboman/mason.nvim",
+	}, true)
+
+	use({ "williamboman/mason-lspconfig.nvim" })
 	if Packer_bootstrap then
 		require("packer").sync()
 	end
