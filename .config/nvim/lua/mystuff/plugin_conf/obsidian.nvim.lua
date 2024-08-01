@@ -1,9 +1,9 @@
 return {
 	"epwalsh/obsidian.nvim",
 	version = "*", -- recommended, use latest release instead of latest commit
-    init = function()
-        vim.wo.conceallevel = 2
-    end,
+	init = function()
+		vim.wo.conceallevel = 2
+	end,
 	lazy = true,
 	ft = "markdown",
 	-- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
@@ -18,6 +18,11 @@ return {
 		-- Trigger completion at 2 chars.
 		min_chars = 2,
 	},
+	-- ui = {
+	-- 	checkboxes = {
+	-- 		[" "] = { char = ">", hl_group = "ObsidianTodo" },
+	-- 	},
+	-- },
 	dependencies = {
 		-- Required.
 		"nvim-lua/plenary.nvim",
