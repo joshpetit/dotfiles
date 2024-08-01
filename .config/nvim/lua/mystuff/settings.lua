@@ -3,7 +3,6 @@ local M = {}
 
 vim.o.timeout = false
 vim.g.mapleader = " "
-vim.g.maplocalleader = ""
 vim.o.mouse = "a"
 vim.o.relativenumber = true
 vim.o.number = true

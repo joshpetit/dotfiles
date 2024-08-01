@@ -1,3 +1,1 @@
-require("mini.bracketed").setup({
-	oldfile = { suffix = "f", options = {} },
-})
+return { "echasnovski/mini.bracketed", version = false, opts = {} }

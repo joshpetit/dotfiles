@@ -1,1 +1,0 @@
-vim.notify = require("notify")
