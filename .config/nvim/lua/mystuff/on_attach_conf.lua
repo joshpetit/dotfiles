@@ -1,16 +1,3 @@
-local navic = require("nvim-navic")
-
-local lsp_formatting = function(bufnr)
-	vim.lsp.buf.format({
-		filter = function(client)
-			-- apply whatever logic you want (in this example, we'll only use null-ls)
-			return client.name == "null-ls"
-		end,
-		bufnr = bufnr,
-	})
-end
-
-
 function bemol()
  local bemol_dir = vim.fs.find({ '.bemol' }, { upward = true, type = 'directory'})[1]
  local ws_folders_lsp = {}

@@ -1,10 +1,9 @@
 return {
 	{
 		"EdenEast/nightfox.nvim",
-        priority = 1,
-		config = function()
-			vim.cmd(":colorscheme nightfox")
-		end,
+        config = function()
+            vim.cmd("colorscheme nightfox")
+        end
 	},
 
 	-- Git diffs on the column
@@ -195,27 +194,6 @@ let g:vrc_trigger= '<leader>r'
 		end,
 	},
 
-	{
-		"epwalsh/obsidian.nvim",
-		opts = {
-			workspaces = {
-				{
-					name = "Controversia Prophetica",
-					path = "~/sync/obsidian",
-				},
-			},
-		},
-
-		{
-			"stevearc/aerial.nvim",
-			opts = {
-				disable_max_size = 10000000000000,
-				disable_max_lines = 1000000000000,
-				backends = { "lsp", "treesitter", "markdown", "asciidoc", "man" },
-				filter_kind = false,
-			},
-		},
-	},
 	{ "zk-org/zk-nvim" },
 	{
 		"nvim-orgmode/orgmode",

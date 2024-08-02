@@ -2,10 +2,12 @@ return {
 	"akinsho/flutter-tools.nvim",
 	lazy = false,
 	dependencies = {
+		"hrsh7th/cmp-nvim-lsp",
 		"nvim-lua/plenary.nvim",
-		"stevearc/dressing.nvim", -- optional for vim.ui.select
+		"stevearc/dressing.nvim",
 	},
-	opts = {
+    config = function()
+        require("flutter-tools").setup({
 		lsp = {
 			on_attach = require("mystuff/on_attach_conf"),
 			capabilities = require("cmp_nvim_lsp").default_capabilities(),
@@ -17,5 +19,7 @@ return {
 			run_via_dap = true,
 			register_configurations = function() end,
 		},
-	},
+	})
+
+    end
 }

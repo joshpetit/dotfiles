@@ -4,8 +4,7 @@ local action_utils = require("telescope.actions.utils")
 
 return {
 	"nvim-telescope/telescope.nvim",
-	config = function()
-		require("telescope").setup({
+    opts = {
 			defaults = {
 				path_display = function(opts, path)
 					local tail = require("telescope.utils").path_tail(path)
@@ -73,7 +72,9 @@ return {
 					case_mode = "smart_case", -- or "ignore_case" or "respect_case"
 				},
 			},
-		})
+		},
+	config = function(_, opts)
+		require("telescope").setup(opts)
 		require("telescope").load_extension("fzf")
 		require("telescope").load_extension("ui-select")
 		require("telescope").load_extension("flutter")

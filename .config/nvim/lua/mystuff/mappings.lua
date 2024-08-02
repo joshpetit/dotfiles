@@ -313,7 +313,7 @@ vim.keymap.set("n", "<leader>lf", function()
 	end)
 end)
 
-nmap("<leader>ps", require("mystuff/plugin_conf/telescope-nvim/functions").search_by_workspace)
+-- nmap("<leader>ps", require("mystuff/plugin_conf/telescope-nvim/functions").search_by_workspace)
 
 local opts = { noremap = true, silent = false }
 -- Create a new note after asking for its title.

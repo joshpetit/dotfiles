@@ -13,16 +13,6 @@ return {
 	--   "BufReadPre path/to/my-vault/**.md",
 	--   "BufNewFile path/to/my-vault/**.md",
 	-- },
-	completion = {
-		nvim_cmp = false,
-		-- Trigger completion at 2 chars.
-		min_chars = 2,
-	},
-	-- ui = {
-	-- 	checkboxes = {
-	-- 		[" "] = { char = ">", hl_group = "ObsidianTodo" },
-	-- 	},
-	-- },
 	dependencies = {
 		-- Required.
 		"nvim-lua/plenary.nvim",
@@ -30,6 +20,19 @@ return {
 		-- see below for full list of optional dependencies 👇
 	},
 	opts = {
+
+		completion = {
+			nvim_cmp = true,
+			-- Trigger completion at 2 chars.
+			min_chars = 2,
+		},
+		ui = {
+			checkboxes = {
+				[" "] = { char = "☐", hl_group = "ObsidianTodo" },
+				["x"] = { char = "", hl_group = "ObsidianDone" },
+				["!"] = { char = "", hl_group = "ObsidianImportant" },
+			},
+		},
 		workspaces = {
 			{
 				name = "wiki",
