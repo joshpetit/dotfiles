@@ -85,6 +85,11 @@ return function(client, bufnr)
 	-- buf_set_keymap('n', '<leader>ff', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 	buf_set_keymap("v", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 
+    -- if it's markdown, set formatexpr to empty string
+    if vim.bo.filetype == "markdown" then
+        vim.bo.formatexpr = ""
+    end
+
     -- bemol()
 end
 

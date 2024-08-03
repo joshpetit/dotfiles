@@ -76,7 +76,7 @@ require("telescope").setup({
 })
 
 require("telescope").load_extension("fzf")
-require("telescope").load_extension("ui-select")
+-- require("telescope").load_extension("ui-select")
 require("telescope").load_extension("flutter")
 
 require("mystuff/utils")
@@ -175,6 +175,48 @@ exports.search_by_workspace = function(opts)
 			prompt_title = "colors",
 			finder = finders.new_table({
 				results = workspaces_list,
+				entry_maker = function(entry)
+					return {
+						value = entry,
+						display = function(the_entry)
+							return displayer({
+								{ the_entry.ordinal },
+								{ the_entry.value.path, "String" },
+							})
+						end,
+						ordinal = entry.name,
+					}
+				end,
+			}),
+			sorter = conf.generic_sorter(opts),
+			attach_mappings = function(prompt_bufnr, map)
+				actions.select_default:replace(function()
+					actions.close(prompt_bufnr)
+
+					local selected = action_state.get_selected_entry()
+					if not selected then
+						return
+					end
+
+					local workspace = selected.value
+					if workspace and workspace ~= "" then
+						require("telescope.builtin").find_files({ hidden = true, search_dirs = { workspace.path } })
+					end
+				end)
+				return true
+			end,
+		})
+		:find()
+end
+
+exports.select_bible_verse = function(opts)
+	opts = opts or {}
+
+	pickers
+		.new(opts, {
+			prompt_title = "colors",
+			finder = finders.new_table({
+				results = books,
 				entry_maker = function(entry)
 					return {
 						value = entry,

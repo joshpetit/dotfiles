@@ -310,9 +310,7 @@ function Yeet(args, what)
 end
 
 vim.keymap.set("n", "<leader>lf", function()
-	vim.ui.input({ prompt = "hi", completion = "custom,v:lua.Yeet" }, function(input)
-		print(input)
-	end)
+
 end)
 
 nmap("<leader>ps", require("mystuff/plugin_conf/telescope-nvim").search_by_workspace)
@@ -330,7 +328,7 @@ end)
 nmap("<leader>nn", function()
 	local title = vim.fn.input("Title: ")
 	os.execute([[touch ~/sync/wiki/"]] .. title .. [[.md"]])
-    vim.cmd([[:e ~/sync/wiki/]] .. title .. ".md")
+	vim.cmd([[:e ~/sync/wiki/]] .. title .. ".md")
 end)
 
 -- vim.api.nvim_set_keymap("n", "<leader>zo", "<Cmd>ZkNotes { sort = { 'modified' } }<CR>", opts)
