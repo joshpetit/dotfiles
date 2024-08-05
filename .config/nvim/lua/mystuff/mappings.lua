@@ -325,6 +325,9 @@ end)
 
 nmap("<leader>nn", function()
 	local title = vim.fn.input("Title: ")
+    if title == nil or title == '' then
+        return
+    end
 	os.execute([[touch ~/sync/wiki/"]] .. title .. [[.md"]])
 	vim.cmd([[:e ~/sync/wiki/]] .. title .. ".md")
 end)
