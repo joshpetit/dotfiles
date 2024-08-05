@@ -35,14 +35,30 @@ local function expand_link()
 	local passage_ref = split_link_text[2]
 	-- TODO: make it be able to get version from markdown metadata
 	local version = "ESV"
-	local split_passage_ref = vim.split(passage_ref, " ", { trim = true })
-	if split_passage_ref[3] ~= nil then
-		version = split_passage_ref[3]
-		passage_ref = split_passage_ref[1] .. " " .. split_passage_ref[2]
+
+	local book = passage_ref:match("%d*[%a%s]+%a")
+	local numbers = passage_ref:gsub(book, "")
+	local chapter = numbers:match("%d+")
+	local verses = numbers:match(":%d+")
+	local start_verse
+	local end_verse
+
+	if verses ~= nil then
+		start_verse = verses:match("%d+")
+		local end_verse_part = numbers:match("-%d+")
+		if end_verse_part ~= nil then
+			end_verse = end_verse_part:match("%d+")
+		end
 	end
-	local book = split_passage_ref[1]
+
+	local parsed_version = passage_ref:gsub(book, ""):match("%a+")
+	if parsed_version ~= nil then
+		version = parsed_version
+		passage_ref = vim.trim(passage_ref:gsub(parsed_version, ""))
+	end
+
 	vim.ui.select(
-		{ "copy", "insert", "biblehub", "biblegateway", "biblegateway-context" },
+		{ "insert", "biblehub", "biblegateway", "biblegateway-context", "open-bible-info-cross-references", "copy" },
 		{ prompt = passage_ref, backend = "builtin" },
 		function(res)
 			if res == "copy" then
@@ -69,13 +85,28 @@ local function expand_link()
 				vim.api.nvim_buf_set_lines(bufnr, cursor[1], cursor[1] + 1, false, { "> " .. results_in_line })
 				-- vim.api.nvim_win_set_cursor(0, {cursor[1], cursor[2] + #link})
 			elseif res == "biblehub" then
-				vim.fn.jobstart(
-					"xdg-open https://biblehub.com/"
-						.. book:lower()
-						.. "/"
-						.. split_passage_ref[2]:gsub(":", "-")
-						.. ".htm"
-				)
+				-- if end verse is not null, prompt the user to pick a number between start_verse and end verse
+				local verse = start_verse
+
+				local goto_biblehub = function()
+					vim.fn.jobstart(
+						"xdg-open https://biblehub.com/"
+							.. book:lower():gsub(" ", "_")
+							.. "/"
+							.. chapter
+							.. "-"
+							.. verse
+							.. ".htm"
+					)
+				end
+				if end_verse ~= nil or start_verse == nil then
+					vim.ui.input({ prompt = "Enter verse" }, function(selected_verse)
+						verse = selected_verse
+						goto_biblehub()
+					end)
+				else
+					goto_biblehub()
+				end
 			elseif res == "biblegateway" then
 				vim.fn.jobstart(
 					'xdg-open "https://www.biblegateway.com/passage/?search='
@@ -84,11 +115,12 @@ local function expand_link()
 						.. version
 						.. '"'
 				)
+			-- TODO when it is a verse range ask for a selection of which verse to open
+			elseif res == "open-bible-info-cross-references" then
+				vim.fn.jobstart(
+					'xdg-open "https://www.openbible.info/labs/cross-references/search?q=' .. passage_ref .. '"'
+				)
 			elseif res == "biblegateway-context" then
-				local chapter = split_passage_ref[2]:match("%d+")
-				local verse = split_passage_ref[2]:match(":%d+")
-				verse = vim.fn.substitute(verse, ":", "", "")
-				vim.print(chapter)
 				vim.fn.jobstart(
 					'xdg-open "https://www.biblegateway.com/passage/?search='
 						.. book
@@ -97,7 +129,7 @@ local function expand_link()
 						.. "&version="
 						.. version
 						.. "#:~:text="
-						.. verse
+						.. start_verse
 						.. '"'
 				)
 			end
@@ -204,15 +236,17 @@ local select_bible_verse = function(opts)
 						return
 					end
 					-- insert the Bible book as a wiki link at the cursor
+					local cursor = vim.api.nvim_win_get_cursor(0)
 					local book = selected.value
 					local current_line = vim.api.nvim_get_current_line()
 					local link = ""
+                    local displace = #book + 8
 					if current_line ~= "" then
 						link = " "
 					end
-					link = link .. "[[" .. book .. "|bible:" .. book .. "]]"
+					-- link = link .. "[[" .. book .. "|bible:" .. book .. " ]]"
+                    link = link .. "[bible:" .. book .. " ](" .. book .. ")"
 					local bufnr = vim.api.nvim_get_current_buf()
-					local cursor = vim.api.nvim_win_get_cursor(0)
 					vim.api.nvim_buf_set_text(
 						bufnr,
 						cursor[1] - 1,
@@ -222,7 +256,7 @@ local select_bible_verse = function(opts)
 						{ link }
 					)
 					-- vim.api.nvim_win_set_cursor(0, {cursor[1], cursor[2] + #link})
-					vim.api.nvim_win_set_cursor(0, { cursor[1], cursor[2] + #link - 3 })
+					vim.api.nvim_win_set_cursor(0, { cursor[1], cursor[2] + displace })
 
 					-- Create a temporary keymap to tab tha will put them at the end of the link after
 
@@ -237,3 +271,21 @@ end
 vim.keymap.set("n", "<leader>ir", select_bible_verse)
 vim.keymap.set("n", "<leader>nir", select_bible_verse)
 vim.keymap.set("i", "<LocalLeader>ir", select_bible_verse)
+
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
+-- vim.api.nvim_create_autocmd("BufEnter", {
+-- 	callback = function()
+-- 		if vim.opt.foldmethod:get() == "expr" then
+-- 			vim.schedule(function()
+-- 				vim.opt.foldmethod = "expr"
+-- 			end)
+-- 		end
+-- 	end,
+-- })
+vim.cmd([[
+let g:markdown_folding = 1
+set foldlevel=99
+    ]])
+local opts = { noremap = true, silent = false }
+vim.api.nvim_set_keymap("n", "<TAB>", "za", opts)
