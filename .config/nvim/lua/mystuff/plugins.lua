@@ -275,8 +275,9 @@ return require("packer").startup(function()
 	use_help({ "nilsboy/vim-rest-console" }, true)
 	use_help({ "epwalsh/obsidian.nvim" }, true)
 	use_help({
-		"nvim-orgmode/orgmode",
+		"SlayerOfTheBad/orgmode",
 		ft = "org",
+        lock = "cf650e5f54d9fc126e54179509f7c93bf64c7ea2",
 		config = function()
 			require("orgmode").setup({
 				org_agenda_files = { "~/sync/org/**/*" },
@@ -342,6 +343,8 @@ return require("packer").startup(function()
 	}, true)
 
 	use({ "williamboman/mason-lspconfig.nvim" })
+	use_help({ "ribelo/taskwarrior.nvim" }, true)
+
 	if Packer_bootstrap then
 		require("packer").sync()
 	end

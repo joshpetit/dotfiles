@@ -13,6 +13,7 @@ local servers = {
 	--"jsonls",
 	-- "jdtls",
 	"svelte",
+	"typos_lsp",
 	"markdown_oxide",
 	"vuels",
 	"cssls",

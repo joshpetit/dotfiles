@@ -309,9 +309,7 @@ function Yeet(args, what)
 	return "hi"
 end
 
-vim.keymap.set("n", "<leader>lf", function()
-
-end)
+vim.keymap.set("n", "<leader>lf", function() end)
 
 nmap("<leader>ps", require("mystuff/plugin_conf/telescope-nvim").search_by_workspace)
 
@@ -350,3 +348,4 @@ vim.api.nvim_set_keymap(
 )
 -- Search for the notes matching the current visual selection.
 vim.api.nvim_set_keymap("v", "<leader>zf", ":'<,'>ZkMatch<CR>", opts)
+
