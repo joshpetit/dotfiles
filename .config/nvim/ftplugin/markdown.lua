@@ -6,34 +6,7 @@ m.cmap("ConvertPdf ", "<cmd>pandoc -i % -o %.pdf<cr>", { buffer = true })
 o.set_buf_option("textwidth", 80)
 vim.bo.formatexpr = ""
 
-local function expand_link()
-	local ts_utils = require("nvim-treesitter.ts_utils")
-	local cursor_node = ts_utils.get_node_at_cursor()
-
-	local link_query = vim.treesitter.query.parse(
-		"markdown_inline",
-		[[
-    (link_text)@link_text
-]]
-	)
-	local bufnr = vim.api.nvim_get_current_buf()
-
-	if cursor_node == nil then
-		return
-	end
-	-- TODO: make it find the next thing on the line
-	-- TODO: make it let you expand on the paranetheses portion of a markdown link []( )
-	if cursor_node:type() ~= "link_text" then
-		for id, node in link_query:iter_captures(cursor_node, bufnr, 0, -1) do
-			cursor_node = node
-		end
-	end
-	-- vim.print(link_query)
-	local link_text = vim.treesitter.get_node_text(cursor_node, bufnr)
-	-- TODO: make it auto insert the bible: prefix if not found
-	local split_link_text = vim.split(link_text, "bible:", { trim = true })
-	local passage_ref = split_link_text[2]
-	-- TODO: make it be able to get version from markdown metadata
+local function handle_passage_ref(passage_ref)
 	local version = "ESV"
 
 	local book = passage_ref:match("%d*[%a%s]+%a")
@@ -135,6 +108,37 @@ local function expand_link()
 			end
 		end
 	)
+end
+
+local function expand_link()
+	local ts_utils = require("nvim-treesitter.ts_utils")
+	local cursor_node = ts_utils.get_node_at_cursor()
+
+	local link_query = vim.treesitter.query.parse(
+		"markdown_inline",
+		[[
+    (link_text)@link_text
+]]
+	)
+	local bufnr = vim.api.nvim_get_current_buf()
+
+	if cursor_node == nil then
+		return
+	end
+	-- TODO: make it find the next thing on the line
+	-- TODO: make it let you expand on the paranetheses portion of a markdown link []( )
+	if cursor_node:type() ~= "link_text" then
+		for id, node in link_query:iter_captures(cursor_node, bufnr, 0, -1) do
+			cursor_node = node
+		end
+	end
+	-- vim.print(link_query)
+	local link_text = vim.treesitter.get_node_text(cursor_node, bufnr)
+	-- TODO: make it auto insert the bible: prefix if not found
+	local split_link_text = vim.split(link_text, "bible:", { trim = true })
+	local passage_ref = split_link_text[2]
+	handle_passage_ref(passage_ref)
+	-- TODO: make it be able to get version from markdown metadata
 	-- vim.print(result)
 end
 
@@ -240,12 +244,12 @@ local select_bible_verse = function(opts)
 					local book = selected.value
 					local current_line = vim.api.nvim_get_current_line()
 					local link = ""
-                    local displace = #book + 8
+					local displace = #book + 8
 					if current_line ~= "" then
 						link = " "
 					end
 					-- link = link .. "[[" .. book .. "|bible:" .. book .. " ]]"
-                    link = link .. "[bible:" .. book .. " ](" .. book .. ")"
+					link = link .. "[bible:" .. book .. " ](" .. book .. ")"
 					local bufnr = vim.api.nvim_get_current_buf()
 					vim.api.nvim_buf_set_text(
 						bufnr,
@@ -258,7 +262,7 @@ local select_bible_verse = function(opts)
 					-- vim.api.nvim_win_set_cursor(0, {cursor[1], cursor[2] + #link})
 					vim.api.nvim_win_set_cursor(0, { cursor[1], cursor[2] + displace })
 
-					-- Create a temporary keymap to tab tha will put them at the end of the link after
+					-- Create a temporary keymap to tab that will put them at the end of the link after
 
 					vim.api.nvim_feedkeys("a", "n", true)
 				end)
@@ -289,3 +293,42 @@ set foldlevel=99
     ]])
 local opts = { noremap = true, silent = false }
 vim.api.nvim_set_keymap("n", "<TAB>", "za", opts)
+local telescope = require("telescope")
+vim.keymap.set("n", "<leader>bs", function()
+	require("telescope.builtin").grep_string({
+		hidden = true,
+		search = "",
+		search_dirs = { "~/texts" },
+		path_display = "hidden",
+        -- I want to make telescope highlight the first WORD of the search result
+        display = function(entry)
+            return "hi"
+        end,
+		vimgrep_arguments = {
+			"rg",
+			"--color=never",
+			"--no-heading",
+			"--with-filename",
+			-- This breaks it for some reason lol
+			-- "--no-line-number",
+			"--column",
+			"--smart-case",
+		},
+		attach_mappings = function(_, map)
+			-- Adds a new map to ctrl+e.
+			map({ "i", "n" }, "<c-e>", function(prompt_bufnr)
+				-- these two a very self-explanatory
+				local entry = require("telescope.actions.state").get_selected_entry()
+				local passage_ref = vim.split(entry.text, "\t")[1]
+				actions.close(prompt_bufnr)
+				handle_passage_ref(passage_ref)
+
+				-- if vim.api.nvim_get_mode().mode == "i" then
+				-- 	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, false, true), "x", true)
+				-- end
+				return true
+			end)
+			return true
+		end,
+	})
+end, opts)
