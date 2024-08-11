@@ -26,11 +26,20 @@ local servers = {
 }
 
 for _, lsp in ipairs(servers) do
-	lspconfig[lsp].setup({
-		capabilities = capabilities,
-		on_attach = on_attach,
-		flags = { debounce_text_changes = 150 },
-	})
+	if lsp == "typos_lsp" then
+		lspconfig[lsp].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+			flags = { debounce_text_changes = 150 },
+            filetypes = { "markdown" },
+		})
+	else
+		lspconfig[lsp].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+			flags = { debounce_text_changes = 150 },
+		})
+	end
 end
 
 local luaLspConfig = {

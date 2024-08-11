@@ -7,7 +7,7 @@ o.set_buf_option("textwidth", 80)
 vim.bo.formatexpr = ""
 
 local function handle_passage_ref(passage_ref)
-	local version = "ESV"
+	local version = "NASB"
 
 	local book = passage_ref:match("%d*[%a%s]+%a")
 	local numbers = passage_ref:gsub(book, "")
@@ -30,84 +30,114 @@ local function handle_passage_ref(passage_ref)
 		passage_ref = vim.trim(passage_ref:gsub(parsed_version, ""))
 	end
 
-	vim.ui.select(
-		{ "insert", "biblehub", "biblegateway", "biblegateway-context", "open-bible-info-cross-references", "copy" },
-		{ prompt = passage_ref, backend = "builtin" },
-		function(res)
-			if res == "copy" then
-				local handle = io.popen("bible --version " .. version .. " " .. passage_ref)
-				if handle == nil then
-					vim.print("Failed to run command")
-					return
+	vim.ui.select({
+		"insert",
+		"biblehub",
+		"biblegateway",
+		"biblegateway-context",
+		"open-bible-info-cross-references",
+		"open",
+		"copy",
+	}, { prompt = passage_ref, backend = "builtin" }, function(res)
+		if res == "copy" then
+			local handle = io.popen("bible --version " .. version .. " " .. passage_ref)
+			if handle == nil then
+				vim.print("Failed to run command")
+				return
+			end
+			local result = handle:read("*a")
+			handle:close()
+			vim.fn.setreg('"', result)
+			vim.print("Copied to clipboard")
+		elseif res == "open" then
+			local bible_buffer
+			for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+				if vim.bo[buf].filetype == "bible" then
+					bible_buffer = buf
+					break
 				end
-				local result = handle:read("*a")
-				handle:close()
-				vim.fn.setreg('"', result)
-				vim.print("Copied to clipboard")
-			elseif res == "insert" then
-				local handle = io.popen("bible --version " .. version .. " " .. passage_ref)
-				if handle == nil then
-					vim.print("Failed to run command")
-					return
-				end
-				local result = handle:read("*a")
-				handle:close()
+			end
+			if bible_buffer == nil then
+				vim.cmd([[split ~/texts/nasb.bible]])
+			end
+			local bible_window
 
-				local cursor = vim.api.nvim_win_get_cursor(0)
-				local results_in_line = vim.fn.substitute(result, "\n", " ", "g")
-				vim.api.nvim_buf_set_lines(bufnr, cursor[1], cursor[1] + 1, false, { "> " .. results_in_line })
-				-- vim.api.nvim_win_set_cursor(0, {cursor[1], cursor[2] + #link})
-			elseif res == "biblehub" then
-				-- if end verse is not null, prompt the user to pick a number between start_verse and end verse
-				local verse = start_verse
+			for _, win in ipairs(vim.api.nvim_list_wins()) do
+				if vim.api.nvim_win_get_buf(win) == bible_buffer then
+					bible_window = win
+					break
+				end
+			end
 
-				local goto_biblehub = function()
-					vim.fn.jobstart(
-						"xdg-open https://biblehub.com/"
-							.. book:lower():gsub(" ", "_")
-							.. "/"
-							.. chapter
-							.. "-"
-							.. verse
-							.. ".htm"
-					)
-				end
-				if end_verse ~= nil or start_verse == nil then
-					vim.ui.input({ prompt = "Enter verse" }, function(selected_verse)
-						verse = selected_verse
-						goto_biblehub()
-					end)
-				else
-					goto_biblehub()
-				end
-			elseif res == "biblegateway" then
+			if bible_window ~= nil then
+				vim.api.nvim_set_current_win(bible_window)
+			end
+			-- find the passage ref in the bible buffer
+			vim.fn.search(book .. " " .. chapter .. ":" .. start_verse, "w")
+		elseif res == "insert" then
+			local handle = io.popen("bible --version " .. version .. " " .. passage_ref)
+			if handle == nil then
+				vim.print("Failed to run command")
+				return
+			end
+			local result = handle:read("*a")
+			handle:close()
+			local bufnr = vim.api.nvim_get_current_buf()
+
+			local cursor = vim.api.nvim_win_get_cursor(0)
+			local results_in_line = vim.fn.substitute(result, "\n", " ", "g")
+			vim.api.nvim_buf_set_lines(bufnr, cursor[1], cursor[1] + 1, false, { "> " .. results_in_line })
+			-- vim.api.nvim_win_set_cursor(0, {cursor[1], cursor[2] + #link})
+		elseif res == "biblehub" then
+			-- if end verse is not null, prompt the user to pick a number between start_verse and end verse
+			local verse = start_verse
+
+			local goto_biblehub = function()
 				vim.fn.jobstart(
-					'xdg-open "https://www.biblegateway.com/passage/?search='
-						.. passage_ref
-						.. "&version="
-						.. version
-						.. '"'
-				)
-			-- TODO when it is a verse range ask for a selection of which verse to open
-			elseif res == "open-bible-info-cross-references" then
-				vim.fn.jobstart(
-					'xdg-open "https://www.openbible.info/labs/cross-references/search?q=' .. passage_ref .. '"'
-				)
-			elseif res == "biblegateway-context" then
-				vim.fn.jobstart(
-					'xdg-open "https://www.biblegateway.com/passage/?search='
-						.. book
-						.. " "
+					"xdg-open https://biblehub.com/"
+						.. book:lower():gsub(" ", "_")
+						.. "/"
 						.. chapter
-						.. "&version="
-						.. version
-						.. "#:~:text="
-						.. start_verse
-						.. '"'
+						.. "-"
+						.. verse
+						.. ".htm"
 				)
 			end
+			if end_verse ~= nil or start_verse == nil then
+				vim.ui.input({ prompt = "Enter verse" }, function(selected_verse)
+					verse = selected_verse
+					goto_biblehub()
+				end)
+			else
+				goto_biblehub()
+			end
+		elseif res == "biblegateway" then
+			vim.fn.jobstart(
+				'xdg-open "https://www.biblegateway.com/passage/?search='
+					.. passage_ref
+					.. "&version="
+					.. version
+					.. '"'
+			)
+			-- TODO when it is a verse range ask for a selection of which verse to open
+		elseif res == "open-bible-info-cross-references" then
+			vim.fn.jobstart(
+				'xdg-open "https://www.openbible.info/labs/cross-references/search?q=' .. passage_ref .. '"'
+			)
+		elseif res == "biblegateway-context" then
+			vim.fn.jobstart(
+				'xdg-open "https://www.biblegateway.com/passage/?search='
+					.. book
+					.. " "
+					.. chapter
+					.. "&version="
+					.. version
+					.. "#:~:text="
+					.. start_verse
+					.. '"'
+			)
 		end
-	)
+	end)
 end
 
 local function expand_link()
@@ -276,8 +306,6 @@ vim.keymap.set("n", "<leader>ir", select_bible_verse)
 vim.keymap.set("n", "<leader>nir", select_bible_verse)
 vim.keymap.set("i", "<LocalLeader>ir", select_bible_verse)
 
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
 -- vim.api.nvim_create_autocmd("BufEnter", {
 -- 	callback = function()
 -- 		if vim.opt.foldmethod:get() == "expr" then
@@ -300,10 +328,10 @@ vim.keymap.set("n", "<leader>bs", function()
 		search = "",
 		search_dirs = { "~/texts" },
 		path_display = "hidden",
-        -- I want to make telescope highlight the first WORD of the search result
-        display = function(entry)
-            return "hi"
-        end,
+		-- I want to make telescope highlight the first WORD of the search result
+		display = function(entry)
+			return "hi"
+		end,
 		vimgrep_arguments = {
 			"rg",
 			"--color=never",

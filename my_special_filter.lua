@@ -65,7 +65,7 @@ function do_it(link)
             passage_ref = passage_ref .. " " .. link.content[i].text
         end
     end
-    local version = "ESV"
+    local version = "NASB"
 
 	local book = passage_ref:match("%d*[%a%s]+%a")
 	local numbers = passage_ref:gsub(book, "")
