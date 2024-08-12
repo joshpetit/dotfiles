@@ -114,14 +114,14 @@ local show_strongss = function()
 	-- local start = vim.cmd([[call matchstr(getline('.'), '\k*', getpos('.')[2]-1)]])
 end
 
-vim.keymap.set("n", "<Localleader>gw", show_strongss, { noremap = true })
+vim.keymap.set("n", "<Localleader>gw", show_strongss, { noremap = true, buffer = true })
 vim.keymap.set("n", "<leader>lf", function()
 	-- print(vim.api.nvim_win_get_cursor(0)[2])
 	local s = "G245"
 	print(s:sub(1, 1) == "G")
 	s = s:sub(2)
 	print(s)
-end, { noremap = true })
+end, { noremap = true, buffer = true })
 
 -- make a function to call show_strongs every time the cursor moves
 -- vim.cmd(
@@ -130,3 +130,130 @@ end, { noremap = true })
 --     ]],
 -- 	false
 -- )
+
+local function parse_reference(passage_ref)
+	local version = "NASB"
+	local book = passage_ref:match("%d*[%a%s]+%a")
+	local numbers = passage_ref:gsub(book, "")
+	local chapter = numbers:match("%d+")
+	local verses = numbers:match(":%d+")
+	local start_verse
+	local end_verse
+
+	if verses ~= nil then
+		start_verse = verses:match("%d+")
+		local end_verse_part = numbers:match("-%d+")
+		if end_verse_part ~= nil then
+			end_verse = end_verse_part:match("%d+")
+		end
+	end
+
+	local parsed_version = passage_ref:gsub(book, ""):match("%a+")
+	if parsed_version ~= nil then
+		version = parsed_version
+		passage_ref = vim.trim(passage_ref:gsub(parsed_version, ""))
+	end
+	return {
+		passage_ref = passage_ref,
+		book = book,
+		chapter = chapter,
+		start_verse = start_verse,
+		end_verse = end_verse,
+		version = version,
+	}
+end
+
+-- Thank you AI!
+local create_passage_reference = function(first_reference, last_reference)
+	local passage_reference = ""
+	if first_reference.book == last_reference.book then
+		passage_reference = first_reference.book
+		if first_reference.chapter == last_reference.chapter then
+			passage_reference = passage_reference .. " " .. first_reference.chapter
+			if first_reference.start_verse == last_reference.start_verse then
+				passage_reference = passage_reference .. ":" .. first_reference.start_verse
+				if first_reference.end_verse ~= nil then
+					passage_reference = passage_reference .. "-" .. last_reference.end_verse
+				end
+			else
+				passage_reference = passage_reference .. ":" .. first_reference.start_verse
+				if first_reference.end_verse ~= nil then
+					passage_reference = passage_reference .. "-" .. first_reference.end_verse
+				end
+				passage_reference = passage_reference .. "-" .. last_reference.start_verse
+				if last_reference.end_verse ~= nil then
+					passage_reference = passage_reference .. "-" .. last_reference.end_verse
+				end
+			end
+		else
+			passage_reference = passage_reference
+				.. " "
+				.. first_reference.chapter
+				.. ":"
+				.. first_reference.start_verse
+			if first_reference.end_verse ~= nil then
+				passage_reference = passage_reference .. "-" .. first_reference.end_verse
+			end
+			passage_reference = passage_reference .. "-" .. last_reference.chapter .. ":" .. last_reference.start_verse
+			if last_reference.end_verse ~= nil then
+				passage_reference = passage_reference .. "-" .. last_reference.end_verse
+			end
+		end
+	else
+		passage_reference = first_reference.book .. " " .. first_reference.chapter .. ":" .. first_reference.start_verse
+		if first_reference.end_verse ~= nil then
+			passage_reference = passage_reference .. "-" .. first_reference.end_verse
+		end
+		passage_reference = passage_reference
+			.. "-"
+			.. last_reference.book
+			.. " "
+			.. last_reference.chapter
+			.. ":"
+			.. last_reference.start_verse
+		if last_reference.end_verse ~= nil then
+			passage_reference = passage_reference .. "-" .. last_reference.end_verse
+		end
+	end
+	return passage_reference
+end
+
+local function break_lines(text, max_width, prefix)
+	prefix = prefix or ""
+	max_width = max_width or 80
+	local result = {}
+	local line = ""
+
+	for word in text:gmatch("%S+") do
+		if #line + #word + #prefix + 1 > max_width then
+			table.insert(result, prefix .. line)
+			line = word
+		else
+			line = (line ~= "") and line .. " " .. word or word
+		end
+	end
+	table.insert(result, prefix .. line)
+
+	return table.concat(result, "\n")
+end
+
+vim.keymap.set("v", "ge", function()
+	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, false, true), "x", true)
+	local bufnum, start_line, start_col, _ = unpack(vim.fn.getpos("'<"))
+	local _, end_line, end_col, _ = unpack(vim.fn.getpos("'>"))
+	local selected_lines = vim.api.nvim_buf_get_lines(bufnum, start_line - 1, end_line, true)
+    -- TODO: Make it partially select the passage
+
+	local first_reference = parse_reference(vim.split(selected_lines[1], "\t")[1])
+	local last_reference = parse_reference(vim.split(selected_lines[#selected_lines], "\t")[1])
+	local passage_reference = create_passage_reference(first_reference, last_reference)
+	local passage_text = ""
+	for _, line in ipairs(selected_lines) do
+		passage_text = passage_text .. vim.split(line, "\t")[2] .. " "
+	end
+
+	passage_text = break_lines(passage_text, 80, "> ")
+	local markdown_link = string.format("[bible:%s](%s)", passage_reference, first_reference.book)
+	local passage_to_copy = string.format("%s\n\n%s", markdown_link, passage_text)
+	vim.fn.setreg('"', passage_to_copy)
+end, { noremap = true, buffer = true })

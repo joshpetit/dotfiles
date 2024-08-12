@@ -284,7 +284,7 @@ return require("packer").startup(function()
 				org_default_notes_file = "~/sync/org/refile.org",
 				org_deadline_warning_days = 5,
 				org_agenda_start_on_weekday = 7,
-				org_todo_keywords = { "TODO(t)", "REVIEW(r)", "|", "DONE(d)" },
+				org_todo_keywords = { "TODO(t)", "REVIEW(r)", "|", "DONE(d)", "CANCELLED(c)" },
 				-- Float doesn't open the items in different buffer correctly.
 				-- win_split_mode  = 'float',
 				org_highlight_latex_and_related = "native",
