@@ -76,12 +76,12 @@ local show_strongss = function()
 	for the_i, the_word in ipairs(words_split) do
 		words_split[the_i] = the_word:match("([%w]+)")
 	end
-	local diatheke_output = vim.fn.system("diatheke -b NASB -o n -k " .. reference)
+	local diatheke_output = vim.fn.system("diatheke -b NASB -o n -k " .. reference):lower()
 	local last_lemma
 
 	for i, word in ipairs(words_split) do
 		local next_lemma_position = diatheke_output:find('lemma="strong:')
-		local word_position_in_output = diatheke_output:find(word)
+		local word_position_in_output = diatheke_output:find(word:lower())
 		if not word_position_in_output then
 			break
 		end
@@ -97,12 +97,10 @@ local show_strongss = function()
 		end
 	end
 
-	local is_hebrew = last_lemma:sub(1, 1) == "H"
+	local is_hebrew = last_lemma:sub(1, 1) == "h"
 	local lemma = last_lemma:sub(2)
 	local strongs_output
-	print(lemma)
 	if is_hebrew then
-		print("diatheke -b StrongsHebrew -k " .. lemma)
 		strongs_output = vim.fn.system("diatheke -b StrongsHebrew -k " .. lemma)
 	else
 		strongs_output = vim.fn.system("diatheke -b StrongsGreek -k " .. lemma)
