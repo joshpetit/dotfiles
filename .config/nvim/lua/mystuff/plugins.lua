@@ -275,9 +275,8 @@ return require("packer").startup(function()
 	use_help({ "nilsboy/vim-rest-console" }, true)
 	use_help({ "epwalsh/obsidian.nvim" }, true)
 	use_help({
-		"SlayerOfTheBad/orgmode",
+		"nvim-orgmode/orgmode",
 		ft = "org",
-        lock = "cf650e5f54d9fc126e54179509f7c93bf64c7ea2",
 		config = function()
 			require("orgmode").setup({
 				org_agenda_files = { "~/sync/org/**/*" },

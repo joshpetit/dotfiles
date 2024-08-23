@@ -240,7 +240,7 @@ vim.keymap.set("v", "ge", function()
 	local bufnum, start_line, start_col, _ = unpack(vim.fn.getpos("'<"))
 	local _, end_line, end_col, _ = unpack(vim.fn.getpos("'>"))
 	local selected_lines = vim.api.nvim_buf_get_lines(bufnum, start_line - 1, end_line, true)
-    -- TODO: Make it partially select the passage
+	-- TODO: Make it partially select the passage
 
 	local first_reference = parse_reference(vim.split(selected_lines[1], "\t")[1])
 	local last_reference = parse_reference(vim.split(selected_lines[#selected_lines], "\t")[1])
@@ -255,3 +255,211 @@ vim.keymap.set("v", "ge", function()
 	local passage_to_copy = string.format("%s\n\n%s", markdown_link, passage_text)
 	vim.fn.setreg('"', passage_to_copy)
 end, { noremap = true, buffer = true })
+
+-- Define a function to highlight a specific word
+local function highlight_word(bufnr, line_num, word_index, hl_group)
+	-- Check if the buffer number is valid
+	if not vim.api.nvim_buf_is_valid(bufnr) then
+		print("Invalid buffer number")
+		return
+	end
+
+	-- Get the line content
+	local line = vim.api.nvim_buf_get_lines(bufnr, line_num - 1, line_num, false)[1]
+
+	-- Split the line into words
+	local words = vim.split(line, "%s+", { trimempty = true })
+
+	-- Check if the word index is within range
+	if word_index > #words then
+		print("Word index out of range")
+		return
+	end
+
+	-- Get the word to be highlighted
+	local word = words[word_index]
+	local start_col = string.find(line, word, 1, true)
+	local end_col = start_col + #word
+
+	-- Apply the highlight
+	vim.api.nvim_buf_add_highlight(bufnr, -1, hl_group, line_num - 1, start_col - 1, end_col - 1)
+end
+
+-- Define highlight group
+-- vim.api.nvim_set_hl(0, "Identifier", { fg = "red", bg = "none", bold = false })
+vim.api.nvim_set_hl(0, "TranslationNote", { fg = "#dbc074", bg = "none", bold = true })
+vim.api.nvim_set_hl(0, "CrossReference", { fg = "#74c0db", bg = "none", bold = true })
+
+-- Highlight the 5th word on the 10th line
+highlight_word(0, 10, 5, "CrossReferences")
+highlight_word(0, 10, 5, "Identifier")
+
+local api = vim.api
+
+local bnr = vim.fn.bufnr("%")
+local ns_id = api.nvim_create_namespace("translation_notes")
+
+local output = ""
+
+local notes_mapping = {}
+
+local find_notes_for_chapter = function()
+    local current_line = vim.api.nvim_get_current_line()
+    local current_reference = vim.split(current_line, "\t")[1]
+    local current_reference_obj = parse_reference(current_reference)
+    local current_chatper = current_reference_obj.chapter
+    local book = current_reference_obj.book
+    local command = string.format("node /home/joshu/test/sword/examples/print_kjv.js %s %s", book, current_chatper)
+	vim.fn.jobstart(command, {
+		on_stdout = function(_, data, _)
+			for k, v in pairs(data) do
+				output = output .. v
+			end
+		end,
+		on_stderr = function(_, data, _)
+			-- print(data)
+		end,
+		on_exit = function(_, code, _)
+			local json = vim.json.decode(output)
+            output = ""
+			-- TODO Fix offset later
+			local offset = 0
+            -- find the line the first verse in the chapter is on
+            local current_line_num = vim.api.nvim_win_get_cursor(0)[1]
+            local first_verse_in_chapter = current_line_num - current_reference_obj.start_verse + 1
+			local line = first_verse_in_chapter
+			for _, v in pairs(json) do
+				local passage = v.passage
+				local notes = v.notes
+				for _, note in pairs(notes) do
+					local col = tonumber(note.index) + #passage + 1
+					local type = "0"
+					if notes_mapping[line] == nil then
+						notes_mapping[line] = {}
+					end
+					if notes_mapping[line][col] == nil then
+						notes_mapping[line][col] = {}
+					end
+					notes_mapping[line][col] = note
+					if note.explanation ~= nil then
+						api.nvim_buf_set_extmark(bnr, ns_id, line - 1, col, {
+							end_line = line,
+							id = tonumber(line .. col .. "2"),
+							virt_text = { { "*", "TranslationNote" } },
+							virt_text_pos = "inline",
+						})
+					end
+					if #note.references ~= 0 then
+						api.nvim_buf_set_extmark(bnr, ns_id, line - 1, col, {
+							end_line = line,
+							id = tonumber(line .. col .. "1"),
+							virt_text = { { "*", "CrossReference" } },
+							virt_text_pos = "inline",
+						})
+					end
+				end
+				line = line + 1
+			end
+		end,
+	})
+end
+
+vim.keymap.set("n", "<leader>bc", function()
+	local current_line_num = vim.api.nvim_win_get_cursor(0)[1]
+	local current_col = vim.api.nvim_win_get_cursor(0)[2]
+	local note = notes_mapping[current_line_num][current_col]
+	if note == nil then
+		return
+	end
+	local cross_references = note.references
+	-- put all the cross references in the quickfix list
+	local current_reference = vim.split(vim.api.nvim_get_current_line(), "\t")[1]
+	local quickfix_list = {
+		{
+			-- pattern = current_reference,
+			col = vim.api.nvim_win_get_cursor(0)[2] + 1,
+			lnum = vim.api.nvim_win_get_cursor(0)[1],
+			text = vim.api.nvim_get_current_line(),
+		},
+	}
+	local buf_lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+
+	-- Iterate over the list of beginnings
+	for _, beginning in ipairs(cross_references) do
+		local ref = parse_reference(beginning)
+		local ref_to_search = ref.book .. " " .. ref.chapter .. ":" .. ref.start_verse
+		for i, line in ipairs(buf_lines) do
+			if line:find("^" .. vim.pesc(ref_to_search)) then
+				table.insert(quickfix_list, {
+					bufnr = 0,
+					lnum = i,
+					col = 1,
+					text = beginning .. " " .. line:sub(#ref_to_search + 2),
+				})
+				break
+			end
+		end
+	end
+	local title = "Cross References for " .. current_reference
+	vim.fn.setqflist({}, "r", { title = title, items = quickfix_list })
+
+	local current_pos = vim.api.nvim_win_get_cursor(0)
+	local current_win = vim.api.nvim_get_current_win()
+
+	-- Open the quickfix window
+	vim.cmd("copen")
+
+	-- Focus back to the original window
+	vim.api.nvim_set_current_win(current_win)
+
+	-- Restore the cursor position
+	vim.api.nvim_win_set_cursor(current_win, current_pos)
+end, { noremap = true, buffer = true })
+
+-- Show the translation note explanation
+vim.keymap.set("n", "<leader>bn", function()
+	local current_line_num = vim.api.nvim_win_get_cursor(0)[1]
+	local current_col = vim.api.nvim_win_get_cursor(0)[2]
+	local note = notes_mapping[current_line_num][current_col]
+	if note == nil then
+		return
+	end
+	local explanation = note.explanation
+	if explanation == nil then
+		return
+	end
+	-- If it is short just show it in a hover, if long show it in a split window
+
+	-- Define popup content
+	local popup_content = { explanation }
+
+	-- Create a buffer for the popup
+	local popup_bufnr = vim.api.nvim_create_buf(false, true) -- No file, ephemeral
+
+	-- Set the content of the popup buffer
+	vim.api.nvim_buf_set_lines(popup_bufnr, 0, -1, false, popup_content)
+
+	-- Get the width of the longest line in the popup content
+	local width = 0
+	for _, line in ipairs(popup_content) do
+		width = math.max(width, #line)
+	end
+
+	-- Open the popup window
+	local popup_win_id = vim.api.nvim_open_win(popup_bufnr, false, {
+		relative = "cursor",
+		row = 1,
+		col = 0,
+		width = width,
+		height = #popup_content,
+		style = "minimal",
+		border = "rounded",
+	})
+
+	-- Close the popup when the cursor moves
+	vim.cmd(string.format("autocmd CursorMoved * ++once lua vim.api.nvim_win_close(%d, true)", popup_win_id))
+end, { noremap = true, buffer = true })
+
+vim.keymap.set("n", "<leader>fn", find_notes_for_chapter, { noremap = true, buffer = true })
+
+-- Probably will use this  https://github.com/junegunn/vim-easy-align
