@@ -300,16 +300,24 @@ local bnr = vim.fn.bufnr("%")
 local ns_id = api.nvim_create_namespace("translation_notes")
 
 local output = ""
+local found_notes = {}
 
 local notes_mapping = {}
 
-local find_notes_for_chapter = function()
-    local current_line = vim.api.nvim_get_current_line()
-    local current_reference = vim.split(current_line, "\t")[1]
-    local current_reference_obj = parse_reference(current_reference)
-    local current_chatper = current_reference_obj.chapter
-    local book = current_reference_obj.book
-    local command = string.format("node /home/joshu/test/sword/examples/print_kjv.js %s %s", book, current_chatper)
+find_notes_for_chapter = function()
+	local current_line = vim.api.nvim_get_current_line()
+	local current_reference = vim.split(current_line, "\t")[1]
+	local current_reference_obj = parse_reference(current_reference)
+	local current_chatper = current_reference_obj.chapter
+	local book = current_reference_obj.book
+	if found_notes[book] == nil then
+		found_notes[book] = {}
+	end
+	if found_notes[book][current_chatper] ~= nil then
+		return
+	end
+	found_notes[book] = {}
+	local command = string.format("node /home/joshu/test/sword/examples/print_kjv.js %s %s", book, current_chatper)
 	vim.fn.jobstart(command, {
 		on_stdout = function(_, data, _)
 			for k, v in pairs(data) do
@@ -321,12 +329,12 @@ local find_notes_for_chapter = function()
 		end,
 		on_exit = function(_, code, _)
 			local json = vim.json.decode(output)
-            output = ""
+			output = ""
 			-- TODO Fix offset later
 			local offset = 0
-            -- find the line the first verse in the chapter is on
-            local current_line_num = vim.api.nvim_win_get_cursor(0)[1]
-            local first_verse_in_chapter = current_line_num - current_reference_obj.start_verse + 1
+			-- find the line the first verse in the chapter is on
+			local current_line_num = vim.api.nvim_win_get_cursor(0)[1]
+			local first_verse_in_chapter = current_line_num - current_reference_obj.start_verse + 1
 			local line = first_verse_in_chapter
 			for _, v in pairs(json) do
 				local passage = v.passage
@@ -360,6 +368,8 @@ local find_notes_for_chapter = function()
 				end
 				line = line + 1
 			end
+
+			found_notes[book][current_chatper] = true
 		end,
 	})
 end
@@ -463,3 +473,35 @@ end, { noremap = true, buffer = true })
 vim.keymap.set("n", "<leader>fn", find_notes_for_chapter, { noremap = true, buffer = true })
 
 -- Probably will use this  https://github.com/junegunn/vim-easy-align
+-- set the local buffer to be unmodifiable
+vim.bo[0].modifiable = false
+
+local target_bufnr = vim.api.nvim_get_current_buf()
+
+-- Function to run the command after cursor is held
+local function run_command_if_cursor_held()
+	local initial_pos = vim.api.nvim_win_get_cursor(0)
+
+	vim.defer_fn(function()
+		local current_pos = vim.api.nvim_win_get_cursor(0)
+		if initial_pos[1] == current_pos[1] and initial_pos[2] == current_pos[2] then
+			-- Replace with the command you want to run
+			find_notes_for_chapter()
+		end
+	end, 500)
+end
+
+-- Set up an autocommand for CursorMoved event in the specific buffer
+vim.api.nvim_create_autocmd("CursorMoved", {
+	buffer = target_bufnr,
+	callback = run_command_if_cursor_held,
+})
+
+vim.wo[0].cursorline = true
+
+local actions = require("mystuff.bible_actions")
+
+vim.keymap.set("n", "<leader>bo", function()
+	local ref = vim.split(vim.api.nvim_get_current_line(), "\t")[1]
+	actions.handle_passage_ref(ref)
+end, { noremap = true, buffer = true })

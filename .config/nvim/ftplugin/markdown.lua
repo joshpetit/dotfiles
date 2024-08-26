@@ -4,7 +4,7 @@ local o = require("mystuff/option_utils")
 m.nmap("<leader>mp", "<cmd>MarkdownPreview<cr>", { buffer = true })
 m.cmap("ConvertPdf ", "<cmd>pandoc -i % -o %.pdf<cr>", { buffer = true })
 o.set_buf_option("textwidth", 80)
-vim.bo.formatexpr = ""
+vim.bo[0].formatexpr = ""
 
 local function handle_passage_ref(passage_ref)
 	local version = "NASB"
@@ -302,9 +302,12 @@ local select_bible_verse = function(opts)
 		:find()
 end
 
-vim.keymap.set("n", "<leader>ir", select_bible_verse)
-vim.keymap.set("n", "<leader>nir", select_bible_verse)
-vim.keymap.set("i", "<LocalLeader>ir", select_bible_verse)
+vim.keymap.set("n", "<leader>ir", select_bible_verse, { buffer = true })
+vim.keymap.set("n", "<leader>nir", select_bible_verse, { buffer = true })
+vim.keymap.set("i", "<LocalLeader>ir", select_bible_verse, { buffer = true })
+vim.keymap.set("i", "<LocalLeader>ir", select_bible_verse, { buffer = true })
+vim.keymap.set("n", "<leader>not", "<cmd>ObsidianToday<cr>", { buffer = true })
+vim.keymap.set("n", "<leader>noy", "<cmd>ObsidianYesterday<cr>", { buffer = true })
 
 -- vim.api.nvim_create_autocmd("BufEnter", {
 -- 	callback = function()
@@ -320,7 +323,7 @@ let g:markdown_folding = 1
 set foldlevel=99
     ]])
 local opts = { noremap = true, silent = false }
-vim.api.nvim_set_keymap("n", "<TAB>", "za", opts)
+-- vim.api.nvim_set_keymap("n", "<TAB>", "za", opts)
 local telescope = require("telescope")
 vim.keymap.set("n", "<leader>bs", function()
 	require("telescope.builtin").grep_string({
@@ -360,3 +363,6 @@ vim.keymap.set("n", "<leader>bs", function()
 		end,
 	})
 end, opts)
+
+vim.o.ignorecase = true
+vim.o.infercase = true
