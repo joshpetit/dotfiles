@@ -71,9 +71,6 @@ alias setclip="xclip -selection c"
 alias getclip="xclip -selection c -o"
 alias pandoc-eisvogel="pandoc --template eisvogel.latex --lua-filter /home/joshu/dotfiles/my_special_filter.lua"
 alias pe="pandoc --template eisvogel.latex"
-alias b="cd .."
-alias bb="cd ../../"
-alias bbb="cd ../../../"
 
 alias fpg='flutter pub get'
 alias lnvm='source $NVM_INIT_FILE'
@@ -166,7 +163,7 @@ zplug load
 [[ -f /home/joshu/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/joshu/.config/.dart-cli-completion/zsh-config.zsh || true
 include /Users/joshiep/.brazil_completion/zsh_completion
 
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+# if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 ma() {
     echo "alias $1=\"${@:2}\"" >> ~/.aliases
@@ -180,3 +177,9 @@ map() {
 include ~/.aliases
 include ~/.aliases-private
 include ~/.amazoninit
+
+# if you wish to use IMDS set AWS_EC2_METADATA_DISABLED=false
+
+export AWS_EC2_METADATA_DISABLED=true
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

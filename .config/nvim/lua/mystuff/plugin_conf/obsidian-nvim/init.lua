@@ -5,6 +5,10 @@ require("obsidian").setup({
 			path = "~/sync/wiki",
 		},
 	},
+	follow_url_func = function(url)
+		vim.fn.setreg("+", url)
+		print("Copied: " .. url)
+	end,
 	completion = {
 		nvim_cmp = false,
 		-- Trigger completion at 2 chars.

@@ -1,5 +1,6 @@
 --[[
-Remove all subtrees whose headlines contain class `noexport`.
+Remove all subtrees whose headlines contain class `noexport`. 
+Just put {.noexport} at the end of the headline
 License:   MIT
 Copyright: © Albert Krewinkel
 ]]
