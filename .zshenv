@@ -24,6 +24,7 @@ export PATH=$PATH:/Users/joshiep/.toolbox/bin
 export CALIBRE_USE_DARK_PALETTE=1
 #export VIRSH_DEFAULT_CONNECT_URI=qemu:///system 
 export PATH="$PATH":"$HOME/.pub-cache/bin"
+export PATH="$PATH":"$HOME/.iterm2/"
 export XDG_CONFIG_HOME=$HOME/.config/
 
 export SDKMAN_DIR="$HOME/.sdkman"

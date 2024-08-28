@@ -227,7 +227,7 @@ vim.keymap.set("n", "<leader>bs", function()
 				local entry = require("telescope.actions.state").get_selected_entry()
 				local passage_ref = vim.split(entry.text, "\t")[1]
 				actions.close(prompt_bufnr)
-				handle_passage_ref(passage_ref)
+				bible_actions.handle_passage_ref(passage_ref)
 
 				-- if vim.api.nvim_get_mode().mode == "i" then
 				-- 	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, false, true), "x", true)
@@ -241,3 +241,16 @@ end, opts)
 
 vim.o.ignorecase = true
 vim.o.infercase = true
+
+vim.keymap.set('n', '<TAB>', function()
+  local line = vim.api.nvim_get_current_line()
+    if line:sub(1,1) == "#" then
+        return "za"
+    end
+  return '<TAB>'
+end, { expr = true, noremap = true, buffer = true })
+
+vim.keymap.set('n', '<leader>nvl', '<cmd>ObsidianLinks<cr>', { noremap = true, buffer = true })
+
+-- Woahh this is awesome, I don't have to worry about what homies remap. (default behavior)
+-- vim.keymap.set('n', '<leader>v', '<leader>ca', { remap = false }) 

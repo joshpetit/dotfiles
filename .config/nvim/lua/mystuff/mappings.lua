@@ -336,7 +336,9 @@ end)
 
 -- vim.api.nvim_set_keymap("n", "<leader>zo", "<Cmd>ZkNotes { sort = { 'modified' } }<CR>", opts)
 -- Open notes associated with the selected tags.
-nmap("<leader>nof", "<cmd>ObsidianSearch<CR>")
+nmap("<leader>nof",function()
+	require("telescope.builtin").find_files({ hidden = true, search_dirs = { "~/sync/wiki" } })
+end)
 vim.api.nvim_set_keymap("n", "<leader>zt", "<Cmd>ZkTags<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>zb", "<Cmd>ZkBacklinks<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>zl", "<Cmd>ZkLinks<CR>", opts)
