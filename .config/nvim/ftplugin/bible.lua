@@ -1,33 +1,13 @@
-local get_start_of_word_at_cursor = function()
-	local cur_pos = vim.api.nvim_win_get_cursor(0)
-	-- jump to beginning of word under cursor
-	-- b: backward
-	-- c: accept match right under cursor
-	vim.fn.search(vim.fn.expand("<cword>"), "bc")
-	local new_pos = vim.api.nvim_win_get_cursor(0)
-	vim.api.nvim_win_set_cursor(0, cur_pos)
-	-- zero-indexed, add 1 as example indicates 1 indexing
-	local result = new_pos[2]
-	return result
-end
+local utils = require("mystuff.utils")
+local bible_utils = require("mystuff.bible_utils")
+local actions = require("mystuff.bible_actions")
+
+vim.bo[0].modifiable = false
+vim.wo[0].cursorline = true
+-- Probably will use this  https://github.com/junegunn/vim-easy-align
 
 local show_strongs = function()
-	local buf = vim.api.nvim_create_buf(false, true)
-	local win = vim.api.nvim_open_win(buf, true, {
-		-- relative = "editor",
-		-- width = 80,
-		-- height = 20,
-		row = 10,
-		col = 10,
-		-- style = "minimal",
-	})
-	-- Don't make it a floating window
-end
-
-local show_strongss = function()
-	-- Create a new split window
 	local original_window = vim.api.nvim_get_current_win()
-	-- see if the buffer strongs buff already exists
 	local strongs_buf = vim.fn.bufnr("Strongs")
 	if strongs_buf == -1 then
 		vim.cmd("new")
@@ -61,7 +41,7 @@ local show_strongss = function()
 	local words_split = vim.split(passage, " ")
 
 	-- This finds the location of the word at the cursor in the passage
-	local start_word_at_cursor = get_start_of_word_at_cursor()
+	local start_word_at_cursor = utils.get_start_of_word_at_cursor_col()
 	local matching_index = nil
 
 	for i, word in ipairs(words_split) do
@@ -112,7 +92,8 @@ local show_strongss = function()
 	-- local start = vim.cmd([[call matchstr(getline('.'), '\k*', getpos('.')[2]-1)]])
 end
 
-vim.keymap.set("n", "<Localleader>gw", show_strongss, { noremap = true, buffer = true })
+vim.keymap.set("n", "<leader>bs", show_strongs, { noremap = true, buffer = true })
+
 vim.keymap.set("n", "<leader>lf", function()
 	-- print(vim.api.nvim_win_get_cursor(0)[2])
 	local s = "G245"
@@ -121,178 +102,38 @@ vim.keymap.set("n", "<leader>lf", function()
 	print(s)
 end, { noremap = true, buffer = true })
 
--- make a function to call show_strongs every time the cursor moves
--- vim.cmd(
--- 	[[
---         autocmd CursorMoved *.bible lua show_strongss()
---     ]],
--- 	false
--- )
-
-local function parse_reference(passage_ref)
-	local version = "NASB"
-	local book = passage_ref:match("%d*[%a%s]+%a")
-	local numbers = passage_ref:gsub(book, "")
-	local chapter = numbers:match("%d+")
-	local verses = numbers:match(":%d+")
-	local start_verse
-	local end_verse
-
-	if verses ~= nil then
-		start_verse = verses:match("%d+")
-		local end_verse_part = numbers:match("-%d+")
-		if end_verse_part ~= nil then
-			end_verse = end_verse_part:match("%d+")
-		end
-	end
-
-	local parsed_version = passage_ref:gsub(book, ""):match("%a+")
-	if parsed_version ~= nil then
-		version = parsed_version
-		passage_ref = vim.trim(passage_ref:gsub(parsed_version, ""))
-	end
-	return {
-		passage_ref = passage_ref,
-		book = book,
-		chapter = chapter,
-		start_verse = start_verse,
-		end_verse = end_verse,
-		version = version,
-	}
+local function get_reference_from_line(line)
+    return bible_utils.parse_reference(vim.split(line, "\t")[1])
 end
 
--- Thank you AI!
-local create_passage_reference = function(first_reference, last_reference)
-	local passage_reference = ""
-	if first_reference.book == last_reference.book then
-		passage_reference = first_reference.book
-		if first_reference.chapter == last_reference.chapter then
-			passage_reference = passage_reference .. " " .. first_reference.chapter
-			if first_reference.start_verse == last_reference.start_verse then
-				passage_reference = passage_reference .. ":" .. first_reference.start_verse
-				if first_reference.end_verse ~= nil then
-					passage_reference = passage_reference .. "-" .. last_reference.end_verse
-				end
-			else
-				passage_reference = passage_reference .. ":" .. first_reference.start_verse
-				if first_reference.end_verse ~= nil then
-					passage_reference = passage_reference .. "-" .. first_reference.end_verse
-				end
-				passage_reference = passage_reference .. "-" .. last_reference.start_verse
-				if last_reference.end_verse ~= nil then
-					passage_reference = passage_reference .. "-" .. last_reference.end_verse
-				end
-			end
-		else
-			passage_reference = passage_reference
-				.. " "
-				.. first_reference.chapter
-				.. ":"
-				.. first_reference.start_verse
-			if first_reference.end_verse ~= nil then
-				passage_reference = passage_reference .. "-" .. first_reference.end_verse
-			end
-			passage_reference = passage_reference .. "-" .. last_reference.chapter .. ":" .. last_reference.start_verse
-			if last_reference.end_verse ~= nil then
-				passage_reference = passage_reference .. "-" .. last_reference.end_verse
-			end
-		end
-	else
-		passage_reference = first_reference.book .. " " .. first_reference.chapter .. ":" .. first_reference.start_verse
-		if first_reference.end_verse ~= nil then
-			passage_reference = passage_reference .. "-" .. first_reference.end_verse
-		end
-		passage_reference = passage_reference
-			.. "-"
-			.. last_reference.book
-			.. " "
-			.. last_reference.chapter
-			.. ":"
-			.. last_reference.start_verse
-		if last_reference.end_verse ~= nil then
-			passage_reference = passage_reference .. "-" .. last_reference.end_verse
-		end
-	end
-	return passage_reference
+local function get_reference_from_current_line()
+    return bible_utils.parse_reference(vim.split(vim.api.nvim_get_current_line(), "\t")[1])
 end
 
-local function break_lines(text, max_width, prefix)
-	prefix = prefix or ""
-	max_width = max_width or 80
-	local result = {}
-	local line = ""
-
-	for word in text:gmatch("%S+") do
-		if #line + #word + #prefix + 1 > max_width then
-			table.insert(result, prefix .. line)
-			line = word
-		else
-			line = (line ~= "") and line .. " " .. word or word
-		end
-	end
-	table.insert(result, prefix .. line)
-
-	return table.concat(result, "\n")
-end
-
-vim.keymap.set("v", "ge", function()
+vim.keymap.set("v", "<leader>by", function()
 	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, false, true), "x", true)
 	local bufnum, start_line, start_col, _ = unpack(vim.fn.getpos("'<"))
 	local _, end_line, end_col, _ = unpack(vim.fn.getpos("'>"))
 	local selected_lines = vim.api.nvim_buf_get_lines(bufnum, start_line - 1, end_line, true)
 	-- TODO: Make it partially select the passage
 
-	local first_reference = parse_reference(vim.split(selected_lines[1], "\t")[1])
-	local last_reference = parse_reference(vim.split(selected_lines[#selected_lines], "\t")[1])
-	local passage_reference = create_passage_reference(first_reference, last_reference)
+	local first_reference = get_reference_from_line(selected_lines[1])
+	local last_reference = get_reference_from_line(selected_lines[#selected_lines])
+
+	local passage_reference = bible_utils.create_passage_reference(first_reference, last_reference)
 	local passage_text = ""
 	for _, line in ipairs(selected_lines) do
 		passage_text = passage_text .. vim.split(line, "\t")[2] .. " "
 	end
 
-	passage_text = break_lines(passage_text, 80, "> ")
+	passage_text = BreakLines(passage_text, 80, "> ")
 	local markdown_link = string.format("[bible:%s](%s)", passage_reference, first_reference.book)
 	local passage_to_copy = string.format("%s\n\n%s", markdown_link, passage_text)
 	vim.fn.setreg('"', passage_to_copy)
 end, { noremap = true, buffer = true })
 
--- Define a function to highlight a specific word
-local function highlight_word(bufnr, line_num, word_index, hl_group)
-	-- Check if the buffer number is valid
-	if not vim.api.nvim_buf_is_valid(bufnr) then
-		print("Invalid buffer number")
-		return
-	end
-
-	-- Get the line content
-	local line = vim.api.nvim_buf_get_lines(bufnr, line_num - 1, line_num, false)[1]
-
-	-- Split the line into words
-	local words = vim.split(line, "%s+", { trimempty = true })
-
-	-- Check if the word index is within range
-	if word_index > #words then
-		print("Word index out of range")
-		return
-	end
-
-	-- Get the word to be highlighted
-	local word = words[word_index]
-	local start_col = string.find(line, word, 1, true)
-	local end_col = start_col + #word
-
-	-- Apply the highlight
-	vim.api.nvim_buf_add_highlight(bufnr, -1, hl_group, line_num - 1, start_col - 1, end_col - 1)
-end
-
--- Define highlight group
--- vim.api.nvim_set_hl(0, "Identifier", { fg = "red", bg = "none", bold = false })
 vim.api.nvim_set_hl(0, "TranslationNote", { fg = "#dbc074", bg = "none", bold = true })
 vim.api.nvim_set_hl(0, "CrossReference", { fg = "#74c0db", bg = "none", bold = true })
-
--- Highlight the 5th word on the 10th line
-highlight_word(0, 10, 5, "CrossReferences")
-highlight_word(0, 10, 5, "Identifier")
 
 local api = vim.api
 
@@ -304,10 +145,8 @@ local found_notes = {}
 
 local notes_mapping = {}
 
-find_notes_for_chapter = function()
-	local current_line = vim.api.nvim_get_current_line()
-	local current_reference = vim.split(current_line, "\t")[1]
-	local current_reference_obj = parse_reference(current_reference)
+local find_notes_for_chapter = function()
+	local current_reference_obj = get_reference_from_current_line()
 	local current_chatper = current_reference_obj.chapter
 	local book = current_reference_obj.book
 	if found_notes[book] == nil then
@@ -396,7 +235,7 @@ vim.keymap.set("n", "<leader>bc", function()
 
 	-- Iterate over the list of beginnings
 	for _, beginning in ipairs(cross_references) do
-		local ref = parse_reference(beginning)
+		local ref = bible_utils.parse_reference(beginning)
 		local ref_to_search = ref.book .. " " .. ref.chapter .. ":" .. ref.start_verse
 		for i, line in ipairs(buf_lines) do
 			if line:find("^" .. vim.pesc(ref_to_search)) then
@@ -472,9 +311,6 @@ end, { noremap = true, buffer = true })
 
 vim.keymap.set("n", "<leader>fn", find_notes_for_chapter, { noremap = true, buffer = true })
 
--- Probably will use this  https://github.com/junegunn/vim-easy-align
--- set the local buffer to be unmodifiable
-vim.bo[0].modifiable = false
 
 local target_bufnr = vim.api.nvim_get_current_buf()
 
@@ -497,9 +333,7 @@ vim.api.nvim_create_autocmd("CursorMoved", {
 	callback = run_command_if_cursor_held,
 })
 
-vim.wo[0].cursorline = true
 
-local actions = require("mystuff.bible_actions")
 
 vim.keymap.set("n", "<leader>bo", function()
 	local ref = vim.split(vim.api.nvim_get_current_line(), "\t")[1]

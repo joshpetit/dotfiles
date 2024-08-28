@@ -102,4 +102,68 @@ function IsModuleAvailable(name)
   end
 end
 
+function BreakLines(text, max_width, prefix)
+	prefix = prefix or ""
+	max_width = max_width or 80
+	local result = {}
+	local line = ""
+
+	for word in text:gmatch("%S+") do
+		if #line + #word + #prefix + 1 > max_width then
+			table.insert(result, prefix .. line)
+			line = word
+		else
+			line = (line ~= "") and line .. " " .. word or word
+		end
+	end
+	table.insert(result, prefix .. line)
+
+	return table.concat(result, "\n")
+end
+
+local function highlight_word(bufnr, line_num, word_index, hl_group)
+	-- Check if the buffer number is valid
+	if not vim.api.nvim_buf_is_valid(bufnr) then
+		print("Invalid buffer number")
+		return
+	end
+
+	-- Get the line content
+	local line = vim.api.nvim_buf_get_lines(bufnr, line_num - 1, line_num, false)[1]
+
+	-- Split the line into words
+	local words = vim.split(line, "%s+", { trimempty = true })
+
+	-- Check if the word index is within range
+	if word_index > #words then
+		print("Word index out of range")
+		return
+	end
+
+	-- Get the word to be highlighted
+	local word = words[word_index]
+	local start_col = string.find(line, word, 1, true)
+	local end_col = start_col + #word
+
+	-- Apply the highlight
+	vim.api.nvim_buf_add_highlight(bufnr, -1, hl_group, line_num - 1, start_col - 1, end_col - 1)
+end
+
+-- highlight_word(0, 10, 5, "CrossReferences")
+-- highlight_word(0, 10, 5, "Identifier")
+--
+
+M.get_start_of_word_at_cursor_col = function()
+	local cur_pos = vim.api.nvim_win_get_cursor(0)
+	-- jump to beginning of word under cursor
+	-- b: backward
+	-- c: accept match right under cursor
+	vim.fn.search(vim.fn.expand("<cword>"), "bc")
+	local new_pos = vim.api.nvim_win_get_cursor(0)
+	vim.api.nvim_win_set_cursor(0, cur_pos)
+	-- zero-indexed, add 1 as example indicates 1 indexing
+	local result = new_pos[2]
+	return result
+end
+
 return M

@@ -147,6 +147,7 @@ return require("packer").startup(function()
 			})
 		end,
 		disable = false,
+		names = false, -- "Name" codes like Blue
 	})
 	use({
 		"windwp/nvim-ts-autotag",
