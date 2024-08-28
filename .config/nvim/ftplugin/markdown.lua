@@ -182,7 +182,6 @@ vim.keymap.set("n", "<leader>ir", select_bible_verse, { buffer = true })
 vim.keymap.set("n", "<leader>bir", select_bible_verse, { buffer = true })
 vim.keymap.set("i", "<LocalLeader>ir", select_bible_verse, { buffer = true })
 vim.keymap.set("i", "<LocalLeader>ir", select_bible_verse, { buffer = true })
-vim.keymap.set("n", "<leader>not", "<cmd>ObsidianToday<cr>", { buffer = true })
 vim.keymap.set("n", "<leader>noy", "<cmd>ObsidianYesterday<cr>", { buffer = true })
 
 -- vim.api.nvim_create_autocmd("BufEnter", {

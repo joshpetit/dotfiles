@@ -63,6 +63,8 @@ local dap_open_window = function(buffer_name)
 	end
 end
 
+vim.keymap.set("n", "<leader>not", "<cmd>ObsidianToday<cr>", { noremap = true })
+
 local view_last_files_versions = function(flogs)
 	local relativePath = vim.fn.expand("%")
 	local fileName = vim.fn.expand("%:t")
@@ -325,9 +327,9 @@ end)
 
 nmap("<leader>nn", function()
 	local title = vim.fn.input("Title: ")
-    if title == nil or title == '' then
-        return
-    end
+	if title == nil or title == "" then
+		return
+	end
 	os.execute([[touch ~/sync/wiki/"]] .. title .. [[.md"]])
 	vim.cmd([[:e ~/sync/wiki/]] .. title .. ".md")
 end)
