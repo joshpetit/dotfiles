@@ -40,10 +40,10 @@ end)
 
 nmap("<leader>ggf", function()
 	---@diagnostic disable-next-line: missing-parameter
-	local file = vim.fn.expand("%")
+	local file_name = vim.fn.expand("%:t")
 	vim.cmd([[:Git]])
-	vim.fn.search(file, "W")
-	print(file)
+	vim.fn.search(file_name, "W")
+	print(file_name)
 end)
 
 -- may be useful in future: vim.fn.empty(vim.fn.win_findbuf(buf))
