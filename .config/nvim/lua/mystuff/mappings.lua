@@ -40,10 +40,10 @@ end)
 
 nmap("<leader>ggf", function()
 	---@diagnostic disable-next-line: missing-parameter
-	local file = vim.fn.expand("%")
+	local file_name = vim.fn.expand("%:t")
 	vim.cmd([[:Git]])
-	vim.fn.search(file, "W")
-	print(file)
+	vim.fn.search(file_name, "W")
+	print(file_name)
 end)
 
 -- may be useful in future: vim.fn.empty(vim.fn.win_findbuf(buf))
@@ -336,7 +336,9 @@ end)
 
 -- vim.api.nvim_set_keymap("n", "<leader>zo", "<Cmd>ZkNotes { sort = { 'modified' } }<CR>", opts)
 -- Open notes associated with the selected tags.
-nmap("<leader>nof", "<cmd>ObsidianSearch<CR>")
+nmap("<leader>nof",function()
+	require("telescope.builtin").find_files({ hidden = true, search_dirs = { "~/sync/wiki" } })
+end)
 vim.api.nvim_set_keymap("n", "<leader>zt", "<Cmd>ZkTags<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>zb", "<Cmd>ZkBacklinks<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>zl", "<Cmd>ZkLinks<CR>", opts)
