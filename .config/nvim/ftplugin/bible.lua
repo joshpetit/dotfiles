@@ -103,20 +103,15 @@ vim.keymap.set("n", "<leader>lf", function()
 end, { noremap = true, buffer = true })
 
 local function get_reference_from_line(line)
-    return bible_utils.parse_reference(vim.split(line, "\t")[1])
+	return bible_utils.parse_reference(vim.split(line, "\t")[1])
 end
 
 local function get_reference_from_current_line()
-    return bible_utils.parse_reference(vim.split(vim.api.nvim_get_current_line(), "\t")[1])
+	return bible_utils.parse_reference(vim.split(vim.api.nvim_get_current_line(), "\t")[1])
 end
 
-vim.keymap.set("v", "<leader>by", function()
-	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, false, true), "x", true)
-	local bufnum, start_line, start_col, _ = unpack(vim.fn.getpos("'<"))
-	local _, end_line, end_col, _ = unpack(vim.fn.getpos("'>"))
-	local selected_lines = vim.api.nvim_buf_get_lines(bufnum, start_line - 1, end_line, true)
-	-- TODO: Make it partially select the passage
-
+local function copy_passage_range(bufnr, start_line, end_line)
+	local selected_lines = vim.api.nvim_buf_get_lines(bufnr, start_line - 1, end_line, true)
 	local first_reference = get_reference_from_line(selected_lines[1])
 	local last_reference = get_reference_from_line(selected_lines[#selected_lines])
 
@@ -127,9 +122,39 @@ vim.keymap.set("v", "<leader>by", function()
 	end
 
 	passage_text = BreakLines(passage_text, 80, "> ")
-	local markdown_link = string.format("[bible:%s](%s)", passage_reference, first_reference.book)
+	local markdown_link = bible_utils.create_markdown_link_string(passage_reference, first_reference.book)
 	local passage_to_copy = string.format("%s\n\n%s", markdown_link, passage_text)
+	return passage_to_copy
+end
+
+local function flash_passage_range(bufnr, start_line, end_line)
+	local namespace_id = vim.api.nvim_create_namespace("flash_passage_range")
+	vim.highlight.range(bufnr, namespace_id, "IncSearch", { start_line - 1, 0 }, { end_line - 1, 20000 })
+	vim.defer_fn(function()
+		if vim.api.nvim_buf_is_valid(bufnr) then
+			vim.api.nvim_buf_clear_namespace(bufnr, namespace_id, 0, -1)
+		end
+	end, 100)
+end
+
+vim.keymap.set("v", "<leader>by", function()
+	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, false, true), "x", true)
+	local bufnr, start_line = unpack(vim.fn.getpos("'<"))
+	local _, end_line = unpack(vim.fn.getpos("'>"))
+	local passage_to_copy = copy_passage_range(bufnr, start_line, end_line)
 	vim.fn.setreg('"', passage_to_copy)
+
+	flash_passage_range(bufnr, start_line, end_line)
+end, { noremap = true, buffer = true })
+
+vim.keymap.set("n", "<leader>by", function()
+	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, false, true), "x", true)
+	local bufnr = vim.api.nvim_get_current_buf()
+	local current_line = vim.api.nvim_win_get_cursor(0)[1]
+	local passage_to_copy = copy_passage_range(bufnr, current_line, current_line)
+
+	vim.fn.setreg('"', passage_to_copy)
+	flash_passage_range(bufnr, current_line, current_line)
 end, { noremap = true, buffer = true })
 
 vim.api.nvim_set_hl(0, "TranslationNote", { fg = "#dbc074", bg = "none", bold = true })
@@ -146,6 +171,7 @@ local found_notes = {}
 local notes_mapping = {}
 
 local find_notes_for_chapter = function()
+	local current_line_num = vim.api.nvim_win_get_cursor(0)[1]
 	local current_reference_obj = get_reference_from_current_line()
 	local current_chatper = current_reference_obj.chapter
 	local book = current_reference_obj.book
@@ -159,20 +185,17 @@ local find_notes_for_chapter = function()
 	local command = string.format("node /home/joshu/test/sword/examples/print_kjv.js %s %s", book, current_chatper)
 	vim.fn.jobstart(command, {
 		on_stdout = function(_, data, _)
-			for k, v in pairs(data) do
+			for _, v in pairs(data) do
 				output = output .. v
 			end
 		end,
 		on_stderr = function(_, data, _)
-			-- print(data)
+			vim.print(data)
 		end,
-		on_exit = function(_, code, _)
+		on_exit = function(_, _, _)
 			local json = vim.json.decode(output)
 			output = ""
-			-- TODO Fix offset later
-			local offset = 0
-			-- find the line the first verse in the chapter is on
-			local current_line_num = vim.api.nvim_win_get_cursor(0)[1]
+
 			local first_verse_in_chapter = current_line_num - current_reference_obj.start_verse + 1
 			local line = first_verse_in_chapter
 			for _, v in pairs(json) do
@@ -311,7 +334,6 @@ end, { noremap = true, buffer = true })
 
 vim.keymap.set("n", "<leader>fn", find_notes_for_chapter, { noremap = true, buffer = true })
 
-
 local target_bufnr = vim.api.nvim_get_current_buf()
 
 -- Function to run the command after cursor is held
@@ -332,8 +354,6 @@ vim.api.nvim_create_autocmd("CursorMoved", {
 	buffer = target_bufnr,
 	callback = run_command_if_cursor_held,
 })
-
-
 
 vim.keymap.set("n", "<leader>bo", function()
 	local ref = vim.split(vim.api.nvim_get_current_line(), "\t")[1]

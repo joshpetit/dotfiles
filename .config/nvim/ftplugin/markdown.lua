@@ -6,7 +6,7 @@ vim.bo[0].textwidth = 80
 vim.bo[0].formatexpr = ""
 vim.wo.conceallevel = 2
 
-vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreview<cr>", { buffer = true, noremap= true})
+vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreview<cr>", { buffer = true, noremap = true })
 local function parse_markdown_bible_link_at_cursor()
 	local ts_utils = require("nvim-treesitter.ts_utils")
 	local cursor_node = ts_utils.get_node_at_cursor()
@@ -51,7 +51,6 @@ vim.keymap.set("n", "<leader>bo", function()
 	local passage = bible_utils.parse_reference(passage_ref)
 	bible_actions.open_to_verse(passage)
 end)
-
 
 local bible_books = {
 	"Genesis",
@@ -154,8 +153,15 @@ local select_bible_verse = function(opts)
 					if current_line ~= "" then
 						link = " "
 					end
+					-- if the book is multiple words put it within <>
+
+					local link_book = book
+					if string.find(book, " ") then
+						link_book = "<" .. book .. ">"
+					end
+
 					-- link = link .. "[[" .. book .. "|bible:" .. book .. " ]]"
-					link = link .. "[bible:" .. book .. " ](" .. book .. ")"
+					link = link .. "[bible:" .. book .. " ](" .. link_book .. ")"
 					local bufnr = vim.api.nvim_get_current_buf()
 					vim.api.nvim_buf_set_text(
 						bufnr,

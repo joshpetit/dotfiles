@@ -182,4 +182,6 @@ include ~/.amazoninit
 
 export AWS_EC2_METADATA_DISABLED=true
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi

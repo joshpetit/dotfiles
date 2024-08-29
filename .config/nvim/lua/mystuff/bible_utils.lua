@@ -87,5 +87,13 @@ M.create_passage_reference = function(first_reference, last_reference)
 	return passage_reference
 end
 
+M.create_markdown_link_string = function(passage_reference, book)
+	local link_book = book
+	if book:find(" ") then
+		link_book = "<" .. book .. ">"
+	end
+	local markdown_link = "[bible:" .. passage_reference .. "](" .. link_book .. ")"
+	return markdown_link
+end
 
 return M
