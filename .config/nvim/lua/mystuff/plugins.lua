@@ -143,11 +143,10 @@ return require("packer").startup(function()
 		"NvChad/nvim-colorizer.lua",
 		config = function()
 			require("colorizer").setup({
-				css = true,
+				names = false
 			})
 		end,
 		disable = false,
-		names = false, -- "Name" codes like Blue
 	})
 	use({
 		"windwp/nvim-ts-autotag",

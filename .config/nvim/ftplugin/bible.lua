@@ -166,9 +166,9 @@ local bnr = vim.fn.bufnr("%")
 local ns_id = api.nvim_create_namespace("translation_notes")
 
 local output = ""
-local found_notes = {}
+local found_notes = require("cache").found_notes
 
-local notes_mapping = {}
+local notes_mapping = require("cache").notes_mapping
 
 local find_notes_for_chapter = function()
 	local current_line_num = vim.api.nvim_win_get_cursor(0)[1]
@@ -190,7 +190,7 @@ local find_notes_for_chapter = function()
 			end
 		end,
 		on_stderr = function(_, data, _)
-			vim.print(data)
+			-- vim.print(data)
 		end,
 		on_exit = function(_, _, _)
 			local json = vim.json.decode(output)
@@ -274,6 +274,7 @@ vim.keymap.set("n", "<leader>bc", function()
 	end
 	local title = "Cross References for " .. current_reference
 	vim.fn.setqflist({}, "r", { title = title, items = quickfix_list })
+	-- vim.fn.setloclist(0, {}, "r", { title = title, items = quickfix_list })
 
 	local current_pos = vim.api.nvim_win_get_cursor(0)
 	local current_win = vim.api.nvim_get_current_win()
@@ -358,4 +359,66 @@ vim.api.nvim_create_autocmd("CursorMoved", {
 vim.keymap.set("n", "<leader>bo", function()
 	local ref = vim.split(vim.api.nvim_get_current_line(), "\t")[1]
 	actions.handle_passage_ref(ref)
+end, { noremap = true, buffer = true })
+
+vim.keymap.set("n", "<leader>.", function()
+	-- Go to the next found note
+	local current_line_num = vim.api.nvim_win_get_cursor(0)[1]
+	local current_col = vim.api.nvim_win_get_cursor(0)[2] + 1
+	local t_line = nil
+	local t_col = nil
+
+	local current_line_length = #vim.api.nvim_get_current_line()
+	for i = current_line_num, 10000000000, 1 do
+		for j = current_col, current_line_length, 1 do
+			if notes_mapping[i] == nil then
+				break
+			end
+			if notes_mapping[i][j] ~= nil then
+				t_line = i
+				t_col = j
+				break
+			end
+		end
+
+		if t_line ~= nil then
+			break
+		end
+
+		current_line_length = #vim.api.nvim_buf_get_lines(0, i, i + 1, false)[1]
+		current_col = 1
+	end
+
+	if t_line == nil then
+		return
+	end
+	vim.api.nvim_win_set_cursor(0, { t_line, t_col })
+end, { noremap = true, buffer = true })
+
+vim.keymap.set("n", "<leader>,", function()
+	-- Go to the next found note
+	local current_line_num = vim.api.nvim_win_get_cursor(0)[1]
+	local current_col = vim.api.nvim_win_get_cursor(0)[2] - 1
+	local t_line = nil
+	local t_col = nil
+
+	for i = current_line_num, 1, -1 do
+		if notes_mapping[i] ~= nil then
+			for j = current_col, 1, -1 do
+				if notes_mapping[i][j] ~= nil then
+					t_line = i
+					t_col = j
+					break
+				end
+			end
+		end
+
+		if t_line ~= nil then
+			break
+		end
+
+		current_col = #vim.api.nvim_buf_get_lines(0, i - 1, i, false)[1]
+	end
+
+	vim.api.nvim_win_set_cursor(0, { t_line, t_col })
 end, { noremap = true, buffer = true })
