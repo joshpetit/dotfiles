@@ -1,82 +1,47 @@
+
+/* Import theme */
+
 @import "Orchis/theme.css"; /**/
+/*@import "Orchis/theme-light.css"; /**/
+/*@import "Orchis/theme-dark.css"; /**/
 
-/* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/tabs_below_content.css made available under Mozilla Public License v. 2.0
-See the above repository for updates as well as full license text. */
-
-
-/* IMPORTANT */
 /*
-Get window_control_placeholder_support.css
-Window controls will be all wrong without it.
-Additionally on Linux, you may need to get:
-linux_gtk_window_control_patch.css
-*/
+ * Here you can enable other theme features not included by default.
+ * To enable a specific feature, uncomment its @import line by removing "/*" at
+ * the beginning of the line. To disable it, put the "/*" back.
+ */
 
-.titlebar-buttonbox-container{
-  position: fixed;
-  display: block;
-  top:0;
-  right:0;
-  height: 40px;
-  z-index: 3;
-  visibility: visible !important;
-}
+/* Hide the tab bar when only one tab is open (GNOMISH)
+ * You should move the new tab button somewhere else for this to work, because by
+ * default it is on the tab bar too. */
+/*@import "Orchis/hide-single-tab.css"; /**/
 
-:root[inFullscreen] #navigator-toolbox:not(:hover) .titlebar-buttonbox-container{ display: none !important; }
+/* Limit the URL bar's autocompletion popup's width to the URL bar's width (GNOMISH) 
+ * This feature is included by default for Firefox 70+ */
+/*@import "Orchis/matching-autocomplete-width.css"; /**/
 
-:root[uidensity="compact"] .titlebar-buttonbox-container{ height: 32px }
-.titlebar-buttonbox-container > .titlebar-buttonbox{ height: 100%; }
+/* Rounded title buttons (headerbar window controls) (GNOMISH) */
+/*@import "Orchis/rounded-title-buttons.css"; /**/
 
-/* Re-adjust window cotrols if menubar is permanently enabled  */
-:root[tabsintitlebar="true"]:not([inFullscreen]) #toolbar-menubar[autohide="false"]{ transform: translateX(0px); }
-:root[tabsintitlebar="true"]:not([inFullscreen]) #toolbar-menubar[autohide="false"] .titlebar-buttonbox-container{ height: 100%; }
-:root[tabsintitlebar="true"]:not([inFullscreen]) #toolbar-menubar[autohide="false"] .titlebar-button{ padding: 2px 17px !important; }
+/* Active tab high contrast */
+@import "Orchis/active-tab-contrast.css"; /*
 
-@media  (-moz-platform: windows),
-        (-moz-os-version: windows-win7),
-        (-moz-os-version: windows-win10){
-  #titlebar{ -moz-appearance: none !important; }
-}
-/* Move tabs below content */
-#main-window > body::after{
-  content: "";
-  display: flex;
-}
-#main-window:not([inFullscreen]) > body::after{
-  margin-bottom: calc(var(--tab-min-height) + 2 * var(--tab-block-margin,0px));
-}
-#main-window[inFullscreen]:not([inDOMFullscreen]) > body::after{
-  margin-bottom: calc(var(--tab-min-height) + 2 * var(--tab-block-margin,0px));
-}
+/* Use system theme icons instead of Adwaita icons included by theme */
+/*@import "Orchis/system-icons.css"; /**/
 
+/* Allow drag window from headerbar buttons (GNOMISH) [BUGGED] 
+ * It can activate button action, with unpleasant behavior. */
+/*@import "Orchis/drag-window-headerbar-buttons.css"; /**/
 
-#TabsToolbar{
-  position: fixed;
-  z-index: 2;
-  display: block;
-  bottom: 0;
-  width: 100vw;
-  height: calc(var(--tab-min-height) + 2 * var(--tab-block-margin,0px));
-  --tabs-navbar-shadow-size: 0px;
-}
-#TabsToolbar:hover{ z-index: 1 }
+/* Make all tab icons look kinda like symbolic icons */
+/*@import "Orchis/symbolic-tab-icons.css"; /**/
 
-#TabsToolbar{ background-color: var(--lwt-accent-color); }
-#TabsToolbar-customization-target{ width: 100vw; }
+/* Hide window buttons (close/min/max) in maximized windows */
+/*@import "Orchis/hide-window-buttons.css"; /**/
 
-.tab-background{ border-top-style: none !important; }
-
-/* Hide stuff that doesn't make sense with tabs below content */
-#TabsToolbar > .titlebar-buttonbox-container,
-#window-controls, /* Fullscreen window controls */
-#TabsToolbar .titlebar-spacer{
-  display: none !important;
-}
-#navigator-toolbox[inFullscreen]:hover #toolbar-menubar > .titlebar-buttonbox-container{ display: flex !important; }
-
-#TabsToolbar:-moz-lwtheme{ background-color: var(--lwt-accent-color); }
-#titlebar{
-  will-change: unset !important;
-  transition: none !important;
-  opacity: 1 !important;
-}
+/* Import a custom stylesheet
+ * Everything you add in your customChrome.css file (it doesn't exist by
+ * default) will be included here and preserved between updates, so you can move
+ * your configuration to that file if you don't like setting it up after every
+ * update. You can also apply your own custom styles in that file. */
+@import "customChrome.css"; /**/

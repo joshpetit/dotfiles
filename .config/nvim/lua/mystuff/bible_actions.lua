@@ -61,6 +61,7 @@ M.handle_passage_ref = function(passage_ref)
 		"biblegateway",
 		"biblegateway-context",
 		"open-bible-info-cross-references",
+		"biblehub-commentaries",
 		"open",
 		"copy",
 	}, { prompt = passage_ref, backend = "builtin" }, function(res)
@@ -102,6 +103,28 @@ M.handle_passage_ref = function(passage_ref)
 			local goto_biblehub = function()
 				vim.fn.jobstart(
 					"xdg-open https://biblehub.com/"
+						.. book:lower():gsub(" ", "_")
+						.. "/"
+						.. chapter
+						.. "-"
+						.. verse
+						.. ".htm"
+				)
+			end
+			if end_verse ~= nil or start_verse == nil then
+				vim.ui.input({ prompt = "Enter verse" }, function(selected_verse)
+					verse = selected_verse
+					goto_biblehub()
+				end)
+			else
+				goto_biblehub()
+			end
+        elseif res == "biblehub-commentaries" then
+			local verse = start_verse
+
+			local goto_biblehub = function()
+				vim.fn.jobstart(
+					"xdg-open https://biblehub.com/commentaries/"
 						.. book:lower():gsub(" ", "_")
 						.. "/"
 						.. chapter

@@ -336,13 +336,27 @@ end)
 
 -- vim.api.nvim_set_keymap("n", "<leader>zo", "<Cmd>ZkNotes { sort = { 'modified' } }<CR>", opts)
 -- Open notes associated with the selected tags.
-nmap("<leader>nof",function()
+nmap("<leader>nof", function()
 	require("telescope.builtin").find_files({ hidden = true, search_dirs = { "~/sync/wiki" } })
 end)
 vim.api.nvim_set_keymap("n", "<leader>zt", "<Cmd>ZkTags<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>zb", "<Cmd>ZkBacklinks<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>zl", "<Cmd>ZkLinks<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>zil", "<Cmd>ZkInsertLink<CR>", opts)
+vim.keymap.set("n", "<leader>qs", function()
+	local search_pattern = vim.fn.getreg("/")
+	vim.cmd("vimgrep /" .. search_pattern .. "/ % ")
+    vim.cmd("copen")
+end, opts)
+
+vim.keymap.set("n", "<leader>qS", function()
+	local search_pattern = vim.fn.getreg("/")
+	vim.cmd("lvimgrep /" .. search_pattern .. "/ % ")
+    vim.cmd("lopen")
+end, opts)
+
+nmap("C<", "<cmd>lprev<cr>")
+nmap("C>", "<cmd>lnext<cr>")
 
 -- Search for the notes matching a given query.
 vim.api.nvim_set_keymap(

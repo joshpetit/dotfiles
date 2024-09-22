@@ -2,6 +2,18 @@ local utils = require("mystuff.utils")
 local bible_utils = require("mystuff.bible_utils")
 local actions = require("mystuff.bible_actions")
 
+-- vim.cmd([[
+--   cnoremap <expr> <space> getcmdtype() == '/' ? '.*' : '<space>'
+-- ]])
+vim.keymap.set("c", "<Space>", function()
+	local cmdtype = vim.fn.getcmdtype()
+	if cmdtype == "/" or cmdtype == "?" then
+		return ".*"
+	else
+		return " "
+	end
+end, { expr = true, noremap = true, buffer = true })
+
 vim.bo[0].modifiable = false
 vim.wo[0].cursorline = true
 -- Probably will use this  https://github.com/junegunn/vim-easy-align
@@ -211,6 +223,14 @@ local find_notes_for_chapter = function()
 						notes_mapping[line][col] = {}
 					end
 					notes_mapping[line][col] = note
+
+                    -- Get the length of the line we're about to set the extmark on
+                    local line_length = #api.nvim_buf_get_lines(bnr, line - 1, line, false)[1]
+                    if col > line_length then
+                        vim.print("col is greater than line length")
+                        vim.print("reference: " .. v.passage)
+                        goto continue
+                    end
 					if note.explanation ~= nil then
 						api.nvim_buf_set_extmark(bnr, ns_id, line - 1, col, {
 							end_line = line,
@@ -227,6 +247,7 @@ local find_notes_for_chapter = function()
 							virt_text_pos = "inline",
 						})
 					end
+                    ::continue::
 				end
 				line = line + 1
 			end
