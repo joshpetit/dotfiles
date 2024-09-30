@@ -42,6 +42,22 @@ require("telescope").setup({
 			},
 			n = {
 				["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+				["K"] = function(prompt_bufnr)
+                    local higlighted_entry = require("telescope.actions.state").get_selected_entry().filename
+                    local current_entry = higlighted_entry
+                    while current_entry == higlighted_entry do
+                        actions.move_selection_previous(prompt_bufnr)
+                        current_entry = require("telescope.actions.state").get_selected_entry().filename
+                    end
+                end,
+				["J"] = function(prompt_bufnr)
+                    local higlighted_entry = require("telescope.actions.state").get_selected_entry().filename
+                    local current_entry = higlighted_entry
+                    while current_entry == higlighted_entry do
+                        actions.move_selection_next(prompt_bufnr)
+                        current_entry = require("telescope.actions.state").get_selected_entry().filename
+                    end
+                end,
 			},
 		},
 	},
