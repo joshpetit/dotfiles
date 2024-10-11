@@ -64,6 +64,7 @@ local dap_open_window = function(buffer_name)
 end
 
 vim.keymap.set("n", "<leader>not", "<cmd>ObsidianToday<cr>", { noremap = true })
+vim.keymap.set("n", "<leader>nod", "<cmd>ObsidianDailies<cr>", { noremap = true })
 
 local view_last_files_versions = function(flogs)
 	local relativePath = vim.fn.expand("%")
@@ -311,7 +312,85 @@ function Yeet(args, what)
 	return "hi"
 end
 
-vim.keymap.set("n", "<leader>lf", function() end)
+local floating_wins = require("cache").floating_wins
+local open_windows = require("cache").open_windows
+
+vim.keymap.set("n","<leader>!", function()
+    floating_wins[1] = vim.api.nvim_get_current_buf()
+end)
+vim.keymap.set("n","<leader>@", function()
+    floating_wins[2] = vim.api.nvim_get_current_buf()
+end)
+vim.keymap.set("n","<leader>#", function()
+    floating_wins[3] = vim.api.nvim_get_current_buf()
+end)
+
+local function close_floating_win(win)
+    if win and vim.api.nvim_win_is_valid(win) then
+        vim.api.nvim_win_close(win, true)
+    end
+end
+
+
+-- TODO: Make it change the current floating window if I try to open another floating window
+-- TODO: Make it close the window if I rerun the same open command
+local function open_floating_win(buffer)
+    local width = 60
+    local height = 20
+
+    -- Get the total dimensions of the editor
+    local editor_width = vim.o.columns
+    local editor_height = vim.o.lines
+
+    -- Calculate the center position
+    local row = math.floor((editor_height - height) / 2)
+    local col = math.floor((editor_width - width) / 2)
+
+    local opts = {
+        relative = 'editor',
+        width = width,
+        height = height,
+        row = row,
+        col = col,
+        style = 'minimal', -- make it look like a floating window
+    }
+    for _, win in pairs(open_windows) do
+        close_floating_win(win)
+    end
+
+    -- Open the new floating window
+    local win = vim.api.nvim_open_win(buffer, true, opts) -- open the window
+    table.insert(open_windows, win)  -- Keep track of the newly opened window
+end
+
+
+local function toggle_floating_win(index)
+    local buffer = floating_wins[index]
+    if buffer then
+        -- Check if the window for this buffer is already open
+        for i, win in ipairs(open_windows) do
+            if vim.api.nvim_win_is_valid(win) and vim.api.nvim_win_get_buf(win) == buffer then
+                -- If it's open, check if the current window is the same
+                if vim.api.nvim_get_current_win() == win then
+                    -- If we are in that window, close it
+                    close_floating_win(win)
+                    table.remove(open_windows, i)  -- Remove from the tracking table
+                else
+                    -- Move the cursor to that window
+                    vim.api.nvim_set_current_win(win)
+                end
+                return
+            end
+        end
+        -- If not open, open it
+        open_floating_win(buffer)
+    end
+end
+
+vim.keymap.set("n", "<leader>1", function() toggle_floating_win(1) end)
+vim.keymap.set("n", "<leader>2", function() toggle_floating_win(2) end)
+vim.keymap.set("n", "<leader>3", function() toggle_floating_win(3) end)
+
 
 nmap("<leader>ps", require("mystuff/plugin_conf/telescope-nvim").search_by_workspace)
 
