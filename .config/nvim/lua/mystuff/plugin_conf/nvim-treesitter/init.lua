@@ -43,4 +43,4 @@ local treesitter_mode_on = function()
 	vim.notify("Treesitter mode on!")
 end
 
-vim.keymap.set("n", "<leader>1", treesitter_mode_on)
+-- vim.keymap.set("n", "<leader>1", treesitter_mode_on)
