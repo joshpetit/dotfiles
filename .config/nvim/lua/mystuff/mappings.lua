@@ -345,6 +345,11 @@ local function open_floating_win(buffer)
     -- Calculate the center position
     local row = math.floor((editor_height - height) / 2)
     local col = math.floor((editor_width - width) / 2)
+       local border_chars = {
+        '╭', '─', '╮',
+        '│', '╯', '─',
+        '╰', '│'
+    }
 
     local opts = {
         relative = 'editor',
@@ -353,6 +358,7 @@ local function open_floating_win(buffer)
         row = row,
         col = col,
         style = 'minimal', -- make it look like a floating window
+        border = border_chars
     }
     for _, win in pairs(open_windows) do
         close_floating_win(win)
