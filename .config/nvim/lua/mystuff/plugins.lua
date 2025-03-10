@@ -165,6 +165,10 @@ return require("packer").startup(function()
 	use_help({
 		"jose-elias-alvarez/typescript.nvim",
 	}, true)
+    use_help({
+        "pmizio/typescript-tools.nvim",
+        requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    }, true)
 	use({ "tpope/vim-fugitive" })
 	use_help({ "dcampos/nvim-snippy" }, true)
 	use_help({ "honza/vim-snippets" }, false)
@@ -308,19 +312,6 @@ return require("packer").startup(function()
 						template = "* %?",
 					},
 				},
-			})
-
-			require("nvim-treesitter.configs").setup({
-				-- If TS highlights are not enabled at all, or disabled via `disable` prop, highlighting will fallback to default Vim syntax highlighting
-				highlight = {
-					enable = true,
-					disable = { "org" }, -- Remove this to use TS highlighter for some of the highlights (Experimental)
-					-- disable = function(lang, bufnr)
-					-- 	return lang == "org"
-					-- end,
-					additional_vim_regex_highlighting = { "org" }, -- Required since TS highlighter doesn't support all syntax features (conceal)
-				},
-				ensure_installed = { "org" }, -- Or run :TSUpdate org
 			})
 		end,
 	}, true)
