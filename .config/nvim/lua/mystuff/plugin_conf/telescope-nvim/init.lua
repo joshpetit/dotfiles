@@ -12,6 +12,7 @@ require("telescope").setup({
 			return string.format("%s (%s)", tail, path), { { { 1, #tail }, "Constant" } }
 		end,
 		file_ignore_patterns = { "^.git/", "node_modules" },
+        layout_strategy = "flex",
 		mappings = {
 			i = {
 				["<C-Down>"] = actions.cycle_history_next,
