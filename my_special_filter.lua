@@ -57,6 +57,10 @@ function do_it(link)
         return link
     end
     local first_string = link.content[1].text
+
+    if first_string == nil then
+        return link
+    end
     if first_string:match("bible:") == nil then
         return link
     end

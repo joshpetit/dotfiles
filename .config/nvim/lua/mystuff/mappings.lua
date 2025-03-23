@@ -198,7 +198,6 @@ nmap("<leader>cpp", [[:let @+ = fnamemodify(expand("%"), ":~:.")<cr>]])
 nmap("<leader>cpf", [[:let @+ = expand('%:t')<cr>]])
 -- Copy full path
 nmap("<leader>cpP", [[:let @+ = expand('%:p')<cr>]])
-nmap("<leader>hl", ":set cursorline!<CR>")
 nmap("<S-q>", "<cmd>NvimTreeToggle<cr>")
 nmap("<leader>css", "<cmd>AerialToggle<cr>")
 vim.keymap.set("n", "<leader>cls", "<cmd>Telescope aerial<cr>")
@@ -231,16 +230,51 @@ nmap("<leader>,", "<cmd>bprev<cr>")
 nmap("<leader>.", "<cmd>bnext<cr>")
 --m.nmap("<leader>ff", "<cmd>lua vim.lsp.buf.formatting_seq_sync()<CR>")
 nmap("<leader>ff", "<cmd>lua vim.lsp.buf.format({async = true})<CR>")
-m.vmap("<leader>ff", "<cmd>lua vim.lsp.buf.format()<CR>")
+m.vmap("<leader>ff", "<cmd>lua vim.lsp.buf.range_formatting()<CR>")
 nmap("di$", "T$dt$")
 nmap("ci$", "T$ct$")
 nmap("<leader>hn", "<cmd>:setlocal nonumber norelativenumber<CR>")
 nmap("<leader>hN", "<cmd>:setlocal number relativenumber<CR>")
 
-vim.cmd([[
-noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
-noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
-]])
+-- Function to handle 'j' and 'k' behavior
+-- I can make this simpler lol
+local function move_down()
+	if vim.v.count == 0 and vim.fn.mode() ~= "V" then
+		vim.cmd("normal! gj")
+	else
+		vim.cmd("normal! " .. vim.v.count .. "j")
+	end
+end
+
+local function move_up()
+	if vim.v.count == 0 and vim.fn.mode() ~= "V" then
+		vim.cmd("normal! gk")
+	else
+		vim.cmd("normal! " .. vim.v.count .. "k")
+	end
+end
+
+-- Key mappings
+vim.keymap.set("n", "j", move_down, { noremap = true, silent = true })
+vim.keymap.set("n", "k", move_up, { noremap = true, silent = true })
+
+-- Visual mode mappings
+vim.keymap.set("v", "j", "j", { noremap = true, silent = true })
+vim.keymap.set("v", "k", "k", { noremap = true, silent = true })
+
+-- Adjust behavior in visual mode
+vim.api.nvim_create_autocmd("ModeChanged", {
+	pattern = "*",
+	callback = function()
+		if vim.fn.mode() == "V" then
+			vim.keymap.set("v", "j", "j", { noremap = true, silent = true })
+			vim.keymap.set("v", "k", "k", { noremap = true, silent = true })
+		else
+			vim.keymap.set("v", "j", move_down, { noremap = true, silent = true })
+			vim.keymap.set("v", "k", move_up, { noremap = true, silent = true })
+		end
+	end,
+})
 
 nmap("<c-j>", "<c-w>j")
 nmap("<c-k>", "<c-w>k")
@@ -316,88 +350,96 @@ end
 local floating_wins = require("cache").floating_wins
 local open_windows = require("cache").open_windows
 
-vim.keymap.set("n","<leader>!", function()
-    floating_wins[1] = vim.api.nvim_get_current_buf()
+vim.keymap.set("n", "<leader>!", function()
+	floating_wins[1] = vim.api.nvim_get_current_buf()
 end)
-vim.keymap.set("n","<leader>@", function()
-    floating_wins[2] = vim.api.nvim_get_current_buf()
+vim.keymap.set("n", "<leader>@", function()
+	floating_wins[2] = vim.api.nvim_get_current_buf()
 end)
-vim.keymap.set("n","<leader>#", function()
-    floating_wins[3] = vim.api.nvim_get_current_buf()
+vim.keymap.set("n", "<leader>#", function()
+	floating_wins[3] = vim.api.nvim_get_current_buf()
 end)
 
 local function close_floating_win(win)
-    if win and vim.api.nvim_win_is_valid(win) then
-        vim.api.nvim_win_close(win, true)
-    end
+	if win and vim.api.nvim_win_is_valid(win) then
+		vim.api.nvim_win_close(win, true)
+	end
 end
-
 
 -- TODO: Make it change the current floating window if I try to open another floating window
 -- TODO: Make it close the window if I rerun the same open command
 local function open_floating_win(buffer)
-    local width = 60
-    local height = 20
+	local width = 60
+	local height = 20
 
-    -- Get the total dimensions of the editor
-    local editor_width = vim.o.columns
-    local editor_height = vim.o.lines
+	-- Get the total dimensions of the editor
+	local editor_width = vim.o.columns
+	local editor_height = vim.o.lines
 
-    -- Calculate the center position
-    local row = math.floor((editor_height - height) / 2)
-    local col = math.floor((editor_width - width) / 2)
-       local border_chars = {
-        '╭', '─', '╮',
-        '│', '╯', '─',
-        '╰', '│'
-    }
+	-- Calculate the center position
+	local row = math.floor((editor_height - height) / 2)
+	local col = math.floor((editor_width - width) / 2)
+	local border_chars = {
+		"╭",
+		"─",
+		"╮",
+		"│",
+		"╯",
+		"─",
+		"╰",
+		"│",
+	}
 
-    local opts = {
-        relative = 'editor',
-        width = width,
-        height = height,
-        row = row,
-        col = col,
-        style = 'minimal', -- make it look like a floating window
-        border = border_chars
-    }
-    for _, win in pairs(open_windows) do
-        close_floating_win(win)
-    end
+	local opts = {
+		relative = "editor",
+		width = width,
+		height = height,
+		row = row,
+		col = col,
+		style = "minimal", -- make it look like a floating window
+		border = border_chars,
+	}
+	for _, win in pairs(open_windows) do
+		close_floating_win(win)
+	end
 
-    -- Open the new floating window
-    local win = vim.api.nvim_open_win(buffer, true, opts) -- open the window
-    table.insert(open_windows, win)  -- Keep track of the newly opened window
+	-- Open the new floating window
+	local win = vim.api.nvim_open_win(buffer, true, opts) -- open the window
+	table.insert(open_windows, win) -- Keep track of the newly opened window
 end
-
 
 local function toggle_floating_win(index)
-    local buffer = floating_wins[index]
-    if buffer then
-        -- Check if the window for this buffer is already open
-        for i, win in ipairs(open_windows) do
-            if vim.api.nvim_win_is_valid(win) and vim.api.nvim_win_get_buf(win) == buffer then
-                -- If it's open, check if the current window is the same
-                if vim.api.nvim_get_current_win() == win then
-                    -- If we are in that window, close it
-                    close_floating_win(win)
-                    table.remove(open_windows, i)  -- Remove from the tracking table
-                else
-                    -- Move the cursor to that window
-                    vim.api.nvim_set_current_win(win)
-                end
-                return
-            end
-        end
-        -- If not open, open it
-        open_floating_win(buffer)
-    end
+	local buffer = floating_wins[index]
+	if buffer then
+		-- Check if the window for this buffer is already open
+		for i, win in ipairs(open_windows) do
+			if vim.api.nvim_win_is_valid(win) and vim.api.nvim_win_get_buf(win) == buffer then
+				-- If it's open, check if the current window is the same
+				if vim.api.nvim_get_current_win() == win then
+					-- If we are in that window, close it
+					close_floating_win(win)
+					table.remove(open_windows, i) -- Remove from the tracking table
+				else
+					-- Move the cursor to that window
+					vim.api.nvim_set_current_win(win)
+				end
+				return
+			end
+		end
+		-- If not open, open it
+		open_floating_win(buffer)
+	end
 end
 
-vim.keymap.set("n", "<leader>1", function() toggle_floating_win(1) end)
-vim.keymap.set("n", "<leader>2", function() toggle_floating_win(2) end)
-vim.keymap.set("n", "<leader>3", function() toggle_floating_win(3) end)
-
+vim.keymap.set("n", "<leader>1", function()
+	toggle_floating_win(1)
+end)
+vim.keymap.set("n", "<leader>2", function()
+	toggle_floating_win(2)
+end)
+vim.keymap.set("n", "<leader>3", function()
+	toggle_floating_win(3)
+end)
 
 nmap("<leader>ps", require("mystuff/plugin_conf/telescope-nvim").search_by_workspace)
 
@@ -432,13 +474,13 @@ vim.api.nvim_set_keymap("n", "<leader>zil", "<Cmd>ZkInsertLink<CR>", opts)
 vim.keymap.set("n", "<leader>qs", function()
 	local search_pattern = vim.fn.getreg("/")
 	vim.cmd("vimgrep /" .. search_pattern .. "/ % ")
-    vim.cmd("copen")
+	vim.cmd("copen")
 end, opts)
 
 vim.keymap.set("n", "<leader>qS", function()
 	local search_pattern = vim.fn.getreg("/")
 	vim.cmd("lvimgrep /" .. search_pattern .. "/ % ")
-    vim.cmd("lopen")
+	vim.cmd("lopen")
 end, opts)
 
 nmap("C<", "<cmd>lprev<cr>")
@@ -455,3 +497,5 @@ vim.api.nvim_set_keymap(
 vim.api.nvim_set_keymap("v", "<leader>zf", ":'<,'>ZkMatch<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>n.", "<Cmd>Oil .<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>nd", "<Cmd>Oil<CR>", opts)
+nmap("<leader>hl", ":set cursorline!<CR>")
+m.vmap("<leader>ff", "<cmd>lua vim.lsp.buf.format()<CR>")
