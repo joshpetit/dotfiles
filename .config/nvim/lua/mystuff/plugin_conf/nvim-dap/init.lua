@@ -202,4 +202,11 @@ dap.configurations.java = {
 		request = "attach",
 		type = "java",
 	},
+	{
+		hostName = "127.0.0.1",
+		name = "Java Debug (9000)",
+		port = 9000,
+		request = "attach",
+		type = "java",
+	}
 }

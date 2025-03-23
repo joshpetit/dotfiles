@@ -47,7 +47,7 @@ return function(client, bufnr)
 	-- 	navic.attach(client, bufnr)
 	-- end
 
-	client.server_capabilities.documentFormattingProvider = false
+	-- client.server_capabilities.documentFormattingProvider = false
 	local function buf_set_keymap(...)
 		vim.api.nvim_buf_set_keymap(bufnr, ...)
 	end

@@ -13,11 +13,13 @@ cmp.setup({
 			require("snippy").expand_snippet(args.body) -- For `snippy` users.
 		end,
 	},
+    preselect = cmp.PreselectMode.None,
 	mapping = {
 		["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
 		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
 		["<C-l>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-		["<CR>"] = cmp.mapping(cmp.mapping.confirm({ select = true })),
+		["<C-CR>"] = cmp.mapping(cmp.mapping.confirm({ select = true })),
+		["<CR>"] = cmp.mapping(cmp.mapping.confirm({ select = false })),
 		["<C-j>"] = cmp.mapping(function()
 			if cmp.visible() then
 				cmp.select_next_item()
@@ -34,7 +36,7 @@ cmp.setup({
 			c = cmp.mapping.close(),
 		}),
 	},
-	completion = { autocomplete = false },
+	-- completion = { autocomplete = false },
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" }, -- { name = 'vsnip' }, -- For vsnip users.
 		{ name = "snippy" }, -- For snippy users.
@@ -53,6 +55,11 @@ cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
 		{ name = "dap" },
 	},
 })
+
+cmp.setup.filetype({ 'markdown' }, {
+    completion = { autocomplete = false }
+})
+
 -- require("cmp").setup.buffer({
 -- 	sources = {
 -- 		{ name = "buffer" },

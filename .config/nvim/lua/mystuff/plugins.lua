@@ -165,6 +165,10 @@ return require("packer").startup(function()
 	use_help({
 		"jose-elias-alvarez/typescript.nvim",
 	}, true)
+    use_help({
+        "pmizio/typescript-tools.nvim",
+        requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    }, true)
 	use({ "tpope/vim-fugitive" })
 	use_help({ "dcampos/nvim-snippy" }, true)
 	use_help({ "honza/vim-snippets" }, false)
@@ -271,12 +275,11 @@ return require("packer").startup(function()
 		end,
 	})
 	use("github/copilot.vim")
-	use("joshpetit/work")
 	use_help({ "nilsboy/vim-rest-console" }, true)
 	use_help({ "epwalsh/obsidian.nvim" }, true)
 	use_help({
 		"nvim-orgmode/orgmode",
-		ft = "org",
+		-- ft = "org",
 		config = function()
 			require("orgmode").setup({
 				org_agenda_files = { "~/sync/org/**/*" },
@@ -310,19 +313,6 @@ return require("packer").startup(function()
 					},
 				},
 			})
-
-			require("nvim-treesitter.configs").setup({
-				-- If TS highlights are not enabled at all, or disabled via `disable` prop, highlighting will fallback to default Vim syntax highlighting
-				highlight = {
-					enable = true,
-					disable = { "org" }, -- Remove this to use TS highlighter for some of the highlights (Experimental)
-					-- disable = function(lang, bufnr)
-					-- 	return lang == "org"
-					-- end,
-					additional_vim_regex_highlighting = { "org" }, -- Required since TS highlighter doesn't support all syntax features (conceal)
-				},
-				ensure_installed = { "org" }, -- Or run :TSUpdate org
-			})
 		end,
 	}, true)
 	use({
@@ -343,6 +333,19 @@ return require("packer").startup(function()
 
 	use({ "williamboman/mason-lspconfig.nvim" })
 	use_help({ "ribelo/taskwarrior.nvim" }, true)
+	use({"joshpetit/work", requires = "mfussenegger/nvim-jdtls"})
+    -- use({"jubnzv/mdeval.nvim", config = function()
+    --     require 'mdeval'.setup({
+    --         require_confirmation=false,
+    --     })
+    -- end})
+    --
+	use({
+		"stevearc/oil.nvim",
+		config = function()
+			require("oil").setup()
+		end,
+	})
 
 	if Packer_bootstrap then
 		require("packer").sync()

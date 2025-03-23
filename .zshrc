@@ -8,6 +8,7 @@ if [ -f ~/.zshextra ]; then
     source ~/.zshextra
 fi
 fpath+=~/.zfunc
+fpath+=~/.zsh/completion
 autoload -U +X bashcompinit && bashcompinit
 # No Stupid beeps
 unsetopt BEEP
