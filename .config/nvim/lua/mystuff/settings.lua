@@ -54,4 +54,6 @@ vim.cmd([[
 let g:vimtex_view_method = 'zathura'
 ]])
 
+M.isLinux = vim.loop.os_uname().sysname == "Linux"
+
 return M

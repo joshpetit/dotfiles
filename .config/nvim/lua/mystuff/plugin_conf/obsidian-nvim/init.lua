@@ -1,3 +1,5 @@
+local settings = require("mystuff.settings")
+
 require("obsidian").setup({
 	workspaces = {
 		{
@@ -10,17 +12,16 @@ require("obsidian").setup({
 		},
 	},
 	follow_url_func = function(url)
-		vim.fn.setreg("+", url)
-		print("Copied: " .. url)
+		vim.ui.open(url)
 	end,
 	completion = {
 		nvim_cmp = false,
 		-- Trigger completion at 2 chars.
 		min_chars = 2,
 	},
-    daily_notes = {
-        folder = "dailies"
-    },
+	daily_notes = {
+		folder = "dailies",
+	},
 	ui = {
 		checkboxes = {
 			[" "] = { char = "☐", hl_group = "ObsidianTodo" },
