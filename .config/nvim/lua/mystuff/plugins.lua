@@ -333,7 +333,7 @@ return require("packer").startup(function()
 
 	use({ "williamboman/mason-lspconfig.nvim" })
 	use_help({ "ribelo/taskwarrior.nvim" }, true)
-	use({"joshpetit/work", requires = "mfussenegger/nvim-jdtls"})
+	use({"git@github.com:joshpetit/work.git", requires = "mfussenegger/nvim-jdtls"})
     -- use({"jubnzv/mdeval.nvim", config = function()
     --     require 'mdeval'.setup({
     --         require_confirmation=false,
