@@ -22,8 +22,8 @@ zmodload zsh/complist
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 setopt APPEND_HISTORY
 HISTFILE="$HOME/.local/share/zsh/histfile"
-HISTSIZE=2500
-SAVEHIST=2500
+HISTSIZE=3500
+SAVEHIST=3500
 zstyle ':completion:*' completer _expand_alias _complete _ignored
 alias removebackground='rembg'
 alias firebaseupdateindexes='firebase firestore:indexes > firestore.indexes.json'
