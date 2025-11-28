@@ -12,7 +12,7 @@ local nmap = function(keys, command)
 	vim.keymap.set("n", keys, command)
 end
 local vmap = function(keys, command)
-	vim.keymap.set("", keys, command)
+	vim.keymap.set("v", keys, command)
 end
 
 nmap("<leader>ef", function()
@@ -167,6 +167,37 @@ local toggle_quick_fix = function()
 end
 
 nmap("<leader>qf", toggle_quick_fix)
+
+local append_to_quick_fix = function(lines)
+    local qf_entries = {}
+    for _, line in pairs(lines) do
+        -- also add line number support now
+        table.insert(qf_entries, { bufnr = 0, filename = vim.fn.expand("%"), lnum = vim.fn.line("."), text = line })
+    end
+    vim.fn.setqflist(qf_entries, "a")
+end
+
+
+-- append selected lines to quickfix
+vmap("<leader>qa", function()
+    local start_line = vim.fn.line("'<")
+    local end_line = vim.fn.line("'>")
+    local lines = vim.fn.getline(start_line, end_line)
+    append_to_quick_fix(lines)
+end)
+
+nmap("<leader>qa", function()
+    local current_line = vim.fn.line(".")
+    local line = vim.fn.getline(current_line)
+    append_to_quick_fix({line})
+end)
+
+-- clear quickfix
+nmap("<leader>qc", function()
+    vim.fn.setqflist({}, "r")
+end)
+
+
 
 nmap("<leader>es", function()
 	local ft = vim.bo.filetype
