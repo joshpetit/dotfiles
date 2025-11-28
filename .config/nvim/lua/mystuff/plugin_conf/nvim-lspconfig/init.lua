@@ -1,4 +1,4 @@
-local lspconfig = require("lspconfig")
+local lspconfig = vim.lsp.config
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -26,14 +26,14 @@ local servers = {
 
 for _, lsp in ipairs(servers) do
 	if lsp == "typos_lsp" then
-		lspconfig[lsp].setup({
+		lspconfig(lsp, {
 			capabilities = capabilities,
 			on_attach = on_attach,
 			flags = { debounce_text_changes = 150 },
 			filetypes = { "markdown" },
 		})
 	else
-		lspconfig[lsp].setup({
+		lspconfig(lsp, {
 			capabilities = capabilities,
 			on_attach = on_attach,
 			flags = { debounce_text_changes = 150 },
@@ -71,7 +71,7 @@ local luaLspConfig = {
 -- local luadev = require("lua-dev").setup({lspconfig=luaLspConfig})
 -- require("lazydev").setup({})
 
-lspconfig.lua_ls.setup({
+lspconfig('lua_ls',{
 	capabilities = capabilities,
 	on_attach = on_attach,
 	flags = { debounce_text_changes = 150 },

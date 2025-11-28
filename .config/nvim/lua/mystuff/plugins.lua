@@ -279,7 +279,7 @@ return require("packer").startup(function()
 	use_help({ "epwalsh/obsidian.nvim" }, true)
 	use_help({
 		"nvim-orgmode/orgmode",
-		-- ft = "org",
+		ft = "org",
 		config = function()
 			require("orgmode").setup({
 				org_agenda_files = { "~/sync/org/**/*" },
@@ -340,6 +340,7 @@ return require("packer").startup(function()
     --     })
     -- end})
     --
+	use({ "~/projects/bible_study.nvim" })
 	use({
 		"stevearc/oil.nvim",
 		config = function()
