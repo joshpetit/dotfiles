@@ -1,5 +1,4 @@
-
-vim.bo[0].textwidth = 80
+vim.bo[0].textwidth = 0
 vim.bo[0].formatexpr = ""
 vim.wo.conceallevel = 2
 

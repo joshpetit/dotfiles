@@ -22,8 +22,8 @@ zmodload zsh/complist
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 setopt APPEND_HISTORY
 HISTFILE="$HOME/.local/share/zsh/histfile"
-HISTSIZE=2500
-SAVEHIST=2500
+HISTSIZE=3500
+SAVEHIST=3500
 zstyle ':completion:*' completer _expand_alias _complete _ignored
 alias removebackground='rembg'
 alias firebaseupdateindexes='firebase firestore:indexes > firestore.indexes.json'
@@ -52,8 +52,8 @@ alias tn='env TP=nested tmux'
 alias flutter-build-small-apk='flutter build apk --split-per-abi'
 alias countlinesofcode="find . -name '*.dart' | xargs wc -l"
 
-#autoload -z edit-command-line
-#bindkey "^X^E" edit-command-line
+autoload edit-command-line; zle -N edit-command-line
+bindkey "^X^E" edit-command-line
 #git
 alias gpo='git push -u origin HEAD'
 alias gcnb='git checkout -b '

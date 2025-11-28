@@ -56,4 +56,6 @@ let g:vimtex_view_method = 'zathura'
 
 M.isLinux = vim.loop.os_uname().sysname == "Linux"
 
+-- vim.opt.laststatus = 3
+
 return M

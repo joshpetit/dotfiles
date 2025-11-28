@@ -30,7 +30,7 @@ parser_config.puml = {
 
 parser_config.puml = {
 	install_info = {
-		url = "https://github.com/tree-sitter/tree-sitter-swift",
+		url = "https://github.com/tree-sitter/swift-tree-sitter",
 		revision = "main",
 		files = { "src/scanner.c" },
 	},
@@ -44,3 +44,15 @@ local treesitter_mode_on = function()
 end
 
 -- vim.keymap.set("n", "<leader>1", treesitter_mode_on)
+--
+
+parser_config["ion"] = {
+  install_info = {
+    url = "https://github.com/Ignis-lang/tree-sitter-ion.git",
+    files = { "src/parser.c" },
+    branch = "main",
+    generate_requires_npm = false,
+    requires_generate_from_grammar = true,
+  },
+  filetype = "ion",
+}
