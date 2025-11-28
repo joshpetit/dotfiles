@@ -207,9 +207,7 @@ nmap("<leader>nf", "<cmd>NvimTreeFindFileToggle<cr>")
 --nmap("<leader>a", [[:HopWord<cr>]])
 --m.vmap("<leader>a", [[:HopWord<cr>]])
 local hop = require("hop")
-vim.keymap.set("", "<leader>a", function()
-	hop.hint_words()
-end, { remap = true })
+vim.keymap.set("", "<leader>a", hop.hint_words, { remap = true })
 
 m.nmap("K", "<Cmd>lua vim.lsp.buf.hover()<CR>")
 nmap("<leader>w", "<Cmd>w<CR>")
@@ -297,7 +295,7 @@ nmap("<leader>gcl", ":Git checkout -<cr>")
 nmap("<leader>gpo", "<cmd>Git push -u origin HEAD<CR>")
 nmap("<leader>gpu", "<cmd>Git push origin HEAD<CR>")
 nmap("<leader>sF", "<cmd>source %<CR>")
-nmap("<leader>gpl", "<cmd>Git pull<CR>")
+nmap("<leader>gpl", "<cmd>Git pull --rebase --autostash<CR>")
 nmap("<leader>gb", "<cmd>Git blame<CR>")
 nmap("<leader>glc", "<cmd>Gclog<CR>")
 nmap("<leader>gif", "<cmd>Git update-index --assume-unchanged %<CR>")
@@ -444,9 +442,6 @@ end)
 nmap("<leader>ps", require("mystuff/plugin_conf/telescope-nvim").search_by_workspace)
 
 local opts = { noremap = true, silent = false }
--- Create a new note after asking for its title.
-vim.api.nvim_set_keymap("n", "<leader>zn", "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", opts)
-vim.api.nvim_set_keymap("v", "<leader>zn", "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", opts)
 nmap("<leader>nor", "<cmd>100vsplit ~/sync/wiki/refile.md<cr>")
 nmap("<leader>noR", "<cmd>10split ~/sync/wiki/refile.md<cr>")
 nmap("<leader>ns", function()
@@ -462,15 +457,10 @@ nmap("<leader>nn", function()
 	vim.cmd([[:e ~/sync/wiki/]] .. title .. ".md")
 end)
 
--- vim.api.nvim_set_keymap("n", "<leader>zo", "<Cmd>ZkNotes { sort = { 'modified' } }<CR>", opts)
 -- Open notes associated with the selected tags.
 nmap("<leader>nof", function()
 	require("telescope.builtin").find_files({ hidden = true, search_dirs = { "~/sync/wiki" } })
 end)
-vim.api.nvim_set_keymap("n", "<leader>zt", "<Cmd>ZkTags<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>zb", "<Cmd>ZkBacklinks<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>zl", "<Cmd>ZkLinks<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>zil", "<Cmd>ZkInsertLink<CR>", opts)
 vim.keymap.set("n", "<leader>qs", function()
 	local search_pattern = vim.fn.getreg("/")
 	vim.cmd("vimgrep /" .. search_pattern .. "/ % ")
@@ -485,17 +475,50 @@ end, opts)
 
 nmap("C<", "<cmd>lprev<cr>")
 nmap("C>", "<cmd>lnext<cr>")
+nmap("<leader>nvl", "<cmd>ObsidianLinks<cr>")
 
--- Search for the notes matching a given query.
-vim.api.nvim_set_keymap(
-	"n",
-	"<leader>zf",
-	"<Cmd>ZkNotes { sort = { 'modified' }, match = { vim.fn.input('Search: ') } }<CR>",
-	opts
-)
--- Search for the notes matching the current visual selection.
-vim.api.nvim_set_keymap("v", "<leader>zf", ":'<,'>ZkMatch<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>n.", "<Cmd>Oil .<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>nd", "<Cmd>Oil<CR>", opts)
 nmap("<leader>hl", ":set cursorline!<CR>")
 m.vmap("<leader>ff", "<cmd>lua vim.lsp.buf.format()<CR>")
+
+vim.api.nvim_set_keymap('n', ']c', '<cmd>Gitsigns next_hunk<CR>', {noremap = true, silent = true, desc = "Next git diff"})
+vim.api.nvim_set_keymap('n', '[c', '<cmd>Gitsigns prev_hunk<CR>', {noremap = true, silent = true, desc = "Previous git diff"})
+-- require("mystuff.git_diff_jump")
+--
+
+
+local function delete_dap_buffers()
+    -- Get all buffers
+    local buffers = vim.api.nvim_list_bufs()
+    
+    -- Iterate through each buffer
+    for _, buf in ipairs(buffers) do
+        -- Check if buffer exists and is valid
+        if vim.api.nvim_buf_is_valid(buf) then
+            -- Get buffer name
+            local buf_name = vim.api.nvim_buf_get_name(buf)
+            -- Check if buffer name contains 'dap'
+            if buf_name:match("dap") or buf_name:match("DAP") then
+                -- Delete the buffer
+                vim.api.nvim_buf_delete(buf, { force = true })
+            end
+        end
+    end
+end
+
+vim.api.nvim_create_user_command('DapCleanup', delete_dap_buffers, {})
+
+vim.keymap.set({ "n", "v" }, "<leader>qa", function()
+  require("avante.api").ask()
+end, { desc = "avante: ask" })
+
+-- Visual mode only mapping for refresh
+vim.keymap.set("v", "<leader>qr", function()
+  require("avante.api").refresh()
+end, { desc = "avante: refresh" })
+
+-- Normal and Visual mode mapping for edit
+vim.keymap.set({ "n", "v" }, "<leader>qe", function()
+  require("avante.api").edit()
+end, { desc = "avante: edit" })

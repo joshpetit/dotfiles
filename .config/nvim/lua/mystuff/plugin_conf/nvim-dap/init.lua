@@ -192,6 +192,31 @@ dap.configurations.dart = {
 	},
 }
 
+local function get_project_name_from_file()
+    -- Get the current working directory
+    local cwd = vim.fn.getcwd()
+    local project_file = cwd .. "/.project"
+    -- Check if .project file exists
+    local file = io.open(project_file, "r")
+    if not file then
+        print("No .project file found in " .. cwd)
+        return nil
+    end
+
+    -- Read the entire file content
+    local content = file:read("*all")
+    file:close()
+
+    -- Look for the project name using pattern matching
+    local name = content:match("<name>([^<]+)</name>")
+    if name then
+        return name
+    else
+        print("Could not find project name in .project file")
+        return nil
+    end
+end
+
 
 
 dap.configurations.java = {
@@ -208,5 +233,15 @@ dap.configurations.java = {
 		port = 9000,
 		request = "attach",
 		type = "java",
+	},
+	{
+		hostName = "localhost",
+		name = "Project Name (5005)",
+        projectName = function() return get_project_name_from_file() or vim.fn.input("Enter project name: ") end,
+		port = 5005,
+		request = "attach",
+		type = "java",
 	}
 }
+
+

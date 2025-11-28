@@ -52,8 +52,8 @@ alias tn='env TP=nested tmux'
 alias flutter-build-small-apk='flutter build apk --split-per-abi'
 alias countlinesofcode="find . -name '*.dart' | xargs wc -l"
 
-#autoload -z edit-command-line
-#bindkey "^X^E" edit-command-line
+autoload edit-command-line; zle -N edit-command-line
+bindkey "^X^E" edit-command-line
 #git
 alias gpo='git push -u origin HEAD'
 alias gcnb='git checkout -b '

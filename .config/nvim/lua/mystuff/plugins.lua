@@ -162,9 +162,9 @@ return require("packer").startup(function()
 			require("trouble").setup()
 		end,
 	})
-	use_help({
-		"jose-elias-alvarez/typescript.nvim",
-	}, true)
+	-- use_help({
+	-- 	"jose-elias-alvarez/typescript.nvim",
+	-- }, true)
     use_help({
         "pmizio/typescript-tools.nvim",
         requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
@@ -218,7 +218,7 @@ return require("packer").startup(function()
 	use("tpope/vim-eunuch") -- SudoWrite!
 	use("tpope/vim-rhubarb")
 	use_help({
-		"jose-elias-alvarez/null-ls.nvim",
+		"nvimtools/none-ls.nvim",
 		requires = { "nvim-lua/plenary.nvim" },
 	}, true)
 	use({
