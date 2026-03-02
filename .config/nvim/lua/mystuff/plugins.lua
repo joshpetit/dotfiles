@@ -276,7 +276,7 @@ return require("packer").startup(function()
 	})
 	use("github/copilot.vim")
 	use_help({ "nilsboy/vim-rest-console" }, true)
-	use_help({ "epwalsh/obsidian.nvim" }, true)
+	use_help({ "obsidian-nvim/obsidian.nvim" }, true)
 	use_help({
 		"nvim-orgmode/orgmode",
 		ft = "org",
@@ -347,6 +347,37 @@ return require("packer").startup(function()
 			require("oil").setup()
 		end,
 	})
+
+    use({"sindrets/diffview.nvim"})
+
+    use_help({
+    'letieu/jira.nvim',
+    }, true)
+
+    use_help({
+        "ssh://git.amazon.com/pkg/Scat-nvim",
+        branch = "mainline",
+        requires = { "nvim-telescope/telescope.nvim", "sindrets/diffview.nvim" },
+    }, true)
+
+    use({
+        "ssh://git.amazon.com/pkg/VimIon",
+        branch = "mainline",
+    })
+
+    use_help({
+        'yetone/avante.nvim',
+        branch = 'main',
+        disable = false,
+        run = 'make',
+        requires = { "MunifTanjim/nui.nvim" },
+    }, true)
+
+    use_help({
+        'olimorris/codecompanion.nvim',
+        branch = 'main',
+        disable = false,
+    }, true)
 
 	if Packer_bootstrap then
 		require("packer").sync()

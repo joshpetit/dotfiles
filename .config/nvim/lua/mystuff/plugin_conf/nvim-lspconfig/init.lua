@@ -1,4 +1,5 @@
-local lspconfig = vim.lsp.config
+-- local lspconfig = vim.lsp.config
+local lspconfig = require("lspconfig")
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -25,15 +26,32 @@ local servers = {
 }
 
 for _, lsp in ipairs(servers) do
-	if lsp == "typos_lsp" then
-		lspconfig(lsp, {
+    if lsp == "markdown_oxide" then
+		lspconfig[lsp].setup({
+            capabilities = vim.tbl_deep_extend(
+                'force',
+                capabilities,
+                {
+                    workspace = {
+                        didChangeWatchedFiles = {
+                            dynamicRegistration = true,
+                        },
+                    },
+                }
+            ),
+			on_attach = on_attach,
+			flags = { debounce_text_changes = 150 },
+			filetypes = { "markdown" },
+		})
+    elseif lsp == "typos_lsp" then
+		lspconfig[lsp].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			flags = { debounce_text_changes = 150 },
 			filetypes = { "markdown" },
 		})
 	else
-		lspconfig(lsp, {
+		lspconfig[lsp].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			flags = { debounce_text_changes = 150 },
@@ -71,7 +89,7 @@ local luaLspConfig = {
 -- local luadev = require("lua-dev").setup({lspconfig=luaLspConfig})
 -- require("lazydev").setup({})
 
-lspconfig('lua_ls',{
+lspconfig['lua_ls'].setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 	flags = { debounce_text_changes = 150 },

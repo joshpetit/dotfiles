@@ -63,8 +63,8 @@ local dap_open_window = function(buffer_name)
 	end
 end
 
-vim.keymap.set("n", "<leader>not", "<cmd>ObsidianToday<cr>", { noremap = true })
-vim.keymap.set("n", "<leader>nod", "<cmd>ObsidianDailies<cr>", { noremap = true })
+vim.keymap.set("n", "<leader>not", "<cmd>Obsidian today<cr>", { noremap = true })
+vim.keymap.set("n", "<leader>nod", "<cmd>Obsidian dailies<cr>", { noremap = true })
 
 local view_last_files_versions = function(flogs)
 	local relativePath = vim.fn.expand("%")
@@ -506,7 +506,7 @@ end, opts)
 
 nmap("C<", "<cmd>lprev<cr>")
 nmap("C>", "<cmd>lnext<cr>")
-nmap("<leader>nvl", "<cmd>ObsidianLinks<cr>")
+nmap("<leader>nvl", "<cmd>Obsidian links<cr>")
 
 vim.api.nvim_set_keymap("n", "<leader>n.", "<Cmd>Oil .<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>nd", "<Cmd>Oil<CR>", opts)
@@ -553,3 +553,4 @@ end, { desc = "avante: refresh" })
 vim.keymap.set({ "n", "v" }, "<leader>qe", function()
   require("avante.api").edit()
 end, { desc = "avante: edit" })
+

@@ -38,7 +38,13 @@ cmp.setup({
 	},
 	-- completion = { autocomplete = false },
 	sources = cmp.config.sources({
-		{ name = "nvim_lsp" }, -- { name = 'vsnip' }, -- For vsnip users.
+		{ name = "nvim_lsp",
+          option = {
+              markdown_oxide = {
+                  keyword_pattern = [[\(\k\| \|\/\|#\)\+]]
+              }
+          }
+        }, -- { name = 'vsnip' }, -- For vsnip users.
 		{ name = "snippy" }, -- For snippy users.
 		-- { name = 'luasnip' }, -- For luasnip users.
 		{ name = "neorg" },
