@@ -1,8 +1,4 @@
--- local lspconfig = vim.lsp.config
-local lspconfig = require("lspconfig")
-
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
 local on_attach = require("mystuff/on_attach_conf")
 
 local servers = {
@@ -10,10 +6,6 @@ local servers = {
 	"sourcekit",
 	"svelte",
 	"kotlin_lsp",
-	-- "smithy_ls",
-	--"jsonls",
-	-- "jdtls",
-	"svelte",
 	"markdown_oxide",
 	"vuels",
 	"cssls",
@@ -26,37 +18,26 @@ local servers = {
 }
 
 for _, lsp in ipairs(servers) do
-    if lsp == "markdown_oxide" then
-		lspconfig[lsp].setup({
-            capabilities = vim.tbl_deep_extend(
-                'force',
-                capabilities,
-                {
-                    workspace = {
-                        didChangeWatchedFiles = {
-                            dynamicRegistration = true,
-                        },
-                    },
-                }
-            ),
-			on_attach = on_attach,
-			flags = { debounce_text_changes = 150 },
-			filetypes = { "markdown" },
+	local config = {
+		capabilities = capabilities,
+		on_attach = on_attach,
+		flags = { debounce_text_changes = 150 },
+	}
+	
+	if lsp == "markdown_oxide" then
+		config.capabilities = vim.tbl_deep_extend('force', capabilities, {
+			workspace = {
+				didChangeWatchedFiles = {
+					dynamicRegistration = true,
+				},
+			},
 		})
-    elseif lsp == "typos_lsp" then
-		lspconfig[lsp].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-			flags = { debounce_text_changes = 150 },
-			filetypes = { "markdown" },
-		})
-	else
-		lspconfig[lsp].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-			flags = { debounce_text_changes = 150 },
-		})
+		config.filetypes = { "markdown" }
+	elseif lsp == "typos_lsp" then
+		config.filetypes = { "markdown" }
 	end
+	
+	vim.lsp.config[lsp] = config
 end
 
 local luaLspConfig = {
@@ -86,10 +67,7 @@ local luaLspConfig = {
 	},
 }
 
--- local luadev = require("lua-dev").setup({lspconfig=luaLspConfig})
--- require("lazydev").setup({})
-
-lspconfig['lua_ls'].setup({
+vim.lsp.config.lua_ls = {
 	capabilities = capabilities,
 	on_attach = on_attach,
 	flags = { debounce_text_changes = 150 },
@@ -104,4 +82,4 @@ lspconfig['lua_ls'].setup({
 			},
 		},
 	},
-})
+}
