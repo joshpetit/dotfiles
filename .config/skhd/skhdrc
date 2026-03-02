@@ -1,31 +1,9 @@
-#cmd + ctrl - c : copyq menu
+cmd + shift - a : choose-gui
 cmd + shift - r : skhd --reload && yabai --restart-service
 cmd + shift - f : open /Applications/Firefox.app
-cmd + shift - e : open /Applications/Emacs.app/
+cmd + shift - s : open /Applications/Slack.app
+cmd + shift - e : open /Applications/zoom.us.app
 cmd + shift - d : open /Applications/iTerm.app/
 cmd + shift - x : open /Applications/Xcode.app/
-
-
-ctrl - e : yabai -m space --layout bsp
-ctrl + shift - s : yabai -m space --layout stack
-
-ctrl + alt - left : yabai -m window --focus west
-ctrl + alt - right : yabai -m window --focus east
-cmd - k : yabai -m window --focus north
-cmd - j : yabai -m window --focus south
-cmd - h : yabai -m window --focus west
-cmd - l : yabai -m window --focus east
-cmd + shift - k : yabai -m window --swap north
-cmd + shift - j : yabai -m window --swap south
-cmd + shift - h : yabai -m window --swap west
-cmd + shift - l : yabai -m window --swap east
-
-ctrl + shift - 1 : yabai -m window --space 1
-ctrl + shift - 2 : yabai -m window --space 2
-ctrl + shift - 3 : yabai -m window --space 3
-ctrl + shift - 4 : yabai -m window --space 4
-ctrl + shift - 5 : yabai -m window --space 5
-ctrl + shift - 6 : yabai -m window --space 6
-
-cmd + shift + ctrl - f : yabai -m window --toggle float
-#
+cmd + shift + ctrl - f : open $(pbpaste)
+f3 : open $(pbpaste)

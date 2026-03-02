@@ -9,7 +9,7 @@ local servers = {
 	"tailwindcss",
 	"sourcekit",
 	"svelte",
-	"kotlin_language_server",
+	"kotlin_lsp",
 	-- "smithy_ls",
 	--"jsonls",
 	-- "jdtls",

@@ -378,6 +378,7 @@ return require("packer").startup(function()
         branch = 'main',
         disable = false,
     }, true)
+    use("shumphrey/fugitive-gitlab.vim")
 
 	if Packer_bootstrap then
 		require("packer").sync()
