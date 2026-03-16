@@ -515,6 +515,7 @@ m.vmap("<leader>ff", "<cmd>lua vim.lsp.buf.format()<CR>")
 
 vim.api.nvim_set_keymap('n', ']c', '<cmd>Gitsigns next_hunk<CR>', {noremap = true, silent = true, desc = "Next git diff"})
 vim.api.nvim_set_keymap('n', '[c', '<cmd>Gitsigns prev_hunk<CR>', {noremap = true, silent = true, desc = "Previous git diff"})
+vim.api.nvim_set_keymap('n', '<leader>cc', '<cmd>CodeCompanionChat<CR>', {noremap = true, silent = true, desc = "Code companion chat"})
 -- require("mystuff.git_diff_jump")
 --
 
