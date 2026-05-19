@@ -555,3 +555,4 @@ vim.keymap.set({ "n", "v" }, "<leader>qe", function()
   require("avante.api").edit()
 end, { desc = "avante: edit" })
 
+require("mystuff.ai_cli")
