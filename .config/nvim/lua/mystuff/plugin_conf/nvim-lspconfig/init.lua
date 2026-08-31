@@ -3,6 +3,7 @@ local on_attach = require("mystuff/on_attach_conf")
 
 local servers = {
 	"tailwindcss",
+	"null-ls",
 	"sourcekit",
 	"svelte",
 	"kotlin_lsp",
@@ -38,6 +39,7 @@ for _, lsp in ipairs(servers) do
 	end
 	
 	vim.lsp.config[lsp] = config
+    -- vim.lsp.enable(lsp) mason.nvim lspconfig thing will do this
 end
 
 local luaLspConfig = {
@@ -83,3 +85,4 @@ vim.lsp.config.lua_ls = {
 		},
 	},
 }
+-- vim.lsp.enable('lua_ls') Mason.nvim lspconfig thign will do this
