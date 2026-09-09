@@ -16,6 +16,7 @@ vim.o.shiftwidth = 4
 vim.o.expandtab = true
 vim.opt.termguicolors = true
 --vim.cmd('abbrev %% expand("%")')
+vim.cmd([[let g:mkdp_port = '3000']])
 
 vim.cmd([[
 let test#strategy = "dispatch"
@@ -57,5 +58,17 @@ let g:vimtex_view_method = 'zathura'
 M.isLinux = vim.loop.os_uname().sysname == "Linux"
 
 -- vim.opt.laststatus = 3
+--
+   vim.g.clipboard = {
+     name = "OSC 52",
+     copy = {
+       ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+       ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+     },
+     paste = {
+       ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+       ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+     },
+   }
 
 return M
