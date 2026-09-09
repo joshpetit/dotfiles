@@ -1,41 +1,40 @@
-require("nvim-treesitter.configs").setup({
-	sync_install = false,
-	highlight = {
-		enable = true,
-	},
-    indent = {
-        enable = true,
-    },
-	incremental_selection = {
-		enable = true,
-		keymaps = {
-			init_selection = "<leader>k",
-			node_incremental = "<leader>k",
-			scope_incremental = "<leader>K",
-			node_decremental = "<leader>j",
-		},
-	},
+require('nvim-treesitter').setup()
+
+require('nvim-treesitter').install {'javascript','typescript', 'java', 'markdown', 'markdown_inline' }
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { '<filetype>' },
+  callback = function() vim.treesitter.start() end,
 })
 
-local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+vim.api.nvim_create_autocmd("User", {
+	pattern = "TSUpdate",
+	callback = function()
+		local parsers = require("nvim-treesitter.parsers")
 
-parser_config.puml = {
-	install_info = {
-		url = "https://github.com/ahlinc/tree-sitter-plantuml",
-		revision = "demo",
-		files = { "src/scanner.cc" },
-	},
-	filetype = "puml",
-}
+		parsers.puml = {
+			install_info = {
+				url = "https://github.com/ahlinc/tree-sitter-plantuml",
+				branch = "demo",
+			},
+		}
 
-parser_config.puml = {
-	install_info = {
-		url = "https://github.com/tree-sitter/swift-tree-sitter",
-		revision = "main",
-		files = { "src/scanner.c" },
-	},
-	filetype = "swift",
-}
+		parsers.swift = {
+			install_info = {
+				url = "https://github.com/tree-sitter/swift-tree-sitter",
+				branch = "main",
+			},
+		}
+
+		parsers.ion = {
+			install_info = {
+				url = "https://github.com/Ignis-lang/tree-sitter-ion.git",
+				branch = "main",
+				generate = true,
+			},
+		}
+	end,
+})
 
 local treesitter_mode_on = function()
 	vim.keymap.set("n", "<leader>sx", ":source ~/.config/nvim/thing.lua<CR>")
@@ -46,13 +45,3 @@ end
 -- vim.keymap.set("n", "<leader>1", treesitter_mode_on)
 --
 
-parser_config["ion"] = {
-  install_info = {
-    url = "https://github.com/Ignis-lang/tree-sitter-ion.git",
-    files = { "src/parser.c" },
-    branch = "main",
-    generate_requires_npm = false,
-    requires_generate_from_grammar = true,
-  },
-  filetype = "ion",
-}
