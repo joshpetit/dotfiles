@@ -116,7 +116,7 @@ return require("packer").startup(function()
 		end,
 	})
 	use({
-		"phaazon/hop.nvim",
+		"smoka7/hop.nvim",
 		config = function()
 			require("hop").setup()
 		end,
