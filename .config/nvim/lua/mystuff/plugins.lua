@@ -47,12 +47,6 @@ return require("packer").startup(function()
 	end
 
 	use("wbthomason/packer.nvim")
-	use({
-		"simrat39/symbols-outline.nvim",
-		config = function()
-			require("symbols-outline").setup()
-		end,
-	})
 	use_help({
 		"kyazdani42/nvim-tree.lua",
 		requires = { "kyazdani42/nvim-web-devicons" },
@@ -70,7 +64,6 @@ return require("packer").startup(function()
 		requires = { "nvim-lua/plenary.nvim" },
 	}, true)
 	use({ "smancill/conky-syntax.vim", disable = true })
-	-- use({ "dhruvasagar/vim-table-mode", disable = false })
 	-- tag = 'release' -- To use the latest release
 	use_help({
 		"hrsh7th/nvim-cmp",
@@ -199,7 +192,7 @@ return require("packer").startup(function()
 		"rcarriga/nvim-dap-ui",
 		requires = { "mfussenegger/nvim-dap", "rcarriga/cmp-dap" },
 	}, true)
-	use_help({ "nvim-treesitter/nvim-treesitter" }, true)
+	use_help({ "nvim-treesitter/nvim-treesitter", branch="main"}, true)
 	use_help({
 		"stevearc/dressing.nvim",
 	}, true)
@@ -332,7 +325,6 @@ return require("packer").startup(function()
 	}, true)
 
 	use({ "williamboman/mason-lspconfig.nvim" })
-	use_help({ "ribelo/taskwarrior.nvim" }, true)
 	use({"git@github.com:joshpetit/work.git", requires = "mfussenegger/nvim-jdtls"})
     -- use({"jubnzv/mdeval.nvim", config = function()
     --     require 'mdeval'.setup({
@@ -354,31 +346,47 @@ return require("packer").startup(function()
     'letieu/jira.nvim',
     }, true)
 
-    use_help({
-        "ssh://git.amazon.com/pkg/Scat-nvim",
-        branch = "mainline",
-        requires = { "nvim-telescope/telescope.nvim", "sindrets/diffview.nvim" },
-    }, true)
-
     use({
         "ssh://git.amazon.com/pkg/VimIon",
         branch = "mainline",
     })
 
     use_help({
-        'yetone/avante.nvim',
-        branch = 'main',
-        disable = false,
-        run = 'make',
-        requires = { "MunifTanjim/nui.nvim" },
-    }, true)
-
-    use_help({
         'olimorris/codecompanion.nvim',
         branch = 'main',
         disable = false,
     }, true)
+
     use("shumphrey/fugitive-gitlab.vim")
+
+    use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
+
+    use({
+        'MeanderingProgrammer/treesitter-modules.nvim',
+        after = { 'nvim-treesitter' },
+        requires = { 'nvim-treesitter/nvim-treesitter' },
+        config = function()
+            require('treesitter-modules').setup({
+                sync_install = false,
+                highlight = {
+                    enable = true,
+                },
+                indent = {
+                    enable = true,
+                },
+                incremental_selection = {
+                    enable = true,
+                    keymaps = {
+                        init_selection = "<leader>k",
+                        node_incremental = "<leader>k",
+                        scope_incremental = "<leader>K",
+                        node_decremental = "<leader>j",
+                    },
+                },
+            })
+
+        end,
+    })
 
 	if Packer_bootstrap then
 		require("packer").sync()
