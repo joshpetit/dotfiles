@@ -64,7 +64,7 @@ require("telescope").setup({
 	},
 	pickers = {
 		find_files = {
-			-- find_command = { "rg", "--ignore", "-L", "--hidden", "--files" },
+			find_command = { "rg", "--ignore", "--hidden", "--files", "-L" },
 		},
 		buffers = {
 			mappings = {
