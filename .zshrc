@@ -40,6 +40,7 @@ alias venv='python -m venv'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias mv='mv -i'
 alias yi='yarn install'
 alias git-line-stats="git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr"
 alias restartmouse='sudo modprobe -r psmouse && sudo modprobe psmouse'
