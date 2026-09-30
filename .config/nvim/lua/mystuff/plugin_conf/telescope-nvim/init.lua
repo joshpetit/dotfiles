@@ -5,6 +5,32 @@ local pickers = require("telescope.pickers")
 local action_utils = require("telescope.actions.utils")
 local action_state = require("telescope.actions.state")
 
+local open_in_picked_window = function(prompt_bufnr)
+  local entry = action_state.get_selected_entry()
+  if not entry then return end
+
+  -- 1. Extract string path or bufnr safely BEFORE closing Telescope
+  local path = entry.filename or (type(entry.value) == "string" and entry.value) or entry[1]
+  local bufnr = entry.bufnr
+
+  -- 2. Close Telescope completely first (this automatically removes the overlay/floating window)
+  actions.close(prompt_bufnr)
+
+  -- 3. Prompt for target window with background completely clear
+  local window = require("window-picker").pick_window()
+
+  -- 4. Navigate to target window and edit
+  if window and vim.api.nvim_win_is_valid(window) then
+    vim.api.nvim_set_current_win(window)
+
+    if bufnr and vim.api.nvim_buf_is_valid(bufnr) then
+      vim.api.nvim_set_current_buf(bufnr)
+    elseif type(path) == "string" then
+      vim.cmd("edit " .. vim.fn.fnameescape(path))
+    end
+  end
+end
+
 require("telescope").setup({
 	defaults = {
 		path_display = function(opts, path)
@@ -15,6 +41,7 @@ require("telescope").setup({
         layout_strategy = "flex",
 		mappings = {
 			i = {
+                ["<C-s>"] = open_in_picked_window,
 				["<C-Down>"] = actions.cycle_history_next,
 				["<C-Up>"] = actions.cycle_history_prev,
 				["<C-j>"] = actions.move_selection_next,
@@ -42,6 +69,7 @@ require("telescope").setup({
 				end,
 			},
 			n = {
+                ["<C-s>"] = open_in_picked_window,
 				["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
 				["K"] = function(prompt_bufnr)
                     local higlighted_entry = require("telescope.actions.state").get_selected_entry().filename
@@ -267,5 +295,12 @@ exports.select_bible_verse = function(opts)
 		})
 		:find()
 end
+
+vim.api.nvim_create_autocmd("User", {
+  pattern = "TelescopePreviewerLoaded",
+  callback = function()
+    vim.wo.wrap = true
+  end,
+})
 
 return exports

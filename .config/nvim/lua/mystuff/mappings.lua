@@ -510,7 +510,7 @@ nmap("<leader>nvl", "<cmd>Obsidian links<cr>")
 
 vim.api.nvim_set_keymap("n", "<leader>n.", "<Cmd>Oil .<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>nd", "<Cmd>Oil<CR>", opts)
-nmap("<leader>hl", ":set cursorline!<CR>")
+-- nmap("<leader>hl", ":set cursorline!<CR>")
 m.vmap("<leader>ff", "<cmd>lua vim.lsp.buf.format()<CR>")
 
 vim.api.nvim_set_keymap('n', ']c', '<cmd>Gitsigns next_hunk<CR>', {noremap = true, silent = true, desc = "Next git diff"})
@@ -556,3 +556,93 @@ vim.keymap.set({ "n", "v" }, "<leader>qe", function()
 end, { desc = "avante: edit" })
 
 require("mystuff.ai_cli")
+
+local M = {
+  enabled = false,
+  ns_id = vim.api.nvim_create_namespace("visual_cursorline"),
+  group = vim.api.nvim_create_augroup("VisualCursorlineGroup", { clear = true }),
+}
+
+-- Ensure highlight group is set (defaults to CursorLine appearance)
+vim.api.nvim_set_hl(0, "VisualCursorLine", { link = "CursorLine", default = true })
+
+local function update_highlight()
+  -- Always clear existing highlights in current buffer
+  vim.api.nvim_buf_clear_namespace(0, M.ns_id, 0, -1)
+
+  if not M.enabled or not vim.wo.wrap then return end
+
+  local win_id = vim.api.nvim_get_current_win()
+  local cursor = vim.api.nvim_win_get_cursor(win_id)
+  local lnum = cursor[1] - 1 -- 0-indexed line number
+  
+  -- Get virtual column (1-indexed screen column)
+  local virtcol = vim.fn.virtcol(".")
+  
+  -- Calculate width of text area (subtracting number column, sign column, fold column)
+  local wininfo = vim.fn.getwininfo(win_id)[1]
+  local text_width = wininfo.width - wininfo.textoff
+  if text_width <= 0 then return end
+
+  -- Determine start and end virtual column bounds for current visual screen line
+  local line_segment = math.floor((virtcol - 1) / text_width)
+  local start_vcol = line_segment * text_width + 1
+  local end_vcol = (line_segment + 1) * text_width
+
+  -- Convert virtual columns back to byte offsets on the line
+  local line_str = vim.api.nvim_buf_get_lines(0, lnum, lnum + 1, false)[1] or ""
+  if #line_str == 0 then return end
+
+  -- Find start byte offset
+  local start_byte = 0
+  for i = 1, #line_str do
+    if vim.fn.virtcol({ lnum + 1, i }) >= start_vcol then
+      start_byte = i - 1
+      break
+    end
+  end
+
+  -- Find end byte offset
+  local end_byte = #line_str
+  for i = start_byte + 1, #line_str do
+    if vim.fn.virtcol({ lnum + 1, i }) > end_vcol then
+      end_byte = i - 1
+      break
+    end
+  end
+
+  -- Apply highlight extmark across the active visual line
+  pcall(vim.api.nvim_buf_set_extmark, 0, M.ns_id, lnum, start_byte, {
+    end_col = end_byte,
+    hl_group = "VisualCursorLine",
+    hl_eol = (end_byte >= #line_str),
+  })
+end
+
+function _G.toggle_visual_cursorline()
+  M.enabled = not M.enabled
+
+  if M.enabled then
+    -- Enable native cursorline restricted purely to the line number column
+    vim.wo.cursorline = true
+    vim.wo.cursorlineopt = "number"
+
+    vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "WinEnter", "BufEnter" }, {
+      group = M.group,
+      callback = update_highlight,
+    })
+    update_highlight()
+  else
+    -- Turn off native cursorline and clear extmark highlights
+    vim.wo.cursorline = false
+    vim.wo.cursorlineopt = "both" -- reset to default
+
+    vim.api.nvim_clear_autocmds({ group = M.group })
+    vim.api.nvim_buf_clear_namespace(0, M.ns_id, 0, -1)
+  end
+end
+
+-- Commands & Keymaps
+vim.api.nvim_create_user_command("ToggleVisualCursorLine", _G.toggle_visual_cursorline, {})
+vim.keymap.set("n", "<leader>hl", _G.toggle_visual_cursorline, { desc = "Toggle Visual CursorLine" })
+vim.keymap.set("n", "<leader>hL", ":set cursorline!<CR>")

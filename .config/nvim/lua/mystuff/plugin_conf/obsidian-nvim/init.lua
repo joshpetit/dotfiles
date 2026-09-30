@@ -1,5 +1,8 @@
 require("obsidian").setup({
-    legacy_commands = false,
+    picker = {
+        name = "snacks.picker"
+    },
+	legacy_commands = false,
 	workspaces = {
 		{
 			name = "wiki",
@@ -13,9 +16,23 @@ require("obsidian").setup({
 	completion = {
 		min_chars = 2,
 	},
-    daily_notes = {
-        folder = "dailies"
-    },
+	attachments = {
+		folder = "assets/imgs",
+        img_text_func = function(path)
+            local base = vim.fn.expand("~/sync/wiki")
+            local relative_path = vim.fs.relpath(base, tostring(path))
+            local file_name = vim.fs.basename(tostring(path))
+            return string.format("![%s](%s)", file_name, relative_path)
+        end,
+        img_name_func = function()
+          return string.format("pasted_image_%s", os.date "%Y%m%d%H%M%S")
+        end,
+		confirm_img_paste = false,
+	},
+
+	daily_notes = {
+		folder = "dailies",
+	},
 	-- ui = {
 	-- 	checkboxes = {
 	-- 		[" "] = { char = "☐", hl_group = "ObsidianTodo" },

@@ -7,6 +7,7 @@ local servers = {
 	"sourcekit",
 	"svelte",
 	"kotlin_lsp",
+	"clangd",
 	"markdown_oxide",
 	"vuels",
 	"cssls",

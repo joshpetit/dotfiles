@@ -267,7 +267,7 @@ return require("packer").startup(function()
 			require("highlight-undo").setup()
 		end,
 	})
-	use("github/copilot.vim")
+	-- use("github/copilot.vim")
 	use_help({ "nilsboy/vim-rest-console" }, true)
 	use_help({ "obsidian-nvim/obsidian.nvim" }, true)
 	use_help({
@@ -358,36 +358,18 @@ return require("packer").startup(function()
     }, true)
 
     use("shumphrey/fugitive-gitlab.vim")
+    use("shortcuts/no-neck-pain.nvim")
+    use({"s1n7ax/nvim-window-picker", tag = 'v2.*', config = function() require'window-picker'.setup() end})
+    use_help({"CWood-sdf/banana.nvim"}, true)
+    use_help({
+        "3rd/image.nvim",
+        requires = {
+            "vhyrro/luarocks.nvim",
+        },
+    }, true)
 
     use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
-
-    use({
-        'MeanderingProgrammer/treesitter-modules.nvim',
-        after = { 'nvim-treesitter' },
-        requires = { 'nvim-treesitter/nvim-treesitter' },
-        config = function()
-            require('treesitter-modules').setup({
-                sync_install = false,
-                highlight = {
-                    enable = true,
-                },
-                indent = {
-                    enable = true,
-                },
-                incremental_selection = {
-                    enable = true,
-                    keymaps = {
-                        init_selection = "<leader>k",
-                        node_incremental = "<leader>k",
-                        scope_incremental = "<leader>K",
-                        node_decremental = "<leader>j",
-                    },
-                },
-            })
-
-        end,
-    })
-
+	use_help({ "folke/snacks.nvim" }, true)
 	if Packer_bootstrap then
 		require("packer").sync()
 	end
