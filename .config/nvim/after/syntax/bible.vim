@@ -1,3 +1,3 @@
-syntax match PassageReference "^.*\t"
-
-hi def link PassageReference SpecialComment
+" syntax match PassageReference "^.*\t"
+"
+" hi def link PassageReference SpecialComment

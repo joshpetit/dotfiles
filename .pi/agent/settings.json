@@ -1,0 +1,9 @@
+{
+  "lastChangelogVersion": "0.84.4",
+  "theme": "nightfox",
+  "defaultProvider": "google",
+  "defaultModel": "gemini-3.8-flash",
+  "packages": [
+    "npm:@juancrg90/nightfox-themes"
+  ]
+}

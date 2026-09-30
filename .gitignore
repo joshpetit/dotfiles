@@ -4,3 +4,13 @@ node_modules
 /.config/obs-studio/basic/scenes
 /.config/obs-studio/plugin_config
 /.config/nvim/lua/mystuff/amazon_hide.lua
+# Pi
+.pi/agent/auth.json
+.pi/agent/sessions/
+.pi/agent/models-store.json
+.pi/agent/trust.json
+.pi/agent/pi-debug.log
+.pi/agent/npm/node_modules/
+.pi/agent/bin/
+.pi/agent/git/
+.pi/pi-acp/
