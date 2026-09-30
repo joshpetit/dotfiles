@@ -22,7 +22,7 @@ require("obsidian").setup({
             local base = vim.fn.expand("~/sync/wiki")
             local relative_path = vim.fs.relpath(base, tostring(path))
             local file_name = vim.fs.basename(tostring(path))
-            return string.format("![%s](%s)", file_name, relative_path)
+            return string.format("![%s](<%s>)", file_name, relative_path)
         end,
         img_name_func = function()
           return string.format("pasted_image_%s", os.date "%Y%m%d%H%M%S")
@@ -38,5 +38,4 @@ require("obsidian").setup({
 	-- 		[" "] = { char = "☐", hl_group = "ObsidianTodo" },
 	-- 	},
 	-- },
-	-- see below for full list of options 👇
 })

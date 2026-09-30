@@ -56,7 +56,7 @@ bindsym $mod + c exec --no-startup-id rofi-json
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec kitty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -312,7 +312,7 @@ bindsym $mod+Ctrl+e exec rofimoji -a type copy -s neutral
 bindsym $mod+Shift+n exec ~/.local/share/scripts/toggle_notifications
 
 bindsym $mod+Shift+d [class="dropdownt"] scratchpad show,
-exec --no-startup-id "alacritty --class dropdownt,dropdownt -e tmux"
+exec --no-startup-id "kitty --class dropdownt,dropdownt -e tmux"
 for_window [class="dropdownt"] move scratchpad
 for_window [class="Conky"] floating enable
 for_window [class="Conky"] sticky enable

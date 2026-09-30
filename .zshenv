@@ -27,6 +27,7 @@ export CALIBRE_USE_DARK_PALETTE=1
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 export PATH="$PATH":"$HOME/.iterm2/"
 export XDG_CONFIG_HOME=$HOME/.config/
+export SNACKS_KITTY=1
 
 export SDKMAN_DIR="$HOME/.sdkman"
 
