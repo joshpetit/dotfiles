@@ -646,3 +646,4 @@ end
 vim.api.nvim_create_user_command("ToggleVisualCursorLine", _G.toggle_visual_cursorline, {})
 vim.keymap.set("n", "<leader>hl", _G.toggle_visual_cursorline, { desc = "Toggle Visual CursorLine" })
 vim.keymap.set("n", "<leader>hL", ":set cursorline!<CR>")
+vim.keymap.set("n", "<leader>pi", ":Obsidian paste_img<CR>")

@@ -1,21 +1,8 @@
-require("nvim-treesitter.configs").setup({
-	sync_install = false,
-	highlight = {
-        additional_vim_regex_highlighting = { "markdown" },
-		enable = true,
-	},
-    indent = {
-        enable = true,
-    },
-	incremental_selection = {
-		enable = true,
-		keymaps = {
-			init_selection = "<leader>k",
-			node_incremental = "<leader>k",
-			scope_incremental = "<leader>K",
-			node_decremental = "<leader>j",
-		},
-	},
+require('nvim-treesitter').install {'javascript','typescript', 'java', 'markdown', 'markdown_inline' }
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { '<filetype>' },
+  callback = function() vim.treesitter.start() end,
 })
 
 vim.api.nvim_create_autocmd("User", {

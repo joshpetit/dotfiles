@@ -325,7 +325,7 @@ return require("packer").startup(function()
 	}, true)
 
 	use({ "williamboman/mason-lspconfig.nvim" })
-	use({"git@github.com:joshpetit/work.git", requires = "mfussenegger/nvim-jdtls"})
+	-- use({"git@github.com:joshpetit/work.git", requires = "mfussenegger/nvim-jdtls"})
     -- use({"jubnzv/mdeval.nvim", config = function()
     --     require 'mdeval'.setup({
     --         require_confirmation=false,
@@ -360,7 +360,6 @@ return require("packer").startup(function()
     use("shumphrey/fugitive-gitlab.vim")
     use("shortcuts/no-neck-pain.nvim")
     use({"s1n7ax/nvim-window-picker", tag = 'v2.*', config = function() require'window-picker'.setup() end})
-    use_help({"CWood-sdf/banana.nvim"}, true)
     use_help({
         "3rd/image.nvim",
         requires = {
@@ -368,7 +367,15 @@ return require("packer").startup(function()
         },
     }, true)
 
-    use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
+	use({
+		"iamcco/markdown-preview.nvim",
+		run = "cd app && npm install",
+		setup = function()
+			vim.g.mkdp_filetypes = { "markdown" }
+		end,
+		ft = { "markdown" },
+	})
+
 	use_help({ "folke/snacks.nvim" }, true)
 	if Packer_bootstrap then
 		require("packer").sync()
