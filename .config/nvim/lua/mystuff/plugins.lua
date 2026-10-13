@@ -255,7 +255,7 @@ return require("packer").startup(function()
 		end,
 	})
 	use_help({
-		"natecraddock/workspaces.nvim",
+		"git@github.com:joshpetit/workspaces.nvim",
 	}, true)
 	use({
 		"natecraddock/sessions.nvim",
@@ -377,6 +377,7 @@ return require("packer").startup(function()
 	})
 
 	use_help({ "folke/snacks.nvim" }, true)
+	use_help({ "folke/sidekick.nvim" }, true)
 	if Packer_bootstrap then
 		require("packer").sync()
 	end
